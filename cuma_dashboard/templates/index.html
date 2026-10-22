@@ -270,6 +270,151 @@ button{font:inherit;color:inherit}
   .mtop{grid-template-columns:minmax(0,1fr) auto}.mtop .gb{grid-column:1/-1;grid-row:2;justify-content:flex-start}.mtop .dot{grid-column:2;grid-row:1}
   .fig{padding:0 14px}.dfit{grid-template-columns:minmax(0,1fr)}.panel{padding:20px 18px}
 }
+
+/* ======================================================================
+   Vista oscura «Casillero»: rejilla bento que se reacomoda (FLIP) al elegir una celda.
+   Siempre oscura, acento verde neón. Solo visible con el tema oscuro.
+   ====================================================================== */
+body[data-vista="casillero"] .app{display:none}
+body:not([data-vista="casillero"]) #casillero{display:none}
+#casillero{--cs-bg:#08080a;--cs-cell:#121215;--cs-cell2:#18181c;--cs-edge:rgba(255,255,255,.07);--cs-edge2:rgba(255,255,255,.14);
+  --cs-ink:#f5f5f6;--cs-mut:#8b8b93;--cs-dim:#26262c;--cs-neon:#3dff8f;--cs-neon-2:#0fd46a;--cs-neon-soft:rgba(61,255,143,.12);
+  --cs-amber:#ffc83d;--cs-red:#ff5a4f;--cs-grey:#5c5c64;
+  position:fixed;inset:0;overflow:auto;background:var(--cs-bg);color:var(--cs-ink);color-scheme:dark;font-family:var(--font);-webkit-font-smoothing:antialiased}
+#casillero::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(60vmax 40vmax at 85% -10%,rgba(61,255,143,.07),transparent 60%)}
+.cs-wrap{position:relative;max-width:1560px;margin-inline:auto;min-height:100dvh;display:grid;grid-template-rows:auto minmax(0,1fr);grid-template-columns:minmax(0,1fr);gap:20px;padding:clamp(18px,2.6vw,32px) clamp(16px,3vw,44px)}
+@media (min-width:981px){.cs-wrap{height:100dvh}}
+.cs-top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px 24px}
+.cs-eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--cs-mut)}
+.cs-eyebrow b{color:var(--cs-neon);font-weight:700}
+.cs-title{margin:6px 0 0;font-family:var(--display);font-size:clamp(1.8rem,3.1vw,2.9rem);font-weight:600;letter-spacing:-.04em;line-height:1.02;color:var(--cs-ink)}
+.cs-side{display:flex;flex-direction:column;align-items:flex-end;gap:10px;min-width:0;max-width:100%}
+.cs-ctl{min-width:0;max-width:100%}
+.cs-top>div{min-width:0;max-width:100%}
+.cs-hint{font-size:13.5px;color:var(--cs-mut)}
+.cs-ctl{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+#casillero .rsel{background:rgba(255,255,255,.06)}
+#casillero .rsel>span{display:none}
+#casillero .rsel button{padding:6px 11px}
+#casillero .rsel>span,#casillero .rsel button,#casillero .rsel button small{color:var(--cs-mut)}
+#casillero .rsel button:hover,#casillero .rsel button[aria-pressed="true"]{color:#0a0a0b}
+#casillero .rsel button:hover:not([aria-pressed="true"]){color:var(--cs-ink)}
+#casillero .rsel button[aria-pressed="true"] small{color:#0a0a0b;opacity:.6}
+#casillero .rsel .hl{background:var(--cs-neon);box-shadow:0 0 18px -2px rgba(61,255,143,.55)}
+#casillero .icon-btn{background:rgba(255,255,255,.07);color:var(--cs-ink)}
+#casillero .icon-btn:hover{background:rgba(255,255,255,.13)}
+
+.cs-rejilla{display:grid;gap:12px;min-height:0;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));
+  grid-template-areas:"a a b c" "d e e f" "g g h f"}
+.cs-rejilla[data-forma="a"]{grid-template-areas:"a a b c" "a a d e" "f g g h"}
+.cs-rejilla[data-forma="b"]{grid-template-areas:"b b a c" "b b d e" "f g g h"}
+.cs-rejilla[data-forma="c"]{grid-template-areas:"a c c b" "d c c e" "f g g h"}
+.cs-rejilla[data-forma="d"]{grid-template-areas:"a b d d" "c e d d" "f g g h"}
+.cs-rejilla[data-forma="e"]{grid-template-areas:"a b c d" "e e f h" "e e g g"}
+.cs-rejilla[data-forma="f"]{grid-template-areas:"a b c d" "f f e h" "f f g g"}
+.cs-rejilla[data-forma="g"]{grid-template-areas:"a b c d" "g g g g" "e f h h";grid-template-rows:minmax(0,1fr) minmax(0,1.5fr) minmax(0,1fr)}
+.cs-rejilla[data-forma="h"]{grid-template-areas:"a b c d" "h h e f" "h h g g"}
+.cs-celda[data-celda="a"]{grid-area:a}.cs-celda[data-celda="b"]{grid-area:b}.cs-celda[data-celda="c"]{grid-area:c}.cs-celda[data-celda="d"]{grid-area:d}
+.cs-celda[data-celda="e"]{grid-area:e}.cs-celda[data-celda="f"]{grid-area:f}.cs-celda[data-celda="g"]{grid-area:g}.cs-celda[data-celda="h"]{grid-area:h}
+
+.cs-celda{position:relative;min-width:0;min-height:0;overflow:hidden;cursor:pointer;text-align:left;transform-origin:0 0;
+  padding:18px 20px;border-radius:28px;border:1px solid var(--cs-edge);background:linear-gradient(180deg,var(--cs-cell2),var(--cs-cell));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.04);transition:border-color .35s,box-shadow .45s}
+.cs-celda:hover{border-color:var(--cs-edge2)}
+.cs-celda:focus-visible{outline:2px solid var(--cs-neon);outline-offset:2px}
+.cs-celda[aria-pressed="true"]{border-color:rgba(61,255,143,.32);box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 0 0 1px rgba(61,255,143,.12),0 40px 90px -50px rgba(61,255,143,.45)}
+.cs-in{height:100%;display:flex;flex-direction:column;gap:6px;min-height:0}
+.cs-h{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:13px;font-weight:500;color:var(--cs-mut);flex:none}
+.cs-h>span:first-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cs-badge{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;font-size:11.5px;font-weight:600;white-space:nowrap;background:var(--cs-neon-soft);color:var(--cs-neon)}
+.cs-badge.neg{background:rgba(255,90,79,.13);color:var(--cs-red)}
+.cs-badge.mut{background:rgba(255,255,255,.07);color:var(--cs-mut)}
+.cs-v{font-family:var(--display);font-size:clamp(1.55rem,2.5vw,2.35rem);font-weight:600;letter-spacing:-.035em;line-height:1.05;font-variant-numeric:tabular-nums;color:var(--cs-ink);flex:none;white-space:nowrap}
+.cs-celda[aria-pressed="true"] .cs-v{font-size:clamp(2.1rem,4vw,3.5rem)}
+.cs-v small{font-size:.42em;font-weight:500;letter-spacing:0;color:var(--cs-mut);margin-left:6px}
+.cs-sub{font-size:12.5px;color:var(--cs-mut);flex:none}
+.cs-viz{position:relative;flex:1 1 auto;min-height:0;display:flex;flex-direction:column;justify-content:flex-end}
+.cs-live{width:8px;height:8px;border-radius:50%;background:var(--cs-neon);box-shadow:0 0 10px var(--cs-neon);animation:csPulse 1.6s ease-in-out infinite}
+@keyframes csPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.8)}}
+.cs-dot{width:8px;height:8px;border-radius:50%;flex:none;background:var(--cs-grey)}
+.cs-dot.ok{background:var(--cs-neon);box-shadow:0 0 8px rgba(61,255,143,.7)}.cs-dot.warn{background:var(--cs-amber)}.cs-dot.bad{background:var(--cs-red)}
+
+/* barras verticales */
+.cs-bars{display:flex;align-items:flex-end;gap:6px;height:100%;min-height:40px}
+.cs-bars>div{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:5px;height:100%}
+.cs-bars i{display:block;width:100%;border-radius:7px 7px 3px 3px;background:var(--cs-dim);transform-origin:bottom;animation:csGrow .8s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--k)*35ms)}
+.cs-bars i.on{background:linear-gradient(180deg,var(--cs-neon),var(--cs-neon-2));box-shadow:0 0 16px -4px rgba(61,255,143,.6)}
+.cs-bars i.alt{background:#4a4a52}
+.cs-bars em{font-style:normal;font-size:10.5px;color:var(--cs-mut);white-space:nowrap}
+.cs-bars b{font-size:10.5px;font-weight:600;color:var(--cs-ink);font-variant-numeric:tabular-nums;white-space:nowrap}
+.cs-bars .pair{flex-direction:row;align-items:flex-end;gap:3px}
+.cs-bars .col{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-end;height:100%;gap:5px;min-width:0}
+@keyframes csGrow{from{transform:scaleY(0)}}
+.cs-svg{display:block;width:100%;height:100%;overflow:visible}
+
+/* medidor radial segmentado */
+.cs-gauge{position:relative;aspect-ratio:1;height:100%;max-height:100%;margin-inline:auto}
+.cs-gauge svg{width:100%;height:100%;display:block}
+.cs-gauge rect{transition:fill .5s}
+.cs-gauge .ctr{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.cs-gauge .ctr b{font-family:var(--display);font-size:clamp(1.1rem,2.6vw,2.6rem);font-weight:600;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.cs-gauge .ctr span{font-size:11.5px;color:var(--cs-mut)}
+
+/* barra segmentada de estado */
+.cs-seg{display:flex;gap:4px;height:26px}
+.cs-seg i{flex:1;border-radius:5px;background:var(--cs-dim);animation:csFade .5s ease both;animation-delay:calc(var(--k)*40ms)}
+.cs-seg i.ok{background:var(--cs-neon);box-shadow:0 0 10px -2px rgba(61,255,143,.6)}.cs-seg i.warn{background:var(--cs-amber)}.cs-seg i.bad{background:var(--cs-red)}
+@keyframes csFade{from{opacity:0;transform:translateY(6px)}}
+.cs-chips{display:flex;flex-wrap:wrap;gap:6px}
+.cs-chips span{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.06);font-size:11.5px;color:var(--cs-ink)}
+
+/* interruptor */
+.cs-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.cs-switch{appearance:none;position:relative;flex:none;width:52px;height:31px;border-radius:999px;border:0;background:#3a3a40;cursor:pointer;transition:background .35s}
+.cs-switch::after{content:"";position:absolute;top:2px;left:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.4);transition:transform .45s cubic-bezier(.32,.72,0,1)}
+.cs-switch[aria-checked="true"]{background:var(--cs-neon);box-shadow:0 0 18px -4px rgba(61,255,143,.7)}
+.cs-switch[aria-checked="true"]::after{transform:translateX(21px)}
+.cs-switch:focus-visible{outline:2px solid var(--cs-neon);outline-offset:3px}
+.cs-state{font-family:var(--display);font-size:clamp(1.25rem,2vw,1.8rem);font-weight:600;letter-spacing:-.02em}
+
+/* lista de tareas */
+.cs-list{display:flex;flex-direction:column;gap:2px;overflow:auto;min-height:0;scrollbar-width:thin;margin-right:-8px;padding-right:8px}
+.cs-task{display:grid;grid-template-columns:20px minmax(0,1fr) auto;align-items:center;gap:10px;padding:6px 2px;font-size:13px;color:var(--cs-ink);border-radius:10px;cursor:pointer}
+.cs-task:hover{background:rgba(255,255,255,.04)}
+.cs-task .box{width:20px;height:20px;border-radius:6px;border:1.5px solid #4a4a52;display:grid;place-items:center;transition:background .25s,border-color .25s}
+.cs-task .box svg{width:13px;height:13px;stroke:#08080a;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round;opacity:0;transform:scale(.4);transition:opacity .25s,transform .35s cubic-bezier(.32,.72,0,1)}
+.cs-task.done .box{background:var(--cs-neon);border-color:var(--cs-neon)}
+.cs-task.done .box svg{opacity:1;transform:none}
+.cs-task .tx{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:color .3s}
+.cs-task.done .tx{color:var(--cs-mut);text-decoration:line-through}
+.cs-task small{font-size:11px;color:var(--cs-mut);white-space:nowrap}
+.cs-task .pr{width:6px;height:6px;border-radius:50%}
+.cs-task .pr.a{background:var(--cs-red)}.cs-task .pr.m{background:var(--cs-amber)}.cs-task .pr.b{background:var(--cs-grey)}
+
+/* mosaico de indicadores */
+.cs-mos{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:4px;align-content:end}
+.cs-mos i{aspect-ratio:1;border-radius:4px;background:var(--cs-dim);animation:csFade .5s ease both;animation-delay:calc(var(--k)*18ms)}
+.cs-mos i.full{background:var(--cs-neon)}.cs-mos i.part{background:var(--cs-amber)}
+.cs-ind{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px;align-items:center;padding:5px 2px;font-size:12.5px;border-bottom:1px solid rgba(255,255,255,.05)}
+.cs-ind em{font-style:normal;font-size:10.5px;color:var(--cs-mut);font-family:var(--mono)}
+.cs-ind b{font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.cs-ind b.na{color:var(--cs-mut);font-weight:500}
+.cs-fam{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--cs-neon);font-weight:600;margin:8px 0 2px}
+.cs-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;flex:none}
+.cs-stats div{background:rgba(255,255,255,.045);border-radius:14px;padding:8px 11px}
+.cs-stats span{display:block;font-size:11px;color:var(--cs-mut)}
+.cs-stats b{font-size:15px;font-weight:600;font-variant-numeric:tabular-nums}
+.cs-note{font-size:12px;color:var(--cs-mut);line-height:1.45;flex:none}
+.cs-lg{display:flex;gap:12px;font-size:11px;color:var(--cs-mut)}
+.cs-lg i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px}
+
+@media (max-width:980px){
+  .cs-rejilla,.cs-rejilla[data-forma]{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:none;grid-auto-rows:minmax(170px,auto);grid-template-areas:none}
+  .cs-celda{grid-area:auto!important}
+  .cs-celda[aria-pressed="true"]{grid-column:1/-1;min-height:400px}
+  .cs-side{align-items:flex-start}.cs-ctl{justify-content:flex-start}
+}
+@media (max-width:520px){.cs-rejilla,.cs-rejilla[data-forma]{grid-template-columns:minmax(0,1fr)}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -315,6 +460,33 @@ button{font:inherit;color:inherit}
     <!-- Ficha -->
     <aside class="panel glass" id="panel"><div class="pin" id="pin"></div></aside>
   </main>
+</div>
+
+<!-- Vista oscura «Casillero» -->
+<div id="casillero">
+  <div class="cs-wrap">
+    <header class="cs-top">
+      <div>
+        <div class="cs-eyebrow"><b>CUMA</b> · <span id="cs-per">Tablero de marzo a septiembre</span></div>
+        <h1 class="cs-title">Todo CUMA, de un vistazo.</h1>
+      </div>
+      <div class="cs-side">
+        <span class="cs-hint">Elige una celda y todo se reacomoda.</span>
+        <div class="cs-ctl"><div class="rsel" id="cs-mes" role="group" aria-label="Periodo"></div>
+          <button class="icon-btn" id="cs-theme" aria-label="Cambiar tema"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg></button></div>
+      </div>
+    </header>
+    <main class="cs-rejilla" id="cs-rejilla">
+      <div class="cs-celda" data-celda="a" role="button" tabindex="0" aria-pressed="false"><div class="cs-in"></div></div>
+      <div class="cs-celda" data-celda="b" role="button" tabindex="0" aria-pressed="false"><div class="cs-in"></div></div>
+      <div class="cs-celda" data-celda="c" role="button" tabindex="0" aria-pressed="false"><div class="cs-in"></div></div>
+      <div class="cs-celda" data-celda="d" role="button" tabindex="0" aria-pressed="false"><div class="cs-in"></div></div>
+      <div class="cs-celda" data-celda="e" role="button" tabindex="0" aria-pressed="false"><div class="cs-in"></div></div>
+      <div class="cs-celda" data-celda="f" role="button" tabindex="0" aria-pressed="false"><div class="cs-in"></div></div>
+      <div class="cs-celda" data-celda="g" role="button" tabindex="0" aria-pressed="false"><div class="cs-in"></div></div>
+      <div class="cs-celda" data-celda="h" role="button" tabindex="0" aria-pressed="false"><div class="cs-in"></div></div>
+    </main>
+  </div>
 </div>
 
 <!-- Datos: Flask sustituye este bloque por el resultado de /api/indicadores; aquí va una instantánea calculada de los Excel. -->
@@ -377,15 +549,17 @@ const $ = id => document.getElementById(id);
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const MES = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
 const MES_L = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
-const lbl = k => MES[+k.slice(5) - 1], lblL = k => MES_L[+k.slice(5) - 1];
+const lbl = k => MES[+k.slice(5) - 1], lblL = k => MES_L[+k.slice(5) - 1], cap = s => s.charAt(0).toUpperCase() + s.slice(1);
 const nf = (v, d = 0) => v == null || !isFinite(v) ? '—' : v.toLocaleString('es-EC', {minimumFractionDigits: d, maximumFractionDigits: d});
 const pct = (v, d = 1) => v == null || !isFinite(v) ? '—' : (v < 0 ? '−' : '') + nf(Math.abs(v), d) + ' %';
 const sgn = (v, d = 1) => v == null || !isFinite(v) ? '—' : (v > 0 ? '+' : v < 0 ? '−' : '') + nf(Math.abs(v), d) + ' %';
 const usd = (v, d = 0) => v == null || !isFinite(v) ? '—' : (v < 0 ? '−' : '') + '$ ' + nf(Math.abs(v), d);
 
 /* ---------- cálculo (misma lógica que tendrá el backend) ---------- */
-const M = D.mensual, idx0 = D.meses.indexOf(D.inicio_costo_real), PER = D.meses.slice(idx0);
+const M = D.mensual, idx0 = D.meses.indexOf(D.inicio_costo_real);
+let PER = D.meses.slice(idx0);   // meses del periodo; por defecto, los que tienen costo real
 const ix = k => D.meses.indexOf(k);
+const perCorto = () => `${lbl(PER[0])} – ${lbl(PER[PER.length - 1]).toLowerCase()}`;
 const sum = (a, ii) => ii.reduce((s, i) => s + (a[i] || 0), 0);
 function calc(ii) {
   const n = ii.length, V = sum(M.ventas, ii), CV = sum(M.costo_ventas, ii), GO = sum(M.gastos, ii), COM = sum(M.comisiones, ii);
@@ -458,7 +632,7 @@ function compute() {
     I7: r.pe == null
       ? {v: 'No alcanzable', txt: true, s: `Margen de contribución de ${pct(r.mc)}: ningún nivel de ventas cubre el costo fijo`, st: 'bad', sp: sp.I7}
       : {v: usd(r.pe), u: 'al mes', s: `Margen de contribución de ${pct(r.mc)}: las ventas tendrían que ser ${nf(r.pe / r.vmes, 1)} veces las actuales (${usd(r.vmes)})`, st: U.I7.f(r.vmes / r.pe), sp: sp.I7},
-    I5: {v: sgn(g), u: lbl(D.meses[last]).toLowerCase(), s: acum ? `${sgn((M.ventas[last] - M.ventas[idx0]) / M.ventas[idx0] * 100)} entre marzo y septiembre` : `Frente a ${lblL(D.meses[last - 1])}`, st: U.I5.f(g), sp: sp.I5},
+    I5: {v: sgn(g), u: lbl(D.meses[last]).toLowerCase(), s: acum ? `${sgn((M.ventas[last] - M.ventas[ix(PER[0])]) / M.ventas[ix(PER[0])] * 100)} entre ${lblL(PER[0])} y ${lblL(D.meses[last])}` : `Frente a ${lblL(D.meses[last - 1])}`, st: U.I5.f(g), sp: sp.I5},
     I11: {v: usd(r.ticket, 2), u: '· ' + nf(acum ? M.transacciones[last] : r.N), s: acum ? `Unas ${nf(r.trans)} transacciones al mes; ${nf(M.transacciones[last])} en septiembre` : `${nf(r.N)} transacciones en ${lblL(S.mes)}`, st: 'na', sp: sp.I11},
     I15: {v: 'Pendiente', txt: true, s: 'Faltan bajas e inventario; se aproximará con entradas y ventas en kg', st: 'na', bar: 0},
     I18: {v: '≤ ' + pct(ab.desintermediacion_max), s: 'El centro de acopio se trata como fuente propia; falta clasificar proveedores', st: 'na', bar: ab.desintermediacion_max / 100},
@@ -578,7 +752,7 @@ function renderPanel() {
   if (!S.sel) {
     const ids = TABLERO.flatMap(g => g[1]), c = s => ids.filter(id => V[id].st === s).length;
     pin.innerHTML = `
-      <div class="phead"><span class="kind"><span class="dot ${WORST}"></span>Resumen · ${R.acum ? 'marzo – septiembre 2026' : lblL(S.mes) + ' 2026'}</span>
+      <div class="phead"><span class="kind"><span class="dot ${WORST}"></span>Resumen · ${R.acum ? perTxt() + ' 2026' : lblL(S.mes) + ' 2026'}</span>
         <h2>${R.r.mo < 0 ? 'La operación aún no se sostiene sola' : 'La operación cubre sus costos'}</h2>
         <p class="lede">Diez indicadores del tablero principal con umbrales provisionales. Toque una tarjeta o use el menú inferior para abrir su ficha.</p></div>
       <div class="counts">
@@ -614,7 +788,7 @@ function renderPanel() {
 function detailViz(id) {
   const L = s => `<span class="lg">${s}</span>`;
   if (['I1', 'I2', 'I3', 'I6', 'I7', 'I5', 'I11'].includes(id))
-    return `<div class="sec"><h3>Evolución mensual · mar – sep ${id === 'I1' ? L('<span><i class="dash"></i>media 3 m</span>') : id === 'I11' ? L('<span><i style="background:var(--c1)"></i>Ticket</span><span><i style="background:var(--c6)"></i>Transacciones</span>') : ''}</h3><div class="chart" style="height:190px"><canvas id="p1"></canvas></div></div>`;
+    return `<div class="sec"><h3>Evolución mensual · ${perCorto().toLowerCase()} ${id === 'I1' ? L('<span><i class="dash"></i>media 3 m</span>') : id === 'I11' ? L('<span><i style="background:var(--c1)"></i>Ticket</span><span><i style="background:var(--c6)"></i>Transacciones</span>') : ''}</h3><div class="chart" style="height:190px"><canvas id="p1"></canvas></div></div>`;
   if (['I4', 'I12', 'I18', 'I20'].includes(id))
     return `<div class="sec"><h3>${{I4: 'Gasto operativo por rubro · dic – oct', I12: '% acumulado de ventas según % de productos', I18: 'Participación en las entradas · mar – sep', I20: 'Participación en las entradas · mar – sep'}[id]}</h3><div class="chart" style="height:200px"><canvas id="p1"></canvas></div></div>`;
   return `<div class="empty"><svg viewBox="0 0 24 24"><path d="M4 19V5M4 19h16"/><path d="M8 15l3-3 3 2 5-6" stroke-dasharray="2 3"/></svg>Este indicador se dibujará cuando llegue el dato que falta.</div>`;
@@ -693,7 +867,7 @@ function drawDetail(id) {
 
 /* ---------- carpetas ---------- */
 const CARPETAS = [
-  {t: 'Cifras mensuales', s: () => `Mar – sep: ventas ${usd(calc(PER.map(ix)).V)} · margen bruto ${pct(calc(PER.map(ix)).mb)}`, b: cardMensual},
+  {t: 'Cifras mensuales', s: () => `${perCorto()}: ventas ${usd(calc(PER.map(ix)).V)} · margen bruto ${pct(calc(PER.map(ix)).mb)}`, b: cardMensual},
   {t: 'Estructura de gastos', s: () => `Personal ${pct(D.estructura_gastos[0].pct)} · energía ${pct(D.estructura_gastos[1].pct)}`, b: cardGastos},
   {t: 'Origen de la mercadería', s: () => `Acopio ${pct(D.proveedores[0].pct)} de las entradas · ${pct(D.origen[3].pct)} sin entrada`, b: cardOrigen},
   {t: 'Pareto ABC', s: () => `Top 20 % = ${pct(D.pareto.y[3])} de las ventas · ${nf(D.pareto.productos)} productos`, b: cardPareto},
@@ -758,7 +932,7 @@ function cardMensual(db) {
   }).join('');
   const ii = PER.map(ix), r = calc(ii);
   db.innerHTML = `<div style="overflow-x:auto"><table class="tbl"><thead><tr><th>Mes</th><th>Ventas</th><th>Costo de ventas</th><th>Margen bruto</th><th>Gastos op.</th><th>Margen op.</th><th>Compras</th><th>Transf. netas</th></tr></thead>
-    <tbody>${rows}<tr class="tot"><td>Mar – sep 2026</td><td>${nf(r.V)}</td><td>${nf(r.CV)}</td><td>${pct(r.mb)}</td><td>${nf(r.GO)}</td><td class="neg">${pct(r.mo)}</td><td>${nf(sum(M.compras, ii))}</td><td>${nf(sum(M.transferencias, ii))}</td></tr></tbody></table></div>
+    <tbody>${rows}<tr class="tot"><td>${perCorto()} 2026</td><td>${nf(r.V)}</td><td>${nf(r.CV)}</td><td>${pct(r.mb)}</td><td>${nf(r.GO)}</td><td class="neg">${pct(r.mo)}</td><td>${nf(sum(M.compras, ii))}</td><td>${nf(sum(M.transferencias, ii))}</td></tr></tbody></table></div>
     <p class="cap">USD. Ventas y costo de ventas de los apuntes contables (cuentas 4.1.1 y 5.3.1); gastos operativos, cuenta 6; compras y transferencias de los archivos operativos. * Costo de transferencias referencial: no se usa para los indicadores de margen.</p>`;
 }
 function cardGastos(db) {
@@ -803,11 +977,185 @@ function cardUmbrales(db) {
     <p class="cap">Umbrales provisionales: margen de las otras tiendas cerca de 23 %, autosuficiencia plena en 100 % y concentración moderada entre 1.500 y 2.500 puntos.</p>`;
 }
 
-/* ---------- arranque y eventos ---------- */
-menu($('mes'), [['acum', 'Mar – sep<small>2026</small>'], ...PER.map(k => [k, lbl(k)])], S.mes, v => {
-  S.mes = v; compute(); renderHeader(); renderView();
+/* ======================================================================
+   Vista «Casillero» (tema oscuro): celdas bento que se reacomodan con FLIP.
+   ====================================================================== */
+const CS = {act: null, prev: {}};
+const CHECK = '<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+let HECHOS = new Set();
+try { HECHOS = new Set(JSON.parse(localStorage.getItem('cuma-datos-recibidos') || '[]')); } catch (e) {}
+const perTxt = () => `${lblL(PER[0])} a ${lblL(PER[PER.length - 1])}`;
+
+function csBars(vals, opt = {}) {
+  const max = Math.max(...vals.filter(v => v != null)) || 1;
+  return `<div class="cs-bars">${vals.map((v, i) => `<div>${opt.val ? `<b>${opt.val(v)}</b>` : ''}<i class="${opt.on && opt.on(i) ? 'on' : ''}" style="--k:${i};height:${Math.max(3, v / max * 100)}%" title="${opt.tip ? opt.tip(i) : ''}"></i>${opt.lbl ? `<em>${opt.lbl(i)}</em>` : ''}</div>`).join('')}</div>`;
+}
+function csPairs(a, b, lbls, big) {
+  const max = Math.max(...a, ...b) || 1;
+  return `<div class="cs-bars" style="gap:${big ? 14 : 8}px">${a.map((v, i) => `<div class="col"><div class="cs-bars pair" style="flex:1;gap:3px">
+    <div class="col" style="flex:1">${big ? `<b>${nf(v, 0)}</b>` : ''}<i class="on" style="--k:${i};height:${Math.max(3, v / max * 100)}%" title="MB ${pct(v)}"></i></div>
+    <div class="col" style="flex:1">${big ? `<b>${nf(b[i], 0)}</b>` : ''}<i class="alt" style="--k:${i};height:${Math.max(3, b[i] / max * 100)}%" title="Gasto ${pct(b[i])}"></i></div></div>${lbls ? `<em style="text-align:center">${lbls[i]}</em>` : ''}</div>`).join('')}</div>`;
+}
+function csLine(vals, sel) {
+  const W = 300, H = 100, p = 6, ok = vals.filter(v => v != null), lo = Math.min(...ok), hi = Math.max(...ok), sp = hi - lo || 1;
+  const xs = vals.map((_, i) => p + i * (W - 2 * p) / (vals.length - 1)), ys = vals.map(v => H - p - (v - lo) / sp * (H - 2 * p) * .85);
+  const d = xs.map((x, i) => (i ? 'L' : 'M') + x.toFixed(1) + ' ' + ys[i].toFixed(1)).join('');
+  const si = sel == null ? vals.length - 1 : sel;
+  return `<svg class="cs-svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none"><defs><linearGradient id="csg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3dff8f" stop-opacity=".35"/><stop offset="1" stop-color="#3dff8f" stop-opacity="0"/></linearGradient>
+    <filter id="csglow" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+    <path d="${d}L${xs[xs.length - 1]} ${H}L${xs[0]} ${H}Z" fill="url(#csg)"/>
+    <path d="${d}" fill="none" stroke="#3dff8f" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke" filter="url(#csglow)" style="animation:csFade .8s ease both"/>
+    <circle cx="${xs[si]}" cy="${ys[si]}" r="4" fill="#08080a" stroke="#3dff8f" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>`;
+}
+function csGauge(v, meta, big) {
+  const N = big ? 60 : 40, on = Math.round(N * Math.max(0, Math.min(1, v / meta)));
+  const segs = Array.from({length: N}, (_, i) => {
+    const a = -135 + i * 270 / (N - 1);
+    return `<rect x="48.6" y="4" width="2.8" height="${big ? 13 : 14}" rx="1.4" transform="rotate(${a} 50 50)" fill="${i < on ? '#3dff8f' : '#26262c'}" style="${i < on ? 'filter:drop-shadow(0 0 2px rgba(61,255,143,.8))' : ''}"/>`;
+  }).join('');
+  return `<div class="cs-gauge"><svg viewBox="0 0 100 100">${segs}</svg>${big ? `<div class="ctr"><b>${pct(v)}</b><span>de la meta ${pct(meta, 0)}</span></div>` : ''}</div>`;
+}
+const GRUPOS = [['Financiero', ['I6', 'I1', 'I2', 'I3', 'I7']], ['Clientes', ['I5', 'I11', 'I15']], ['Abastecimiento', ['I18', 'I20']]];
+const peor = ids => ['bad', 'warn', 'ok'].find(s => ids.some(id => V[id].st === s)) || 'na';
+
+const CELDAS = {
+  a(x) {  // Ventas
+    const {r, last} = R, g = growth(last), inSel = k => S.mes === 'acum' ? PER.includes(k) : k === S.mes;
+    const best = PER.reduce((b, k) => M.ventas[ix(k)] > M.ventas[ix(b)] ? k : b, PER[0]);
+    return `<div class="cs-h"><span>Ventas</span><span class="cs-badge ${g < 0 ? 'neg' : ''}">${sgn(g)} ${lbl(D.meses[last]).toLowerCase()}</span></div>
+      <div class="cs-v" data-n="${r.V}" data-f="usd">${usd(r.V)}</div>
+      <div class="cs-sub">${R.acum ? `${PER.length} meses · ${usd(r.vmes)} al mes` : cap(lblL(S.mes)) + ' 2026'}</div>
+      ${x ? '' : `<div class="cs-viz" style="opacity:.55;max-height:56px;margin-top:auto">${csBars(M.ventas, {on: i => inSel(D.meses[i]), tip: i => usd(M.ventas[i])})}</div>`}
+      ${x ? `<div class="cs-viz" style="margin-top:10px">${csBars(M.ventas, {on: i => inSel(D.meses[i]), lbl: i => lbl(D.meses[i]), val: v => nf(v / 1000, 1) + 'k', tip: i => usd(M.ventas[i])})}</div>
+        <div class="cs-stats"><div><span>Promedio mensual</span><b>${usd(r.vmes)}</b></div><div><span>Mejor mes</span><b>${lbl(best)} · ${usd(M.ventas[ix(best)])}</b></div><div><span>Desde ${lblL(PER[0])}</span><b>${sgn((M.ventas[ix(PER[PER.length - 1])] - M.ventas[ix(PER[0])]) / M.ventas[ix(PER[0])] * 100)}</b></div></div>` : ''}`;
+  },
+  b(x) {  // Transacciones
+    const last = R.last, k = D.meses[last], tr = PER.map(m => M.transacciones[ix(m)]), sel = S.mes === 'acum' ? null : PER.indexOf(S.mes);
+    return `<div class="cs-h"><span>Transacciones</span><span class="cs-badge mut"><span class="cs-live"></span>${cap(lblL(k))}</span></div>
+      <div class="cs-v" data-n="${M.transacciones[last]}" data-f="nf">${nf(M.transacciones[last])}</div>
+      <div class="cs-sub">Ticket ${usd(M.ventas_pos[last] / M.transacciones[last], 2)}</div>
+      <div class="cs-viz" style="margin-top:${x ? 12 : 4}px">${csLine(tr, sel)}</div>
+      ${x ? `<div class="cs-stats"><div><span>Promedio</span><b>${nf(sum(tr, tr.map((_, i) => i)) / tr.length)}</b></div><div><span>Máximo</span><b>${nf(Math.max(...tr))}</b></div><div><span>Ticket promedio</span><b>${usd(R.r.ticket, 2)}</b></div></div>` : ''}`;
+  },
+  c(x) {  // Base de cálculo (interruptor)
+    const real = PER[0] === D.inicio_costo_real;
+    return `<div class="cs-h"><span>Costo real</span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="${real ? '#3dff8f' : '#ffc83d'}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/>${real ? '<path d="M9 12l2 2 4-4"/>' : '<path d="M12 8v5M12 16h.01"/>'}</svg></div>
+      <div class="cs-state" style="color:${real ? 'var(--cs-ink)' : 'var(--cs-amber)'}">${real ? 'Activado' : 'En pausa'}</div>
+      <div class="cs-row" style="margin-top:auto"><span class="cs-sub">${real ? `Desde ${lblL(PER[0])} · ${PER.length} meses` : 'Incluye dic – feb referencial'}</span>
+        <button class="cs-switch" id="cs-sw" role="switch" aria-checked="${real}" aria-label="Usar solo meses con costo real"></button></div>
+      ${x ? `<p class="cs-note" style="margin-top:12px">Hasta marzo de 2026 las transferencias no tenían costo propio y el sistema les asignó el costo actual del producto. Con el interruptor activado, los indicadores de margen se calculan solo con costo real (marzo a septiembre); en pausa, se suman diciembre a febrero como referencia.</p>
+        <div class="cs-chips" style="margin-top:6px">${D.meses.map((m, i) => `<span><span class="cs-dot ${i < idx0 ? 'warn' : 'ok'}"></span>${lbl(m)}</span>`).join('')}</div>` : ''}`;
+  },
+  d(x) {  // Autosuficiencia
+    const {r} = R, brecha = (r.CV + r.GO - r.V) / r.n;
+    return `<div class="cs-h"><span>Autosuficiencia</span><span class="cs-badge mut">Meta 100 %</span></div>
+      ${x ? '' : `<div class="cs-v" data-n="${r.oss}" data-f="pct">${pct(r.oss)}</div>`}
+      <div class="cs-viz" style="justify-content:center;${x ? 'padding:6px 0' : ''}">${csGauge(r.oss, 100, x)}</div>
+      ${x ? `<div class="cs-stats"><div><span>Ventas</span><b>${usd(r.V)}</b></div><div><span>Costos y gastos</span><b>${usd(r.CV + r.GO)}</b></div><div><span>Aporte necesario</span><b>${usd(Math.max(0, brecha))}/mes</b></div></div>` : ''}`;
+  },
+  e(x) {  // Semáforo
+    const ids = TABLERO.flatMap(g => g[1]), n = s => ids.filter(id => V[id].st === s).length, w = peor(ids);
+    return `<div class="cs-h"><span>Semáforo</span><span class="cs-badge ${n('bad') ? 'neg' : ''}">${n('bad')} en rojo</span></div>
+      <div class="cs-state">${{bad: 'Requiere atención', warn: 'En vigilancia', ok: 'Todo en orden', na: 'Por calibrar'}[w]}</div>
+      ${x ? `<div class="cs-list" style="flex:1;margin-top:6px">${ids.map(id => `<div class="cs-ind"><span class="cs-dot ${V[id].st}"></span><span>${id} · ${BY[id].c}</span><b class="${V[id].txt ? 'na' : ''}">${V[id].v}</b></div>`).join('')}</div>` : '<div style="flex:1"></div>'}
+      <div class="cs-seg">${ids.map((id, k) => `<i class="${V[id].st}" style="--k:${k}" title="${id} · ${BY[id].c}: ${ST[V[id].st]}"></i>`).join('')}</div>
+      <div class="cs-chips">${GRUPOS.map(([g, gi]) => `<span><span class="cs-dot ${peor(gi)}"></span>${g}</span>`).join('')}</div>`;
+  },
+  f(x) {  // Datos pendientes (lista)
+    const items = D.faltan.map((f, i) => ({f, i})).sort((p, q) => 'amb'.indexOf(p.f[2]) - 'amb'.indexOf(q.f[2]));
+    const show = x ? items : items.slice(0, 5);
+    return `<div class="cs-h"><span>Datos pendientes</span><span class="cs-badge mut">${HECHOS.size}/${D.faltan.length}</span></div>
+      <div class="cs-list" style="flex:1;margin-top:4px">${show.map(({f, i}) => `<div class="cs-task ${HECHOS.has(i) ? 'done' : ''}" data-t="${i}" role="checkbox" aria-checked="${HECHOS.has(i)}" tabindex="0">
+        <span class="box">${CHECK}</span><span class="tx">${f[0]}</span>${x ? `<small>${f[1]} · ${f[3]}</small>` : `<span class="pr ${f[2]}"></span>`}</div>`).join('')}</div>
+      ${x ? '<p class="cs-note">Marca un dato cuando CUMA lo entregue. Rojo: prioridad alta; ámbar: media; gris: baja.</p>' : ''}`;
+  },
+  g(x) {  // Margen bruto y gasto
+    const {r} = R, mb = series(c => c.mb), go = series(c => c.pgo);
+    return `<div class="cs-h"><span>Margen bruto y gasto</span><span class="cs-badge mut">% de ventas</span></div>
+      <div class="cs-row" style="justify-content:flex-start;gap:18px;align-items:baseline"><div class="cs-v" data-n="${r.mb}" data-f="pct">${pct(r.mb)}</div><span class="cs-sub">gasto ${pct(r.pgo)} · margen op. ${pct(r.mo)}</span></div>
+      <div class="cs-viz" style="margin-top:${x ? 10 : 4}px">${csPairs(mb.map(v => Math.max(0, v)), go, x ? PER.map(lbl) : null, x)}</div>
+      ${x ? `<div class="cs-lg" style="margin-top:8px"><span><i style="background:#3dff8f"></i>Margen bruto</span><span><i style="background:#4a4a52"></i>Gasto operativo</span><span>El gasto supera al margen en todos los meses</span></div>` : ''}`;
+  },
+  h(x) {  // Sistema de indicadores
+    const cb = D.cobertura, tot = cb.completos + cb.parciales + cb.sin_datos;
+    return `<div class="cs-h"><span>Indicadores</span><span class="cs-badge">${cb.completos + cb.parciales}/${tot}</span></div>
+      ${x ? `<div class="cs-list" style="flex:1">${['C', 'F', 'O', 'A'].map(f => `<div class="cs-fam">${FAM_L[f]}</div>${IND.filter(i => i.f === f).map(i => `<div class="cs-ind"><span class="cs-dot ${i.e === 'full' ? 'ok' : i.e === 'part' ? 'warn' : ''}"></span><span>${i.id} · ${i.n}</span><b class="${V[i.id].txt ? 'na' : ''}">${V[i.id].v}</b></div>`).join('')}`).join('')}</div>`
+        : `<div class="cs-v" data-n="${cb.completos}" data-f="nf">${cb.completos}<small>completos · ${cb.parciales} parciales</small></div>
+           <div class="cs-viz"><div class="cs-mos">${IND.map((i, k) => `<i class="${i.e}" style="--k:${k}" title="${i.id} · ${i.n}"></i>`).join('')}</div></div>`}`;
+  }
+};
+
+function csFill() {
+  document.querySelectorAll('.cs-celda').forEach(c => {
+    const k = c.dataset.celda;
+    c.querySelector('.cs-in').innerHTML = CELDAS[k](CS.act === k);
+  });
+  $('cs-per').textContent = R.acum ? `Tablero de ${perTxt()}` : `Tablero de ${lblL(S.mes)} 2026`;
+  // contadores: animan desde el valor anterior
+  const F = {usd: v => usd(v), nf: v => nf(v), pct: v => pct(v)};
+  document.querySelectorAll('.cs-v[data-n]').forEach(el => {
+    const key = el.closest('.cs-celda').dataset.celda, to = +el.dataset.n, from = CS.prev[key] ?? to * .6, f = F[el.dataset.f];
+    CS.prev[key] = to;
+    if (from === to || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const tail = el.querySelector('small') ? el.querySelector('small').outerHTML : '', t0 = performance.now();
+    const step = now => { const p = Math.min(1, (now - t0) / 700), e = 1 - Math.pow(1 - p, 3);
+      el.innerHTML = f(from + (to - from) * e) + tail; if (p < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  });
+  const sw = $('cs-sw');
+  if (sw) sw.onclick = e => { e.stopPropagation(); setInicio(PER[0] === D.inicio_costo_real ? D.meses[0] : D.inicio_costo_real); };
+  document.querySelectorAll('.cs-task').forEach(t => {
+    const tog = e => { e.stopPropagation(); const i = +t.dataset.t; HECHOS.has(i) ? HECHOS.delete(i) : HECHOS.add(i);
+      try { localStorage.setItem('cuma-datos-recibidos', JSON.stringify([...HECHOS])); } catch (er) {}
+      t.classList.toggle('done', HECHOS.has(i)); t.setAttribute('aria-checked', HECHOS.has(i));
+      t.closest('.cs-celda').querySelector('.cs-badge').textContent = `${HECHOS.size}/${D.faltan.length}`; };
+    t.onclick = tog; t.onkeydown = e => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); tog(e); } };
+  });
+}
+/* FLIP: primero se miden las celdas, se cambia la forma de la rejilla, se mide de nuevo y se anima la diferencia */
+function csPick(k) {
+  const grid = $('cs-rejilla'), cells = [...grid.children], first = new Map(cells.map(c => [c, c.getBoundingClientRect()]));
+  CS.act = CS.act === k ? null : k;
+  grid.dataset.forma = CS.act || '';
+  cells.forEach(c => c.setAttribute('aria-pressed', c.dataset.celda === CS.act));
+  csFill();
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  cells.forEach(c => {
+    const f = first.get(c), l = c.getBoundingClientRect();
+    if (!l.width || !f.width) return;
+    const dx = f.left - l.left, dy = f.top - l.top, sx = f.width / l.width, sy = f.height / l.height;
+    if (Math.abs(dx) + Math.abs(dy) < 1 && Math.abs(sx - 1) + Math.abs(sy - 1) < .01) return;
+    c.animate([{transform: `translate(${dx}px,${dy}px) scale(${sx},${sy})`}, {transform: 'none'}], {duration: 620, easing: 'cubic-bezier(.32,.72,0,1)'});
+    c.querySelector('.cs-in').animate([{opacity: 0}, {opacity: 0, offset: .35}, {opacity: 1}], {duration: 620, easing: 'ease-out'});
+  });
+}
+document.querySelectorAll('.cs-celda').forEach(c => {
+  c.addEventListener('click', () => csPick(c.dataset.celda));
+  c.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target === c) { e.preventDefault(); csPick(c.dataset.celda); } });
+});
+
+/* ---------- periodo compartido por las dos vistas ---------- */
+const enCasillero = () => document.body.dataset.vista === 'casillero';
+function refresh() {
+  compute(); renderHeader();
+  if (enCasillero()) { csFill(); return; }
+  renderView();
   if (S.deck) { if (S.card != null) pickCard(S.card); } else swap($('pin'), renderPanel);
-}, '<span>Periodo</span>');
+}
+function buildMes() {
+  const items = [['acum', `${lbl(PER[0])} – ${lbl(PER[PER.length - 1]).toLowerCase()}<small>${PER[0].slice(0, 4) === PER[PER.length - 1].slice(0, 4) ? PER[0].slice(0, 4) : ''}</small>`], ...PER.map(k => [k, lbl(k)])];
+  const pickMes = v => { S.mes = v; ['mes', 'cs-mes'].forEach(id => { const n = $(id); n.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b.dataset.v === v)); slide(n); }); refresh(); };
+  menu($('mes'), items, S.mes, pickMes, '<span>Periodo</span>');
+  menu($('cs-mes'), items, S.mes, pickMes, '<span>Periodo</span>');
+}
+function setInicio(k) {
+  PER = D.meses.slice(ix(k));
+  if (S.mes !== 'acum' && !PER.includes(S.mes)) S.mes = 'acum';
+  buildMes(); refresh();
+}
+
+/* ---------- arranque y eventos ---------- */
+buildMes();
 menu($('fam'), Object.entries(FAM), S.fam, v => {
   S.fam = v; S.sel = null;
   swap($('view'), renderView);
@@ -815,19 +1163,33 @@ menu($('fam'), Object.entries(FAM), S.fam, v => {
   swap($('pin'), renderPanel);
 });
 $('dtoggle').onclick = () => { if (S.deck) { closeDeck(); swap($('pin'), renderPanel); } else openDeck(); };
-addEventListener('keydown', e => { if (e.key === 'Escape' && S.deck) { if (S.card != null) pickCard(null); else { closeDeck(); swap($('pin'), renderPanel); } } });
+addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return;
+  if (enCasillero()) { if (CS.act) csPick(CS.act); return; }
+  if (S.deck) { if (S.card != null) pickCard(null); else { closeDeck(); swap($('pin'), renderPanel); } }
+});
 addEventListener('resize', () => document.querySelectorAll('.rsel,.gb,.il').forEach(n => slide(n, true)));
 
+/* tema: automático → claro → oscuro; el oscuro usa la vista Casillero */
 const THEMES = ['auto', 'light', 'dark'], TL = {auto: 'automático', light: 'claro', dark: 'oscuro'};
 let theme = 'auto';
 try { theme = localStorage.getItem('cuma-theme') || 'auto'; } catch (e) {}
-const applyTheme = () => { if (theme === 'auto') document.documentElement.removeAttribute('data-theme'); else document.documentElement.dataset.theme = theme; $('theme').title = 'Tema: ' + TL[theme]; };
-const repaint = () => { defaults(); renderView(); renderPanel(); if (S.deck && S.card != null) pickCard(S.card); };
-applyTheme();
-$('theme').onclick = () => { theme = THEMES[(THEMES.indexOf(theme) + 1) % 3]; try { localStorage.setItem('cuma-theme', theme); } catch (e) {} applyTheme(); repaint(); };
+const oscuro = () => theme === 'dark' || (theme === 'auto' && matchMedia('(prefers-color-scheme: dark)').matches);
+const applyTheme = () => {
+  if (theme === 'auto') document.documentElement.removeAttribute('data-theme'); else document.documentElement.dataset.theme = theme;
+  document.body.dataset.vista = oscuro() ? 'casillero' : 'panel';
+  $('theme').title = $('cs-theme').title = 'Tema: ' + TL[theme];
+};
+const repaint = () => {
+  applyTheme(); defaults(); compute(); renderHeader();
+  if (enCasillero()) csFill(); else { renderView(); renderSub(); renderPanel(); if (S.deck && S.card != null) pickCard(S.card); }
+  requestAnimationFrame(() => document.querySelectorAll('.rsel,.gb,.il').forEach(n => slide(n, true)));
+};
+const nextTheme = () => { theme = THEMES[(THEMES.indexOf(theme) + 1) % 3]; try { localStorage.setItem('cuma-theme', theme); } catch (e) {} repaint(); };
+$('theme').onclick = nextTheme; $('cs-theme').onclick = nextTheme;
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (theme === 'auto') repaint(); });
 
-defaults(); compute(); renderHeader(); renderView(); renderSub(); renderPanel();
+repaint();
 })();
 </script>
 </body>
