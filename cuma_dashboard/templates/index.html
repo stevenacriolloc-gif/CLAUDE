@@ -8,17 +8,17 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
 /* Gramática de Corbatul Twin: una sola página, mapa a la izquierda (menú por familia, tarjetas bento que se agrandan
-   y se reacomodan), ficha a la derecha y carpetas de datos. Paleta fría (azul, turquesa, violeta) y paneles de vidrio 100 % transparentes. */
+   y se reacomodan), ficha a la derecha y carpetas de datos. Paleta de Corbatul (verdes y grises); las tarjetas toman el color de su estado y paneles de vidrio 100 % transparentes. */
 :root{
   --bg:#fdfdfd; --surface:#f8f8f8; --surface2:#efefef; --ink:#2c2c2e; --ink-strong:#111111;
-  --muted:#6b6b70; --line:#e1e1e3; --line-soft:#ededef; --accent:#1f6fe0; --accent-soft:rgba(47,123,255,.11); --neg:#e5383b;
-  --chart:#2f7bff; --chart-2:#cdd3dc; --chart-3:#14b8a6;
+  --muted:#6b6b70; --line:#e1e1e3; --line-soft:#ededef; --accent:#2f6b45; --accent-soft:#e8f0eb; --neg:#b0322f;
+  --chart:#2f6b45; --chart-2:#c4c4c8; --chart-3:#e55812;
   --ok:#34c759; --warn:#f5b400; --bad:#ff3b30; --na:#a3a3a8;
   --ok-halo:rgba(52,199,89,.22); --warn-halo:rgba(245,180,0,.28); --bad-halo:rgba(255,59,48,.2); --na-halo:rgba(142,142,147,.2);
   --dedge:rgba(0,0,0,.12); --dglass:transparent; --dscrim:rgba(253,253,253,.18);
   --glass-flat:rgba(0,0,0,.055); --glass-hi:rgba(255,255,255,.95); --glass-shadow:rgba(0,0,0,.22);
-  --gold:#1f6fe0; --c1:#2f7bff; --c2:#14b8a6; --c3:#8b5cf6; --c4:#06b6d4; --c5:#6366f1; --c6:#bcd4ff;
-  --blob-a:rgba(20,184,166,.15); --blob-b:rgba(47,123,255,.17); --blob-c:rgba(139,92,246,.14); --blob-d:rgba(6,182,212,.12);
+  --gold:#4d6b1f; --c1:#16b45a; --c2:#95c623; --c3:#e55812; --c4:#5f5f63; --c5:#8fd9ac; --c6:#dcd3c4;
+  --blob-a:rgba(47,107,69,.10); --blob-b:rgba(0,0,0,.035); --blob-c:rgba(149,198,35,.08); --blob-d:rgba(47,107,69,.06);
   --brand:#58585e;
   --ease:cubic-bezier(.2,.8,.2,1); --spring:cubic-bezier(.32,.72,0,1);
   --font:'Segoe UI',system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
@@ -27,26 +27,26 @@
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#09090b; --surface:#141415; --surface2:#1c1c1e; --ink:#cfcfd3; --ink-strong:#f5f5f7;
-  --muted:#9a9aa0; --line:rgba(255,255,255,.12); --line-soft:rgba(255,255,255,.07); --accent:#6aa5ff; --accent-soft:rgba(47,123,255,.16); --neg:#ff5a67;
-  --chart:#4f8dff; --chart-2:rgba(255,255,255,.16); --chart-3:#2dd4bf;
+  --muted:#9a9aa0; --line:rgba(255,255,255,.12); --line-soft:rgba(255,255,255,.07); --accent:#86c9a0; --accent-soft:#15241b; --neg:#f2928a;
+  --chart:#86c9a0; --chart-2:rgba(255,255,255,.16); --chart-3:#f06a26;
   --ok:#30d158; --warn:#ffd60a; --bad:#ff453a; --na:#5c5c62;
   --ok-halo:rgba(48,209,88,.24); --warn-halo:rgba(255,214,10,.22); --bad-halo:rgba(255,69,58,.24); --na-halo:rgba(142,142,147,.22);
   --dedge:rgba(255,255,255,.16); --dglass:transparent; --dscrim:rgba(8,8,10,.22);
   --glass-flat:rgba(255,255,255,.07); --glass-hi:rgba(255,255,255,.18); --glass-shadow:rgba(0,0,0,.6);
-  --gold:#7fb0ff; --c1:#4f8dff; --c2:#2dd4bf; --c3:#a78bfa; --c4:#22d3ee; --c5:#818cf8; --c6:#1e3a5f;
-  --blob-a:rgba(20,184,166,.20); --blob-b:rgba(47,123,255,.24); --blob-c:rgba(139,92,246,.20); --blob-d:rgba(6,182,212,.14);
+  --gold:#a8c75a; --c1:#34e07a; --c2:#a8d63a; --c3:#f06a26; --c4:#9a9a9f; --c5:#7fcf9e; --c6:#2e3a3a;
+  --blob-a:rgba(134,201,160,.10); --blob-b:rgba(255,255,255,.035); --blob-c:rgba(168,214,58,.06); --blob-d:rgba(134,201,160,.06);
   --brand:#d8d8da;
   color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#09090b; --surface:#141415; --surface2:#1c1c1e; --ink:#cfcfd3; --ink-strong:#f5f5f7;
-  --muted:#9a9aa0; --line:rgba(255,255,255,.12); --line-soft:rgba(255,255,255,.07); --accent:#6aa5ff; --accent-soft:rgba(47,123,255,.16); --neg:#ff5a67;
-  --chart:#4f8dff; --chart-2:rgba(255,255,255,.16); --chart-3:#2dd4bf;
+  --muted:#9a9aa0; --line:rgba(255,255,255,.12); --line-soft:rgba(255,255,255,.07); --accent:#86c9a0; --accent-soft:#15241b; --neg:#f2928a;
+  --chart:#86c9a0; --chart-2:rgba(255,255,255,.16); --chart-3:#f06a26;
   --ok:#30d158; --warn:#ffd60a; --bad:#ff453a; --na:#5c5c62;
   --ok-halo:rgba(48,209,88,.24); --warn-halo:rgba(255,214,10,.22); --bad-halo:rgba(255,69,58,.24); --na-halo:rgba(142,142,147,.22);
   --dedge:rgba(255,255,255,.16); --dglass:transparent; --dscrim:rgba(8,8,10,.22);
   --glass-flat:rgba(255,255,255,.07); --glass-hi:rgba(255,255,255,.18); --glass-shadow:rgba(0,0,0,.6);
-  --gold:#7fb0ff; --c1:#4f8dff; --c2:#2dd4bf; --c3:#a78bfa; --c4:#22d3ee; --c5:#818cf8; --c6:#1e3a5f;
-  --blob-a:rgba(20,184,166,.20); --blob-b:rgba(47,123,255,.24); --blob-c:rgba(139,92,246,.20); --blob-d:rgba(6,182,212,.14);
+  --gold:#a8c75a; --c1:#34e07a; --c2:#a8d63a; --c3:#f06a26; --c4:#9a9a9f; --c5:#7fcf9e; --c6:#2e3a3a;
+  --blob-a:rgba(134,201,160,.10); --blob-b:rgba(255,255,255,.035); --blob-c:rgba(168,214,58,.06); --blob-d:rgba(134,201,160,.06);
   --brand:#d8d8da;
   color-scheme:dark}
 
@@ -131,8 +131,13 @@ button{font:inherit;color:inherit}
 .tile{appearance:none;position:relative;display:flex;flex-direction:column;gap:2px;min-width:0;min-height:0;text-align:left;cursor:pointer;overflow:hidden;
   padding:11px 12px 10px;border-radius:16px;border:1px solid var(--dedge);background:transparent;transform-origin:0 0;
   transition:background .3s,border-color .3s,box-shadow .35s}
-.tile:hover{background:color-mix(in srgb,var(--accent) 6%,transparent)}
-.tile.big{grid-column:span 2;grid-row:span 2;background:color-mix(in srgb,var(--accent) 5%,transparent);border-color:color-mix(in srgb,var(--accent) 45%,transparent);box-shadow:0 0 0 1px color-mix(in srgb,var(--accent) 12%,transparent),0 20px 40px -26px var(--accent);padding:14px 16px 12px}
+.tile{--st:var(--na);--chart:var(--st);border-color:color-mix(in srgb,var(--st) 38%,transparent);background:color-mix(in srgb,var(--st) 7%,transparent)}
+.tile[data-st="ok"]{--st:var(--ok)}.tile[data-st="warn"]{--st:var(--warn)}.tile[data-st="bad"]{--st:var(--bad)}
+.tile[data-st="na"]{--st:var(--muted);border-color:var(--dedge);background:transparent}
+.tile:hover{background:color-mix(in srgb,var(--st) 12%,transparent)}
+.tile .t-id{display:flex;align-items:center;gap:6px}
+.tile .t-st{font-family:var(--font);font-size:10px;font-weight:600;letter-spacing:0;color:color-mix(in srgb,var(--st) 75%,var(--ink-strong))}
+.tile.big{grid-column:span 2;grid-row:span 2;background:color-mix(in srgb,var(--st) 10%,transparent);border-color:color-mix(in srgb,var(--st) 60%,transparent);box-shadow:0 0 0 1px color-mix(in srgb,var(--st) 14%,transparent),0 20px 40px -26px var(--st);padding:14px 16px 12px}
 .tile .t-h{display:flex;align-items:center;justify-content:space-between;gap:6px}
 .tile .t-id{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--muted)}
 .tile .t-n{font-size:12px;font-weight:600;color:var(--ink);line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -628,7 +633,7 @@ function tileHTML(id, big) {
   if (k.sp) viz = spark(k.sp, sel) + (big ? `<div class="axis"><span>${lbl(PER[0])}</span><span>${lbl(PER[PER.length - 1])}</span></div>` : '');
   else if (k.bar) viz = `<div class="bar"><i style="width:${k.bar * 100}%"></i></div>`;
   else viz = `<div class="bar void"></div>`;
-  return `<div class="t-h"><span class="t-id">${id}</span></div>
+  return `<div class="t-h"><span class="t-id">${id}</span>${k.st !== 'na' ? `<span class="t-st">${{ok: 'En meta', warn: 'Vigilancia', bad: 'Acción'}[k.st]}</span>` : ''}</div>
     <div class="t-n">${big ? i.n : i.c}</div>
     <div class="t-v num ${k.txt ? 'txt' : ''}">${k.v}${k.u && big ? `<small>${k.u}</small>` : ''}</div>
     ${big ? `<div class="t-s">${k.s}</div><div class="tags"><span class="tag ${i.e}">${ETAG[i.e]}</span><span class="tag none">${ST[k.st]}</span></div>` : ''}
@@ -644,7 +649,7 @@ function renderBento(anim = true) {
   const ids = visibles();
   let html = '', j = 0;
   ids.forEach(id => {
-    html += `<button class="tile ${S.sel === id ? 'big' : ''} ${first.has(id) ? '' : 'enter'}" style="--j:${j++}" data-id="${id}" aria-pressed="${S.sel === id}">${tileHTML(id, S.sel === id)}</button>`;
+    html += `<button class="tile ${S.sel === id ? 'big' : ''} ${first.has(id) ? '' : 'enter'}" style="--j:${j++}" data-st="${V[id].st}" data-id="${id}" aria-pressed="${S.sel === id}">${tileHTML(id, S.sel === id)}</button>`;
   });
   if (S.fam === 'T') {
     const n = IND.length - TABLERO.length;
