@@ -56,10 +56,10 @@ button{font:inherit;color:inherit}
   padding:clamp(18px,2.6vw,36px) clamp(16px,4vw,48px) clamp(16px,2.4vw,28px)}
 
 /* ---------- cabecera (como OMEGA · Corbatul Twin) ---------- */
-.top{padding-left:22px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.top{padding-left:22px;display:flex;flex-wrap:wrap;align-items:center;gap:12px 28px;min-width:0}
 .ttl{--om:clamp(2.1rem,4.2vw,2.8rem);margin:0;display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px}
 .t-cuma{padding:.04em .02em .04em 0;font-size:var(--om);font-weight:700;letter-spacing:.03em;text-transform:uppercase;line-height:1.1;color:var(--brand);font-family:'High Tower Text','Palatino Linotype',Palatino,'Book Antiqua',Georgia,serif}
-.logo{display:block;height:calc(var(--om)*1.75);width:auto;color:var(--ink-strong);flex:none;align-self:center}
+.logo{display:block;height:calc(var(--om)*1.45);width:auto;color:var(--ink-strong);flex:none;align-self:center}
 .t-stack{display:flex;flex-direction:column;justify-content:center;gap:2px;position:relative;padding-left:12px;font-size:clamp(.7rem,1.2vw,.82rem)}
 .t-stack::before{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);height:calc(var(--om)*.72);width:1.5px;background:color-mix(in srgb,var(--muted) 55%,transparent)}
 .t-main{font-weight:700;letter-spacing:.14em;text-transform:uppercase;line-height:1.3;color:var(--ink-strong)}
@@ -287,8 +287,8 @@ tr.done td.w{color:var(--muted);text-decoration:line-through}
 <body>
 <div class="app">
   <header class="top">
-    <h1 class="ttl"><svg class="logo" viewBox="0 0 1851 849" role="img" aria-label="CUMA"><title>CUMA</title><g transform="translate(0.000000,849.000000) scale(0.100000,-0.100000)"
-fill="currentColor" stroke="none">
+    <h1 class="ttl"><svg class="logo" viewBox="-30 -30 1911 909" role="img" aria-label="CUMA"><title>CUMA</title><g transform="translate(0.000000,849.000000) scale(0.100000,-0.100000)"
+fill="currentColor" stroke="currentColor" stroke-width="190" stroke-linejoin="round">
 <path d="M7183 7993 c-9 -22 13 -335 33 -478 54 -390 188 -780 384 -1121 372
 -648 992 -1142 1675 -1334 155 -43 350 -79 469 -87 101 -6 103 -5 109 17 7 28
 -191 429 -309 626 -193 322 -453 667 -767 1018 -50 55 -102 114 -116 130 -61
@@ -390,7 +390,7 @@ l24 1 -7 -92z"/>
 2 -2 2 54 175 126 383 71 209 135 399 141 422 6 24 14 43 18 43 5 0 72 -190
 149 -421z"/>
 </g>
-</svg><span class="t-stack"><span class="t-main">Tablero de indicadores</span></span></h1>
+</svg></h1>
     <div class="toprow">
       <div class="rsel" id="mes" role="group" aria-label="Periodo"></div>
       <button class="icon-btn" id="theme" aria-label="Cambiar tema" title="Tema: automático"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg></button>
