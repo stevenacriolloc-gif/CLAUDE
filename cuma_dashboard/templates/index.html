@@ -28,6 +28,7 @@
   --lens-shadow:inset 0 1px 1px #fff,inset 0 -2px 5px rgba(255,255,255,.6),inset 0 0 0 .5px rgba(0,0,0,.06),0 8px 18px -8px rgba(20,22,30,.38),0 1px 2px rgba(20,22,30,.14);
   --depth:inset 0 1px 1px rgba(255,255,255,.95),inset 0 -14px 26px -18px rgba(20,22,30,.12);
   --float:0 1px 2px rgba(20,22,30,.06),0 14px 30px -18px rgba(20,22,30,.3);
+  --chrome-bg:rgba(255,255,255,.55); --pop-bg:rgba(250,250,251,.74); --pop-solid:#f6f6f7; --card-bg:transparent; --sheen:rgba(255,255,255,.4);
   --ease:cubic-bezier(.2,.8,.2,1); --spring:cubic-bezier(.32,.72,0,1);
   --expo:cubic-bezier(.16,1,.3,1); --out3:cubic-bezier(.215,.61,.355,1);
   --font:'Segoe UI',system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
@@ -50,6 +51,7 @@
   --lens-shadow:inset 0 1px 1px rgba(255,255,255,.55),inset 0 -2px 5px rgba(255,255,255,.12),inset 0 0 0 .5px rgba(255,255,255,.3),0 8px 18px -8px rgba(0,0,0,.6);
   --depth:inset 0 1px 1px rgba(255,255,255,.28),inset 0 -16px 28px -18px rgba(0,0,0,.45);
   --float:0 1px 2px rgba(0,0,0,.3),0 18px 36px -20px rgba(0,0,0,.7);
+  --chrome-bg:rgba(34,34,38,.42); --pop-bg:rgba(28,28,32,.8); --pop-solid:#1d1d21; --card-bg:transparent; --sheen:rgba(255,255,255,.04);
   color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#09090b; --surface:#141415; --surface2:#1c1c1e; --ink:#cfcfd3; --ink-strong:#f5f5f7;
@@ -67,11 +69,11 @@
   --lens-shadow:inset 0 1px 1px rgba(255,255,255,.55),inset 0 -2px 5px rgba(255,255,255,.12),inset 0 0 0 .5px rgba(255,255,255,.3),0 8px 18px -8px rgba(0,0,0,.6);
   --depth:inset 0 1px 1px rgba(255,255,255,.28),inset 0 -16px 28px -18px rgba(0,0,0,.45);
   --float:0 1px 2px rgba(0,0,0,.3),0 18px 36px -20px rgba(0,0,0,.7);
+  --chrome-bg:rgba(34,34,38,.42); --pop-bg:rgba(28,28,32,.8); --pop-solid:#1d1d21; --card-bg:transparent; --sheen:rgba(255,255,255,.04);
   color-scheme:dark}
 
 *{box-sizing:border-box}
-html,body{height:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow:hidden}
+body{margin:0;min-height:100dvh;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 body::before{content:"";position:fixed;inset:-10vmax;z-index:-1;pointer-events:none;
   background:radial-gradient(34vmax 30vmax at 6% 12%,var(--blob-a),transparent 70%),
              radial-gradient(38vmax 32vmax at 52% 0%,var(--blob-b),transparent 70%),
@@ -80,53 +82,112 @@ body::before{content:"";position:fixed;inset:-10vmax;z-index:-1;pointer-events:n
              radial-gradient(34vmax 30vmax at 12% 100%,var(--blob-b),transparent 70%)}
 button{font:inherit;color:inherit}
 .num{font-variant-numeric:tabular-nums}
-.app{height:100dvh;max-width:1520px;margin-inline:auto;display:grid;grid-template-rows:auto minmax(0,1fr);gap:22px;
-  padding:clamp(18px,2.6vw,36px) clamp(16px,4vw,48px) clamp(16px,2.4vw,28px)}
+.app{--dock-x:20px;--dock-w:60px;--gutter:clamp(16px,1.6vw,28px);max-width:1680px;margin-inline:auto;
+  padding:16px var(--gutter) 56px calc(var(--dock-x) + var(--dock-w) + var(--gutter))}
 
-/* ---------- cabecera (como OMEGA · Corbatul Twin) ---------- */
-.top{display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px 28px;min-width:0}
-.top .ttl{line-height:0}
-.ttl{--om:clamp(2.1rem,4.2vw,2.8rem);margin:0;display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px}
-.t-cuma .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em;margin-bottom:-.08em}
-.t-cuma .ch{display:inline-block}
-.t-cuma{padding:.04em .02em .04em 0;font-size:var(--om);font-weight:800;letter-spacing:.06em;text-transform:uppercase;line-height:1.1;color:var(--ink-strong);font-family:'Playfair Display','Didot','Bodoni 72',Georgia,serif}
-.logo{display:block;height:calc(var(--om)*1.45);width:auto;color:var(--ink-strong);flex:none;align-self:center}
-.t-stack{display:flex;flex-direction:column;justify-content:center;gap:2px;position:relative;padding-left:12px;font-size:clamp(.7rem,1.2vw,.82rem)}
-.t-stack::before{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);height:calc(var(--om)*.72);width:1.5px;background:color-mix(in srgb,var(--muted) 55%,transparent)}
-.t-main{font-weight:700;letter-spacing:.14em;text-transform:uppercase;line-height:1.3;color:var(--ink-strong)}
-.t-sub{font-weight:600;letter-spacing:.14em;text-transform:uppercase;line-height:1.3;color:var(--muted)}
-.toprow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;min-width:0}
+/* ---------- cabecera flotante: marca · pestañas · herramientas (estructura de Vitrea) ---------- */
+.top{position:sticky;top:12px;z-index:40;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:16px;margin-bottom:26px;pointer-events:none}
+.top>*{pointer-events:auto}
+.chrome{position:relative;border-radius:999px;background:var(--chrome-bg);-webkit-backdrop-filter:blur(12px) saturate(150%);backdrop-filter:blur(12px) saturate(150%);box-shadow:var(--depth),var(--float)}
+.brand{display:grid;place-items:center;width:52px;height:52px;padding:0;text-decoration:none}
+.brand__mark{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;color:#fff;
+  background:linear-gradient(160deg,color-mix(in srgb,var(--ok) 70%,#fff),var(--ok));box-shadow:inset 0 1px rgba(255,255,255,.6),0 2px 8px -2px color-mix(in srgb,var(--ok) 60%,transparent)}
+.brand__mark svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tabs{justify-self:center;min-width:0;max-width:100%}
+.tabs .gb{padding:5px;gap:2px;border-radius:999px}
+.tabs .gb button{padding:10px 16px;font-size:13.5px}
+.tools{justify-self:end;display:flex;align-items:center;gap:4px;padding:5px}
+.pbtn{appearance:none;position:relative;display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 12px 0 14px;border:0;border-radius:999px;background:transparent;color:var(--ink-strong);font-size:13.5px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background-color .2s}
+.pbtn small{font-weight:500;color:var(--muted)}
+.pbtn:hover,.pbtn[aria-expanded="true"],.ibtn:hover,.ibtn[aria-expanded="true"]{background:var(--glass-flat)}
+.pbtn .chev{width:15px;height:15px;transform:rotate(90deg)}
+.pbtn[aria-expanded="true"] .chev{transform:rotate(-90deg)}
+.ibtn{appearance:none;position:relative;width:42px;height:42px;flex:none;display:grid;place-items:center;border:0;border-radius:50%;background:transparent;color:var(--ink-strong);cursor:pointer;transition:background-color .2s}
+.ico{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---------- dock vertical de acciones ---------- */
+.dock{position:fixed;z-index:30;top:0;bottom:0;left:max(var(--dock-x),calc((100vw - 1680px)/2 + var(--dock-x)));height:fit-content;margin:auto 0;display:flex;flex-direction:column;gap:4px;padding:7px}
+.dock__btn{appearance:none;position:relative;display:grid;place-items:center;width:46px;height:46px;border:0;border-radius:50%;background:transparent;color:var(--ink-strong);cursor:pointer;transition:background-color .2s,color .2s}
+.dock__btn:hover,.dock__btn:focus-visible{background:var(--glass-flat)}
+.dock__btn[aria-pressed="true"]{background:var(--lens);box-shadow:var(--lens-shadow);color:var(--ink-strong)}
+.dock__btn--main{background:var(--ok);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 4px 12px -2px color-mix(in srgb,var(--ok) 55%,transparent)}
+.dock__btn--main:hover{background:var(--ok);filter:brightness(1.06)}
+.dock__sep{height:1px;margin:4px 10px;background:var(--line)}
+.dock__tip{position:absolute;top:0;bottom:0;left:calc(100% + 14px);height:fit-content;margin:auto 0;padding:6px 10px;border-radius:10px;background:var(--pop-solid);color:var(--ink-strong);box-shadow:var(--float);font-size:12.5px;font-weight:600;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .18s var(--ease)}
+.dock__tip kbd{font:inherit;font-size:11px;color:var(--muted);margin-left:4px}
+.dock__btn:hover .dock__tip,.dock__btn:focus-visible .dock__tip{opacity:1}
+.dock .ico--sun{display:none}
+:root[data-theme="dark"] .dock .ico--sun{display:block}:root[data-theme="dark"] .dock .ico--moon{display:none}
+
+/* ---------- encabezado de la vista: título grande y cifras ---------- */
+.head{display:flex;flex-wrap:wrap;align-items:center;gap:18px clamp(28px,4vw,72px);margin-bottom:24px}
+.head__lead{display:flex;align-items:center;gap:14px;flex:none}
+.head__title{margin:0;font-size:clamp(28px,2.6vw,38px);font-weight:600;letter-spacing:-.025em;line-height:1.04;color:var(--ink-strong)}
+.head__title .word{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em;margin-bottom:-.08em}
+.head__title .ch{display:inline-block}
+.head__stats{display:flex;flex-wrap:wrap;gap:14px clamp(24px,3.2vw,56px);margin:0}
+.stat{display:flex;align-items:center;gap:12px}
+.stat__ico{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;color:var(--ink-strong)}
+.stat__value{margin:0;display:flex;align-items:center;gap:10px;font-size:22px;font-weight:600;letter-spacing:-.01em;color:var(--ink-strong)}
+.stat__label{color:var(--muted);font-size:12.5px;line-height:1.3;max-width:170px}
+.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:700;white-space:nowrap;letter-spacing:.01em}
+.badge.ok{background:color-mix(in srgb,var(--ok) 16%,transparent);color:color-mix(in srgb,var(--ok) 60%,var(--ink-strong))}
+.badge.warn{background:color-mix(in srgb,var(--warn) 20%,transparent);color:color-mix(in srgb,var(--warn) 45%,var(--ink-strong))}
+.badge.bad{background:color-mix(in srgb,var(--bad) 14%,transparent);color:color-mix(in srgb,var(--bad) 75%,var(--ink-strong))}
+.badge.na{background:var(--glass-flat);color:var(--ink)}
+
+/* ---------- menús emergentes de vidrio y buscador ---------- */
+.pop{position:fixed;z-index:80;min-width:250px;overflow-x:hidden;max-width:min(360px,calc(100vw - 24px));max-height:min(70vh,560px);overflow:auto;padding:6px;border-radius:24px;
+  background:var(--pop-bg);-webkit-backdrop-filter:blur(30px) saturate(150%);backdrop-filter:blur(30px) saturate(150%);box-shadow:var(--depth),0 24px 60px -18px rgba(10,20,40,.35);scrollbar-width:thin}
+.pop hr{height:1px;margin:4px 8px;border:0;background:var(--line)}
+.pop__head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 10px 6px;font-weight:700;color:var(--ink-strong)}
+.pop__head small{font-weight:500;color:var(--muted);font-size:12px}
+.menu__item{appearance:none;display:flex;align-items:center;gap:10px;width:100%;padding:10px 12px;border:0;border-radius:14px;background:transparent;text-align:left;font-size:13.5px;font-weight:600;color:var(--ink-strong);cursor:pointer}
+.menu__item:hover,.menu__item:focus-visible{background:var(--glass-flat);outline:none}
+.menu__item small{margin-left:auto;font-size:12px;font-weight:500;color:var(--muted)}
+.menu__item .ck{margin-left:auto;width:16px;height:16px;fill:none;stroke:var(--ok);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.menu__item small+.ck{margin-left:8px}
+.menu__item.mrow{cursor:default;gap:16px}.menu__item.mrow:hover{background:transparent}
+.finder__bar input::-webkit-search-cancel-button{display:none}
+.menu__item .lead{display:grid;place-items:center;width:30px;height:30px;flex:none;border-radius:50%;background:var(--glass-flat)}
+.menu__item .lead svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.finder{width:min(620px,calc(100vw - 24px));max-height:none;margin:12vh auto auto;padding:0;border:0;border-radius:28px;color:var(--ink);overflow:visible;
+  background:var(--pop-bg);-webkit-backdrop-filter:blur(30px) saturate(150%);backdrop-filter:blur(30px) saturate(150%);box-shadow:var(--depth),0 30px 80px -20px rgba(10,20,40,.4)}
+.finder::backdrop{background:rgba(12,14,18,.22);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+.finder__bar{display:flex;align-items:center;gap:12px;padding:16px 18px;border-bottom:1px solid var(--line);color:var(--muted)}
+.finder__bar input{flex:1;min-width:0;border:0;outline:none;background:transparent;font:inherit;font-size:17px;color:var(--ink-strong)}
+.finder__bar kbd,.dock__tip kbd{font:600 11px var(--font);border:1px solid var(--line);border-radius:7px;padding:2px 7px;color:var(--muted)}
+.finder__list{max-height:52vh;overflow:auto;padding:8px;scrollbar-width:thin}
+.finder__group{padding:10px 10px 4px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.finder__opt{display:flex;align-items:center;gap:12px;padding:9px 10px;border-radius:16px;cursor:pointer}
+.finder__opt[aria-selected="true"]{background:var(--glass-flat)}
+.finder__opt .lead{display:grid;place-items:center;width:36px;height:36px;flex:none;border-radius:50%;background:var(--glass-flat);font-family:var(--mono);font-size:10.5px;font-weight:600;color:var(--muted)}
+.finder__opt b{display:block;font-weight:600;color:var(--ink-strong)}
+.finder__opt small{display:block;font-size:12px;color:var(--muted)}
+.finder__opt .dot{margin-left:auto}
+.finder__empty{padding:28px 16px;text-align:center;color:var(--muted)}
 
 /* ---------- menús con resaltado deslizante ---------- */
-/* píldora de vidrio con canto de luz y lente elástica (gramática de Vitrea) */
-.rsel,.mtop .gb,.hm-mode{border-radius:999px;background:var(--glass-flat);-webkit-backdrop-filter:blur(12px) saturate(150%);backdrop-filter:blur(12px) saturate(150%);
-  box-shadow:inset 1px 1px 0 -.25px var(--rim-hi),inset -1px -1px 0 -.25px var(--rim-mid),inset 0 0 0 1px var(--rim-lo),var(--float)}
-.rsel{position:relative;display:flex;align-items:center;gap:4px;padding:4px;width:max-content;max-width:100%;overflow-x:auto;scrollbar-width:none;isolation:isolate}
-.rsel::-webkit-scrollbar{display:none}
-.rsel>span{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:0 8px 0 10px;white-space:nowrap}
-.rsel button{position:relative;z-index:1;border:0;background:transparent;padding:6px 12px;border-radius:999px;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;display:flex;align-items:baseline;gap:6px;white-space:nowrap;transition:color .3s,background-color .2s}
-.rsel button small{font-size:11px;font-weight:500;color:var(--muted)}
-.rsel button:hover,.rsel button[aria-pressed="true"]{color:var(--ink-strong)}
-.gb,.il{position:relative;display:flex;flex-wrap:nowrap;justify-content:center;gap:3px;padding:4px;isolation:isolate;max-width:100%;overflow-x:auto;scrollbar-width:none}
-.gb::-webkit-scrollbar,.il::-webkit-scrollbar{display:none}
-.gb button,.il button{appearance:none;margin:0;position:relative;z-index:1;cursor:pointer;background:transparent;border:0;border-radius:999px;padding:8px 16px;font-size:12.5px;font-weight:600;color:#3b3b3e;white-space:nowrap;transition:color .45s var(--spring),background-color .2s}
-:root[data-theme="dark"] .gb button,:root[data-theme="dark"] .il button{color:var(--muted)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .gb button,:root:not([data-theme="light"]) .il button{color:var(--muted)}}
-.gb button:hover,.il button:hover,.gb button[aria-pressed="true"],.il button[aria-pressed="true"]{color:var(--ink-strong)}
-.rsel button:not([aria-pressed="true"]):hover,.gb button:not([aria-pressed="true"]):hover,.il button:not([aria-pressed="true"]):hover{background:var(--glass-flat)}
+.hm-mode{border-radius:999px;background:var(--glass-flat);box-shadow:inset 0 0 0 1px var(--rim-lo)}
+.gb{position:relative;display:flex;flex-wrap:nowrap;justify-content:center;gap:3px;padding:4px;isolation:isolate;max-width:100%;overflow-x:auto;scrollbar-width:none}
+.gb::-webkit-scrollbar{display:none}
+.gb button{appearance:none;margin:0;position:relative;z-index:1;cursor:pointer;background:transparent;border:0;border-radius:999px;padding:8px 16px;font-size:12.5px;font-weight:600;color:#3b3b3e;white-space:nowrap;transition:color .45s var(--spring),background-color .2s}
+:root[data-theme="dark"] .gb button{color:var(--muted)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .gb button{color:var(--muted)}}
+.gb button:hover,.gb button[aria-pressed="true"]{color:var(--ink-strong)}
+.gb button:not([aria-pressed="true"]):hover{background:var(--glass-flat)}
 /* lente: los bordes izquierdo y derecho viajan a ritmos distintos y al llegar rebota como gelatina */
 .hl{position:absolute;left:0;top:0;z-index:0;pointer-events:none;opacity:0;border-radius:999px;background:var(--lens);box-shadow:var(--lens-shadow);transition:opacity .3s;will-change:left,width,transform}
 .hl.on{opacity:1}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.icon-btn{position:relative;width:34px;height:34px;flex:none;border-radius:50%;border:0;display:grid;place-items:center;background:var(--glass-flat);color:var(--ink-strong);cursor:pointer;transition:background .2s;
-  box-shadow:inset 1px 1px 0 -.25px var(--rim-hi),inset -1px -1px 0 -.25px var(--rim-mid),inset 0 0 0 1px var(--rim-lo),var(--float)}
-.icon-btn:hover{background:var(--line)}
-.icon-btn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-
 /* ---------- escenario ---------- */
-.stage{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:24px;min-height:0}
+.stage{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);gap:var(--gap,16px);align-items:start}
+.left{min-width:0}
+.left .dstack{display:none}
+.stage.dk .bento{display:none}.stage.dk .left .dstack{display:block}
+/* la ficha: tarjetas sueltas sobre el fondo, fija mientras se recorre la rejilla */
+.side{position:sticky;top:96px;max-height:calc(100dvh - 112px);overflow-y:auto;scrollbar-width:thin;display:flex;flex-direction:column;gap:14px;min-width:0;padding:8px;margin:-8px}
 .dbody{display:flex;flex-direction:column;gap:12px;min-width:0}
-.deck .dstack{margin-top:10px}
 /* mapa de calor día × hora */
 .hm-mode{padding:3px}
 .hm-mode button{padding:5px 12px;font-size:11.5px;text-transform:none;letter-spacing:0}
@@ -148,10 +209,12 @@ button{font:inherit;color:inherit}
 .hm-lg{display:flex;align-items:center;gap:6px;font-size:10.5px;color:var(--muted)}
 .hm-lg em{font-style:normal}
 .hm-lg i{display:block;width:90px;height:8px;border-radius:99px;background:linear-gradient(90deg,color-mix(in srgb,var(--ok) 8%,transparent),var(--ok))}
-.glass{position:relative;-webkit-backdrop-filter:blur(28px) saturate(180%);backdrop-filter:blur(28px) saturate(180%);box-shadow:var(--depth),0 30px 60px -40px var(--glass-shadow);
-  background:transparent;border:0;border-radius:18px}
+.card,.side>.phead,.side>.sec,.side>.note,.side>.empty-st,.side>.dbody,.side>.cgs>.cg{position:relative;border:0;border-radius:26px;padding:18px 20px;
+  background:linear-gradient(172deg,var(--sheen) 0%,transparent 34%),var(--card-bg);-webkit-backdrop-filter:blur(12px) saturate(150%);backdrop-filter:blur(12px) saturate(150%);box-shadow:var(--depth),var(--float)}
+.side>.cgs{display:flex;flex-direction:column;gap:14px}
+.glass{position:relative;-webkit-backdrop-filter:blur(12px) saturate(150%);backdrop-filter:blur(12px) saturate(150%);box-shadow:var(--depth),var(--float);background:var(--card-bg)}
 /* canto de luz de las tarjetas: un degradado cónico enmascarado que solo deja ver 1,25 px del borde */
-.glass::before,.tile::before,.dc::before,.dli::before,.cg::before{content:"";position:absolute;inset:0;z-index:1;border-radius:inherit;pointer-events:none;padding:1.25px;
+.glass::before,.chrome::before,.tile::before,.dli::before,.card::before,.side>.phead::before,.side>.sec::before,.side>.note::before,.side>.dbody::before,.side>.cgs>.cg::before,.pop::before,.finder::before{content:"";position:absolute;inset:0;z-index:1;border-radius:inherit;pointer-events:none;padding:1.25px;
   background:conic-gradient(from 300deg,var(--rim-hi) 0deg,var(--rim-lo) 55deg,transparent 90deg,var(--rim-lo) 140deg,var(--rim-mid) 180deg,var(--rim-lo) 220deg,transparent 270deg,var(--rim-lo) 315deg,var(--rim-hi) 360deg);
   -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
 .tile.more::before{display:none}
@@ -159,30 +222,14 @@ button{font:inherit;color:inherit}
 .ripple-wrap{position:absolute;inset:0;z-index:2;border-radius:inherit;overflow:hidden;pointer-events:none}
 .ripple{position:absolute;left:0;top:0;width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;pointer-events:none;
   background:radial-gradient(circle,transparent 38%,var(--rip,var(--ripple)) 62%,transparent 72%)}
-.map{display:flex;flex-direction:column;min-width:0;min-height:0;overflow:hidden}
-.mtop{position:relative;display:flex;justify-content:center;align-items:center;padding:14px 34px 10px}
-.mtop .gb{min-width:0;transition:transform .45s var(--spring)}
-.mtop .gb button{padding:8px 10px}
-.dtoggle{position:relative;box-shadow:inset 1px 1px 0 -.25px var(--rim-hi),inset -1px -1px 0 -.25px var(--rim-mid),inset 0 0 0 1px var(--rim-lo),var(--float);appearance:none;display:inline-flex;align-items:center;gap:7px;margin:0;height:34px;padding:0 14px 0 11px;border:0;border-radius:999px;background:var(--glass-flat);color:var(--ink-strong);font-size:12.5px;font-weight:600;cursor:pointer;transition:background .2s,color .2s}
-.dtoggle svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-.dtoggle:hover{background:var(--line)}
-.dtoggle[aria-expanded="true"]{background:var(--ink-strong);color:var(--bg)}
 .dot{--c:var(--na);--h:var(--na-halo);position:relative;flex:none;width:10px;height:10px;border-radius:50%;background:var(--c);box-shadow:0 0 0 3px var(--h);transition:background-color .3s,box-shadow .3s}
 .dot::before{content:"";position:absolute;inset:0;border-radius:50%;background:var(--c);opacity:0;animation:breath 3.4s cubic-bezier(.45,0,.25,1) infinite}
 .dot.ok{--c:var(--ok);--h:var(--ok-halo)}.dot.warn{--c:var(--warn);--h:var(--warn-halo)}.dot.bad{--c:var(--bad);--h:var(--bad-halo)}
 .dot.na::before{display:none}
 .dot.sm{width:7px;height:7px;box-shadow:0 0 0 2px var(--h)}.dot.sm::before{display:none}
 @keyframes breath{0%,100%{transform:scale(1);opacity:0}18%{opacity:.38}55%{transform:scale(2.5);opacity:0}}
-.mtop>.dot{position:absolute;right:16px;top:50%;margin-top:-3px}
-
-.mbody{position:relative;flex:1 1 auto;min-height:0;display:flex;flex-direction:column}
-.view{flex:1 1 auto;min-height:0;overflow-y:auto;scrollbar-width:thin;padding:2px 16px 14px;transition:filter .6s var(--ease)}
-.mbody.dk .view{filter:blur(9px)}
-.il{border-top:1px solid var(--line);padding:8px 12px;justify-content:flex-start;transition:filter .6s var(--ease),opacity .3s}
-.map.dk .il{filter:blur(9px);pointer-events:none}
-
 /* ---------- rejilla bento: la tarjeta tocada se agranda y el resto se reacomoda (FLIP) ---------- */
-.bento{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:minmax(104px,auto);grid-auto-flow:row dense;gap:8px}
+.bento{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:minmax(118px,auto);grid-auto-flow:row dense;gap:12px}
 .tile{appearance:none;position:relative;display:flex;flex-direction:column;gap:2px;min-width:0;min-height:0;text-align:left;cursor:pointer;overflow:hidden;
   padding:12px 13px 11px;border-radius:16px;border:0;background:transparent;transform-origin:0 0;
   transition:background .3s,border-color .3s,box-shadow .35s}
@@ -229,36 +276,16 @@ button{font:inherit;color:inherit}
 .grp-h{grid-column:1/-1;margin:8px 2px 0;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:10px}
 .grp-h::after{content:"";flex:1;height:1px;background:var(--line)}
 
-/* ---------- baraja de datos (igual que el simulador) ---------- */
-.deck{position:absolute;inset:0;z-index:5;overflow:hidden;visibility:hidden;pointer-events:none;transition:visibility 0s .7s}
-.deck.open{visibility:visible;pointer-events:auto;transition-delay:0s}
-.dscrim{position:absolute;inset:0;background:var(--dscrim);opacity:0;transition:opacity .45s ease}
-.deck.open .dscrim{opacity:1}
-.dc{position:absolute;left:14px;right:14px;top:calc(100% + 24px);height:calc(100% - 28px);z-index:2;overflow:hidden;
-  border:0;border-radius:22px;background:var(--dglass);
-  -webkit-backdrop-filter:blur(22px) saturate(140%);backdrop-filter:blur(22px) saturate(140%);
-  box-shadow:inset 0 1px 0 var(--glass-hi),0 16px 30px -18px var(--glass-shadow);
-  opacity:0;transform-origin:50% 0;transform:scale(.94);transition:top .6s var(--ease),transform .6s var(--ease),opacity .35s ease}
-.dc.on{top:14px;opacity:1;transform:scale(1)}
-.dh{appearance:none;position:relative;z-index:2;display:flex;align-items:center;justify-content:flex-end;width:100%;height:40px;margin:0;padding:0 20px;border:0;background:transparent;cursor:pointer}
-.dh::after{content:"";position:absolute;left:20px;right:20px;bottom:0;height:1px;background:var(--line)}
 .chev{flex:none;width:18px;height:18px;fill:none;stroke:var(--muted);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform .45s var(--ease)}
-.dh .chev{transform:rotate(90deg)}
-.db{position:absolute;left:0;right:0;top:40px;bottom:0;overflow:auto;padding:8px 18px 14px;scrollbar-width:thin;opacity:0;transition:opacity .4s ease .25s}
-.dc.on .db{opacity:1}
-
 /* ---------- ficha (panel derecho, como el simulador) ---------- */
-.panel{min-width:0;min-height:0;overflow:hidden;display:flex;flex-direction:column}
-.pin{flex:1 1 auto;min-height:0;overflow-y:auto;scrollbar-width:thin;padding:24px 28px 26px;display:flex;flex-direction:column;gap:18px}
-.pbar{display:flex;justify-content:space-between;align-items:center}
 .pill-btn{appearance:none;display:inline-flex;align-items:center;gap:7px;border:0;border-radius:999px;padding:7px 14px 7px 11px;background:var(--glass-flat);font-size:12.5px;font-weight:600;color:var(--ink-strong);cursor:pointer;transition:background .2s}
 .pill-btn:hover{background:var(--line)}
 .pill-btn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-.phead{display:flex;flex-direction:column;gap:6px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.phead{display:flex;flex-direction:column;gap:6px}
 .kind{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;color:var(--muted);display:flex;align-items:center;gap:8px}
-.panel h2{margin:0;font-weight:600;font-size:1.3rem;line-height:1.2;color:var(--ink-strong);text-wrap:balance}
-.panel p{margin:0;color:var(--muted)}
-.note{padding:10px 13px;border-radius:10px;background:var(--accent-soft);color:var(--ink);font-size:12.5px;line-height:1.45}
+.side h2{margin:0;font-weight:600;font-size:1.3rem;line-height:1.2;color:var(--ink-strong);text-wrap:balance}
+.side p{margin:0;color:var(--muted)}
+.note{background:var(--accent-soft);color:var(--ink);font-size:12.5px;line-height:1.45}
 .sec{display:flex;flex-direction:column;gap:7px;min-width:0}
 .sec h3{margin:0;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
 .tbl{display:flex;flex-direction:column}
@@ -345,17 +372,29 @@ button{font:inherit;color:inherit}
 tr.done td.w{color:var(--muted);text-decoration:line-through}
 .dfit{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:14px;align-items:start}
 
+.side>.note{background:var(--accent-soft)}
+.dbody .cg::before{display:none}
+.dbody .cg{background:var(--glass-flat);border-radius:16px;padding:11px 13px;box-shadow:none}
+
 /* ---------- pantallas pequeñas ---------- */
-@media (max-width:1180px){.bento{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:980px){.bento{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media (max-width:980px){
-  body{overflow:auto}.app{height:auto;min-height:100dvh}
-  .stage{grid-template-columns:minmax(0,1fr)}.map{height:min(720px,90dvh)}.panel,.pin{overflow:visible}
+@media (max-width:1180px){.bento{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .top{grid-template-columns:auto 1fr;row-gap:10px}.tabs{grid-area:2/1/auto/-1;justify-self:start}.tools{grid-area:1/2}}
+@media (max-width:980px){.bento{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .stage{grid-template-columns:minmax(0,1fr)}.side{position:static;max-height:none;overflow:visible;padding:0;margin:0}}
+@media (max-width:760px){
+  .app{padding:10px 12px calc(100px + env(safe-area-inset-bottom))}
+  .top{gap:8px;top:8px;margin-bottom:18px}.tabs{width:100%}
+  .tabs .gb{justify-content:flex-start;-webkit-mask-image:linear-gradient(90deg,transparent,#000 10px calc(100% - 18px),transparent);mask-image:linear-gradient(90deg,transparent,#000 10px calc(100% - 18px),transparent)}
+  .brand{width:48px;height:48px}.brand__mark{width:36px;height:36px}
+  .dock{top:auto;left:0;right:0;bottom:calc(14px + env(safe-area-inset-bottom));flex-direction:row;gap:2px;width:fit-content;height:auto;margin:0 auto;padding:6px}
+  .dock__btn{width:48px;height:48px}.dock__sep,.dock__tip{display:none}
+  .head{gap:14px}.head__stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 16px;width:100%}
+  .stat{align-items:flex-start;gap:10px}.stat__value{flex-wrap:wrap;gap:4px 8px;font-size:18px}.stat__ico{display:none}
 }
 @media (max-width:640px){
-  .top{padding-left:0}.bento{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .mtop .gb{justify-content:flex-start}
-  .tl.x4{grid-template-columns:1fr 1fr}.dfit{grid-template-columns:minmax(0,1fr)}.pin{padding:22px 18px}
+  .bento{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tl.x4{grid-template-columns:1fr 1fr}.dfit{grid-template-columns:minmax(0,1fr)}
+  .card,.side>.phead,.side>.sec,.side>.note,.side>.empty-st,.side>.dbody,.side>.cgs>.cg{padding:16px}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -363,29 +402,39 @@ tr.done td.w{color:var(--muted);text-decoration:line-through}
 <body>
 <div class="app">
   <header class="top">
-    <h1 class="ttl"><span class="t-cuma">CUMA</span></h1>
-    <div class="toprow">
-      <div class="rsel" id="mes" role="group" aria-label="Periodo"></div>
-      <button class="dtoggle" id="dtoggle" aria-expanded="false"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="7" ry="2.6"/><path d="M5 6v6c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6V6"/><path d="M5 12v6c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6v-6"/></svg>Datos</button>
-      <button class="icon-btn" id="theme" aria-label="Cambiar tema" title="Tema: automático"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg></button>
+    <a class="brand chrome" href="#" id="brand" aria-label="CUMA · volver al resumen" title="CUMA"><span class="brand__mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21v-8"/><path d="M12 13C12 8.6 9.2 6 4.5 6c0 4.6 2.8 7 7.5 7z"/><path d="M12 11c0-3.9 2.5-6.4 7-6.4 0 3.9-2.5 6.4-7 6.4z"/></svg></span></a>
+    <nav class="tabs chrome" aria-label="Familias de indicadores"><div class="gb" id="fam"></div></nav>
+    <div class="tools chrome">
+      <button type="button" class="pbtn" id="mesbtn" aria-haspopup="menu" aria-expanded="false"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span id="meslbl"></span><svg class="chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+      <button type="button" class="ibtn" id="semaforo" aria-haspopup="menu" aria-expanded="false" aria-label="Semáforo del tablero" title="Semáforo del tablero"><span class="dot" id="gdot"></span></button>
     </div>
   </header>
 
-  <main class="stage">
-    <section class="map glass" id="map">
-      <div class="mtop">
-        <nav class="gb" id="fam" aria-label="Familia"></nav>
-        <span class="dot" id="gdot"></span>
-      </div>
-      <div class="mbody" id="mbody">
-        <div class="view" id="view"><div class="bento" id="bento"></div></div>
-        <div class="deck" id="deck"><div class="dscrim"></div></div>
-      </div>
-      <nav class="il" id="sub" aria-label="Indicadores"></nav>
-    </section>
-    <aside class="panel glass" id="panel"><div class="pin" id="pin"></div></aside>
+  <nav class="dock chrome" aria-label="Acciones rápidas">
+    <button type="button" class="dock__btn dock__btn--main" data-act="buscar" aria-label="Buscar indicador"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg><span class="dock__tip">Buscar indicador <kbd>/</kbd></span></button>
+    <button type="button" class="dock__btn" data-act="resumen" aria-label="Resumen del periodo"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg><span class="dock__tip">Resumen del periodo</span></button>
+    <button type="button" class="dock__btn" data-act="todos" aria-pressed="false" aria-label="Ver los 23 indicadores"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6h14M5 12h14M5 18h9"/></svg><span class="dock__tip">Ver los 23 indicadores</span></button>
+    <button type="button" class="dock__btn" data-act="datos" id="dtoggle" aria-pressed="false" aria-label="Datos"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="6" rx="7" ry="2.6"/><path d="M5 6v6c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6V6"/><path d="M5 12v6c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6v-6"/></svg><span class="dock__tip">Datos <kbd>D</kbd></span></button>
+    <span class="dock__sep" aria-hidden="true"></span>
+    <button type="button" class="dock__btn" data-act="tema" id="theme" aria-label="Cambiar tema"><svg class="ico ico--moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg><svg class="ico ico--sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></svg><span class="dock__tip" id="themetip">Tema</span></button>
+  </nav>
+
+  <main class="main" id="main">
+    <header class="head">
+      <div class="head__lead"><h1 class="head__title" id="title" tabindex="-1"></h1></div>
+      <dl class="head__stats" id="stats"></dl>
+    </header>
+    <div class="stage" id="stage">
+      <section class="left" aria-label="Indicadores"><div class="bento" id="bento"></div><div id="deck"></div></section>
+      <aside class="side" id="pin" aria-live="polite"></aside>
+    </div>
   </main>
 </div>
+
+<dialog class="finder" id="finder" aria-label="Buscar indicador">
+  <div class="finder__bar"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg><input id="finder-q" type="search" placeholder="Buscar entre los 23 indicadores…" autocomplete="off" aria-controls="finder-list"><kbd>Esc</kbd></div>
+  <div class="finder__list" id="finder-list" role="listbox"></div>
+</dialog>
 
 <script type="application/json" id="cuma-data">
 {
@@ -657,17 +706,22 @@ function reveal(el, delay = 0) {
     {duration: 400, delay: delay + 50 + Math.min(i, 12) * 30, easing: 'cubic-bezier(.215,.61,.355,1)', fill: 'backwards'}));
 }
 function swap(el, fn) {
-  el._leave?.cancel();
+  const tok = el._tok = {};
   if (reduce()) { fn(); return; }
-  const a = el._leave = el.animate([{clipPath: inset(el, 0, 60), transform: 'none'}, {clipPath: inset(el, .1), transform: 'translateY(-6px) scale(.97)'}],
-    {duration: 200, easing: 'cubic-bezier(.55,.085,.68,.53)', fill: 'forwards'});
-  a.onfinish = () => { if (el._leave !== a) return; el._leave = null; fn(); a.cancel(); reveal(el); };
+  const kids = [...el.children].filter(k => { const r = k.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight; });
+  const outs = kids.map(k => k.animate([{clipPath: inset(k, 0, 60), transform: 'none'}, {clipPath: inset(k, .1), transform: 'translateY(-6px) scale(.97)'}],
+    {duration: 200, easing: 'cubic-bezier(.55,.085,.68,.53)', fill: 'forwards'}));
+  Promise.all(outs.map(a => a.finished.catch(() => {}))).then(() => {
+    if (el._tok !== tok) return;
+    fn(); outs.forEach(a => a.cancel());
+    [...el.children].forEach((k, i) => reveal(k, Math.min(i, 8) * 60));
+  });
 }
 const out3 = t => 1 - (1 - t) ** 3, inOut3 = t => t < .5 ? 4 * t ** 3 : 1 - (-2 * t + 2) ** 3 / 2;
 
 /* ---------- toque: onda que se expande desde el dedo y botón que se aplasta y rebota ---------- */
-const SQUISH = '.rsel button, .gb button, .il button, .pill-btn, .dtoggle, .icon-btn, .switch';
-const RIPPLE = SQUISH + ', .dli';
+const SQUISH = '.gb button, .pbtn, .ibtn, .dock__btn, .brand, .switch';
+const RIPPLE = SQUISH + ', .dli, .menu__item';
 function ripple(el, x, y, soft) {
   const r = el.getBoundingClientRect(), wrap = document.createElement('span'), dot = document.createElement('span');
   wrap.className = 'ripple-wrap'; wrap.setAttribute('aria-hidden', 'true'); dot.className = 'ripple';
@@ -731,17 +785,15 @@ function renderBento(anim = true) {
     if (Math.abs(sx - 1) + Math.abs(sy - 1) > .01) [...el.children].forEach(c => c.animate([{opacity: 0}, {opacity: 0, offset: .35}, {opacity: 1}], {duration: 560}));
   });
 }
-function toggleTodos() { S.todos = !S.todos; renderBento(); renderSub(); }
-function renderSub() {
-  const ids = S.fam === 'T' ? TABLERO : visibles();
-  menu($('sub'), [['', 'Resumen'], ...ids.map(id => [id, `${id} · ${BY[id].c}`])], S.sel || '', v => pick(v || null));
-}
+function toggleTodos() { S.todos = !S.todos; if (S.fam !== 'T') { S.fam = 'T'; press($('fam'), 'T'); } S.sel = null; renderHead(); renderBento(); swap($('pin'), renderPanel); }
 function pick(id) {
   if (S.datos) closeDatos(false);
   S.sel = id;
-  if (id && !visibles().includes(id)) { S.todos = true; }
-  renderBento();
-  if ($('sub').querySelector(`[data-v="${id || ''}"]`)) press($('sub'), id || ''); else press($('sub'), '');
+  if (id && !visibles().includes(id)) {
+    if (S.fam !== 'T' && BY[id].f !== S.fam) { S.fam = BY[id].f; press($('fam'), S.fam); renderHead(); }
+    if (!visibles().includes(id)) S.todos = true;
+  }
+  renderBento(); syncDock();
   if (id) requestAnimationFrame(() => { const el = $('bento').querySelector(`[data-id="${id}"]`); el && el.scrollIntoView({block: 'nearest', behavior: 'smooth'}); });
   swap($('pin'), renderPanel);
 }
@@ -764,13 +816,8 @@ function renderPanel() {
     pin.innerHTML = `
       <div class="phead"><span class="kind"><span class="dot ${WORST}"></span>Resumen · ${acum ? perLargo() : lblL(S.mes)} 2026</span>
         <h2>${r.mo < 0 ? 'La operación aún no se sostiene sola' : 'La operación cubre sus costos'}</h2>
-        <p>Diez indicadores del tablero principal con umbrales provisionales. Toca una tarjeta para agrandarla y ver su ficha.</p></div>
+        <p>Diez indicadores del tablero principal con umbrales provisionales. Toca una tarjeta para agrandarla y ver su ficha, o búscala con la lupa del costado.</p></div>
       <div class="cgs">
-        <div class="cg"><h4>Cifras del periodo</h4><div class="tl x4">
-          <div><span>Ventas</span><b class="num">${usd(r.V)}</b><em>${acum ? usd(r.vmes) + ' al mes' : sgn(growth(ix(S.mes))) + ' vs. mes anterior'}</em></div>
-          <div><span>Transacciones</span><b class="num">${nf(r.N)}</b><em>Ticket ${usd(r.ticket, 2)}</em></div>
-          <div><span>Margen bruto</span><b class="num">${pct(r.mb)}</b><em>Gasto ${pct(r.pgo)}</em></div>
-          <div><span>Cobertura</span><b class="num">${D.cobertura.completos + D.cobertura.parciales} de 23</b><em>${D.cobertura.completos} completos · ${D.cobertura.parciales} parciales</em></div></div></div>
         <div class="cg"><h4>Ventas mensuales · miles de USD</h4>${vbars(M.ventas.map(v => v / 1000), k => inSel(D.meses[k]), D.meses.map(lbl), v => nf(v, 1))}</div>
         <div class="cg"><h4>Margen bruto y gasto · % de ventas <span class="lg"><span><i style="background:var(--chart)"></i>MB</span><span><i style="background:var(--chart-3)"></i>Gasto</span><span><i class="dash"></i>MB 3 m</span></span></h4>
           <div class="chart" style="height:150px"><canvas id="p1"></canvas></div></div>
@@ -897,31 +944,27 @@ const TARJETAS = [
 /* lista de tarjetas en el mapa (izquierda); contenido de la tarjeta en la ficha (derecha) */
 function deckList() {
   const deck = $('deck');
-  let el = deck.querySelector('.dc');
-  if (!el) {
-    el = document.createElement('article'); el.className = 'dc';
-    el.innerHTML = `<button class="dh" aria-label="Cerrar datos">${CHEV}</button><div class="db"></div>`;
-    deck.append(el); el.querySelector('.dh').onclick = () => closeDatos();
-  }
-  const db = el.querySelector('.db');
-  db.innerHTML = `<div class="sec">
-    <div class="dstack" style="--n:${TARJETAS.length}">${TARJETAS.map((c, j) => `<button class="dli ${S.card === j ? 'cur' : ''}" style="--j:${j}" data-i="${j}" aria-pressed="${S.card === j}"><span class="dlt">${j + 1} · ${c.t}</span>${CHEV}<span class="dls">${c.s()}</span></button>`).join('')}</div></div>`;
-  db.querySelectorAll('.dli').forEach(b => b.onclick = () => pickCard(+b.dataset.i));
-  return el;
+  deck.innerHTML = `<div class="dstack" style="--n:${TARJETAS.length}">${TARJETAS.map((c, j) => `<button class="dli ${S.card === j ? 'cur' : ''}" style="--j:${j}" data-i="${j}" aria-pressed="${S.card === j}"><span class="dlt">${j + 1} · ${c.t}</span>${CHEV}<span class="dls">${c.s()}</span></button>`).join('')}</div>`;
+  deck.querySelectorAll('.dli').forEach(b => b.onclick = () => pickCard(S.card === +b.dataset.i ? null : +b.dataset.i));
+}
+// la columna izquierda se cierra sobre sí misma y se vuelve a abrir con el otro contenido
+function swapLeft(fn) {
+  const left = $('stage').querySelector('.left');
+  if (reduce()) { fn(); return; }
+  const a = left.animate([{clipPath: inset(left, 0, 60), transform: 'none', opacity: 1}, {clipPath: inset(left, .1), transform: 'translateY(-6px) scale(.97)', opacity: .4}],
+    {duration: 200, easing: 'cubic-bezier(.55,.085,.68,.53)', fill: 'forwards'});
+  a.onfinish = () => { fn(); a.cancel(); reveal(left); };
 }
 function openDatos() {
-  S.datos = true; S.card = null;
-  $('map').classList.add('dk'); $('mbody').classList.add('dk'); $('dtoggle').setAttribute('aria-expanded', 'true');
-  const el = deckList(); $('deck').classList.add('open');
-  requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('on')));
-  swap($('pin'), renderPanel);
+  S.datos = true; S.card = null; syncDock();
+  swapLeft(() => { deckList(); $('stage').classList.add('dk'); });
+  renderHead(); swap($('pin'), renderPanel);
 }
 function closeDatos(redraw = true) {
-  S.datos = false; S.card = null;
-  $('map').classList.remove('dk'); $('mbody').classList.remove('dk'); $('dtoggle').setAttribute('aria-expanded', 'false');
-  const deck = $('deck'); deck.classList.remove('open'); deck.querySelectorAll('.dc').forEach(e => e.classList.remove('on'));
+  S.datos = false; S.card = null; syncDock();
   kill('d1');
-  if (redraw) swap($('pin'), renderPanel);
+  const back = () => { $('stage').classList.remove('dk'); $('deck').innerHTML = ''; };
+  if (redraw) { swapLeft(back); renderHead(); swap($('pin'), renderPanel); } else back();
 }
 function pickCard(i) {
   S.card = i;
@@ -933,11 +976,9 @@ function renderDatosPanel() {
   kill('d1');
   const pin = $('pin'), c = S.card == null ? null : TARJETAS[S.card];
   pin.innerHTML = `
-    <div class="pbar"><button class="pill-btn" id="dclose"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="7" ry="2.6"/><path d="M5 6v6c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6V6"/><path d="M5 12v6c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6v-6"/></svg>Cerrar</button><span class="dot ${WORST}"></span></div>
     <div class="phead"><span class="kind">Datos${c ? ` · ${S.card + 1} de ${TARJETAS.length}` : ''}</span><h2>${c ? c.t : 'Selecciona una tarjeta'}</h2><p>${c ? c.s() : 'Elige una tarjeta de la lista de la izquierda para ver aquí sus tablas y gráficas.'}</p></div>
     ${c ? '<div class="dbody"></div>' : ''}`;
   if (c) c.b(pin.querySelector('.dbody'));
-  $('dclose').onclick = () => closeDatos();
 }
 function cardMensual(db) {
   const rows = D.meses.map((k, i) => {
@@ -1055,57 +1096,169 @@ function cardUmbrales(db) {
     <p class="cap">Umbrales provisionales, por calibrar con las metas institucionales: margen de las otras tiendas y meta del gerente cerca de 18 %, autosuficiencia plena en 100 %, merma aceptable hasta 5 % y concentración moderada hasta 2.500 puntos.</p>`;
 }
 
+/* ---------- encabezado: título que sube letra por letra y cifras del periodo ---------- */
+const ICO = {
+  usd: '<path d="M12 3v18M16.5 7.5C16 6 14.4 5 12 5c-2.8 0-4.5 1.3-4.5 3.2 0 4.3 9 2.4 9 7 0 2-1.8 3.3-4.5 3.3-2.6 0-4.3-1.1-4.8-2.8"/>',
+  pct: '<path d="M5 19L19 5"/><circle cx="7" cy="7" r="2.5"/><circle cx="17" cy="17" r="2.5"/>',
+  cart: '<path d="M3 4h2.5l2.2 11h10.6L20.5 8H7"/><circle cx="9.5" cy="19" r="1.4"/><circle cx="17" cy="19" r="1.4"/>'};
+function splitTitle(el, txt) {
+  el.setAttribute('aria-label', txt);
+  el.innerHTML = txt.split(' ').map(w => `<span class="word" aria-hidden="true">${[...w].map(c => `<span class="ch">${c}</span>`).join('')}</span>`).join(' ');
+  if (!reduce()) el.querySelectorAll('.ch').forEach((c, i) => c.animate([{transform: 'translateY(115%) rotate(6deg)'}, {transform: 'none'}],
+    {duration: 850, delay: i * 22, easing: 'cubic-bezier(.23,1,.32,1)', fill: 'backwards'}));
+}
+function renderHead() {
+  const txt = S.datos ? 'Datos de respaldo' : S.fam === 'T' ? (S.todos ? 'Los 23 indicadores' : 'Tablero principal') : FAM_L[S.fam];
+  const el = $('title'); if (el.getAttribute('aria-label') !== txt) splitTitle(el, txt);
+  const {r, acum} = R, gr = acum ? null : growth(ix(S.mes)), mbSt = r.mb >= 18 ? 'ok' : r.mb >= r.pgo ? 'warn' : 'bad';
+  const stat = (ico, v, badge, lab) => `<div class="stat"><span class="stat__ico chrome">${'<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">' + ICO[ico] + '</svg>'}</span>
+    <div><dd class="stat__value"><b class="num">${v}</b>${badge}</dd><dt class="stat__label">${lab}</dt></div></div>`;
+  $('stats').innerHTML =
+    stat('usd', usd(r.V), gr == null ? `<span class="badge na">${usd(r.vmes)} al mes</span>` : `<span class="badge ${gr >= 0 ? 'ok' : 'bad'}">${sgn(gr)}</span>`, `Ventas · ${acum ? perLargo().toLowerCase() : lblL(S.mes)}`) +
+    stat('pct', pct(r.mb), `<span class="badge ${mbSt}">meta 18 %</span>`, `Margen bruto · gasto ${pct(r.pgo)}`) +
+    stat('cart', nf(r.N), `<span class="badge na">ticket ${usd(r.ticket, 2)}</span>`, 'Transacciones del periodo');
+  $('meslbl').innerHTML = S.mes === 'acum' ? `${perCorto()} <small>2026</small>` : `${cap(lblL(S.mes))} <small>2026</small>`;
+}
+function syncDock() {
+  document.querySelector('[data-act="datos"]').setAttribute('aria-pressed', S.datos);
+  document.querySelector('[data-act="todos"]').setAttribute('aria-pressed', S.fam === 'T' && S.todos && !S.datos);
+}
+
+/* ---------- menús emergentes de vidrio: se abren con un recorte que baja y un pequeño rebote ---------- */
+let POP = null;
+function closePop(now) {
+  const p = POP; if (!p) return; POP = null;
+  p.btn.setAttribute('aria-expanded', 'false');
+  if (now || reduce()) { p.el.remove(); return; }
+  p.el.animate([{transform: 'none', clipPath: 'inset(-40px round 28px)'}, {transform: 'scale(.94)', clipPath: 'inset(0% 0% 100% 0% round 28px)'}],
+    {duration: 180, easing: 'cubic-bezier(.55,.085,.68,.53)', fill: 'forwards'}).onfinish = () => p.el.remove();
+}
+function openPop(btn, html, mount) {
+  const same = POP && POP.btn === btn; closePop(true); if (same) return;
+  const el = document.createElement('div'); el.className = 'pop'; el.setAttribute('role', 'menu'); el.innerHTML = html;
+  document.body.append(el);
+  const b = btn.getBoundingClientRect(), w = el.offsetWidth;
+  el.style.top = (b.bottom + 10) + 'px';
+  el.style.left = Math.max(12, Math.min(b.right - w, innerWidth - w - 12)) + 'px';
+  btn.setAttribute('aria-expanded', 'true'); POP = {btn, el};
+  mount && mount(el);
+  if (!reduce()) el.animate([{transform: 'scale(.86)', clipPath: 'inset(0% 0% 100% 0% round 28px)'}, {transform: 'none', clipPath: 'inset(-60px round 28px)'}],
+    {duration: 420, easing: 'cubic-bezier(.34,1.56,.64,1)', fill: 'backwards'}).onfinish = e => { el.style.clipPath = ''; };
+  el.style.transformOrigin = `${b.right - el.getBoundingClientRect().left - b.width / 2}px 0`;
+  el.querySelector('button')?.focus({preventScroll: true});
+}
+document.addEventListener('pointerdown', e => { if (POP && !POP.el.contains(e.target) && !POP.btn.contains(e.target)) closePop(); });
+const CK = '<svg class="ck" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+function openMes() {
+  const real = PER[0] === D.inicio_costo_real, it = (v, l, sub = '') => `<button type="button" class="menu__item" role="menuitemradio" aria-checked="${S.mes === v}" data-v="${v}">${l}${sub ? `<small>${sub}</small>` : ''}${S.mes === v ? CK : ''}</button>`;
+  openPop($('mesbtn'), `<div class="pop__head">Periodo <small>2026</small></div>
+    ${it('acum', 'Acumulado', perCorto())}<hr>${PER.map(k => it(k, cap(lblL(k)), D.meses.indexOf(k) < ix(D.inicio_costo_real) ? 'referencial' : '')).join('')}<hr>
+    <div class="menu__item mrow"><span>Solo costo real <small style="margin:0;display:block">${real ? 'desde abril' : 'incluye dic – mar'}</small></span><button class="switch" id="pop-real" role="switch" aria-checked="${real}" aria-label="Solo meses con costo real" style="margin-left:auto"></button></div>`,
+    el => {
+      el.querySelectorAll('[data-v]').forEach(b => b.onclick = () => { S.mes = b.dataset.v; closePop(); refresh(); });
+      el.querySelector('#pop-real').onclick = () => { closePop(); setInicio(real ? D.meses[0] : D.inicio_costo_real); };
+    });
+}
+function openSemaforo() {
+  const c = s => TABLERO.filter(id => V[id].st === s).length;
+  openPop($('semaforo'), `<div class="pop__head">Semáforo del tablero <small>${c('ok')} · ${c('warn')} · ${c('bad')}</small></div>
+    ${['bad', 'warn', 'ok', 'na'].flatMap(st => TABLERO.filter(id => V[id].st === st)).map(id => `<button type="button" class="menu__item" role="menuitem" data-id="${id}"><span class="dot sm ${V[id].st}"></span>${BY[id].c}<small>${V[id].v}</small></button>`).join('')}`,
+    el => el.querySelectorAll('[data-id]').forEach(b => b.onclick = () => { closePop(); if (S.fam !== 'T') { S.fam = 'T'; S.todos = false; press($('fam'), 'T'); renderHead(); } pick(b.dataset.id); }));
+}
+
+/* ---------- buscador de indicadores ---------- */
+let FI = [], FSEL = 0;
+function finderList() {
+  const q = $('finder-q').value.trim().toLowerCase(), norm = x => x.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  FI = IND.filter(i => !q || norm(`${i.id} ${i.n} ${i.c} ${FAM_L[i.f]}`).includes(norm(q)));
+  FSEL = Math.min(FSEL, Math.max(0, FI.length - 1));
+  let html = '', last = '';
+  FI.forEach((i, k) => {
+    if (i.f !== last) { html += `<div class="finder__group">${FAM_L[i.f]}</div>`; last = i.f; }
+    html += `<div class="finder__opt" role="option" data-k="${k}" aria-selected="${k === FSEL}"><span class="lead">${i.id}</span><div><b>${i.n}</b><small>${V[i.id].v}</small></div><span class="dot sm ${V[i.id].st}"></span></div>`;
+  });
+  $('finder-list').innerHTML = html || '<div class="finder__empty">Ningún indicador coincide.</div>';
+  $('finder-list').querySelectorAll('.finder__opt').forEach(o => { o.onclick = () => finderGo(+o.dataset.k); o.onmousemove = () => { if (FSEL !== +o.dataset.k) { FSEL = +o.dataset.k; mark(); } }; });
+}
+function mark() { $('finder-list').querySelectorAll('.finder__opt').forEach(o => { const on = +o.dataset.k === FSEL; o.setAttribute('aria-selected', on); if (on) o.scrollIntoView({block: 'nearest'}); }); }
+function finderGo(k) { const i = FI[k]; if (!i) return; $('finder').close(); if (S.datos) closeDatos(false); pick(i.id); }
+function openFinder() {
+  closePop(true); $('finder-q').value = ''; FSEL = 0; finderList(); $('finder').showModal(); $('finder-q').focus();
+  if (!reduce()) $('finder').animate([{transform: 'scale(.94) translateY(-10px)', opacity: 0}, {transform: 'none', opacity: 1}], {duration: 380, easing: 'cubic-bezier(.34,1.4,.64,1)'});
+}
+$('finder-q').oninput = () => { FSEL = 0; finderList(); };
+$('finder-q').onkeydown = e => {
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); FSEL = (FSEL + (e.key === 'ArrowDown' ? 1 : -1) + FI.length) % Math.max(1, FI.length); mark(); }
+  else if (e.key === 'Enter') { e.preventDefault(); finderGo(FSEL); }
+};
+$('finder').onclick = e => { if (e.target === $('finder')) $('finder').close(); };
+
 /* ---------- periodo ---------- */
 function refresh() {
-  compute(); renderBento(false);
+  compute(); renderHead(); renderBento(false);
   if (S.datos) deckList();
   swap($('pin'), renderPanel);
-}
-function buildMes() {
-  const items = [['acum', `${perCorto()}<small>2026</small>`], ...PER.map(k => [k, lbl(k)])];
-  menu($('mes'), items, S.mes, v => { S.mes = v; refresh(); }, '<span>Periodo</span>');
 }
 function setInicio(k) {
   PER = D.meses.slice(ix(k));
   if (S.mes !== 'acum' && !PER.includes(S.mes)) S.mes = 'acum';
-  buildMes(); refresh();
+  refresh();
 }
 
 /* ---------- arranque y eventos ---------- */
-buildMes();
 menu($('fam'), Object.entries(FAM), S.fam, v => {
+  closePop(true);
   if (S.datos) closeDatos(false);
   S.fam = v; S.sel = null; S.todos = false;
-  renderBento(); renderSub(); swap($('pin'), renderPanel);
+  renderHead(); renderBento(); syncDock(); swap($('pin'), renderPanel);
 });
-$('dtoggle').onclick = () => S.datos ? closeDatos() : openDatos();
+$('mesbtn').onclick = openMes;
+$('semaforo').onclick = openSemaforo;
+$('brand').onclick = e => { e.preventDefault(); goResumen(); };
+function goResumen() {
+  closePop(true);
+  if (S.datos) closeDatos(false);
+  const famChange = S.fam !== 'T' || S.todos; S.fam = 'T'; S.todos = false; press($('fam'), 'T');
+  S.sel = null; renderHead(); renderBento(); syncDock(); swap($('pin'), renderPanel);
+  scrollTo({top: 0, behavior: reduce() ? 'auto' : 'smooth'});
+}
+document.querySelector('.dock').addEventListener('click', e => {
+  const b = e.target.closest('[data-act]'); if (!b) return;
+  ({buscar: openFinder, resumen: goResumen, todos: () => { if (S.datos) closeDatos(false); toggleTodos(); syncDock(); },
+    datos: () => S.datos ? closeDatos() : openDatos(), tema: cycleTheme})[b.dataset.act]?.();
+});
 addEventListener('keydown', e => {
-  if (e.key !== 'Escape') return;
-  if (S.datos) { if (S.card != null) pickCard(null); else closeDatos(); }
-  else if (S.sel) pick(null);
+  const typing = e.target.closest('input, textarea, select, [contenteditable="true"]');
+  if (e.key === 'Escape') {
+    if ($('finder').open) return;
+    if (POP) { const b = POP.btn; closePop(); b.focus(); return; }
+    if (S.datos) { if (S.card != null) pickCard(null); else closeDatos(); }
+    else if (S.sel) pick(null);
+  } else if (!typing && !e.metaKey && !e.ctrlKey && !e.altKey && (e.key === '/')) { e.preventDefault(); openFinder(); }
+  else if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); openFinder(); }
+  else if (!typing && !e.metaKey && !e.ctrlKey && !e.altKey && e.key.toLowerCase() === 'd' && !$('finder').open) { S.datos ? closeDatos() : openDatos(); }
 });
-addEventListener('resize', () => document.querySelectorAll('.rsel,.gb,.il').forEach(n => slide(n, true)));
+addEventListener('resize', () => { closePop(true); document.querySelectorAll('.gb').forEach(n => slide(n, true)); });
 
 const THEMES = ['auto', 'light', 'dark'], TL = {auto: 'automático', light: 'claro', dark: 'oscuro'};
 let theme = 'auto';
 try { theme = localStorage.getItem('cuma-theme') || 'auto'; } catch (e) {}
-const applyTheme = () => { if (theme === 'auto') document.documentElement.removeAttribute('data-theme'); else document.documentElement.dataset.theme = theme; $('theme').title = 'Tema: ' + TL[theme]; };
-const repaint = () => { applyTheme(); defaults(); compute(); renderBento(false); if (S.datos) deckList(); renderPanel(); };
-$('theme').onclick = () => { theme = THEMES[(THEMES.indexOf(theme) + 1) % 3]; try { localStorage.setItem('cuma-theme', theme); } catch (e) {} repaint(); };
+const applyTheme = () => { if (theme === 'auto') document.documentElement.removeAttribute('data-theme'); else document.documentElement.dataset.theme = theme; $('themetip').textContent = 'Tema: ' + TL[theme]; };
+const repaint = () => { applyTheme(); defaults(); compute(); renderHead(); renderBento(false); if (S.datos) deckList(); renderPanel(); };
+function cycleTheme() { theme = THEMES[(THEMES.indexOf(theme) + 1) % 3]; try { localStorage.setItem('cuma-theme', theme); } catch (e) {} repaint(); }
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (theme === 'auto') repaint(); });
 
-applyTheme(); defaults(); compute(); renderBento(false); renderSub(); renderPanel();
+applyTheme(); defaults(); compute(); renderHead(); renderBento(false); renderPanel();
 
-/* entrada de la página: las letras del título suben, los controles caen con rebote y los paneles se abren */
+/* entrada de la página: la cabecera cae con rebote, el dock entra de lado y las tarjetas se abren */
 if (!reduce()) {
-  const t = document.querySelector('.t-cuma'), txt = t.textContent.trim();
-  t.setAttribute('aria-label', txt);
-  t.innerHTML = `<span class="w" aria-hidden="true">${[...txt].map(c => `<span class="ch">${c}</span>`).join('')}</span>`;
-  t.querySelectorAll('.ch').forEach((c, i) => c.animate([{transform: 'translateY(115%) rotate(6deg)'}, {transform: 'none'}],
-    {duration: 850, delay: 80 + i * 22, easing: 'cubic-bezier(.23,1,.32,1)', fill: 'backwards'}));
-  [...document.querySelectorAll('.toprow>*')].forEach((c, i) => c.animate([{transform: 'translateY(-70px)', opacity: 0}, {transform: 'none', opacity: 1}],
+  [...document.querySelectorAll('.top>*')].forEach((c, i) => c.animate([{transform: 'translateY(-70px)'}, {transform: 'none'}],
     {duration: 900, delay: 20 + i * 70, easing: 'cubic-bezier(.34,1.45,.64,1)', fill: 'backwards'}));
-  reveal($('map'), 100); reveal($('panel'), 160);
+  const dock = document.querySelector('.dock'), mob = matchMedia('(max-width:760px)').matches;
+  dock.animate([{transform: mob ? 'translateY(90px)' : 'translateX(-90px)'}, {transform: 'none'}], {duration: 900, delay: 100, easing: 'cubic-bezier(.215,.61,.355,1)', fill: 'backwards'});
+  dock.querySelectorAll('.dock__btn').forEach((b, i) => b.animate([{opacity: 0, transform: 'translateY(10px)'}, {opacity: 1, transform: 'none'}], {duration: 550, delay: 300 + i * 35, easing: 'cubic-bezier(.215,.61,.355,1)', fill: 'backwards'}));
+  document.querySelectorAll('#stats .stat').forEach((c, i) => c.animate([{opacity: 0, transform: 'translateY(14px)'}, {opacity: 1, transform: 'none'}], {duration: 550, delay: 150 + i * 80, easing: 'cubic-bezier(.215,.61,.355,1)', fill: 'backwards'}));
+  [...$('pin').children].forEach((k, i) => reveal(k, 160 + Math.min(i, 8) * 60));
 }
 })();
 </script>
