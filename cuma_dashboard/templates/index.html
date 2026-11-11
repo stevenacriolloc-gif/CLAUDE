@@ -172,8 +172,8 @@ button{font:inherit;color:inherit}
 .gb{position:relative;display:flex;flex-wrap:nowrap;justify-content:center;gap:3px;padding:4px;isolation:isolate;max-width:100%;overflow-x:auto;scrollbar-width:none}
 .gb::-webkit-scrollbar{display:none}
 .gb button{appearance:none;margin:0;position:relative;z-index:1;cursor:pointer;background:transparent;border:0;border-radius:999px;padding:8px 16px;font-size:12.5px;font-weight:600;color:#3b3b3e;white-space:nowrap;transition:color .45s var(--spring),background-color .2s}
-:root[data-theme="dark"] .gb button{color:var(--muted)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .gb button{color:var(--muted)}}
+:root[data-theme="dark"] .gb button{color:rgba(255,255,255,.82)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .gb button{color:rgba(255,255,255,.82)}}
 .gb button:hover,.gb button[aria-pressed="true"]{color:var(--ink-strong)}
 .gb button:not([aria-pressed="true"]):hover{background:var(--glass-flat)}
 /* lente: los bordes izquierdo y derecho viajan a ritmos distintos y al llegar rebota como gelatina */
@@ -323,7 +323,7 @@ button{font:inherit;color:inherit}
 .vbars{display:flex;align-items:flex-end;gap:6px;height:118px}
 .vbars>div{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:3px;height:100%}
 .vbars i{display:block;width:100%;max-width:30px;border-radius:6px 6px 3px 3px;background:var(--c,var(--chart-2));transform-origin:bottom;animation:growY .8s var(--ease) both calc(var(--k)*50ms)}
-.vbars b{font-size:10px;font-weight:600;color:var(--ink-strong);font-variant-numeric:tabular-nums}
+.vbars b{font-size:9.5px;font-weight:600;white-space:nowrap;letter-spacing:-.01em;color:var(--ink-strong);font-variant-numeric:tabular-nums}
 .vbars em{font-style:normal;font-size:10px;color:var(--muted)}
 @keyframes growY{from{transform:scaleY(0)}}
 .chart{position:relative;width:100%}
@@ -558,7 +558,7 @@ const lbl = k => MES[+k.slice(5) - 1], lblL = k => MES_L[+k.slice(5) - 1], cap =
 const nf = (v, d = 0) => v == null || !isFinite(v) ? '—' : v.toLocaleString('es-EC', {minimumFractionDigits: d, maximumFractionDigits: d});
 const pct = (v, d = 1) => v == null || !isFinite(v) ? '—' : (v < 0 ? '−' : '') + nf(Math.abs(v), d) + ' %';
 const sgn = (v, d = 1) => v == null || !isFinite(v) ? '—' : (v > 0 ? '+' : v < 0 ? '−' : '') + nf(Math.abs(v), d) + ' %';
-const usd = (v, d = 0) => v == null || !isFinite(v) ? '—' : (v < 0 ? '−' : '') + '$ ' + nf(Math.abs(v), d);
+const usd = (v, d = 2) => v == null || !isFinite(v) ? '—' : (v < 0 ? '−' : '') + '$ ' + nf(Math.abs(v), d);
 const reduce = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ---------- cálculo (misma lógica que tendrá el backend) ---------- */
@@ -653,7 +653,7 @@ function compute() {
     I12: {v: pct(D.pareto.y[3]), s: `El 20 % de los ${nf(D.pareto.productos)} productos concentra el ${nf(D.pareto.y[3], 0)} % de las ventas.`, st: 'na', bar: D.pareto.y[3] / 100},
     I13: {v: nf(inv.rot_anual, 1) + ' veces', u: 'al año', s: `${inv.dias} días de inventario en promedio. Inventario promedio ${usd(inv.promedio)} (abril y septiembre).`, st: 'na', sp: inv.total, ax: [inv.conteos[0], inv.conteos[2]], f: v => usd(v)},
     I14: {v: nf(inv.gmroi_anual, 2), u: 'al año', s: `Cada dólar en existencias genera ${nf(inv.gmroi_anual * 100, 0)} centavos de margen bruto al año; la referencia es 1.`, st: 'na', bar: inv.gmroi_anual},
-    I17: {v: usd(vLast / D.superficie_m2, 1), u: 'por m² · ' + lbl(D.meses[last]).toLowerCase(), s: `${usd(vLast / D.empleados)} por empleado (${D.empleados} empleados) en ${lblL(D.meses[last])}; superficie de ${nf(D.superficie_m2, 2)} m².`, st: 'na', sp: series(c => c.V / D.superficie_m2), f: v => usd(v, 1)}
+    I17: {v: usd(vLast / D.superficie_m2, 2), u: 'por m² · ' + lbl(D.meses[last]).toLowerCase(), s: `${usd(vLast / D.empleados)} por empleado (${D.empleados} empleados) en ${lblL(D.meses[last])}; superficie de ${nf(D.superficie_m2, 2)} m².`, st: 'na', sp: series(c => c.V / D.superficie_m2), f: v => usd(v, 2)}
   };
   for (const i of IND) if (!V[i.id]) V[i.id] = {v: i.e === 'none' ? 'Sin datos' : 'Por calcular', txt: true, s: 'Falta: ' + i.q.charAt(0).toLowerCase() + i.q.slice(1) + '.', st: 'na', bar: null};
   R = {r, acum, last};
@@ -843,7 +843,7 @@ function renderPanel() {
         <h2>${r.mo < 0 ? 'La operación aún no se sostiene sola' : 'La operación cubre sus costos'}</h2>
         <p>Diez indicadores del tablero principal con umbrales provisionales. Toca una tarjeta para agrandarla y ver su ficha, o búscala con la lupa del costado.</p></div>
       <div class="cgs">
-        <div class="cg"><h4>Ventas mensuales · miles de USD</h4>${vbars(M.ventas.map(v => v / 1000), k => inSel(D.meses[k]), D.meses.map(lbl), v => nf(v, 1))}</div>
+        <div class="cg"><h4>Ventas mensuales · USD</h4>${vbars(M.ventas, k => inSel(D.meses[k]), D.meses.map(lbl), v => nf(v, 2))}</div>
         <div class="cg"><h4>Margen bruto y gasto · % de ventas <span class="lg"><span><i style="background:var(--chart)"></i>MB</span><span><i style="background:var(--chart-3)"></i>Gasto</span><span><i class="dash"></i>MB 3 m</span></span></h4>
           <div class="chart" style="height:150px"><canvas id="p1"></canvas></div></div>
       </div>
@@ -893,7 +893,7 @@ function detailViz(id) {
     return evo + `<div class="cg">${H('Ventas por franja horaria · ' + h.periodo)}${vbars(h.franjas.map(f => f.pv), k => k === 1 || k === 3, h.franjas.map(f => f.c), v => nf(v, 0) + ' %')}
       <div class="tl" style="margin-top:8px"><div><span>Ticket fin de semana</span><b>${usd(h.semana.fin_tk, 2)}</b><em>${pct(h.semana.fin_pv)} de las ventas</em></div><div><span>Ticket entre semana</span><b>${usd(h.semana.sem_tk, 2)}</b><em>${nf(h.semana.sem_tr)} trans. al día</em></div></div></div>`; }
   if (id === 'I13' || id === 'I14') { const inv = D.inventario;
-    return `<div class="cg">${H('Inventario contado al costo · miles de USD')}${vbars(inv.total.map(v => v / 1000), k => k > 0, inv.conteos, v => nf(v, 1))}
+    return `<div class="cg">${H('Inventario contado al costo · USD')}${vbars(inv.total, k => k > 0, inv.conteos, v => nf(v, 2))}
       <div class="tl x4" style="margin-top:8px;grid-template-columns:repeat(3,1fr)">${id === 'I13'
         ? `<div><span>Rotación may – sep</span><b>${nf(inv.rot_periodo, 2)}</b><em>5 meses</em></div><div><span>Anualizada</span><b>${nf(inv.rot_anual, 1)}</b><em>veces</em></div><div><span>Días de inventario</span><b>${inv.dias}</b><em>días</em></div>`
         : `<div><span>GMROI may – sep</span><b>${nf(inv.gmroi_periodo, 2)}</b><em>5 meses</em></div><div><span>Anualizado</span><b>${nf(inv.gmroi_anual, 2)}</b><em>referencia 1</em></div><div><span>Inventario promedio</span><b>${usd(inv.promedio)}</b><em>abr y sep</em></div>`}</div></div>`; }
@@ -947,7 +947,7 @@ function drawDetail(id) {
   else if (id === 'I6') lineSeries('p1', series(c => c.oss), v => pct(v));
   else if (id === 'I7') lineSeries('p1', series(c => c.pe), v => usd(v));
   else if (id === 'I5') lineSeries('p1', PER.map(k => growth(ix(k))), v => sgn(v));
-  else if (id === 'I17') lineSeries('p1', series(c => c.V / D.superficie_m2), v => usd(v, 1));
+  else if (id === 'I17') lineSeries('p1', series(c => c.V / D.superficie_m2), v => usd(v, 2));
   else if (id === 'I11') lineSeries('p1', series(c => c.ticket), v => usd(v, 2), [{data: PER.map(k => M.transacciones[ix(k)]), yAxisID: 'y2', type: 'bar', backgroundColor: css('--chart-2'), borderRadius: 5, maxBarThickness: 18, order: 2, fmt: v => nf(v) + ' transacciones'}]);
   else if (id === 'I12') pareto('p1');
 }
