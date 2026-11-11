@@ -430,54 +430,7 @@ l24 1 -7 -92z"/>
 </div>
 
 <script type="application/json" id="cuma-data">
-{
-  "actualizado": "2026-09-30",
-  "meses": ["2025-12","2026-01","2026-02","2026-03","2026-04","2026-05","2026-06","2026-07","2026-08","2026-09"],
-  "inicio_costo_real": "2026-03",
-  "mensual": {
-    "ventas":         [7283, 15628, 12671, 13394, 12524, 11954, 12812, 11534, 10479, 11629],
-    "costo_ventas":   [7102, 9793, 9963, 12081, 9002, 11851, 11016, 10367, 8722, 10673],
-    "gastos":         [1826, 3612, 4468, 3769, 4090, 4039, 3939, 3720, 3593, 3369],
-    "comisiones":     [99, 249, 182, 219, 195, 181, 230, 196, 167, 191],
-    "ventas_pos":     [7283.05, 15628.43, 12671.35, 13388.52, 12529.95, 11954.15, 12812.32, 11533.57, 10478.92, 11629.25],
-    "transacciones":  [838, 1637, 1443, 1577, 1463, 1411, 1387, 1448, 1265, 1327],
-    "compras":        [18060, 5927, 4710, 5561, 6087, 5687, 7777, 6115, 4791, 7515],
-    "transferencias": [null, 2844, 5733, 4266, 2764, 2501, 4112, 3170, 2370, 3739]
-  },
-  "estructura_gastos": [
-    {"rubro":"Personal","pct":33.7},{"rubro":"Energía","pct":32.5},{"rubro":"Servicios ocasionales","pct":24.1},
-    {"rubro":"Comisiones de tarjeta","pct":5.0},{"rubro":"Otros","pct":2.8},{"rubro":"Mantenimiento","pct":1.9}
-  ],
-  "origen": [
-    {"origen":"Solo compras directas","usd":44097,"pct":36.8},
-    {"origen":"Compras directas y transferencias","usd":34737,"pct":29.0},
-    {"origen":"Solo transferencias del acopio","usd":28869,"pct":24.1},
-    {"origen":"Sin entrada registrada","usd":12207,"pct":10.2}
-  ],
-  "pareto": {"x":[0,5,10,20,30,40,50,60,70,80,90,100],"y":[0,48.9,62.0,76.2,84.0,89.1,92.8,95.4,97.4,98.8,99.6,100],
-             "productos":3506,"abc":{"A":850,"B":1187,"C":1469}},
-  "proveedores": [
-    {"nombre":"Centro de acopio EDEC","pct":34.4},{"nombre":"Corporación Favorita","pct":19.4},{"nombre":"Galindo Galindo Elías","pct":5.3},
-    {"nombre":"Alpina Ecuador","pct":2.7},{"nombre":"Arias Arias Andersson","pct":2.4},{"nombre":"Paucar Tigre Martha","pct":2.3}
-  ],
-  "abastecimiento": {"hhi":1630,"desintermediacion_max":30.1},
-  "cobertura": {"completos":10,"parciales":5,"sin_datos":8,"tablero_pct":80},
-  "faltan": [
-    ["Bajas y mermas con su motivo","I15","a","Administración de CUMA"],
-    ["Inventario mensual por producto","I13, I14, I15","a","Administración de CUMA"],
-    ["Confirmar desde qué mes el costo de transferencias es real","I1, I6, I7","a","Administrador del sistema"],
-    ["Registro de reempaques o tabla de códigos a granel y empacados","I1, I15, I18","m","Administración de CUMA"],
-    ["Transferencias de diciembre de 2025","I1, I18, I20","m","Administrador del sistema"],
-    ["Confirmar nómina pagada desde EDEC EP y número de empleados","I2, I6, I7, I17","m","Administrador del sistema"],
-    ["Categorías corregidas en el catálogo","I8, I12, I15","m","Administrador del sistema"],
-    ["Marca de canasta básica o precio regulado","I8","m","Administración de CUMA"],
-    ["Días sin existencia por producto","I16","b","Administración de CUMA"],
-    ["Hora de cada venta","I11, I17","b","Administrador del sistema"],
-    ["Parroquia de origen de proveedores directos","I21","b","Administración de CUMA"],
-    ["Fechas de pago a proveedores","I19","b","Tesorería de EDEC EP"],
-    ["Precios mayoristas y de una canasta de referencia","I22, I23","b","Levantamiento propio"]
-  ]
-}
+{"actualizado": "2026-09-30", "meses": ["2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06", "2026-07", "2026-08", "2026-09"], "inicio_costo_real": "2026-03", "mensual": {"ventas": [7283.05, 15628.43, 12671.35, 13393.97, 12524.5, 11954.15, 12812.32, 11533.57, 10478.92, 11629.25], "costo_ventas": [7101.94, 9792.73, 9963.23, 12080.57, 9002.1, 11851.35, 11016.34, 10366.63, 8721.5, 10673.36], "gastos": [1825.55, 3612.08, 4467.72, 3768.79, 4089.58, 4039.47, 3938.83, 3720.24, 3592.85, 3369.25], "comisiones": [99.46, 248.95, 182.03, 218.65, 195.4, 181.17, 230.19, 196.26, 167.46, 190.66], "ventas_pos": [7283.05, 15628.43, 12671.35, 13388.52, 12529.95, 11954.15, 12812.32, 11533.57, 10478.92, 11629.25], "transacciones": [838, 1637, 1443, 1577, 1463, 1411, 1387, 1448, 1265, 1327], "compras": [18059.95, 5926.99, 4710.1, 5560.93, 6087.2, 5686.99, 7776.63, 6115.31, 4791.02, 7515.15], "transferencias": [null, 2844.41, 5733.21, 4266.38, 2763.81, 2501.41, 4111.96, 3170.38, 2370.44, 3738.64]}, "estructura_gastos": [{"rubro": "Personal", "pct": 33.7}, {"rubro": "Energía", "pct": 32.5}, {"rubro": "Servicios ocasionales", "pct": 24.1}, {"rubro": "Comisiones de tarjeta", "pct": 5.0}, {"rubro": "Otros", "pct": 2.8}, {"rubro": "Mantenimiento", "pct": 1.9}], "origen": [{"origen": "Solo compras directas", "usd": 44295, "pct": 37.1}, {"origen": "Compras directas y transferencias", "usd": 34539, "pct": 28.9}, {"origen": "Solo transferencias del acopio", "usd": 28865, "pct": 24.1}, {"origen": "Sin entrada registrada", "usd": 11850, "pct": 9.9}], "pareto": {"x": [0, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100], "y": [0.0, 48.9, 62.0, 76.1, 84.0, 89.1, 92.8, 95.4, 97.4, 98.8, 99.6, 100.0], "productos": 3508, "abc": {"A": 850, "B": 1187, "C": 1471}}, "proveedores": [{"nombre": "Centro de acopio EDEC", "pct": 34.5}, {"nombre": "Corporacion Favorita C.A.", "pct": 19.4}, {"nombre": "Galindo Galindo Elias Alberto ", "pct": 5.3}, {"nombre": "Alpina Productos Alimenticios Alpiecuador S.A", "pct": 2.7}, {"nombre": "Arias Arias Andersson Vicente", "pct": 2.4}, {"nombre": "Paucar Tigre Martha Veronica", "pct": 2.3}], "abastecimiento": {"hhi": 1634, "desintermediacion_max": 30.1}, "cobertura": {"completos": 10, "parciales": 5, "sin_datos": 8, "tablero_pct": 80}, "faltan": [["Bajas y mermas con su motivo", "I15", "a", "Administración de CUMA"], ["Inventario mensual por producto", "I13, I14, I15", "a", "Administración de CUMA"], ["Confirmar desde qué mes el costo de transferencias es real", "I1, I6, I7", "a", "Administrador del sistema"], ["Registro de reempaques o tabla de códigos a granel y empacados", "I1, I15, I18", "m", "Administración de CUMA"], ["Transferencias de diciembre de 2025", "I1, I18, I20", "m", "Administrador del sistema"], ["Confirmar nómina pagada desde EDEC EP y número de empleados", "I2, I6, I7, I17", "m", "Administrador del sistema"], ["Categorías corregidas en el catálogo", "I8, I12, I15", "m", "Administrador del sistema"], ["Marca de canasta básica o precio regulado", "I8", "m", "Administración de CUMA"], ["Días sin existencia por producto", "I16", "b", "Administración de CUMA"], ["Hora de cada venta", "I11, I17", "b", "Administrador del sistema"], ["Parroquia de origen de proveedores directos", "I21", "b", "Administración de CUMA"], ["Fechas de pago a proveedores", "I19", "b", "Tesorería de EDEC EP"], ["Precios mayoristas y de una canasta de referencia", "I22, I23", "b", "Levantamiento propio"]]}
 </script>
 
 <script>

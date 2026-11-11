@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: cuma-dashboard
+    runtime: python
+    plan: free
+    rootDir: cuma_dashboard
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --timeout 120
+    healthCheckPath: /salud
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: DASHBOARD_PASSWORD
+        sync: false
+      - key: ADMIN_TOKEN
+        sync: false

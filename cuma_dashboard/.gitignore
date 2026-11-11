@@ -1,0 +1,5 @@
+# Los Excel de CUMA no se publican: tienen datos de clientes y proveedores.
+datos/
+*.xlsx
+*.xls
+__pycache__/
