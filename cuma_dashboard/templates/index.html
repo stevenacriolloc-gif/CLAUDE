@@ -183,6 +183,8 @@ button{font:inherit;color:inherit}
 /* ---------- escenario ---------- */
 .stage{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);gap:var(--gap,16px);align-items:start}
 .left{min-width:0}
+.left>.sema{margin-bottom:12px;padding:14px 16px}
+.sema__t{margin:0 0 8px;font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:var(--gold)}
 .left .dstack{display:none}
 .stage.dk .bento{display:none}.stage.dk .left .dstack{display:block}
 /* la ficha: tarjetas sueltas sobre el fondo, fija mientras se recorre la rejilla */
@@ -439,7 +441,7 @@ tr.done td.w{color:var(--muted);text-decoration:line-through}
       <dl class="head__stats" id="stats"></dl>
     </header>
     <div class="stage" id="stage">
-      <section class="left" aria-label="Indicadores"><div class="bento" id="bento"></div><div id="deck"></div></section>
+      <section class="left" aria-label="Indicadores"><div class="card sema" id="sema"></div><div class="bento" id="bento"></div><div id="deck"></div></section>
       <aside class="side" id="pin" aria-live="polite"></aside>
     </div>
   </main>
@@ -775,7 +777,16 @@ function visibles() {
   if (S.fam !== 'T') return IND.filter(i => i.f === S.fam).map(i => i.id);
   return S.todos ? [...TABLERO, ...IND.map(i => i.id).filter(id => !TABLERO.includes(id))] : TABLERO;
 }
+/* semáforo del tablero, encima de la pila de tarjetas */
+function renderSema() {
+  const c = st => TABLERO.filter(id => V[id].st === st).length;
+  $('sema').innerHTML = `<h4 class="sema__t">Semáforo del tablero</h4>
+    <div class="seg">${TABLERO.map(id => `<i style="--c:var(--${V[id].st})" title="${id} · ${BY[id].c}: ${ST[V[id].st]}"></i>`).join('')}</div>
+    <div class="tl x4"><div><span>Dentro de la meta</span><b><span class="dot sm ok"></span>${c('ok')}</b></div><div><span>En vigilancia</span><b><span class="dot sm warn"></span>${c('warn')}</b></div>
+      <div><span>Requieren acción</span><b><span class="dot sm bad"></span>${c('bad')}</b></div><div><span>Sin dato</span><b><span class="dot sm na"></span>${c('na')}</b></div></div>`;
+}
 function renderBento(anim = true) {
+  renderSema();
   const grid = $('bento'), first = new Map();
   if (anim && !reduce()) grid.querySelectorAll('[data-id]').forEach(el => first.set(el.dataset.id, el.getBoundingClientRect()));
   const ids = visibles();
@@ -835,10 +846,6 @@ function renderPanel() {
         <div class="cg"><h4>Ventas mensuales · miles de USD</h4>${vbars(M.ventas.map(v => v / 1000), k => inSel(D.meses[k]), D.meses.map(lbl), v => nf(v, 1))}</div>
         <div class="cg"><h4>Margen bruto y gasto · % de ventas <span class="lg"><span><i style="background:var(--chart)"></i>MB</span><span><i style="background:var(--chart-3)"></i>Gasto</span><span><i class="dash"></i>MB 3 m</span></span></h4>
           <div class="chart" style="height:150px"><canvas id="p1"></canvas></div></div>
-        <div class="cg"><h4>Semáforo del tablero</h4>
-          <div class="seg">${TABLERO.map(id => `<i style="--c:var(--${({ok: 'ok', warn: 'warn', bad: 'bad', na: 'na'})[V[id].st]})" title="${id} · ${BY[id].c}"></i>`).join('')}</div>
-          <div class="tl x4"><div><span>Dentro de la meta</span><b><span class="dot sm ok"></span>${c('ok')}</b></div><div><span>En vigilancia</span><b><span class="dot sm warn"></span>${c('warn')}</b></div>
-            <div><span>Requieren acción</span><b><span class="dot sm bad"></span>${c('bad')}</b></div><div><span>Sin dato</span><b><span class="dot sm na"></span>${c('na')}</b></div></div></div>
       </div>
       <div class="sec"><h3>Base de cálculo</h3><div class="tbl">
         <div class="row" style="align-items:center"><span class="n">Solo meses con costo real (${real ? 'desde abril' : 'incluye dic – mar referencial'})</span><span class="v" style="display:flex;justify-content:flex-end"><button class="switch" id="sw-real" role="switch" aria-checked="${real}" aria-label="Solo meses con costo real"></button></span></div></div></div>
