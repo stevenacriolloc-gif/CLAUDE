@@ -1,7 +1,7 @@
 """Tablero de indicadores de CUMA (Flask).
 
-Al arrancar busca los Excel en DATA_DIR y recalcula los indicadores; si no hay Excel, usa la
-última instantánea publicada (datos_publicados/indicadores.json), que solo tiene cifras agregadas.
+Parte de la última instantánea publicada (datos_publicados/indicadores.json, solo cifras agregadas).
+Si hay Excel en DATA_DIR, recalcula sobre ella las series que salen directamente de esos archivos.
 
 Variables de entorno opcionales:
   DATA_DIR             carpeta con los Excel (por defecto ./datos)
@@ -22,6 +22,8 @@ DATA_DIR = os.environ.get("DATA_DIR", os.path.join(BASE, "datos"))
 SNAPSHOT = os.path.join(BASE, "datos_publicados", "indicadores.json")
 PLANTILLA = os.path.join(BASE, "templates", "index.html")
 INICIO, FIN = '<script type="application/json" id="cuma-data">', "</script>"
+# Lo que se recalcula desde los Excel; el resto (inventario, horas, supuestos del informe) viene de la instantánea.
+RECALCULADAS = ("actualizado", "meses", "mensual", "pareto")
 
 app = Flask(__name__)
 _lock = threading.Lock()
@@ -39,11 +41,12 @@ def datos():
     firma = _firma()
     with _lock:
         if _estado["datos"] is None or firma != _estado["firma"]:
+            with open(SNAPSHOT, encoding="utf-8") as fh:
+                base = json.load(fh)
             if firma:
-                _estado.update(datos=calculo.construir(DATA_DIR), firma=firma, origen="excel")
-            elif _estado["datos"] is None:
-                with open(SNAPSHOT, encoding="utf-8") as fh:
-                    _estado.update(datos=json.load(fh), firma=None, origen="instantanea")
+                nuevo = calculo.construir(DATA_DIR)
+                base.update({k: nuevo[k] for k in RECALCULADAS})
+            _estado.update(datos=base, firma=firma, origen="excel" if firma else "instantanea")
         return _estado["datos"]
 
 

@@ -8,7 +8,8 @@ mkdir datos   # copia aquí Datos_Cuma…xlsx, Apuntes_Cuma…xlsx y transferenc
 python app.py # http://localhost:8000
 ```
 
-- Sin Excel en `datos/`, usa la última instantánea agregada (`datos_publicados/indicadores.json`).
-- Para publicar cifras nuevas sin subir los Excel: `python -m cuma.calculo datos datos_publicados/indicadores.json`.
+- La base es la instantánea agregada `datos_publicados/indicadores.json` (inventario, horas y supuestos del informe incluidos).
+- Con Excel en `datos/`, se recalculan sobre ella las ventas, costos, gastos, compras, transferencias, transacciones y el Pareto.
+- `python -m cuma.calculo datos` imprime todo lo que se calcula desde los Excel.
 - Los Excel nunca se suben al repositorio (`.gitignore`): contienen datos de clientes.
 - En Render (`render.yaml` en la raíz): `DASHBOARD_PASSWORD` protege el tablero (usuario `cuma`) y `ADMIN_TOKEN` habilita `/actualizar` para subir Excel desde el navegador (el disco del plan gratuito se borra al reiniciar; la instantánea queda como respaldo).
