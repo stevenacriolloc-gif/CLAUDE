@@ -129,7 +129,7 @@ button{font:inherit;color:inherit}
 .stat{display:flex;align-items:center;gap:12px}
 .stat__ico{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;color:var(--ink-strong)}
 .stat__value{margin:0;display:flex;align-items:center;gap:10px;font-size:22px;font-weight:600;letter-spacing:-.01em;color:var(--ink-strong)}
-.stat__label{color:var(--muted);font-size:12.5px;line-height:1.3;max-width:170px}
+.stat__label{color:var(--muted);font-size:12.5px;line-height:1.3;white-space:nowrap}
 .badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:700;white-space:nowrap;letter-spacing:.01em}
 .badge.ok{background:color-mix(in srgb,var(--ok) 16%,transparent);color:color-mix(in srgb,var(--ok) 60%,var(--ink-strong))}
 .badge.warn{background:color-mix(in srgb,var(--warn) 20%,transparent);color:color-mix(in srgb,var(--warn) 45%,var(--ink-strong))}
@@ -193,11 +193,12 @@ button{font:inherit;color:inherit}
 /* mapa de calor día × hora */
 .hm-mode{padding:3px}
 .hm-mode button{padding:5px 12px;font-size:11.5px;text-transform:none;letter-spacing:0}
-.hm{display:grid;grid-template-columns:30px repeat(14,minmax(0,1fr)) 58px;gap:4px;align-items:center;margin-top:4px}
+.hm{display:grid;grid-template-columns:42px repeat(7,minmax(0,1fr)) 74px;gap:4px;align-items:center;margin-top:4px}
+.hm .tt.tc{text-align:center;font-size:10px}
 .hm .hh{font-size:10px;color:var(--muted);text-align:center;font-variant-numeric:tabular-nums}
 .hm .hh:last-child{text-align:right}
 .hm .rl{font-size:11px;font-weight:600;color:var(--muted)}
-.hm .c{position:relative;height:30px;border-radius:7px;display:grid;place-items:center;font-size:10px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums;cursor:pointer;
+.hm .c{position:relative;height:24px;border-radius:7px;display:grid;place-items:center;font-size:10px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums;cursor:pointer;
   transition:transform .35s var(--spring),box-shadow .3s;animation:hmIn .5s var(--ease) backwards;animation-delay:calc(var(--k,0)*6ms)}
 .hm .c.hi{color:#fff}
 .hm .c.pk{box-shadow:0 0 0 2px var(--surface),0 0 0 3.5px var(--ok)}
@@ -412,6 +413,18 @@ tr.done td.w{color:var(--muted);text-decoration:line-through}
 .fold-in{display:flex;flex-direction:column;gap:8px;padding-top:14px}
 .fold-in>p{margin:0;color:var(--ink);font-size:13px;line-height:1.5}
 .interp{margin:0;color:var(--ink);font-size:13px;line-height:1.5}
+
+/* mapa de calor en miniatura dentro de la pila de tarjetas */
+.tile.hmt{--st:var(--ok);background:color-mix(in srgb,var(--ink) 4%,transparent)}
+.tile.hmt.wide{grid-column:span 2;grid-row:span 2}
+.mh{flex:1 1 auto;min-height:0;margin-top:6px;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));grid-auto-rows:minmax(0,1fr);gap:2px}
+.mh.big{grid-template-columns:22px repeat(7,minmax(0,1fr));gap:3px}
+.mh i{display:block;border-radius:2px;min-height:3px}
+.mh.big i{border-radius:3px}
+.mh i.off{background:repeating-linear-gradient(135deg,var(--glass-flat) 0 2px,transparent 2px 5px)}
+.mh i.pk{outline:1.5px solid var(--ok);outline-offset:1px}
+.mh-h,.mh-d{font-size:9px;line-height:1;color:var(--muted);text-align:center;align-self:center;font-variant-numeric:tabular-nums}
+.mh-h{text-align:right;padding-right:3px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -556,7 +569,7 @@ const MES = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','
 const MES_L = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
 const lbl = k => MES[+k.slice(5) - 1], lblL = k => MES_L[+k.slice(5) - 1], cap = s => s.charAt(0).toUpperCase() + s.slice(1);
 const nf = (v, d = 0) => v == null || !isFinite(v) ? '—' : v.toLocaleString('es-EC', {minimumFractionDigits: d, maximumFractionDigits: d});
-const pct = (v, d = 1) => v == null || !isFinite(v) ? '—' : (v < 0 ? '−' : '') + nf(Math.abs(v), d) + ' %';
+const pct = (v, d = 2) => v == null || !isFinite(v) ? '—' : (v < 0 ? '−' : '') + nf(Math.abs(v), d) + ' %';
 const sgn = (v, d = 1) => v == null || !isFinite(v) ? '—' : (v > 0 ? '+' : v < 0 ? '−' : '') + nf(Math.abs(v), d) + ' %';
 const usd = (v, d = 2) => v == null || !isFinite(v) ? '—' : (v < 0 ? '−' : '') + '$ ' + nf(Math.abs(v), d);
 const reduce = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -794,12 +807,16 @@ function renderBento(anim = true) {
   ids.forEach(id => {
     html += `<button class="tile ${S.sel === id ? 'big' : ''} ${first.has(id) ? '' : 'enter'}" style="--j:${j++}" data-st="${V[id].st}" data-id="${id}" aria-pressed="${S.sel === id}">${tileHTML(id, S.sel === id)}</button>`;
   });
+  if (S.fam === 'T' || S.fam === 'O') {
+    const big = !S.sel;
+    html += `<button class="tile hmt ${big ? 'wide' : ''} ${first.has('hm') ? '' : 'enter'}" style="--j:${j++}" data-id="hm" aria-label="Ventas por hora: abrir el mapa de calor">${miniHeat(big)}</button>`;
+  }
   if (S.fam === 'T') {
     const n = IND.length - TABLERO.length;
     html += `<button class="tile more ${first.has('more') ? '' : 'enter'}" style="--j:${j}" data-id="more"><div class="t-id">${S.todos ? 'TABLERO' : 'SISTEMA'}</div><div class="t-v">${S.todos ? 'Ver menos' : '+' + n}</div><div class="t-n" style="color:var(--muted);font-weight:500">${S.todos ? 'Solo los 10 principales' : 'Ver los 23 indicadores'}</div></button>`;
   }
   grid.innerHTML = html;
-  grid.querySelectorAll('.tile').forEach(b => b.onclick = () => b.dataset.id === 'more' ? toggleTodos() : pick(S.sel === b.dataset.id ? null : b.dataset.id));
+  grid.querySelectorAll('.tile').forEach(b => b.onclick = () => b.dataset.id === 'more' ? toggleTodos() : b.dataset.id === 'hm' ? openDatos(TARJETAS.findIndex(t => t.b === cardHoras)) : pick(S.sel === b.dataset.id ? null : b.dataset.id));
   if (!first.size) return;
   grid.querySelectorAll('[data-id]').forEach(el => {          // FLIP: invertir la diferencia y reproducir
     const f = first.get(el.dataset.id); if (!f) return;
@@ -916,7 +933,8 @@ function defaults() {
   Chart.defaults.animation.duration = 650;
 }
 const axX = {grid: {display: false}, border: {display: false}};
-const axY = cb => ({border: {display: false}, ticks: {maxTicksLimit: 4, callback: cb}});
+// en los ejes las marcas redondas no llevan «,00»; los valores exactos se ven en la etiqueta al pasar el cursor
+const axY = cb => ({border: {display: false}, ticks: {maxTicksLimit: 4, callback: v => String(cb(v)).replace(/,00(?=\s|$)/, '')}});
 function chartMargen(cv) {
   const mb = series(c => c.mb), go = series(c => c.pgo), ma = mb.map((_, i) => i < 2 ? null : (mb[i] + mb[i - 1] + mb[i - 2]) / 3);
   const si = S.mes === 'acum' ? -1 : PER.indexOf(S.mes), pr = a => a.map((_, i) => i === si ? 5 : 2.5);
@@ -988,8 +1006,8 @@ function swapLeft(fn) {
     {duration: 200, easing: 'cubic-bezier(.55,.085,.68,.53)', fill: 'forwards'});
   a.onfinish = () => { fn(); a.cancel(); reveal(left); };
 }
-function openDatos() {
-  S.datos = true; S.card = null; syncDock();
+function openDatos(card = null) {
+  S.datos = true; S.card = card; syncDock();
   swapLeft(() => { deckList(); $('stage').classList.add('dk'); });
   renderHead(); swap($('pin'), renderPanel);
 }
@@ -1038,7 +1056,7 @@ function cardOrigen(db) {
 }
 function cardHoras(db) {
   const h = D.horas, w = h.semana, dm = h.domingo;
-  db.innerHTML = `<div class="cg"><h4><span>Mapa de calor · promedio por día y hora</span><nav class="gb hm-mode" id="hm-mode" aria-label="Medida"></nav></h4>
+  db.innerHTML = `<div class="cg"><h4><span>Mapa de calor · promedio por hora y día</span><nav class="gb hm-mode" id="hm-mode" aria-label="Medida"></nav></h4>
       <div class="hm" id="hm"></div>
       <div class="hm-foot"><span class="hm-info" id="hm-info"></span><span class="hm-lg"><em>Menos</em><i></i><em>Más</em></span></div></div>
     <div class="tl x4" style="margin-top:12px">
@@ -1053,33 +1071,52 @@ function cardHoras(db) {
   drawHeat(S.hm || 'v');
   menu($('hm-mode'), [['v', 'Ventas'], ['t', 'Transacciones']], S.hm || 'v', v => { S.hm = v; drawHeat(v); });
 }
+const DIAS = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'], DIAS_L = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'];
+function picoMapa(M) { let pk = [0, 0]; M.forEach((r, d) => r.forEach((v, j) => { if (v != null && v > M[pk[0]][pk[1]]) pk = [d, j]; })); return pk; }
+// filas = horas, columnas = días de la semana; a la derecha el total de la hora en la semana y abajo el total de cada día
 function drawHeat(m) {
-  const H = D.mapa, DIAS = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'], DL = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'];
-  const M = H[m], all = M.flat().filter(v => v != null), max = Math.max(...all);
+  const H = D.mapa, M = H[m], all = M.flat().filter(v => v != null), max = Math.max(...all);
   const fmt = v => m === 'v' ? usd(v) : nf(v, 1), cell = v => m === 'v' ? nf(v, 0) : nf(v, 1);
   const unit = m === 'v' ? 'en ventas' : 'transacciones';
-  let pk = [0, 0]; M.forEach((r, d) => r.forEach((v, j) => { if (v != null && v > M[pk[0]][pk[1]]) pk = [d, j]; }));
-  let html = '<span></span>' + H.horas.map(x => `<span class="hh">${x}</span>`).join('') + '<span class="hh">Día</span>';
-  M.forEach((r, d) => {
-    html += `<span class="rl">${DIAS[d]}</span>`;
-    r.forEach((v, j) => {
+  const pk = picoMapa(M);
+  let html = '<span></span>' + DIAS.map(x => `<span class="hh">${x}</span>`).join('') + '<span class="hh">Semana</span>';
+  H.horas.forEach((h, j) => {
+    html += `<span class="rl">${h}:00</span>`;
+    M.forEach((r, d) => {
+      const v = r[j];
       if (v == null) { html += `<span class="c off" data-d="${d}" data-j="${j}"></span>`; return; }
       const a = v / max, p = Math.round(8 + a * 92);
-      html += `<span class="c ${a > .55 ? 'hi' : ''} ${d === pk[0] && j === pk[1] ? 'pk' : ''}" style="--k:${d * 14 + j};background:color-mix(in srgb,var(--ok) ${p}%,transparent)" data-d="${d}" data-j="${j}">${a > .12 ? cell(v) : ''}</span>`;
+      html += `<span class="c ${a > .55 ? 'hi' : ''} ${d === pk[0] && j === pk[1] ? 'pk' : ''}" style="--k:${j * 7 + d};background:color-mix(in srgb,var(--ok) ${p}%,transparent)" data-d="${d}" data-j="${j}">${a > .12 ? cell(v) : ''}</span>`;
     });
-    html += `<span class="tt">${fmt(r.reduce((s, v) => s + (v || 0), 0))}</span>`;
+    html += `<span class="tt">${fmt(M.reduce((s, r) => s + (r[j] || 0), 0))}</span>`;
   });
+  html += '<span class="rl">Día</span>' + M.map(r => `<span class="tt tc">${fmt(r.reduce((s, v) => s + (v || 0), 0))}</span>`).join('') + '<span></span>';
   const el = $('hm'); if (!el) return;
   el.innerHTML = html;
-  const info = $('hm-info'), base = `Pico: ${DL[pk[0]]} a las ${H.horas[pk[1]]}:00, ${fmt(M[pk[0]][pk[1]])} ${unit}`;
+  const info = $('hm-info'), base = `Pico: ${DIAS_L[pk[0]]} a las ${H.horas[pk[1]]}:00, ${fmt(M[pk[0]][pk[1]])} ${unit}`;
   info.textContent = base;
   el.querySelectorAll('.c').forEach(c => {
     c.onmouseenter = () => { const d = +c.dataset.d, j = +c.dataset.j, v = M[d][j];
-      info.textContent = v == null ? `${cap(DL[d])} a las ${H.horas[j]}:00: cerrado` : `${cap(DL[d])} de ${H.horas[j]}:00 a ${H.horas[j]}:59: ${fmt(v)} ${unit} · ${m === 'v' ? nf(H.t[d][j], 1) + ' transacciones' : usd(H.v[d][j]) + ' en ventas'}`; };
+      info.textContent = v == null ? `${cap(DIAS_L[d])} a las ${H.horas[j]}:00: cerrado` : `${cap(DIAS_L[d])} de ${H.horas[j]}:00 a ${H.horas[j]}:59: ${fmt(v)} ${unit} · ${m === 'v' ? nf(H.t[d][j], 1) + ' transacciones' : usd(H.v[d][j]) + ' en ventas'}`; };
     c.onmouseleave = () => { info.textContent = base; };
     c.onclick = c.onmouseenter;
   });
 }
+// mapa en miniatura para la tarjeta de la pila: grande sin indicador abierto, del tamaño de una tarjeta si hay uno abierto
+function miniHeat(grande) {
+  const H = D.mapa, M = H.v, max = Math.max(...M.flat().filter(v => v != null)), pk = picoMapa(M);
+  let g = '';
+  H.horas.forEach((h, j) => {
+    if (grande) g += `<span class="mh-h">${j % 2 ? '' : h}</span>`;
+    M.forEach((r, d) => { const v = r[j];
+      g += v == null ? '<i class="off"></i>' : `<i class="${d === pk[0] && j === pk[1] ? 'pk' : ''}" style="background:color-mix(in srgb,var(--ok) ${Math.round(8 + v / max * 92)}%,transparent)"></i>`; });
+  });
+  const head = grande ? '<span></span>' + DIAS.map(x => `<span class="mh-d">${x[0]}</span>`).join('') : '';
+  return `<div class="t-h"><span class="t-id">HORAS</span><span class="t-st" style="--st:var(--ok)">Pico ${DIAS[pk[0]].toLowerCase()} ${H.horas[pk[1]]}:00</span></div>
+    <div class="t-n">Ventas por hora</div>
+    <div class="mh ${grande ? 'big' : ''}">${head}${g}</div>`;
+}
+
 function cardInventario(db) {
   const inv = D.inventario, A = D.ajustes, T = D.ajustes_total;
   db.innerHTML = `<div style="overflow-x:auto"><table class="dt-tbl"><thead><tr><th>Inventario contado al costo</th>${inv.conteos.map(c => `<th>${c} 2026</th>`).join('')}</tr></thead><tbody>
