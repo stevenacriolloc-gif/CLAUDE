@@ -683,17 +683,14 @@ tr.done td.w{color:var(--muted);text-decoration:line-through}
 .st-badge.ok{color:color-mix(in srgb,var(--sem-ok) 72%,#000)}.st-badge.warn{color:color-mix(in srgb,var(--sem-warn) 62%,#000)}.st-badge.bad{color:var(--sem-bad)}
 .pop.pop--semc{min-width:0;padding:12px}
 .sem-c{display:flex;gap:10px}
-/* bolitas de cristal: brillo arriba, canto claro y un pulso suave de su propio color */
-.sem-c{gap:14px;padding:4px 2px}
-.sem-c__o{--c:var(--sem-na);position:relative;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;font:600 12.5px var(--font);font-variant-numeric:tabular-nums;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.35);
-  background:radial-gradient(circle at 32% 26%,rgba(255,255,255,.95) 0 5%,rgba(255,255,255,.35) 16%,transparent 34%),radial-gradient(circle at 50% 120%,color-mix(in srgb,var(--c) 55%,#fff) 0,transparent 55%),radial-gradient(circle at 50% 45%,color-mix(in srgb,var(--c) 92%,#fff) 0,var(--c) 58%,color-mix(in srgb,var(--c) 70%,#000) 100%);
-  box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.75),inset 0 -6px 10px color-mix(in srgb,var(--c) 40%,#000 15%),0 4px 10px -3px color-mix(in srgb,var(--c) 60%,transparent);
-  animation:orb 2.6s ease-in-out infinite}
-.sem-c__o::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1px solid rgba(255,255,255,.55);opacity:.7;pointer-events:none}
-.sem-c__o.bad{--c:var(--sem-bad)}.sem-c__o.warn{--c:var(--sem-warn);color:#4a3a00;text-shadow:0 1px 1px rgba(255,255,255,.5)}.sem-c__o.ok{--c:var(--sem-ok)}
-.sem-c__o:nth-child(2){animation-delay:.35s}.sem-c__o:nth-child(3){animation-delay:.7s}.sem-c__o:nth-child(4){animation-delay:1.05s}
-@keyframes orb{0%,100%{box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.75),inset 0 -6px 10px color-mix(in srgb,var(--c) 40%,#000 15%),0 4px 10px -3px color-mix(in srgb,var(--c) 60%,transparent),0 0 0 0 color-mix(in srgb,var(--c) 45%,transparent)}
-  50%{box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.9),inset 0 -6px 10px color-mix(in srgb,var(--c) 40%,#000 15%),0 4px 14px -2px color-mix(in srgb,var(--c) 75%,transparent),0 0 0 7px color-mix(in srgb,var(--c) 0%,transparent)}}
+/* bolitas planas como el punto del ícono: color liso, anillo claro y el mismo pulso */
+.sem-c{gap:14px;padding:6px 4px}
+.sem-c__o{--c:var(--sem-na);position:relative;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--c);box-shadow:0 0 0 4px color-mix(in srgb,var(--c) 22%,transparent);font:600 12px var(--font);font-variant-numeric:tabular-nums;color:#fff}
+.sem-c__o::before{content:"";position:absolute;inset:0;border-radius:50%;background:var(--c);opacity:0;animation:orbp 3.4s cubic-bezier(.45,0,.25,1) infinite;z-index:-1}
+@keyframes orbp{0%,100%{transform:scale(1);opacity:0}18%{opacity:.35}55%{transform:scale(1.55);opacity:0}}
+.pop.pop--semc{padding:16px 18px}
+.sem-c__o.bad{--c:var(--sem-bad)}.sem-c__o.warn{--c:var(--sem-warn);color:#4a3a00}.sem-c__o.ok{--c:var(--sem-ok)}
+.sem-c__o:nth-child(2)::before{animation-delay:.4s}.sem-c__o:nth-child(3)::before{animation-delay:.8s}.sem-c__o:nth-child(4)::before{animation-delay:1.2s}
 /* ficha: sin títulos sobre la tabla y las gráficas; la leyenda ya los nombra */
 .ficha__g h4{display:none}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
