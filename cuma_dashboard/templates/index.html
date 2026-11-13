@@ -576,6 +576,33 @@ tr.done td.w{color:var(--muted);text-decoration:line-through}
 .tema small{display:block;font-size:11.5px;color:var(--muted);line-height:1.35}
 .tema em{font-style:normal;font-family:var(--mono);font-size:10.5px;font-weight:600;color:var(--accent)}
 .dbody .dfit{grid-template-columns:minmax(0,1fr)}
+
+/* tarjetas de indicador con diseño editorial: nombre y estado arriba, cifra grande y fina, nota y minigráfica abajo */
+.tile:not(.big):not(.hmt):not(.more){background:var(--card-bg);border:1px solid var(--line);padding:16px 18px 14px;gap:6px;min-height:150px}
+.tile:not(.big):not(.hmt):not(.more):hover{border-color:var(--ink-strong);background:var(--card-bg)}
+.tile .t-lab{font-family:var(--font);font-size:14px;font-weight:500;color:var(--ink-strong);line-height:1.3;min-width:0}
+.tile:not(.big) .t-h{align-items:flex-start;gap:10px}
+.st-badge{flex:none;font-family:var(--mono);font-size:11.5px;font-weight:600;line-height:1;padding:5px 8px;border:1px solid currentColor;border-radius:2px;white-space:nowrap;background:var(--card-bg)}
+.st-badge.ok{color:var(--ok)}.st-badge.warn{color:var(--warn)}.st-badge.bad{color:var(--bad)}
+.tile:not(.big):not(.hmt):not(.more) .t-v{font-size:clamp(28px,2.4vw,38px);font-weight:300;letter-spacing:-.03em;line-height:1.05;margin-top:2px}
+.tile:not(.big) .t-v.txt{font-size:22px;font-weight:300;color:var(--muted)}
+.t-ft{display:grid;grid-template-columns:minmax(0,1fr) 64px;align-items:end;gap:10px;margin-top:auto}
+.t-nt{font-size:12.5px;line-height:1.35;color:var(--ink);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.t-mini{display:block;align-self:center}
+.t-mini svg.spark{height:24px}
+.t-mini .bar{margin:0}
+.bento{grid-template-columns:repeat(2,minmax(0,1fr))}
+.tile.hmt.wide{grid-row:span 2}
+.tile.big{background:var(--card-bg);border:1px solid var(--ink-strong);padding:18px 20px 14px;gap:8px}
+.tile.big .t-h{align-items:flex-start;gap:10px}
+.tile.big .t-lab{font-size:15px}
+.tile.big .t-w{color:var(--muted);font-weight:400}
+.tile.big .t-v{font-size:clamp(36px,3.4vw,52px);font-weight:300;letter-spacing:-.035em;line-height:1.02}
+.tile.big .t-v small{font-size:14px;font-weight:400;letter-spacing:0}
+.tile.big .t-s{font-size:13px;font-weight:400;color:var(--ink);line-height:1.45}
+.tile .t-lab,.t-nt{font-weight:400}
+.tile.big svg.spark path[fill]{opacity:.5}
+@media (max-width:640px){.bento{grid-template-columns:minmax(0,1fr)}.tile.big,.tile.hmt.wide{grid-column:auto}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -846,6 +873,26 @@ function compute() {
     I17: {v: usd(vLast / D.superficie_m2, 2), w: lblL(D.meses[last]), u: 'por m² · ' + lbl(D.meses[last]).toLowerCase(), s: `${usd(vLast / D.empleados)} por empleado (${D.empleados} empleados) en ${lblL(D.meses[last])}; superficie de ${nf(D.superficie_m2, 2)} m².`, st: 'na', sp: series(c => c.V / D.superficie_m2), f: v => usd(v, 2)}
   };
   for (const i of IND) if (!V[i.id]) V[i.id] = {v: i.e === 'none' ? 'Sin datos' : 'Por calcular', txt: true, s: 'Falta: ' + i.q.charAt(0).toLowerCase() + i.q.slice(1) + '.', st: 'na', bar: null};
+  // nota corta del pie de cada tarjeta
+  const rP = calc(PER.map(ix)), trP = tendencia(ix(PER[0]), ix(PER[PER.length - 1]));
+  const NT = {
+    I1: `Meta gerente: 18,0 % · Gasto/vtas ${pct(r.pgo)}`,
+    I2: `Margen bruto ${pct(r.mb)} · ${r.pgo > r.mb ? 'supera al margen' : 'debajo del margen'}`,
+    I3: r.mo < 0 ? `Pierde ${usd(-(r.V - r.CV - r.GO) / r.n)}/mes antes de aportes` : 'Cubre el gasto de operación',
+    I6: `Las ventas cubren el ${nf(r.oss, 0)} % de los costos; el resto requiere aportes`,
+    I7: V.I7.txt ? 'Margen de contribución negativo' : `Ventas ${usd(rP.vmes)}/mes · ${nf(rP.vmes / peP * 100, 0)} % del PE`,
+    I5: `Venta diaria del periodo ${trP == null ? '—' : sgn(trP)}`,
+    I11: `${nf(r.trans)} trans./mes · ${win}`,
+    I15: 'Ajuste de inventario · frutas y hortalizas',
+    I18: 'Cota superior · falta clasificar proveedores',
+    I20: `Transferencias ${pct(ab.transferencias_pct)} · Favorita ${pct(ab.favorita_pct)}`,
+    I4: `Energía ${pct(D.estructura_gastos[1].pct)} · dic – oct`,
+    I12: `${nf(D.pareto.productos)} productos · dic – sep`,
+    I13: `${inv.dias} días de inventario · may – sep`,
+    I14: 'Referencia 1 · may – sep',
+    I17: `${usd(vLast / D.empleados)} por empleado`
+  };
+  Object.entries(NT).forEach(([id, t]) => { V[id].nt = t; });
   // I1, I2, I3 e I7 se encienden por un mismo hecho cuando el gasto supera al margen bruto: el semáforo lo cuenta una vez
   const causa = r.pgo > r.mb ? ['I1', 'I2', 'I3', 'I7'].filter(id => V[id].st === 'bad') : [];
   R = {r, acum, last, causa};
@@ -854,7 +901,7 @@ function compute() {
 }
 
 /* ---------- utilidades visuales ---------- */
-function spark(vals, sel) {
+function spark(vals, sel, tinta) {
   const W = 200, H = 40, p = 3, ok = vals.filter(v => v != null); if (ok.length < 2) return '';
   const xs = vals.map((_, i) => p + i * (W - 2 * p) / (vals.length - 1)), lo = Math.min(...ok), hi = Math.max(...ok), sp = hi - lo || 1;
   const ys = vals.map(v => v == null ? null : H - p - (v - lo) / sp * (H - 2 * p));
@@ -863,8 +910,8 @@ function spark(vals, sel) {
   vals.forEach((v, i) => { if (v == null) { pen = false; return; } d += (pen ? 'L' : 'M') + xs[i].toFixed(1) + ' ' + ys[i].toFixed(1); pen = true; });
   const id = 'g' + Math.random().toString(36).slice(2, 8), si = sel == null ? vals.length - 1 : sel, hueco = vals.some(v => v == null);
   return `<svg class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--chart)" stop-opacity=".22"/><stop offset="1" stop-color="var(--chart)" stop-opacity="0"/></linearGradient></defs>
-    ${hueco ? '' : `<path d="${d}L${pts[pts.length - 1][0]} ${H}L${pts[0][0]} ${H}Z" fill="url(#${id})"/>`}<path d="${d}" fill="none" stroke="var(--chart)" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
-    ${ys[si] == null ? '' : `<circle cx="${xs[si]}" cy="${ys[si]}" r="3" fill="var(--surface)" stroke="var(--chart)" stroke-width="1.8" vector-effect="non-scaling-stroke"/>`}</svg>`;
+    ${hueco || tinta ? '' : `<path d="${d}L${pts[pts.length - 1][0]} ${H}L${pts[0][0]} ${H}Z" fill="url(#${id})"/>`}<path d="${d}" fill="none" stroke="${tinta ? 'var(--ink-strong)' : 'var(--chart)'}" stroke-width="${tinta ? 1.3 : 1.8}" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+    ${ys[si] == null ? '' : `<circle cx="${xs[si]}" cy="${ys[si]}" r="${tinta ? 2.6 : 3}" fill="${tinta ? 'var(--chart-3)' : 'var(--surface)'}" stroke="${tinta ? 'none' : 'var(--chart)'}" stroke-width="1.8" vector-effect="non-scaling-stroke"/>`}</svg>`;
 }
 function slide(nav, instant) {
   let hl = nav.querySelector(':scope>.hl');
@@ -961,9 +1008,16 @@ function tileHTML(id, big) {
   else if (k.bar) viz = `<div class="bar"><i style="width:${k.bar * 100}%"></i></div>`;
   else viz = `<div class="bar void"></div>`;
   const cc = R.causa.length > 1 && R.causa.includes(id);
-  return `<div class="t-h"><span class="t-id">${id}${k.w ? ` · <span class="t-w">${k.w}</span>` : ''}</span>${k.st !== 'na' ? `<span class="t-st">${{ok: 'En meta', warn: 'Vigilancia', bad: cc && big ? 'Acción · causa común' : 'Acción'}[k.st]}</span>` : ''}</div>
-    <div class="t-n">${big ? i.n : i.c}</div>
-    <div class="t-v num ${k.txt ? 'txt' : ''}">${k.v}${k.u && big ? `<small>${k.u}</small>` : ''}</div>
+  if (!big) {
+    const badge = k.st === 'na' ? '' : `<span class="st-badge ${k.st}">${{ok: '● Meta', warn: '▲ Vigilar', bad: '■ Acción'}[k.st]}</span>`;
+    const nota = k.nt || (k.txt ? i.q : k.w || '');
+    const mini = k.sp ? spark(k.sp, k.ax ? null : sel, true) : k.bar ? `<div class="bar"><i style="width:${k.bar * 100}%"></i></div>` : '';
+    return `<div class="t-h"><span class="t-lab">${id} · ${i.c}</span>${badge}</div>
+      <div class="t-v num ${k.txt ? 'txt' : ''}">${k.v}</div>
+      <div class="t-ft"><span class="t-nt">${nota}</span><span class="t-mini">${mini}</span></div>`;
+  }
+  return `<div class="t-h"><span class="t-lab">${id} · ${i.n}${k.w ? ` <span class="t-w">· ${k.w}</span>` : ''}</span>${k.st === 'na' ? '' : `<span class="st-badge ${k.st}">${{ok: '● Meta', warn: '▲ Vigilar', bad: '■ Acción'}[k.st]}</span>`}</div>
+    <div class="t-v num ${k.txt ? 'txt' : ''}">${k.v}${k.u ? `<small>${k.u}</small>` : ''}</div>
     ${big ? `<div class="t-s">${k.s}</div><div class="tags"><span class="tag ${i.e}">${ETAG[i.e]}</span><span class="tag none">${ST[k.st]}</span>${cc ? '<span class="tag cc">Causa común: gasto mayor que el margen</span>' : ''}</div>` : ''}
     <div class="t-viz">${viz}</div>`;
 }
