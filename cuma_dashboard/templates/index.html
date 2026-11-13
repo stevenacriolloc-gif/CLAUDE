@@ -645,7 +645,8 @@ tr.done td.w{color:var(--muted);text-decoration:line-through}
 .ficha__s{flex:1;min-width:0;margin:0;padding-left:22px;border-left:1px solid var(--line);font-size:14px;line-height:1.55;color:var(--ink);align-self:stretch;display:flex;align-items:center}
 .ficha__info{flex:none;align-self:flex-start}
 .ficha__info{flex:none}
-.ficha__g{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:center}
+.ficha__g{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:24px;align-items:center}
+.ficha .dt-tbl th,.ficha .dt-tbl td{padding:9px 7px}.ficha .dt-tbl th{white-space:normal;line-height:1.25;vertical-align:bottom}
 .ficha .cg{border:0!important;background:none!important;padding:0!important;margin:0 0 14px;box-shadow:none!important}
 .ficha .cg::before{display:none}
 .ficha__c .cg:last-child,.ficha__d .cg:last-child{margin-bottom:0}
@@ -680,6 +681,10 @@ tr.done td.w{color:var(--muted);text-decoration:line-through}
 .dot.bad{--c:var(--sem-bad);--h:color-mix(in srgb,var(--sem-bad) 28%,transparent)}
 .seg-g{box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--sem-bad) 70%,transparent)}
 .st-badge.ok{color:color-mix(in srgb,var(--sem-ok) 72%,#000)}.st-badge.warn{color:color-mix(in srgb,var(--sem-warn) 62%,#000)}.st-badge.bad{color:var(--sem-bad)}
+.pop.pop--semc{min-width:0;padding:12px}
+.sem-c{display:flex;gap:10px}
+.sem-c__o{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;font:600 17px var(--font);font-variant-numeric:tabular-nums;color:#fff;background:var(--sem-na)}
+.sem-c__o.bad{background:var(--sem-bad)}.sem-c__o.warn{background:var(--sem-warn);color:#3a2e00}.sem-c__o.ok{background:var(--sem-ok)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -1300,9 +1305,11 @@ function renderPanel() {
       <div class="ficha__g"><div class="ficha__d">${tab || `<p class="ficha__vacio">Sin datos para calcularlo todavía. Falta: ${i.q.charAt(0).toLowerCase() + i.q.slice(1)}.</p>`}</div>
         <div class="ficha__c">${detailViz(i.id)}</div></div>
     </article>`;
+  const notas = [...pin.querySelectorAll('.ficha p.cap')].map(p => { const t = p.innerHTML; p.remove(); return t; });
   const falta = D.faltan.filter(f => f[1].split(/,\s*/).includes(i.id));
   $('f-info').onclick = () => openPop($('f-info'), `<div class="pop__head">${i.id} · ${i.c}</div>
     ${OPC.map(([, t, h]) => `<div class="pop__sub">${t}</div><div class="pop__blk">${h}</div>`).join('')}
+    ${notas.length ? `<div class="pop__sub">Notas de los datos</div><div class="pop__blk">${notas.map(t => `<p>${t}</p>`).join('')}</div>` : ''}
     ${falta.length ? `<div class="pop__sub">Datos que faltan</div><div class="pop__blk">${falta.map(f => `<p>${f[0]} <small>· ${f[3]} · ${f[4]}</small></p>`).join('')}</div>` : ''}`, null, 'pop--sema pop--info');
   drawDetail(i.id);
 }
@@ -1317,24 +1324,24 @@ function varMes(id) {
 }
 function detailViz(id) {
   const H = h => `<h4>${h}</h4>`;
-  const evo = `<div class="cg">${H('Evolución mensual · ' + perCorto().toLowerCase())}<div class="chart" style="height:150px"><canvas id="p1"></canvas></div></div>`;
+  const evo = `<div class="cg">${H('Evolución mensual')}<div class="chart" style="height:150px"><canvas id="p1"></canvas></div></div>`;
   if (id === 'I7') { const mc = series(c => c.mc), raros = PER.filter((m, j) => mc[j] < 2);
     return `<div class="cg">${H('Ventas mensuales y punto de equilibrio del periodo')}<div class="chart" style="height:170px"><canvas id="p1"></canvas></div>
       <p class="cap">Se usa una sola línea del periodo.${raros.length ? ` En ${raros.map(lblL).join(' y ')} el margen de contribución del mes fue menor que 2 % (${raros.map(m => pct(mc[PER.indexOf(m)], 2)).join(', ')}): ahí el punto de equilibrio mensual no existe o se dispara.` : ''} El margen mensual salta con los ajustes de inventario.</p></div>`; }
-  if (COMBO[id]) return `<div class="cg">${H(COMBO[id]().t + ' · ' + perCorto().toLowerCase())}<div class="chart" style="height:240px"><canvas id="p1"></canvas></div>${COMBO[id]().cap ? `<p class="cap">${COMBO[id]().cap}</p>` : ''}</div>`
-    + (id === 'I11' ? `<div class="cg">${H('Ventas por franja horaria · ' + D.horas.periodo)}${vbars(D.horas.franjas.map(f => f.pv), k => k === 1 || k === 3, D.horas.franjas.map(f => f.c), v => nf(v, 0) + ' %')}<div class="tl" style="margin-top:8px"><div><span>Ticket fin de semana</span><b>${usd(D.horas.semana.fin_tk, 2)}</b><em>${pct(D.horas.semana.fin_pv)} de las ventas</em></div><div><span>Ticket entre semana</span><b>${usd(D.horas.semana.sem_tk, 2)}</b><em>${nf(D.horas.semana.sem_tr)} trans. al día</em></div></div></div>` : '');
+  if (COMBO[id]) return `<div class="cg">${H(COMBO[id]().t)}<div class="chart" style="height:240px"><canvas id="p1"></canvas></div>${COMBO[id]().cap ? `<p class="cap">${COMBO[id]().cap}</p>` : ''}</div>`
+    + (id === 'I11' ? `<div class="cg">${H('Ventas por franja horaria')}${vbars(D.horas.franjas.map(f => f.pv), k => k === 1 || k === 3, D.horas.franjas.map(f => f.c), v => nf(v, 0) + ' %')}<div class="tl" style="margin-top:8px"><div><span>Ticket fin de semana</span><b>${usd(D.horas.semana.fin_tk, 2)}</b><em>${pct(D.horas.semana.fin_pv)} de las ventas</em></div><div><span>Ticket entre semana</span><b>${usd(D.horas.semana.sem_tk, 2)}</b><em>${nf(D.horas.semana.sem_tr)} trans. al día</em></div></div></div>` : '');
   if (id === 'I11') { const h = D.horas;
-    return evo + `<div class="cg">${H('Ventas por franja horaria · ' + h.periodo)}${vbars(h.franjas.map(f => f.pv), k => k === 1 || k === 3, h.franjas.map(f => f.c), v => nf(v, 0) + ' %')}
+    return evo + `<div class="cg">${H('Ventas por franja horaria')}${vbars(h.franjas.map(f => f.pv), k => k === 1 || k === 3, h.franjas.map(f => f.c), v => nf(v, 0) + ' %')}
       <div class="tl" style="margin-top:8px"><div><span>Ticket fin de semana</span><b>${usd(h.semana.fin_tk, 2)}</b><em>${pct(h.semana.fin_pv)} de las ventas</em></div><div><span>Ticket entre semana</span><b>${usd(h.semana.sem_tk, 2)}</b><em>${nf(h.semana.sem_tr)} trans. al día</em></div></div></div>`; }
   if (id === 'I13' || id === 'I14') { const inv = D.inventario;
     return `<div class="cg">${H('Inventario contado al costo · USD')}${vbars(inv.total, k => k > 0, inv.conteos, v => nf(v, 2))}
       <div class="tl x4" style="margin-top:8px;grid-template-columns:repeat(3,1fr)">${id === 'I13'
         ? `<div><span>Rotación may – sep</span><b>${nf(inv.rot_periodo, 2)}</b><em>5 meses</em></div><div><span>Anualizada</span><b>${nf(inv.rot_anual, 1)}</b><em>veces</em></div><div><span>Días de inventario</span><b>${inv.dias}</b><em>días</em></div>`
         : `<div><span>GMROI may – sep</span><b>${nf(inv.gmroi_periodo, 2)}</b><em>5 meses</em></div><div><span>Anualizado</span><b>${nf(inv.gmroi_anual, 2)}</b><em>referencia 1</em></div><div><span>Inventario promedio</span><b>${usd(inv.promedio)}</b><em>abr y sep</em></div>`}</div></div>`; }
-  if (id === 'I15') return `<div class="cg">${H('Ajuste neto sobre ventas por área · mar – sep')}${D.ajustes.map((a, k) => `<div class="pr"><div class="l"><span>${a.area}</span><b>${pct(-a.pct)}</b></div><div class="trk"><i style="--c:${k === 1 ? 'var(--chart)' : 'var(--chart-2)'};--w:${Math.min(1, -a.pct / 22)};--k:${k}"></i></div></div>`).join('')}
+  if (id === 'I15') return `<div class="cg">${H('Ajuste neto sobre ventas por área')}${D.ajustes.map((a, k) => `<div class="pr"><div class="l"><span>${a.area}</span><b>${pct(-a.pct)}</b></div><div class="trk"><i style="--c:${k === 1 ? 'var(--chart)' : 'var(--chart-2)'};--w:${Math.min(1, -a.pct / 22)};--k:${k}"></i></div></div>`).join('')}
     <p class="cap">Granos a granel no es merma: entran con el código a granel y se venden con el código empacado.</p></div>`;
-  if (id === 'I4') return `<div class="cg">${H('Gasto operativo por rubro · dic – oct')}${D.estructura_gastos.map((g, k) => `<div class="pr"><div class="l"><span>${g.rubro}</span><b>${pct(g.pct)}</b></div><div class="trk"><i style="--c:var(--chart);--w:${g.pct / 40};--k:${k}"></i></div></div>`).join('')}</div>`;
-  if (id === 'I18' || id === 'I20') return `<div class="cg">${H('Participación en las entradas · mar – sep')}${D.proveedores.map((p, k) => `<div class="pr"><div class="l"><span>${p.nombre}</span><b>${pct(p.pct)}</b></div><div class="trk"><i style="--c:${k ? 'var(--chart-2)' : 'var(--chart)'};--w:${p.pct / 40};--k:${k}"></i></div></div>`).join('')}</div>`;
+  if (id === 'I4') return `<div class="cg">${H('Gasto operativo por rubro')}${D.estructura_gastos.map((g, k) => `<div class="pr"><div class="l"><span>${g.rubro}</span><b>${pct(g.pct)}</b></div><div class="trk"><i style="--c:var(--chart);--w:${g.pct / 40};--k:${k}"></i></div></div>`).join('')}</div>`;
+  if (id === 'I18' || id === 'I20') return `<div class="cg">${H('Participación en las entradas')}${D.proveedores.map((p, k) => `<div class="pr"><div class="l"><span>${p.nombre}</span><b>${pct(p.pct)}</b></div><div class="trk"><i style="--c:${k ? 'var(--chart-2)' : 'var(--chart)'};--w:${p.pct / 40};--k:${k}"></i></div></div>`).join('')}</div>`;
   if (id === 'I12') return `<div class="cg">${H('% acumulado de ventas según % de productos')}<div class="chart" style="height:150px"><canvas id="p1"></canvas></div>
     <div class="tl x4" style="margin-top:8px;grid-template-columns:repeat(3,1fr)">${['A', 'B', 'C'].map(c => `<div><span>Clase ${c}</span><b>${nf(D.pareto.abc[c])}</b></div>`).join('')}</div></div>`;
   return `<div class="empty-st">Este indicador se dibujará cuando llegue el dato que falta.</div>`;
@@ -1824,11 +1831,8 @@ function openMes() {
   openPop($('b-fechas'), html(), bind);
 }
 function openSemaforo() {
-  const ORD = ['bad', 'warn', 'ok', 'na'], c = st => TABLERO.filter(id => V[id].st === st).length;
-  const L = {bad: 'Acción', warn: 'Vigilancia', ok: 'En meta', na: 'Sin dato'};
-  openPop($('b-sem'), `<div class="pop__head">Semáforo del tablero</div>
-    <div class="pop__sema"><div class="seg">${ORD.flatMap(st => TABLERO.filter(id => V[id].st === st)).map(id => `<i style="--c:var(--sem-${V[id].st})" title="${id} · ${BY[id].c}: ${ST[V[id].st]}"></i>`).join('')}</div>
-    <div class="tl x4">${ORD.map(st => `<div><span>${L[st]}</span><b><span class="dot sm ${st}"></span>${c(st)}</b></div>`).join('')}</div></div>`, null, 'pop--sema');
+  const c = st => TABLERO.filter(id => V[id].st === st).length, L = {bad: 'Acción', warn: 'Vigilancia', ok: 'En meta', na: 'Sin dato'};
+  openPop($('b-sem'), `<div class="sem-c">${['bad', 'warn', 'ok', 'na'].map(st => `<span class="sem-c__o ${st}" title="${L[st]}" aria-label="${L[st]}: ${c(st)}">${c(st)}</span>`).join('')}</div>`, null, 'pop--semc');
 }
 
 const FAMS = [['T', 'Tablero principal', () => TABLERO.length], ['C', 'Contables'], ['F', 'Financieros'], ['O', 'Operativos y comerciales'], ['A', 'Abastecimiento y valor público']];
