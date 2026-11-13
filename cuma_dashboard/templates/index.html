@@ -1824,11 +1824,11 @@ function openMes() {
   openPop($('b-fechas'), html(), bind);
 }
 function openSemaforo() {
-  const c = s => TABLERO.filter(id => V[id].st === s).length, P = problemas();
-  openPop($('b-sem'), `<div class="pop__head">Semáforo del tablero <small>${c('ok')} en meta · ${c('warn')} en vigilancia · ${P.n} ${P.n === 1 ? 'problema' : 'problemas'}</small></div>
-    <div class="pop__sema">${semaHTML()}</div><hr><div class="pop__sub">Indicadores del tablero</div>
-    ${['bad', 'warn', 'ok', 'na'].flatMap(st => TABLERO.filter(id => V[id].st === st)).map(id => `<button type="button" class="menu__item" role="menuitem" data-id="${id}"><span class="dot sm ${V[id].st}"></span>${BY[id].c}<small>${V[id].v}</small></button>`).join('')}`,
-    el => el.querySelectorAll('[data-id]').forEach(b => b.onclick = () => { closePop(); if (S.fam !== 'T') { S.fam = 'T'; S.todos = false; syncNav(); renderHead(); } pick(b.dataset.id); }), 'pop--sema');
+  const ORD = ['bad', 'warn', 'ok', 'na'], c = st => TABLERO.filter(id => V[id].st === st).length;
+  const L = {bad: 'Acción', warn: 'Vigilancia', ok: 'En meta', na: 'Sin dato'};
+  openPop($('b-sem'), `<div class="pop__head">Semáforo del tablero</div>
+    <div class="pop__sema"><div class="seg">${ORD.flatMap(st => TABLERO.filter(id => V[id].st === st)).map(id => `<i style="--c:var(--sem-${V[id].st})" title="${id} · ${BY[id].c}: ${ST[V[id].st]}"></i>`).join('')}</div>
+    <div class="tl x4">${ORD.map(st => `<div><span>${L[st]}</span><b><span class="dot sm ${st}"></span>${c(st)}</b></div>`).join('')}</div></div>`, null, 'pop--sema');
 }
 
 const FAMS = [['T', 'Tablero principal', () => TABLERO.length], ['C', 'Contables'], ['F', 'Financieros'], ['O', 'Operativos y comerciales'], ['A', 'Abastecimiento y valor público']];
