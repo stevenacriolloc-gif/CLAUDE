@@ -664,6 +664,16 @@ tr.done td.w{color:var(--muted);text-decoration:line-through}
 .marq__t{display:flex;gap:8px;width:max-content;padding:2px 0 2px 12px}
 .tile.chip .dot{width:7px;height:7px}
 .tile.chip--cur{flex:none}
+.pop .yr{justify-content:center;gap:22px;font-size:15px}
+.yr button{appearance:none;width:32px;height:32px;border:0;border-radius:50%;background:transparent;font-size:20px;line-height:1;color:var(--ink-strong);cursor:pointer}
+.yr button:hover:not(:disabled){background:var(--glass-flat)}.yr button:disabled{opacity:.2;cursor:default}
+.mgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;padding:4px 10px 2px}
+.mchip{position:relative;appearance:none;height:40px;border:1px solid var(--line);border-radius:999px;background:transparent;font:500 13px var(--font);color:var(--ink-strong);cursor:pointer;transition:background-color .25s,border-color .25s,color .25s}
+.mchip:hover:not(:disabled){border-color:var(--ink-strong)}
+.mchip.on{background:var(--band);border-color:var(--band);color:var(--on-band)}
+.mchip:disabled{opacity:.28;cursor:default}
+.mchip i{position:absolute;top:7px;right:10px;width:4px;height:4px;border-radius:50%;background:currentColor;opacity:.55}
+.pop__note{margin:8px 12px 8px;font-size:11.5px;line-height:1.45;color:var(--muted)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -809,8 +819,9 @@ const reduce = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 const M = D.mensual, idx0 = D.meses.indexOf(D.inicio_costo_real);
 let PER = D.meses.slice(idx0);   // meses del periodo; por defecto, los que tienen costo real
 const ix = k => D.meses.indexOf(k);
-const perCorto = () => `${lbl(PER[0])} – ${lbl(PER[PER.length - 1]).toLowerCase()}`;
-const perLargo = () => `${lblL(PER[0])} a ${lblL(PER[PER.length - 1])}`;
+const seguido = () => PER.every((k, j) => !j || D.meses.indexOf(k) === D.meses.indexOf(PER[j - 1]) + 1);
+const perCorto = () => PER.length === 1 ? lbl(PER[0]) : seguido() ? `${lbl(PER[0])} – ${lbl(PER[PER.length - 1]).toLowerCase()}` : PER.map((k, j) => j ? lbl(k).toLowerCase() : lbl(k)).join(', ');
+const perLargo = () => PER.length === 1 ? lblL(PER[0]) : seguido() ? `${lblL(PER[0])} a ${lblL(PER[PER.length - 1])}` : PER.map(lblL).join(', ').replace(/, ([^,]+)$/, ' y $1');
 const sum = (a, ii) => ii.reduce((s, i) => s + (a[i] || 0), 0);
 function calc(ii) {
   const n = ii.length, V = sum(M.ventas, ii), CV = sum(M.costo_ventas, ii), GO = sum(M.gastos, ii), COM = sum(M.comisiones, ii);
@@ -1748,7 +1759,7 @@ function cardUmbrales(db) {
 /* ---------- barra superior: estado de los íconos y textos de ayuda ---------- */
 const famNombre = () => S.datos || S.fam === 'X' ? 'Datos' : S.fam === 'T' ? (S.todos ? 'Los 23 indicadores' : 'Tablero principal') : FAM_L[S.fam];
 function renderHead() {
-  const per = S.mes === 'acum' ? `${perCorto()} 2026` : `${cap(lblL(S.mes))} 2026`;
+  const ys = [...new Set(PER.map(k => k.slice(0, 4)))], per = S.mes === 'acum' ? `${perCorto()}${ys.length === 1 ? ' ' + ys[0] : ''}` : `${cap(lblL(S.mes))} ${S.mes.slice(0, 4)}`;
   $('b-fechas-tip').textContent = 'Fechas · ' + per; $('b-fechas').setAttribute('aria-label', 'Fechas: ' + per);
   $('b-ind-tip').textContent = 'Indicadores · ' + (S.datos || S.fam === 'X' ? 'elegir apartado' : famNombre());
   syncNav();
@@ -1785,17 +1796,26 @@ function openPop(btn, html, mount, cls) {
 }
 document.addEventListener('pointerdown', e => { if (POP && !POP.el.contains(e.target) && !POP.btn.contains(e.target)) closePop(); });
 const CK = '<svg class="ck" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+let FY = +D.meses[D.meses.length - 1].slice(0, 4);
 function openMes() {
-  const real = PER[0] === D.inicio_costo_real, it = (v, l, sub = '') => `<button type="button" class="menu__item" role="menuitemradio" aria-checked="${S.mes === v}" data-v="${v}">${l}${sub ? `<small>${sub}</small>` : ''}${S.mes === v ? CK : ''}</button>`;
-  openPop($('b-fechas'), `<div class="pop__head">Fechas <small>2026</small></div>
-    ${it('acum', 'Acumulado', perCorto())}<hr><div class="pop__sub">Mes por mes</div>${PER.map(k => it(k, cap(lblL(k)), D.meses.indexOf(k) < ix(D.inicio_costo_real) ? 'referencial' : '')).join('')}<hr><div class="pop__sub">Ajuste de los datos</div>
-    <div class="menu__item mrow"><span>Solo costo real <small style="margin:0;display:block">${real ? 'desde abril' : 'incluye dic – mar'}</small></span><button class="switch" id="pop-real" role="switch" aria-checked="${real}" aria-label="Solo meses con costo real" style="margin-left:auto"></button></div>
-    <hr><button type="button" class="menu__item" role="menuitem" data-x="1">Fuentes y fechas de corte<small>corte ${fechaL(D.corte || '2026-09-30')}</small></button>`,
-    el => {
-      el.querySelectorAll('[data-v]').forEach(b => b.onclick = () => { S.mes = b.dataset.v; closePop(); refresh(); });
-      el.querySelector('#pop-real').onclick = () => { closePop(); setInicio(real ? D.meses[0] : D.inicio_costo_real); };
-      el.querySelector('[data-x]').onclick = () => setFam('X');
+  const anios = [...new Set(D.meses.map(k => +k.slice(0, 4)))];
+  const sel = () => S.mes === 'acum' ? new Set(PER) : new Set([S.mes]);
+  const html = () => { const S0 = sel(); return `<div class="pop__head yr"><button type="button" data-y="-1" aria-label="Año anterior" ${FY <= anios[0] ? 'disabled' : ''}>‹</button><b>${FY}</b><button type="button" data-y="1" aria-label="Año siguiente" ${FY >= anios[anios.length - 1] ? 'disabled' : ''}>›</button></div>
+    <div class="mgrid">${MES.map((m, j) => { const k = `${FY}-${String(j + 1).padStart(2, '0')}`, ok = D.meses.includes(k), on = S0.has(k);
+      return `<button type="button" class="mchip ${on ? 'on' : ''}" data-k="${k}" aria-pressed="${on}" ${ok ? '' : 'disabled'}>${m}${ok && ix(k) < idx0 ? '<i title="Costo referencial"></i>' : ''}</button>`; }).join('')}</div>
+    <p class="pop__note">${S0.size > 1 ? `Acumulado de ${S0.size} meses` : 'Un solo mes'} · marca varios para sumarlos. Los meses con punto tienen costo referencial.</p>`; };
+  const bind = el => {
+    el.querySelectorAll('[data-y]').forEach(b => b.onclick = () => { FY += +b.dataset.y; el.innerHTML = html(); bind(el); });
+    el.querySelectorAll('[data-k]').forEach(b => b.onclick = () => {
+      const S0 = sel(), k = b.dataset.k;
+      if (S0.has(k)) { if (S0.size === 1) return; S0.delete(k); } else S0.add(k);
+      const ks = [...S0].sort();
+      if (ks.length === 1) { S.mes = ks[0]; PER = D.meses.slice(Math.min(ix(ks[0]), idx0)); }
+      else { S.mes = 'acum'; PER = ks; }
+      refresh(); el.innerHTML = html(); bind(el);
     });
+  };
+  openPop($('b-fechas'), html(), bind);
 }
 function openSemaforo() {
   const c = s => TABLERO.filter(id => V[id].st === s).length, P = problemas();
@@ -1827,9 +1847,10 @@ function openAjustes() {
   openPop($('b-ajustes'), `<div class="pop__head">Ajustes</div>
     <div class="pop__sub">Apariencia</div>
     <button type="button" class="menu__item" role="menuitem" data-a="tema"><span class="tema__sw" aria-hidden="true">${t.sw.map(c => `<i style="background:${c}"></i>`).join('')}</span>${t.n}<small>Cambiar</small></button>
+    <hr><button type="button" class="menu__item" role="menuitem" data-x="1">Fuentes y fechas de corte<small>corte ${fechaL(D.corte || '2026-09-30')}</small></button>
     <hr><div class="pop__sub">Atajos de teclado</div>
     <div class="keys"><kbd>/</kbd><span>Buscar indicador</span><kbd>Esc</kbd><span>Cerrar el menú o la ficha</span></div>`,
-    el => { el.querySelector('[data-a="tema"]').onclick = () => { closePop(true); cycleTheme(); }; });
+    el => { el.querySelector('[data-a="tema"]').onclick = () => { closePop(true); cycleTheme(); }; el.querySelector('[data-x]').onclick = () => setFam('X'); });
 }
 
 /* ---------- buscador de indicadores ---------- */
