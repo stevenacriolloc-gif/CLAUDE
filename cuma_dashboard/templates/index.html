@@ -1113,8 +1113,8 @@ function renderBento(anim = true) {
     clearTimeout(HV.t);
     HV.t = setTimeout(() => { if (b.matches(':hover') && performance.now() > HV.lock) expand(b.dataset.id); }, 180);
   });
-  grid.onpointerenter = () => { HV.over = true; };
-  grid.onpointerleave = () => { HV.over = false; clearTimeout(HV.t); HV.last = performance.now(); };
+  grid.onpointerenter = () => { HV.over = true; STRIP.over = true; };
+  grid.onpointerleave = () => { HV.over = false; STRIP.over = false; clearTimeout(HV.t); HV.last = performance.now(); };
   flip(grid, first);
 }
 function flip(grid, first) {
@@ -1176,6 +1176,16 @@ function expand(id) {
   [prev, id].forEach(x => { const el = x && g.querySelector(`[data-id="${x}"]`); if (!el) return; el.classList.toggle('big', x === id); el.classList.remove('enter'); el.innerHTML = tileHTML(x, x === id); });
   layoutGrid(); if (!reduce()) flip(g, first);
 }
+// franja superior: avanza una píldora cada 2 segundos y vuelve al inicio al llegar al final
+const STRIP = {over: false};
+setInterval(() => {
+  const g = $('bento');
+  if (g.matches(':hover') || document.hidden || POP || !$('stage').classList.contains('foco')) return;
+  const max = g.scrollWidth - g.clientWidth; if (max <= 4) return;
+  const gl = g.getBoundingClientRect().left, pos = c => c.getBoundingClientRect().left - gl + g.scrollLeft;
+  const next = [...g.querySelectorAll('.tile.chip')].map(pos).find(x => x > g.scrollLeft + 24);
+  g.scrollTo({left: g.scrollLeft >= max - 4 || next == null ? 0 : Math.min(max, next - 16), behavior: reduce() ? 'auto' : 'smooth'});
+}, 2000);
 // cada 5 segundos se agranda la siguiente tarjeta, salvo que el mouse esté sobre la cuadrícula
 setInterval(() => {
   if (HV.over || document.hidden || POP || innerWidth < 760 || !$('stage').classList.contains('solo') || performance.now() - HV.last < 5000) return;
@@ -1251,7 +1261,7 @@ function renderPanel() {
   const tab = tablaDatos(i.id, true);
   pin.innerHTML = `
     <article class="ficha">
-      <header class="ficha__h"><div><span class="kind"><span class="dot ${k.st}"></span>${i.id} · ${FAM_L[i.f]}</span><h2>${i.n}</h2></div>
+      <header class="ficha__h"><h2>${i.n}</h2>
         <button type="button" class="tbtn ficha__info" id="f-info" aria-haspopup="dialog" aria-expanded="false" aria-label="Fórmula y especificaciones"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><circle cx="12" cy="12" r="10" opacity=".5"/><path d="M12 17v-6"/><circle cx="12" cy="8" r=".6" fill="currentColor"/></g></svg><span class="tip">Fórmula y especificaciones</span></button></header>
       <div class="ficha__g"><div class="ficha__d">${tab || `<p class="ficha__vacio">Sin datos para calcularlo todavía. Falta: ${i.q.charAt(0).toLowerCase() + i.q.slice(1)}.</p>`}</div>
         <div class="ficha__c">${detailViz(i.id)}</div></div>
@@ -1351,9 +1361,9 @@ function tablaDatos(id, sinFalta) {
   const t = TAB[id];
   if (t) {
     const ii = PER.map(ix), r = calc(ii);
-    const rows = ii.map(i => `<tr class="${S.mes === D.meses[i] ? 'sel' : ''}"><td>${lbl(D.meses[i])} ${D.meses[i].slice(0, 4)}</td>${t.c.map(([, f, fm]) => { const v = f(i); return `<td class="${typeof v === 'number' && v < 0 ? 'neg' : ''}">${fm(v)}</td>`; }).join('')}</tr>`).join('');
-    const tot = `<tr class="tot"><td>${perCorto()} 2026</td>${t.c.map(([, f, fm, tf]) => { const v = tf ? tf(r) : (fm === P2 ? null : ii.reduce((a, i) => a + (f(i) || 0), 0)); return `<td>${v == null ? '' : fm(v)}</td>`; }).join('')}</tr>`;
-    return tbl(['Mes', ...t.c.map(c => c[0])], rows + tot + (t.x ? t.x() : ''), 'USD. ' + t.f) + ft;
+    const rows = ii.map(i => `<tr class="${S.mes === D.meses[i] ? 'sel' : ''}"><td>${lbl(D.meses[i])}</td>${t.c.map(([, f, fm]) => { const v = f(i); return `<td class="${typeof v === 'number' && v < 0 ? 'neg' : ''}">${fm(v)}</td>`; }).join('')}</tr>`).join('');
+    const tot = `<tr class="tot"><td>Total</td>${t.c.map(([, f, fm, tf]) => { const v = tf ? tf(r) : (fm === P2 ? null : ii.reduce((a, i) => a + (f(i) || 0), 0)); return `<td>${v == null ? '' : fm(v)}</td>`; }).join('')}</tr>`;
+    return tbl(['2026', ...t.c.map(c => c[0])], rows + tot + (t.x ? t.x() : ''), 'USD. ' + t.f) + ft;
   }
   if (id === 'I4') return tbl(['Rubro', '% del gasto operativo'], D.estructura_gastos.map(g => `<tr><td>${g.rubro}</td><td>${pct(g.pct, 1)}</td></tr>`).join('') + `<tr class="tot"><td>Total</td><td>${pct(D.estructura_gastos.reduce((a, g) => a + g.pct, 0), 1)}</td></tr>`, 'Cuenta 6 de los apuntes contables, de diciembre a octubre.') + ft;
   if (id === 'I12') { const P = D.pareto; return tbl(['% de los productos', '% acumulado de las ventas'], P.x.slice(1).map((x, k) => `<tr class="${x === 20 ? 'sel' : ''}"><td>${x} %</td><td>${pct(P.y[k + 1], 1)}</td></tr>`).join('') + ['A', 'B', 'C'].map(c => `<tr class="tot"><td>Clase ${c}</td><td>${nf(P.abc[c])} productos</td></tr>`).join(''), `${nf(P.productos)} productos con venta, de diciembre a septiembre; ordenados de mayor a menor venta.`) + ft; }
