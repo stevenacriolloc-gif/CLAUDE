@@ -109,6 +109,18 @@
    3170,
    2370,
    3739
+  ],
+  "dias": [
+   13,
+   30,
+   28,
+   31,
+   30,
+   31,
+   30,
+   31,
+   31,
+   30
   ]
  },
  "estructura_gastos": [
@@ -667,5 +679,69 @@
    "Levantamiento propio",
    "Alta; depende del equipo"
   ]
- ]
+ ],
+ "fuentes": [
+  {
+   "fuente": "Ventas (punto de venta)",
+   "contenido": "Líneas de factura a clientes",
+   "desde": "2025-12-19",
+   "hasta": "2026-09-30",
+   "registros": 70854
+  },
+  {
+   "fuente": "Compras",
+   "contenido": "Facturas de proveedores directos",
+   "desde": "2025-12-18",
+   "hasta": "2026-09-29",
+   "registros": 9921
+  },
+  {
+   "fuente": "Transferencias",
+   "contenido": "Envíos del centro de acopio y devoluciones",
+   "desde": "2026-01-02",
+   "hasta": "2026-09-30",
+   "registros": 9783
+  },
+  {
+   "fuente": "Apuntes contables",
+   "contenido": "Cuentas 4, 5 y 6: ingresos, costos y gastos",
+   "desde": "2025-12-02",
+   "hasta": "2026-10-20",
+   "registros": 86212
+  },
+  {
+   "fuente": "Productos",
+   "contenido": "Catálogo con categoría, precio y costo actuales",
+   "desde": null,
+   "hasta": null,
+   "registros": 3932
+  },
+  {
+   "fuente": "Conteos de inventario",
+   "contenido": "Inventario completo al costo",
+   "desde": "2026-01-09",
+   "hasta": "2026-09-30",
+   "registros": 3,
+   "puntos": [
+    "2026-01-09",
+    "2026-04-30",
+    "2026-09-30"
+   ]
+  },
+  {
+   "fuente": "Ventas por hora",
+   "contenido": "Órdenes del punto de venta con hora",
+   "desde": "2026-01-09",
+   "hasta": "2026-10-14",
+   "registros": 13108
+  },
+  {
+   "fuente": "Productos agroecológicos",
+   "contenido": "Ingreso y venta por productor, con parroquia",
+   "desde": null,
+   "hasta": null,
+   "registros": 35
+  }
+ ],
+ "corte": "2026-09-30"
 }

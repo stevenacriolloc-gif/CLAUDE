@@ -7,6 +7,7 @@ Variables de entorno opcionales:
   DATA_DIR             carpeta con los Excel (por defecto ./datos)
   DASHBOARD_PASSWORD   si se define, el tablero pide usuario «cuma» y esta contraseña
   ADMIN_TOKEN          si se define, habilita /actualizar para subir Excel nuevos desde el navegador
+  NOMBRE               si se define, reemplaza el nombre «CUMA» en los textos del tablero (p. ej. «[NOMBRE]» para anonimizar)
 """
 import hmac
 import json
@@ -24,6 +25,8 @@ PLANTILLA = os.path.join(BASE, "templates", "index.html")
 INICIO, FIN = '<script type="application/json" id="cuma-data">', "</script>"
 # Lo que se recalcula desde los Excel; el resto (inventario, horas, supuestos del informe) viene de la instantánea.
 RECALCULADAS = ("actualizado", "meses", "mensual", "pareto")
+# Fuentes que solo vienen de la instantánea (no hay Excel para ellas): se conservan al recalcular.
+FUENTES_FIJAS = ("Conteos de inventario", "Ventas por hora", "Productos agroecológicos")
 
 app = Flask(__name__)
 _lock = threading.Lock()
@@ -46,6 +49,7 @@ def datos():
             if firma:
                 nuevo = calculo.construir(DATA_DIR)
                 base.update({k: nuevo[k] for k in RECALCULADAS})
+                base["fuentes"] = nuevo["fuentes"] + [x for x in base.get("fuentes", []) if x["fuente"] in FUENTES_FIJAS]
             _estado.update(datos=base, firma=firma, origen="excel" if firma else "instantanea")
         return _estado["datos"]
 
@@ -68,7 +72,11 @@ def tablero():
     i = html.index(INICIO) + len(INICIO)
     j = html.index(FIN, i)
     carga = json.dumps(datos(), ensure_ascii=False).replace("</", "<\\/")
-    return Response(html[:i] + "\n" + carga + "\n" + html[j:], mimetype="text/html")
+    html = html[:i] + "\n" + carga + "\n" + html[j:]
+    nombre = os.environ.get("NOMBRE")
+    if nombre:   # solo el texto visible: los identificadores internos van en minúsculas («cuma-data») y no cambian
+        html = html.replace("CUMA", nombre)
+    return Response(html, mimetype="text/html")
 
 
 @app.get("/api/indicadores")

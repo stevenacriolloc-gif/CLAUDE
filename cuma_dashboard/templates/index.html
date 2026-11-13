@@ -425,6 +425,54 @@ tr.done td.w{color:var(--muted);text-decoration:line-through}
 .mh i.pk{outline:1.5px solid var(--ok);outline-offset:1px}
 .mh-h,.mh-d{font-size:9px;line-height:1;color:var(--muted);text-align:center;align-self:center;font-variant-numeric:tabular-nums}
 .mh-h{text-align:right;padding-right:3px}
+
+/* correcciones de la revisión: ventana de cada tarjeta, causa común, ficha y páginas nuevas */
+.tile .t-w{font-family:var(--font);letter-spacing:0;text-transform:none;opacity:.85;white-space:nowrap}
+.tile .t-h .t-id{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.tile .t-h .t-st{flex:none}
+.tag.cc{background:color-mix(in srgb,var(--bad) 14%,transparent);color:color-mix(in srgb,var(--bad) 75%,var(--ink-strong))}
+.seg-g{display:flex;gap:3px;padding:2px;margin:-2px 0;border-radius:99px;box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--bad) 70%,transparent)}
+.seg-g i{flex:1;border-radius:99px;background:var(--c)}
+.sema__c{margin:0 0 8px;font-size:12px;line-height:1.45;color:var(--ink)}
+.tl em{font-style:normal;font-size:10.5px;color:var(--muted)}
+.vbars{position:relative}
+.vbars>div{gap:2px}
+.vbars b{line-height:12px}.vbars em{line-height:14px}
+.vref{position:absolute;left:0;right:0;height:0;border-top:1.5px dashed var(--bad);pointer-events:none;z-index:1}
+.vref em{position:absolute;left:0;top:-16px;font-style:normal;font-size:10px;font-weight:600;color:color-mix(in srgb,var(--bad) 80%,var(--ink-strong));white-space:nowrap}
+.fnav{display:flex;justify-content:space-between;gap:8px;margin-bottom:8px}
+.fnav__b{appearance:none;border:0;border-radius:8px;padding:6px 10px;background:var(--glass-flat);color:var(--ink);font-size:12px;font-weight:600;cursor:pointer;max-width:48%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fnav__b:hover{color:var(--ink-strong);background:color-mix(in srgb,var(--ink) 10%,transparent)}
+.varm{display:flex;flex-wrap:wrap;gap:4px 14px;margin:6px 0 0;font-size:12px;color:var(--muted)}
+.varm b{color:var(--ink-strong);font-weight:600}
+.varm .up{color:color-mix(in srgb,var(--ok) 70%,var(--ink-strong))}.varm .dn{color:color-mix(in srgb,var(--bad) 75%,var(--ink-strong))}
+.refx{margin:8px 0 0;font-size:12px;line-height:1.45;color:var(--muted)}.refx b{color:var(--ink);font-weight:600}
+.fuente{margin-top:8px;padding:9px 12px;border-radius:8px;background:var(--glass-flat);font-size:12px;line-height:1.5;color:var(--muted)}
+.cg-sub{margin:-4px 0 8px;font-size:11.5px;color:var(--muted)}
+.ap-tbl td{vertical-align:middle}
+.ap-tbl tr[data-id]{cursor:pointer}
+.ap-tbl .fxt{margin-top:2px;font-family:var(--mono);font-size:10.5px;color:var(--muted);font-weight:400}
+.muted{color:var(--muted);font-size:11px}
+.tspark{display:inline-block;width:84px;height:22px;vertical-align:middle}.tspark svg{width:100%;height:100%}
+.lim ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:13px;line-height:1.5;color:var(--ink)}
+.casc{display:block;width:100%;height:180px;overflow:visible;margin-top:6px}
+.casc rect.c-ini{fill:var(--chart-2)}.casc rect.c-menos{fill:color-mix(in srgb,var(--ink) 14%,transparent)}.casc rect.c-fin{fill:var(--chart)}.casc rect.c-neg{fill:var(--bad)}
+.casc text{font-size:10px;font-weight:600;fill:var(--ink-strong);font-family:var(--font)}
+.casc-0{stroke:var(--line);stroke-width:1}
+.casc-l{display:grid;gap:4px;margin-top:4px;font-size:10.5px;line-height:1.25;color:var(--muted);text-align:center}
+.gantt{position:relative;display:flex;flex-direction:column;gap:6px;--lw:150px;padding-bottom:18px}
+.gt-ax,.gt-row{display:grid;grid-template-columns:var(--lw) 1fr;align-items:center;gap:10px}
+.gt-ax>div{display:grid;grid-template-columns:repeat(11,1fr);font-size:10px;color:var(--muted);text-align:center}
+.gt-l{font-size:12px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gt-tr{position:relative;height:12px;border-radius:99px;background:var(--glass-flat)}
+.gt-tr i{position:absolute;top:0;bottom:0;border-radius:99px;background:var(--chart)}
+.gt-tr b{position:absolute;top:50%;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:var(--chart)}
+.gt-ln{position:absolute;top:20px;bottom:16px;left:calc(var(--lw) + 10px + (100% - var(--lw) - 10px) * var(--xn));width:0;border-left:1.5px dashed var(--bad)}
+.gt-ln.real{border-left-color:var(--warn)}
+.gt-ln em{position:absolute;bottom:-17px;left:4px;font-style:normal;font-size:10px;font-weight:600;color:var(--muted);white-space:nowrap}
+.left .dli{transform:none;animation-name:dliInL}
+@keyframes dliInL{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@media (max-width:640px){.vbars b{display:none}.vref em{font-size:9px}.gantt{--lw:96px}.fnav__b{font-size:11px}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -569,9 +617,9 @@ const MES = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','
 const MES_L = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
 const lbl = k => MES[+k.slice(5) - 1], lblL = k => MES_L[+k.slice(5) - 1], cap = s => s.charAt(0).toUpperCase() + s.slice(1);
 const nf = (v, d = 0) => v == null || !isFinite(v) ? '—' : v.toLocaleString('es-EC', {minimumFractionDigits: d, maximumFractionDigits: d});
-const pct = (v, d = 2) => v == null || !isFinite(v) ? '—' : (v < 0 ? '−' : '') + nf(Math.abs(v), d) + ' %';
+const pct = (v, d = 1) => v == null || !isFinite(v) ? '—' : (v < 0 ? '−' : '') + nf(Math.abs(v), d) + ' %';
 const sgn = (v, d = 1) => v == null || !isFinite(v) ? '—' : (v > 0 ? '+' : v < 0 ? '−' : '') + nf(Math.abs(v), d) + ' %';
-const usd = (v, d = 2) => v == null || !isFinite(v) ? '—' : (v < 0 ? '−' : '') + '$ ' + nf(Math.abs(v), d);
+const usd = (v, d = 0) => v == null || !isFinite(v) ? '—' : (v < 0 ? '−' : '') + '$ ' + nf(Math.abs(v), d);
 const reduce = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ---------- cálculo (misma lógica que tendrá el backend) ---------- */
@@ -587,7 +635,11 @@ function calc(ii) {
   return {V, CV, GO, n, N, mb: (V - CV) / V * 100, pgo: GO / V * 100, mo: (V - CV - GO) / V * 100, oss: V / (CV + GO) * 100,
     mc: MC * 100, pe: MC > 0 ? CF / MC : null, vmes: V / n, ticket: VP / N, trans: N / n};
 }
-const growth = i => i > 0 ? (M.ventas[i] - M.ventas[i - 1]) / M.ventas[i - 1] * 100 : null;
+const DIAS_MES = M.dias || D.meses.map(k => new Date(+k.slice(0, 4), +k.slice(5), 0).getDate());
+const vd = i => M.ventas[i] / DIAS_MES[i];   // venta diaria promedio del mes
+// I5: variación de la venta diaria frente al mes anterior; un mes parcial (diciembre) no entra en la variación
+const growth = i => i > 0 && DIAS_MES[i - 1] >= 20 ? (vd(i) - vd(i - 1)) / vd(i - 1) * 100 : null;
+const tendencia = (a, b) => b > a ? (vd(b) - vd(a)) / vd(a) * 100 : null;
 const series = f => PER.map(k => f(calc([ix(k)]), ix(k)));
 
 /* ---------- semáforo (umbrales provisionales) ---------- */
@@ -597,7 +649,7 @@ const U = {
   I2: {txt: 'Rojo si supera al margen bruto', f: (v, r) => v > r.mb ? 'bad' : 'ok'},
   I3: {txt: 'Rojo si es negativo', f: v => v >= 0 ? 'ok' : 'bad'},
   I7: {txt: 'Rojo si las ventas son menores que el punto de equilibrio', f: q => q >= 1 ? 'ok' : 'bad'},
-  I5: {txt: 'Ámbar si es negativo un mes', f: v => v == null ? 'na' : v >= 0 ? 'ok' : 'warn'},
+  I5: {txt: 'Según la tendencia de la venta diaria en el periodo: verde si crece; ámbar si cae hasta 5 % o si el último mes repunta; rojo si cae más', f: (tr, g) => tr == null ? 'na' : tr >= 0 ? 'ok' : tr >= -5 || g > 0 ? 'warn' : 'bad'},
   I11: {txt: 'Ámbar si caen las transacciones frente al mes anterior', f: d => d == null ? 'na' : d >= 0 ? 'ok' : 'warn'},
   I15: {txt: 'Verde ≤ 5 % · ámbar 5 – 10 %', f: v => v <= 5 ? 'ok' : v <= 10 ? 'warn' : 'bad'},
   I18: {txt: 'Por definir con la meta institucional', f: () => 'na'},
@@ -607,8 +659,8 @@ const ST = {ok: 'Dentro de la meta', warn: 'En vigilancia', bad: 'Requiere acci�
 
 /* ---------- catálogo de los 23 indicadores ---------- */
 const fr = (a, b) => `<span class="fr"><span>${a}</span><span>${b}</span></span>`, t = '<sub>t</sub>';
-const FAM = {T: 'Tablero', C: 'Contables', F: 'Financieros', O: 'Operativos', A: 'Abastecimiento'};
-const FAM_L = {C: 'Contables', F: 'Financieros', O: 'Operativos y comerciales', A: 'Abastecimiento y valor público'};
+const FAM = {T: 'Tablero', C: 'Contables', F: 'Financieros', O: 'Operativos', A: 'Abastecimiento', X: 'Fechas'};
+const FAM_L = {C: 'Contables', F: 'Financieros', O: 'Operativos y comerciales', A: 'Abastecimiento y valor público', X: 'Datos y fechas'};
 const FUENTES = ['Ventas', 'Compras', 'Transf.', 'Apuntes', 'Ajustes', 'Ventas por hora'];
 const ETAG = {full: 'Completo', part: 'Parcial', none: 'Sin datos'};
 const IND = [
@@ -616,9 +668,9 @@ const IND = [
   {id:'I2', f:'C', c:'Gasto / ventas', n:'Gastos operativos sobre ventas', d:'Gasto de operación necesario por cada dólar vendido. Si supera al margen bruto, la operación genera pérdida.', fx:`PGO${t} = ${fr('GO'+t,'V'+t)} × 100`, u:'%', p:'Mensual', e:'full', src:[1,0,0,1], q:'No incluye los costos de administración que asume la cooperativa'},
   {id:'I3', f:'C', c:'Margen operativo', n:'Margen operativo y neto', d:'Resultado de la actividad comercial después de costos y gastos; el margen neto añade depreciación e imputaciones.', fx:`MO${t} = ${fr('V'+t+' − CV'+t+' − GO'+t,'V'+t)} × 100 &nbsp; MN${t} = ${fr('Resultado neto'+t,'V'+t)} × 100`, u:'%', p:'Mensual', e:'part', src:[1,0,0,1], q:'Inversiones, activos fijos y depreciación (solicitados a EDEC EP) para el margen neto'},
   {id:'I4', f:'C', c:'Estructura de costos', n:'Estructura de costos y gastos', d:'Participación de cada rubro en el gasto total; identifica los rubros con mayor potencial de optimización.', fx:`EC<sub>i,t</sub> = ${fr('Gasto del rubro i'+t,'∑<sub>i</sub> Gasto<sub>i,t</sub>')} × 100`, u:'%', p:'Mensual', e:'full', src:[0,0,0,1], q:'Clasificar fijo y variable (propio)'},
-  {id:'I5', f:'C', c:'Crecimiento', n:'Crecimiento de ingresos', d:'Variación mensual de las ventas netas; se descompone en transacciones y ticket promedio.', fx:`g${t} = ${fr('V'+t+' − V<sub>t−1</sub>','V<sub>t−1</sub>')} × 100`, u:'%', p:'Mensual', e:'full', src:[1,0,0,0], q:'—'},
-  {id:'I6', f:'F', c:'Autosuficiencia', n:'Autosuficiencia operativa (OSS)', d:'Grado en que los ingresos propios cubren la totalidad de los costos de operación, sin aportes de EDEC EP.', fx:`OSS${t} = ${fr('V'+t,'CV'+t+' + GO'+t)} × 100`, u:'%', p:'Mensual', e:'full', src:[1,0,0,1], q:'Versión contable: la merma queda dentro del costo de ventas al ajustar el inventario'},
-  {id:'I7', f:'F', c:'Punto de equilibrio', n:'Punto de equilibrio', d:'Nivel de ventas mensuales que cubre los costos fijos con el margen de contribución.', fx:`MC% = ${fr('V'+t+' − CVar'+t,'V'+t)} &nbsp; PE${t} = ${fr('CF'+t,'MC%')}`, u:'USD', p:'Mensual', e:'full', src:[1,0,0,1], q:'Variables: costo de ventas y comisiones de tarjeta; el resto del gasto se trata como fijo'},
+  {id:'I5', f:'C', c:'Crecimiento', n:'Crecimiento de ingresos', d:'Variación de la venta diaria promedio frente al mes anterior; se lee junto con la tendencia de todo el periodo y se descompone en transacciones y ticket.', fx:`g${t} = ${fr('VD'+t+' − VD<sub>t−1</sub>','VD<sub>t−1</sub>')} × 100 &nbsp; VD${t} = ${fr('V'+t,'Días con venta'+t)}`, u:'%', p:'Mensual', e:'full', src:[1,0,0,0], q:'—'},
+  {id:'I6', f:'F', c:'Autosuficiencia', n:'Autosuficiencia operativa (OSS)', d:'Grado en que los ingresos propios cubren la totalidad de los costos de operación, sin aportes de EDEC EP.', fx:`OSS${t} = ${fr('V'+t,'CV'+t+' + GO'+t)} × 100`, u:'%', p:'Mensual', e:'part', src:[1,0,0,1], q:'Nómina incompleta: el personal registrado ronda USD 1.300 al mes y EDEC EP podría pagar una parte; si es así, la autosuficiencia está sobreestimada. La merma queda dentro del costo de ventas'},
+  {id:'I7', f:'F', c:'Punto de equilibrio', n:'Punto de equilibrio', d:'Nivel de ventas mensuales que cubre los costos fijos con el margen de contribución.', fx:`MC% = ${fr('V'+t+' − CVar'+t,'V'+t)} &nbsp; PE${t} = ${fr('CF'+t,'MC%')}`, u:'USD', p:'Mensual', e:'part', src:[1,0,0,1], q:'Nómina incompleta (ver I6): con el gasto real de personal el punto de equilibrio sería mayor. Variables: costo de ventas y comisiones de tarjeta; el resto se trata como fijo'},
   {id:'I8', f:'F', c:'Subsidio cruzado', n:'Subsidio cruzado del margen', d:'Diferencia de margen entre productos no básicos y de canasta básica, y aporte de los no básicos a la utilidad bruta.', fx:`SC${t} = MB<sub>t</sub><sup>NB</sup> − MB<sub>t</sub><sup>B</sup> &nbsp; Aporte<sub>t</sub><sup>NB</sup> = ${fr('V<sub>t</sub><sup>NB</sup> − CV<sub>t</sub><sup>NB</sup>','V'+t+' − CV'+t)} × 100`, u:'p. p. y %', p:'Mensual', e:'part', src:[1,1,1,0], q:'Marca de canasta básica; se aproxima con IVA 0 %'},
   {id:'I9', f:'F', c:'Ciclo de efectivo', n:'Ciclo de conversión del efectivo', d:'Días entre el pago a proveedores y la recuperación del efectivo por ventas.', fx:`CCE${t} = ${fr('Inv'+t,'CV'+t)}d + ${fr('CxC'+t,'V'+t)}d − ${fr('CxP'+t,'Compras'+t)}d`, u:'Días', p:'Mensual', e:'none', src:[0,1,1,0], q:'Cuentas por cobrar y por pagar; la tesorería es centralizada y no se separa por tienda'},
   {id:'I10', f:'F', c:'Cobertura de caja', n:'Meses de cobertura de caja', d:'Meses que podría operar CUMA con su liquidez disponible, sin ingresos ni aportes.', fx:`MCC${t} = ${fr('Caja y bancos'+t,'Egreso mensual promedio')}`, u:'Meses', p:'Mensual', e:'none', src:[0,0,0,0], q:'Saldos de caja y bancos de CUMA; la tesorería es centralizada'},
@@ -637,6 +689,25 @@ const IND = [
   {id:'I23', f:'A', c:'Ahorro consumidor', n:'Ahorro del consumidor', d:'Diferencia de costo de una canasta fija entre comercios de referencia y CUMA.', fx:`AC${t} = ${fr('C<sub>t</sub><sup>ref</sup> − C<sub>t</sub><sup>CUMA</sup>','C<sub>t</sub><sup>ref</sup>')} × 100, &nbsp; C${t} = ∑<sub>k</sub> w<sub>k</sub> p<sub>k,t</sub>`, u:'%', p:'Mensual', e:'none', src:[1,0,0,0], q:'Precios de una canasta fija en otros comercios (levantamiento propio)'}
 ];
 const BY = Object.fromEntries(IND.map(i => [i.id, i]));
+// fórmulas en texto llano para la tabla de cada apartado
+const FXT = {I1: '(Ventas − Costo de ventas) / Ventas', I2: 'Gastos operativos / Ventas', I3: '(Ventas − Costo − Gastos) / Ventas · Resultado neto / Ventas',
+  I4: 'Gasto de cada rubro / Gasto total', I5: '(Venta diaria del mes − la del mes anterior) / la del mes anterior', I6: 'Ventas / (Costo de ventas + Gastos operativos)',
+  I7: 'Costos fijos / Margen de contribución %', I8: 'Margen de no básicos − Margen de canasta básica', I9: 'Días de inventario + días de cobro − días de pago',
+  I10: 'Caja y bancos / Egreso mensual promedio', I11: 'Ventas / Transacciones', I12: 'Ventas del 20 % de productos con más venta / Ventas totales',
+  I13: 'Costo de ventas / Inventario promedio', I14: '(Ventas − Costo de ventas) / Inventario promedio', I15: '1 − kg vendidos / kg disponibles (hoy: ajuste / ventas)',
+  I16: 'Días sin existencia / Días de surtido activo', I17: 'Ventas / m² · Ventas / empleado', I18: 'Compras a productor directo / Compras totales',
+  I19: 'Promedio de (fecha de pago − fecha de recepción)', I20: 'Σ (participación de cada proveedor)²', I21: 'Compras de origen local / Compras totales',
+  I22: '(Precio pagado − precio mayorista) / precio mayorista', I23: '(Canasta en otros comercios − en la tienda) / en otros comercios'};
+// referencias para leer cada valor (solo las que tienen respaldo; el resto se dice sin referencia)
+const REF = {I1: 'Otras tiendas de la red: cerca de 18 %, que es también la meta del gerente.', I2: 'Debe quedar por debajo del margen bruto; si lo supera, la operación pierde.',
+  I3: 'Equilibrio en 0 %: por encima la operación gana, por debajo pierde.', I6: 'Autosuficiencia plena: 100 % (los ingresos cubren todos los costos).',
+  I12: 'Regla 80/20: el 20 % de los productos suele concentrar cerca del 80 % de las ventas.', I14: 'GMROI de 1: cada dólar en inventario devuelve un dólar de margen al año.',
+  I15: 'Umbral provisional del tablero: hasta 5 % de las ventas del área.', I20: 'Menos de 1.500 puntos: poco concentrado · 1.500 – 2.500: moderado · más de 2.500: alto.'};
+// cobertura calculada del propio catálogo (cambia si un indicador pasa a parcial)
+function COB() {
+  const c = e => IND.filter(i => i.e === e).length, tb = e => TABLERO.filter(id => BY[id].e === e).length;
+  return {completos: c('full'), parciales: c('part'), sin_datos: c('none'), tablero_completos: tb('full'), tablero_pct: Math.round((TABLERO.length - tb('none')) / TABLERO.length * 100)};
+}
 const TABLERO = ['I6', 'I1', 'I2', 'I3', 'I7', 'I5', 'I11', 'I15', 'I18', 'I20'];
 
 /* ---------- valores de la vista ---------- */
@@ -644,32 +715,37 @@ const S = {mes: 'acum', fam: 'T', sel: null, todos: false, datos: false, card: n
 let V = {}, R = null, WORST = 'na';
 function compute() {
   const acum = S.mes === 'acum', ii = acum ? PER.map(ix) : [ix(S.mes)], r = calc(ii), last = ii[ii.length - 1], g = growth(last);
-  const sp = {I1: series(c => c.mb), I2: series(c => c.pgo), I3: series(c => c.mo), I6: series(c => c.oss), I7: series(c => c.pe),
+  const sp = {I1: series(c => c.mb), I2: series(c => c.pgo), I3: series(c => c.mo), I6: series(c => c.oss), I7: series(c => c.V),
               I5: PER.map(k => growth(ix(k))), I11: series(c => c.ticket)};
+  const win = acum ? perCorto().toLowerCase() : lblL(S.mes), tr = tendencia(ix(PER[0]), last);
+  const k3 = PER.indexOf(D.meses[last]), ma3 = k3 >= 2 ? (sp.I1[k3] + sp.I1[k3 - 1] + sp.I1[k3 - 2]) / 3 : null;
+  const peP = calc(PER.map(ix)).pe;   // punto de equilibrio: una sola línea del periodo
   const ab = D.abastecimiento, inv = D.inventario, aj2 = D.ajustes[1];
   const dTr = last > 0 ? M.transacciones[last] - M.transacciones[last - 1] : null;
   const vLast = M.ventas[last];
   V = {
-    I6: {v: pct(r.oss), s: `Las ventas cubren el ${nf(r.oss, 0)} % de los costos; el resto se financia con aportes.`, st: U.I6.f(r.oss), sp: sp.I6, f: v => pct(v)},
-    I1: {v: pct(r.mb), s: 'Las otras tiendas tienen cerca de 18 %, que es también la meta del gerente.', st: U.I1.f(r.mb, r), sp: sp.I1, f: v => pct(v)},
-    I2: {v: pct(r.pgo), s: `Cada dólar vendido requiere ${nf(r.pgo, 0)} centavos de gasto.`, st: U.I2.f(r.pgo, r), sp: sp.I2, f: v => pct(v)},
-    I3: {v: pct(r.mo), s: r.mo < 0 ? `La operación pierde unos ${usd(-(r.V - r.CV - r.GO) / r.n)} al mes antes de aportes.` : 'El margen cubre el gasto de operación.', st: U.I3.f(r.mo), sp: sp.I3, f: v => pct(v)},
-    I7: r.pe == null
-      ? {v: 'No alcanzable', txt: true, s: `Margen de contribución de ${pct(r.mc)}: ningún nivel de ventas cubre el costo fijo.`, st: 'bad', sp: sp.I7, f: v => usd(v)}
-      : {v: usd(r.pe), u: 'al mes', s: `Con un margen de contribución de ${pct(r.mc)}, las ventas tendrían que ser ${nf(r.pe / r.vmes, 1)} veces las actuales (${usd(r.vmes)}).`, st: U.I7.f(r.vmes / r.pe), sp: sp.I7, f: v => usd(v)},
-    I5: {v: sgn(g), u: lbl(D.meses[last]).toLowerCase(), s: acum ? `${sgn((M.ventas[last] - M.ventas[ix(PER[0])]) / M.ventas[ix(PER[0])] * 100)} entre ${lblL(PER[0])} y ${lblL(D.meses[last])}.` : `Frente a ${lblL(D.meses[last - 1])}.`, st: U.I5.f(g), sp: sp.I5, f: v => sgn(v)},
-    I11: {v: usd(r.ticket, 2), u: nf(acum ? M.transacciones[last] : r.N) + ' trans.', s: acum ? `Unas ${nf(r.trans)} transacciones al mes; ${nf(M.transacciones[last])} en ${lblL(D.meses[last])} (${sgn(dTr / M.transacciones[last - 1] * 100)} frente a ${lblL(D.meses[last - 1])}).` : `${nf(r.N)} transacciones en ${lblL(S.mes)}${dTr == null ? '' : ` (${sgn(dTr / M.transacciones[last - 1] * 100)} frente al mes anterior)`}.`, st: U.I11.f(dTr), sp: sp.I11, f: v => usd(v, 2)},
-    I15: {v: pct(-aj2.pct), u: 'frutas y hortalizas', s: 'Ajuste neto de inventario sobre las ventas del área (mar – sep); aproxima la merma en valor, no en kilogramos.', st: U.I15.f(-aj2.pct), bar: -aj2.pct / 10},
-    I18: {v: '≤ ' + pct(ab.desintermediacion_max), s: 'Cota superior provisional: clasifica a los proveedores por su razón social y no separa productores de distribuidores.', st: 'na', bar: ab.desintermediacion_max / 100},
-    I20: {v: nf(ab.hhi), s: `Concentración moderada: transferencias ${pct(ab.transferencias_pct)} (un solo proveedor) y Corporación Favorita ${pct(ab.favorita_pct)}.`, st: U.I20.f(ab.hhi), bar: ab.hhi / 10000},
-    I4: {v: pct(D.estructura_gastos[0].pct + D.estructura_gastos[2].pct), u: 'personal', s: `Socios ${pct(D.estructura_gastos[0].pct)} y contratado ${pct(D.estructura_gastos[2].pct)} · energía ${pct(D.estructura_gastos[1].pct)}.`, st: 'na', bar: (D.estructura_gastos[0].pct + D.estructura_gastos[2].pct) / 100},
-    I12: {v: pct(D.pareto.y[3]), s: `El 20 % de los ${nf(D.pareto.productos)} productos concentra el ${nf(D.pareto.y[3], 0)} % de las ventas.`, st: 'na', bar: D.pareto.y[3] / 100},
-    I13: {v: nf(inv.rot_anual, 1) + ' veces', u: 'al año', s: `${inv.dias} días de inventario en promedio. Inventario promedio ${usd(inv.promedio)} (abril y septiembre).`, st: 'na', sp: inv.total, ax: [inv.conteos[0], inv.conteos[2]], f: v => usd(v)},
-    I14: {v: nf(inv.gmroi_anual, 2), u: 'al año', s: `Cada dólar en existencias genera ${nf(inv.gmroi_anual * 100, 0)} centavos de margen bruto al año; la referencia es 1.`, st: 'na', bar: inv.gmroi_anual},
-    I17: {v: usd(vLast / D.superficie_m2, 2), u: 'por m² · ' + lbl(D.meses[last]).toLowerCase(), s: `${usd(vLast / D.empleados)} por empleado (${D.empleados} empleados) en ${lblL(D.meses[last])}; superficie de ${nf(D.superficie_m2, 2)} m².`, st: 'na', sp: series(c => c.V / D.superficie_m2), f: v => usd(v, 2)}
+    I6: {v: pct(r.oss), w: win, s: `Las ventas cubren el ${nf(r.oss, 0)} % de los costos; el resto se financia con aportes. Probablemente está sobreestimada: el gasto de personal registrado (unos USD 1.300 al mes) es bajo y EDEC EP podría pagar una parte.`, st: U.I6.f(r.oss), sp: sp.I6, f: v => pct(v), fx: v => pct(v, 2)},
+    I1: {v: pct(r.mb), w: win, s: `Media de los últimos tres meses: ${ma3 == null ? '—' : pct(ma3)}; el margen mensual salta con los ajustes de inventario, por eso se lee la media. Las otras tiendas tienen cerca de 18 %, que es también la meta del gerente.`, st: U.I1.f(r.mb, r), sp: sp.I1, f: v => pct(v), fx: v => pct(v, 2)},
+    I2: {v: pct(r.pgo), w: win, s: `Cada dólar vendido requiere ${nf(r.pgo, 0)} centavos de gasto.`, st: U.I2.f(r.pgo, r), sp: sp.I2, f: v => pct(v), fx: v => pct(v, 2)},
+    I3: {v: pct(r.mo), w: win, s: r.mo < 0 ? `La operación pierde unos ${usd(-(r.V - r.CV - r.GO) / r.n)} al mes antes de aportes.` : 'El margen cubre el gasto de operación.', st: U.I3.f(r.mo), sp: sp.I3, f: v => pct(v), fx: v => pct(v, 2)},
+    I7: peP == null
+      ? {v: 'No alcanzable', txt: true, w: perCorto().toLowerCase(), s: `Margen de contribución del periodo de ${pct(calc(PER.map(ix)).mc)}: ningún nivel de ventas cubre el costo fijo.`, st: 'bad', sp: sp.I7, f: v => usd(v), fx: v => usd(v, 2)}
+      : {v: usd(peP), u: 'al mes', w: perCorto().toLowerCase(), s: `Una sola línea del periodo: con un margen de contribución de ${pct(calc(PER.map(ix)).mc)}, las ventas tendrían que ser ${nf(peP / calc(PER.map(ix)).vmes, 1)} veces las actuales (${usd(calc(PER.map(ix)).vmes)} al mes). Probablemente subestimado: la nómina registrada está incompleta.`, st: U.I7.f(calc(PER.map(ix)).vmes / peP), sp: sp.I7, f: v => usd(v), fx: v => usd(v, 2)},
+    I5: {v: sgn(g), u: lbl(D.meses[last]).toLowerCase(), w: win, s: `${g == null ? 'Sin mes anterior comparable' : `Venta diaria de ${lblL(D.meses[last])} ${sgn(g)} frente a ${lblL(D.meses[last - 1])}`}${tr == null ? '.' : `; en el periodo (${lblL(PER[0])} a ${lblL(D.meses[last])}) la venta diaria ${tr >= 0 ? 'sube' : 'cae'} ${pct(Math.abs(tr))}.`}${tr != null && tr < 0 && g > 0 ? ' El repunte del último mes no compensa la caída del periodo.' : ''}`, st: U.I5.f(tr, g), sp: sp.I5, f: v => sgn(v), fx: v => sgn(v, 2)},
+    I11: {v: usd(r.ticket, 2), w: win, u: nf(acum ? M.transacciones[last] : r.N) + ' trans.', s: acum ? `Unas ${nf(r.trans)} transacciones al mes; ${nf(M.transacciones[last])} en ${lblL(D.meses[last])} (${sgn(dTr / M.transacciones[last - 1] * 100)} frente a ${lblL(D.meses[last - 1])}).` : `${nf(r.N)} transacciones en ${lblL(S.mes)}${dTr == null ? '' : ` (${sgn(dTr / M.transacciones[last - 1] * 100)} frente al mes anterior)`}.`, st: U.I11.f(dTr), sp: sp.I11, f: v => usd(v, 2), fx: v => usd(v, 2)},
+    I15: {v: pct(-aj2.pct), w: 'mar – sep', u: 'frutas y hortalizas', s: 'Ajuste neto de inventario sobre las ventas del área (mar – sep); aproxima la merma en valor, no en kilogramos.', st: U.I15.f(-aj2.pct), bar: -aj2.pct / 10},
+    I18: {v: '≤ ' + pct(ab.desintermediacion_max), w: 'mar – sep', s: 'Cota superior provisional: clasifica a los proveedores por su razón social y no separa productores de distribuidores.', st: 'na', bar: ab.desintermediacion_max / 100},
+    I20: {v: nf(ab.hhi), w: 'mar – sep', s: `Concentración moderada: transferencias ${pct(ab.transferencias_pct)} (un solo proveedor) y Corporación Favorita ${pct(ab.favorita_pct)}.`, st: U.I20.f(ab.hhi), bar: ab.hhi / 10000},
+    I4: {v: pct(D.estructura_gastos[0].pct + D.estructura_gastos[2].pct), w: 'dic – oct', u: 'personal', s: `Socios ${pct(D.estructura_gastos[0].pct)} y contratado ${pct(D.estructura_gastos[2].pct)} · energía ${pct(D.estructura_gastos[1].pct)}.`, st: 'na', bar: (D.estructura_gastos[0].pct + D.estructura_gastos[2].pct) / 100},
+    I12: {v: pct(D.pareto.y[3]), w: 'dic – sep', s: `El 20 % de los ${nf(D.pareto.productos)} productos concentra el ${nf(D.pareto.y[3], 0)} % de las ventas.`, st: 'na', bar: D.pareto.y[3] / 100},
+    I13: {v: nf(inv.rot_anual, 1) + ' veces', w: 'may – sep', u: 'al año', s: `${inv.dias} días de inventario en promedio. Inventario promedio ${usd(inv.promedio)} (abril y septiembre).`, st: 'na', sp: inv.total, ax: [inv.conteos[0], inv.conteos[2]], f: v => usd(v)},
+    I14: {v: nf(inv.gmroi_anual, 2), w: 'may – sep', u: 'al año', s: `Cada dólar en existencias genera ${nf(inv.gmroi_anual * 100, 0)} centavos de margen bruto al año; la referencia es 1.`, st: 'na', bar: inv.gmroi_anual},
+    I17: {v: usd(vLast / D.superficie_m2, 2), w: lblL(D.meses[last]), u: 'por m² · ' + lbl(D.meses[last]).toLowerCase(), s: `${usd(vLast / D.empleados)} por empleado (${D.empleados} empleados) en ${lblL(D.meses[last])}; superficie de ${nf(D.superficie_m2, 2)} m².`, st: 'na', sp: series(c => c.V / D.superficie_m2), f: v => usd(v, 2)}
   };
   for (const i of IND) if (!V[i.id]) V[i.id] = {v: i.e === 'none' ? 'Sin datos' : 'Por calcular', txt: true, s: 'Falta: ' + i.q.charAt(0).toLowerCase() + i.q.slice(1) + '.', st: 'na', bar: null};
-  R = {r, acum, last};
+  // I1, I2, I3 e I7 se encienden por un mismo hecho cuando el gasto supera al margen bruto: el semáforo lo cuenta una vez
+  const causa = r.pgo > r.mb ? ['I1', 'I2', 'I3', 'I7'].filter(id => V[id].st === 'bad') : [];
+  R = {r, acum, last, causa};
   WORST = ['bad', 'warn', 'ok'].find(s => TABLERO.some(id => V[id].st === s)) || 'na';
   $('gdot').className = 'dot ' + WORST; $('gdot').title = 'Tablero: ' + ST[WORST].toLowerCase();
 }
@@ -680,10 +756,11 @@ function spark(vals, sel) {
   const xs = vals.map((_, i) => p + i * (W - 2 * p) / (vals.length - 1)), lo = Math.min(...ok), hi = Math.max(...ok), sp = hi - lo || 1;
   const ys = vals.map(v => v == null ? null : H - p - (v - lo) / sp * (H - 2 * p));
   const pts = xs.map((x, i) => ys[i] == null ? null : [x, ys[i]]).filter(Boolean);
-  const d = pts.map((q, i) => (i ? 'L' : 'M') + q[0].toFixed(1) + ' ' + q[1].toFixed(1)).join('');
-  const id = 'g' + Math.random().toString(36).slice(2, 8), si = sel == null ? vals.length - 1 : sel;
+  let d = '', pen = false;
+  vals.forEach((v, i) => { if (v == null) { pen = false; return; } d += (pen ? 'L' : 'M') + xs[i].toFixed(1) + ' ' + ys[i].toFixed(1); pen = true; });
+  const id = 'g' + Math.random().toString(36).slice(2, 8), si = sel == null ? vals.length - 1 : sel, hueco = vals.some(v => v == null);
   return `<svg class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--chart)" stop-opacity=".22"/><stop offset="1" stop-color="var(--chart)" stop-opacity="0"/></linearGradient></defs>
-    <path d="${d}L${pts[pts.length - 1][0]} ${H}L${pts[0][0]} ${H}Z" fill="url(#${id})"/><path d="${d}" fill="none" stroke="var(--chart)" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+    ${hueco ? '' : `<path d="${d}L${pts[pts.length - 1][0]} ${H}L${pts[0][0]} ${H}Z" fill="url(#${id})"/>`}<path d="${d}" fill="none" stroke="var(--chart)" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
     ${ys[si] == null ? '' : `<circle cx="${xs[si]}" cy="${ys[si]}" r="3" fill="var(--surface)" stroke="var(--chart)" stroke-width="1.8" vector-effect="non-scaling-stroke"/>`}</svg>`;
 }
 function slide(nav, instant) {
@@ -780,23 +857,30 @@ function tileHTML(id, big) {
   if (k.sp) { const ax = k.ax || [lbl(PER[0]), lbl(PER[PER.length - 1])]; viz = spark(k.sp, k.ax ? null : sel) + (big ? `<div class="axis"><span>${ax[0]}</span><span>${ax[1]}</span></div>` : ''); }
   else if (k.bar) viz = `<div class="bar"><i style="width:${k.bar * 100}%"></i></div>`;
   else viz = `<div class="bar void"></div>`;
-  return `<div class="t-h"><span class="t-id">${id}</span>${k.st !== 'na' ? `<span class="t-st">${{ok: 'En meta', warn: 'Vigilancia', bad: 'Acción'}[k.st]}</span>` : ''}</div>
+  const cc = R.causa.length > 1 && R.causa.includes(id);
+  return `<div class="t-h"><span class="t-id">${id}${k.w ? ` · <span class="t-w">${k.w}</span>` : ''}</span>${k.st !== 'na' ? `<span class="t-st">${{ok: 'En meta', warn: 'Vigilancia', bad: cc && big ? 'Acción · causa común' : 'Acción'}[k.st]}</span>` : ''}</div>
     <div class="t-n">${big ? i.n : i.c}</div>
     <div class="t-v num ${k.txt ? 'txt' : ''}">${k.v}${k.u && big ? `<small>${k.u}</small>` : ''}</div>
-    ${big ? `<div class="t-s">${k.s}</div><div class="tags"><span class="tag ${i.e}">${ETAG[i.e]}</span><span class="tag none">${ST[k.st]}</span></div>` : ''}
+    ${big ? `<div class="t-s">${k.s}</div><div class="tags"><span class="tag ${i.e}">${ETAG[i.e]}</span><span class="tag none">${ST[k.st]}</span>${cc ? '<span class="tag cc">Causa común: gasto mayor que el margen</span>' : ''}</div>` : ''}
     <div class="t-viz">${viz}</div>`;
 }
 function visibles() {
+  if (S.fam === 'X') return IND.map(i => i.id);   // en «Fechas» se ven las 23 tarjetas con su ventana
   if (S.fam !== 'T') return IND.filter(i => i.f === S.fam).map(i => i.id);
   return S.todos ? [...TABLERO, ...IND.map(i => i.id).filter(id => !TABLERO.includes(id))] : TABLERO;
 }
 /* semáforo del tablero, encima de la pila de tarjetas */
+function problemas() {
+  const cc = R.causa.length > 1 ? R.causa : [], otros = TABLERO.filter(id => V[id].st === 'bad' && !cc.includes(id));
+  return {cc, n: (cc.length ? 1 : 0) + otros.length, ind: TABLERO.filter(id => V[id].st === 'bad').length};
+}
 function renderSema() {
-  const c = st => TABLERO.filter(id => V[id].st === st).length;
+  const c = st => TABLERO.filter(id => V[id].st === st).length, P = problemas(), seg = id => `<i style="--c:var(--${V[id].st})" title="${id} · ${BY[id].c}: ${ST[V[id].st]}"></i>`;
   $('sema').innerHTML = `<h4 class="sema__t">Semáforo del tablero</h4>
-    <div class="seg">${TABLERO.map(id => `<i style="--c:var(--${V[id].st})" title="${id} · ${BY[id].c}: ${ST[V[id].st]}"></i>`).join('')}</div>
+    <div class="seg">${P.cc.length ? `<span class="seg-g" style="flex:${P.cc.length}" title="Una sola causa">${P.cc.map(seg).join('')}</span>` : ''}${TABLERO.filter(id => !P.cc.includes(id)).map(seg).join('')}</div>
+    ${P.cc.length ? `<p class="sema__c"><b>${P.cc.join(', ').replace(/, (I\d+)$/, ' e $1')}</b> se encienden por una sola causa: el gasto (${pct(R.r.pgo)} de las ventas) supera al margen bruto (${pct(R.r.mb)}). Cuenta como un problema.</p>` : ''}
     <div class="tl x4"><div><span>Dentro de la meta</span><b><span class="dot sm ok"></span>${c('ok')}</b></div><div><span>En vigilancia</span><b><span class="dot sm warn"></span>${c('warn')}</b></div>
-      <div><span>Requieren acción</span><b><span class="dot sm bad"></span>${c('bad')}</b></div><div><span>Sin dato</span><b><span class="dot sm na"></span>${c('na')}</b></div></div>`;
+      <div><span>Problemas que requieren acción</span><b><span class="dot sm bad"></span>${P.n}</b>${P.ind !== P.n ? `<em>${P.ind} indicadores en rojo</em>` : ''}</div><div><span>Sin dato</span><b><span class="dot sm na"></span>${c('na')}</b></div></div>`;
 }
 function renderBento(anim = true) {
   renderSema();
@@ -843,14 +927,17 @@ function pick(id) {
 /* ---------- ficha ---------- */
 const charts = {};
 function kill(k) { if (charts[k]) { charts[k].destroy(); delete charts[k]; } }
-function vbars(vals, on, lbls, fmt) {
-  const max = Math.max(...vals) || 1;
-  return `<div class="vbars">${vals.map((v, k) => `<div><b>${fmt(v)}</b><i style="--k:${k};height:${Math.max(3, v / max * 82)}%;--c:${on(k) ? 'var(--chart)' : 'var(--chart-2)'}"></i><em>${lbls[k]}</em></div>`).join('')}</div>`;
+function vbars(vals, on, lbls, fmt, ref, fx = fmt) {
+  const top = Math.max(...vals, ref ? ref.v : 0) || 1, H = 84, base = 16;   // base: alto de la etiqueta del mes
+  return `<div class="vbars">${ref ? `<span class="vref" style="bottom:${base + ref.v / top * H}px"><em>${ref.l}</em></span>` : ''}${vals.map((v, k) => `<div title="${lbls[k]}: ${fx(v)}"><b>${fmt(v)}</b><i style="--k:${k};height:${Math.max(3, v / top * H)}px;--c:${on(k) ? 'var(--chart)' : 'var(--chart-2)'}"></i><em>${lbls[k]}</em></div>`).join('')}</div>`;
 }
+const fechaL = s => { const [y, m, d] = s.split('-'); return `${+d} ${MES[+m - 1].toLowerCase()} ${y}`; };
 function renderPanel() {
-  kill('p1');
+  ['p1', 'a1', 'a2'].forEach(kill);
   const pin = $('pin');
   if (S.datos) return renderDatosPanel();
+  if (!S.sel && S.fam === 'X') return renderFechas();
+  if (!S.sel && S.fam !== 'T') return renderApartado();
   if (!S.sel) {
     const {r, acum} = R, c = s => TABLERO.filter(id => V[id].st === s).length;
     const inSel = k => acum ? PER.includes(k) : k === S.mes;
@@ -860,8 +947,8 @@ function renderPanel() {
         <h2>${r.mo < 0 ? 'La operación aún no se sostiene sola' : 'La operación cubre sus costos'}</h2>
         <p>Diez indicadores del tablero principal con umbrales provisionales. Toca una tarjeta para agrandarla y ver su ficha, o búscala con la lupa del costado.</p></div>
       <div class="cgs">
-        <div class="cg"><h4>Ventas mensuales · USD</h4>${vbars(M.ventas, k => inSel(D.meses[k]), D.meses.map(lbl), v => nf(v, 2))}</div>
-        <div class="cg"><h4>Margen bruto y gasto · % de ventas <span class="lg"><span><i style="background:var(--chart)"></i>MB</span><span><i style="background:var(--chart-3)"></i>Gasto</span><span><i class="dash"></i>MB 3 m</span></span></h4>
+        <div class="cg"><h4>Ventas mensuales y punto de equilibrio · USD</h4>${vbars(M.ventas, k => inSel(D.meses[k]), D.meses.map(lbl), v => nf(v, 0), V.I7.txt ? null : {v: calc(PER.map(ix)).pe, l: `Punto de equilibrio del periodo · ${usd(calc(PER.map(ix)).pe)} al mes`}, v => usd(v, 2))}</div>
+        <div class="cg"><h4>Margen bruto y gasto · % de ventas <span class="lg"><span><i style="background:var(--chart)"></i>MB media 3 m</span><span><i class="dash"></i>MB del mes</span><span><i style="background:var(--chart-3)"></i>Gasto</span></span></h4>
           <div class="chart" style="height:150px"><canvas id="p1"></canvas></div></div>
       </div>
       <div class="sec"><h3>Base de cálculo</h3><div class="tbl">
@@ -884,16 +971,22 @@ function renderPanel() {
       <div class="row"><span class="n">Fuentes</span><span class="v t"><span class="src">${FUENTES.map((f, j) => `<span class="${i.src[j] ? 'on' : ''}">${f}</span>`).join('')}</span></span></div>
       <div class="row row-long"><span class="n">Qué falta</span><span class="v t">${i.q}</span></div></div>`]
   ];
+  const lista = visibles(), pos = lista.indexOf(i.id), ant = lista[pos - 1], sig = lista[pos + 1];
+  const nav = id => id ? `<button type="button" class="fnav__b" data-go="${id}">${id === ant ? '‹ ' : ''}${id} · ${BY[id].c}${id === sig ? ' ›' : ''}</button>` : '<span></span>';
+  const ref = i.id === 'I7' && !k.txt ? `Ventas promedio del periodo: ${usd(calc(PER.map(ix)).vmes)} al mes, ${nf(calc(PER.map(ix)).vmes / calc(PER.map(ix)).pe * 100, 0)} % del punto de equilibrio.` : REF[i.id] || 'Sin referencia sectorial disponible; se compara con su propia evolución.';
   pin.innerHTML = `
-    <div class="phead"><span class="kind"><span class="dot ${k.st}"></span>${i.id} · ${FAM_L[i.f]}</span><h2>${i.n}</h2></div>
+    <div class="phead"><nav class="fnav" aria-label="Indicador anterior y siguiente">${nav(ant)}${nav(sig)}</nav><span class="kind"><span class="dot ${k.st}"></span>${i.id} · ${FAM_L[i.f]}</span><h2>${i.n}</h2></div>
     <div class="cgs">
-      <div class="cg"><h4>${R.acum ? perCorto() : cap(lblL(S.mes))} 2026</h4>
-        <div class="big num">${k.v}${k.u ? `<small>${k.u}</small>` : ''}</div></div>
+      <div class="cg"><h4>${k.w ? cap(k.w) : (R.acum ? perCorto() : cap(lblL(S.mes)))}${/\d{4}/.test(k.w || '') ? '' : ' 2026'}</h4>
+        <div class="big num">${k.v}${k.u ? `<small>${k.u}</small>` : ''}</div>
+        ${varMes(i.id)}
+        <p class="refx"><b>Referencia:</b> ${ref}</p></div>
       ${detailViz(i.id)}
       <div class="cg"><h4>Interpretación</h4><p class="interp">${k.s}</p></div>
     </div>
     <div class="sec opciones"><div class="opts" role="group" aria-label="Más detalles">${OPC.map(([o, t]) => `<button type="button" class="opt" data-o="${o}" aria-expanded="${S.opc.has(o)}">${t}<svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>`).join('')}</div>
       ${OPC.map(([o, t, h]) => `<div class="fold ${S.opc.has(o) ? 'open' : ''}" data-o="${o}"><div><div class="fold-in"><h3>${t}</h3>${h}</div></div></div>`).join('')}</div>`;
+  pin.querySelectorAll('[data-go]').forEach(b => b.onclick = () => pick(b.dataset.go));
   pin.querySelectorAll('.opt').forEach(b => b.onclick = () => {
     const o = b.dataset.o, on = !S.opc.has(o);
     on ? S.opc.add(o) : S.opc.delete(o);
@@ -902,10 +995,22 @@ function renderPanel() {
   });
   drawDetail(i.id);
 }
+// variación frente al mes anterior para los indicadores con serie mensual
+function varMes(id) {
+  const k = V[id];
+  if (!k.sp || k.ax || id === 'I7') return '';
+  const j = S.mes === 'acum' ? PER.length - 1 : PER.indexOf(S.mes), a = k.sp[j], b = k.sp[j - 1];
+  if (j < 1 || a == null || b == null) return '';
+  const pp = ['I1', 'I2', 'I3', 'I6', 'I5'].includes(id), d = pp ? a - b : (a - b) / Math.abs(b) * 100;
+  return `<p class="varm"><span>${cap(lblL(PER[j]))}: <b>${k.f(a)}</b></span><span>${cap(lblL(PER[j - 1]))}: ${k.f(b)}</span><span class="${d >= 0 ? 'up' : 'dn'}">${d >= 0 ? '▲' : '▼'} ${nf(Math.abs(d), 1)} ${pp ? 'p. p.' : '%'}</span></p>`;
+}
 function detailViz(id) {
   const H = h => `<h4>${h}</h4>`;
   const evo = `<div class="cg">${H('Evolución mensual · ' + perCorto().toLowerCase())}<div class="chart" style="height:150px"><canvas id="p1"></canvas></div></div>`;
-  if (['I1', 'I2', 'I3', 'I6', 'I7', 'I5', 'I17'].includes(id)) return evo;
+  if (id === 'I7') { const mc = series(c => c.mc), raros = PER.filter((m, j) => mc[j] < 2);
+    return `<div class="cg">${H('Ventas mensuales y punto de equilibrio del periodo')}<div class="chart" style="height:170px"><canvas id="p1"></canvas></div>
+      <p class="cap">Se usa una sola línea del periodo.${raros.length ? ` En ${raros.map(lblL).join(' y ')} el margen de contribución del mes fue menor que 2 % (${raros.map(m => pct(mc[PER.indexOf(m)], 2)).join(', ')}): ahí el punto de equilibrio mensual no existe o se dispara.` : ''} El margen mensual salta con los ajustes de inventario.</p></div>`; }
+  if (['I1', 'I2', 'I3', 'I6', 'I5', 'I17'].includes(id)) return evo;
   if (id === 'I11') { const h = D.horas;
     return evo + `<div class="cg">${H('Ventas por franja horaria · ' + h.periodo)}${vbars(h.franjas.map(f => f.pv), k => k === 1 || k === 3, h.franjas.map(f => f.c), v => nf(v, 0) + ' %')}
       <div class="tl" style="margin-top:8px"><div><span>Ticket fin de semana</span><b>${usd(h.semana.fin_tk, 2)}</b><em>${pct(h.semana.fin_pv)} de las ventas</em></div><div><span>Ticket entre semana</span><b>${usd(h.semana.sem_tk, 2)}</b><em>${nf(h.semana.sem_tr)} trans. al día</em></div></div></div>`; }
@@ -935,45 +1040,153 @@ function defaults() {
 const axX = {grid: {display: false}, border: {display: false}};
 // en los ejes las marcas redondas no llevan «,00»; los valores exactos se ven en la etiqueta al pasar el cursor
 const axY = cb => ({border: {display: false}, ticks: {maxTicksLimit: 4, callback: v => String(cb(v)).replace(/,00(?=\s|$)/, '')}});
-function chartMargen(cv) {
+// margen bruto (media de 3 meses como lectura principal) frente al gasto; con «zona», el área entre ambos es el margen operativo
+function chartMargen(cv, zona) {
   const mb = series(c => c.mb), go = series(c => c.pgo), ma = mb.map((_, i) => i < 2 ? null : (mb[i] + mb[i - 1] + mb[i - 2]) / 3);
   const si = S.mes === 'acum' ? -1 : PER.indexOf(S.mes), pr = a => a.map((_, i) => i === si ? 5 : 2.5);
   charts[cv] = new Chart($(cv), {type: 'line',
     data: {labels: PER.map(lbl), datasets: [
-      {label: 'Margen bruto', data: mb, borderColor: css('--chart'), backgroundColor: css('--chart') + '22', fill: true, tension: .35, borderWidth: 2, pointRadius: pr(mb), pointBackgroundColor: css('--surface'), pointBorderWidth: 1.6},
       {label: 'Gasto / ventas', data: go, borderColor: css('--chart-3'), tension: .35, borderWidth: 2, pointRadius: pr(go), pointBackgroundColor: css('--surface'), pointBorderWidth: 1.6},
-      {label: 'MB media 3 m', data: ma, borderColor: css('--muted'), borderDash: [4, 4], borderWidth: 1.3, pointRadius: 0, tension: .35}]},
+      {label: 'Margen bruto del mes', data: mb, borderColor: css('--muted'), borderDash: [4, 4], borderWidth: 1.3, pointRadius: pr(mb), pointBackgroundColor: css('--surface'), pointBorderWidth: 1.2, tension: .35,
+        fill: zona ? {target: 0, above: css('--ok') + '33', below: css('--bad') + '26'} : false},
+      {label: 'Margen bruto · media 3 m', data: ma, borderColor: css('--chart'), borderWidth: 2.4, pointRadius: 0, tension: .35}]},
     options: {maintainAspectRatio: false, interaction: {mode: 'index', intersect: false},
-      plugins: {tooltip: {callbacks: {label: c => ' ' + c.dataset.label + ': ' + pct(c.raw)}}},
+      plugins: {tooltip: {callbacks: {label: c => c.raw == null ? null : ' ' + c.dataset.label + ': ' + pct(c.raw, 2)}}},
       scales: {x: axX, y: {...axY(v => v + ' %'), beginAtZero: true}}}});
 }
-function lineSeries(cv, data, fmt, extra = []) {
+// ventas mensuales en barras y el punto de equilibrio del periodo como una sola línea
+function chartPE(cv) {
+  const pe = calc(PER.map(ix)).pe, si = S.mes === 'acum' ? -1 : PER.indexOf(S.mes);
+  charts[cv] = new Chart($(cv), {type: 'bar',
+    data: {labels: PER.map(lbl), datasets: [
+      {type: 'line', label: 'Punto de equilibrio del periodo', data: PER.map(() => pe), borderColor: css('--bad'), borderDash: [6, 4], borderWidth: 1.8, pointRadius: 0, order: 0},
+      {label: 'Ventas', data: PER.map(k => M.ventas[ix(k)]), backgroundColor: PER.map((k, j) => si < 0 || j === si ? css('--chart') : css('--chart-2')), borderRadius: 5, maxBarThickness: 34, order: 1}]},
+    options: {maintainAspectRatio: false, interaction: {mode: 'index', intersect: false},
+      plugins: {tooltip: {callbacks: {label: c => ' ' + c.dataset.label + ': ' + usd(c.raw, 2)}}},
+      scales: {x: axX, y: {...axY(v => usd(v)), beginAtZero: true}}}});
+}
+function lineSeries(cv, data, fmt, extra = [], fx = fmt) {
   const si = S.mes === 'acum' ? data.length - 1 : PER.indexOf(S.mes);
   charts[cv] = new Chart($(cv), {type: 'line',
     data: {labels: PER.map(lbl), datasets: [{data, borderColor: css('--chart'), backgroundColor: css('--chart') + '22', fill: true, tension: .35, borderWidth: 2, order: 1,
-      pointRadius: data.map((_, i) => i === si ? 5 : 2.5), pointBackgroundColor: css('--surface'), pointBorderWidth: 1.6, spanGaps: true}, ...extra]},
+      pointRadius: data.map((_, i) => i === si ? 5 : 2.5), pointBackgroundColor: css('--surface'), pointBorderWidth: 1.6, spanGaps: false}, ...extra]},
     options: {maintainAspectRatio: false, interaction: {mode: 'index', intersect: false},
-      plugins: {tooltip: {callbacks: {label: c => ' ' + (c.dataset.fmt || fmt)(c.raw)}}},
+      plugins: {tooltip: {callbacks: {label: c => c.raw == null ? ' sin dato' : ' ' + (c.dataset.fmt || fx)(c.raw)}}},
       scales: {x: axX, y: axY(fmt), ...(extra.some(e => e.yAxisID === 'y2') ? {y2: {position: 'right', beginAtZero: true, grid: {display: false}, border: {display: false}, ticks: {maxTicksLimit: 4}}} : {})}}});
 }
 function drawDetail(id) {
   if (!$('p1')) return;
   const mb = series(c => c.mb);
-  if (id === 'I1') lineSeries('p1', mb, v => pct(v), [{data: mb.map((_, i) => i < 2 ? null : (mb[i] + mb[i - 1] + mb[i - 2]) / 3), borderColor: css('--muted'), borderDash: [4, 4], borderWidth: 1.3, pointRadius: 0, tension: .35, fmt: v => 'media 3 m ' + pct(v)}]);
-  else if (id === 'I2') lineSeries('p1', series(c => c.pgo), v => pct(v));
-  else if (id === 'I3') lineSeries('p1', series(c => c.mo), v => pct(v));
-  else if (id === 'I6') lineSeries('p1', series(c => c.oss), v => pct(v));
-  else if (id === 'I7') lineSeries('p1', series(c => c.pe), v => usd(v));
-  else if (id === 'I5') lineSeries('p1', PER.map(k => growth(ix(k))), v => sgn(v));
-  else if (id === 'I17') lineSeries('p1', series(c => c.V / D.superficie_m2), v => usd(v, 2));
+  if (id === 'I1') chartMargen('p1');
+  else if (id === 'I2') lineSeries('p1', series(c => c.pgo), v => pct(v), [], v => pct(v, 2));
+  else if (id === 'I3') lineSeries('p1', series(c => c.mo), v => pct(v), [], v => pct(v, 2));
+  else if (id === 'I6') lineSeries('p1', series(c => c.oss), v => pct(v), [{data: PER.map(() => 100), borderColor: css('--muted'), borderDash: [4, 4], borderWidth: 1.3, pointRadius: 0, fill: false, fmt: () => 'autosuficiencia plena: 100 %'}], v => pct(v, 2));
+  else if (id === 'I7') chartPE('p1');
+  else if (id === 'I5') lineSeries('p1', PER.map(k => growth(ix(k))), v => sgn(v), [], v => 'venta diaria ' + sgn(v, 2) + ' frente al mes anterior');
+  else if (id === 'I17') lineSeries('p1', series(c => c.V / D.superficie_m2), v => usd(v), [], v => usd(v, 2) + ' por m²');
   else if (id === 'I11') lineSeries('p1', series(c => c.ticket), v => usd(v, 2), [{data: PER.map(k => M.transacciones[ix(k)]), yAxisID: 'y2', type: 'bar', backgroundColor: css('--chart-2'), borderRadius: 5, maxBarThickness: 18, order: 2, fmt: v => nf(v) + ' transacciones'}]);
   else if (id === 'I12') pareto('p1');
+}
+/* ---------- página de cada apartado (plano «Apartado»): pregunta, dos gráficas, tabla de fórmulas y qué limita ---------- */
+const AP = {
+  C: {q: '¿La venta alcanza para pagar la mercadería y los gastos?', src: 'Apuntes contables · 2 dic 2025 – 20 oct 2026',
+    g: [['Margen bruto y gastos operativos sobre ventas', 'I1 e I2 mensuales · el área entre ambas es el margen operativo (I3): verde si gana, rojo si pierde', 'margen'],
+        ['De las ventas al resultado del periodo', 'Cascada del periodo, cada rubro como % de las ventas · I4 (reparto de rubros de dic – oct)', 'cascada']],
+    lim: ['Los apuntes cubren cuentas de ingresos, costos y gastos; no hay balance general.',
+          'La depreciación y los gastos que asume EDEC EP no están registrados: el margen operativo y neto queda parcial.',
+          'Los costos de transferencia son reales solo desde abril de 2026, y diciembre de 2025 es un mes parcial que no entra en la variación mensual.']},
+  F: {q: '¿La tienda se sostiene con sus propios ingresos?', src: 'Apuntes contables y ventas · costo real desde abril de 2026',
+    g: [['Autosuficiencia operativa mensual', 'I6 · la línea punteada es la autosuficiencia plena (100 %)', 'oss'],
+        ['Ventas frente al punto de equilibrio', 'Ventas mensuales e I7 del periodo en una sola línea', 'pe']],
+    lim: ['El gasto de personal registrado ronda USD 1.300 al mes; si EDEC EP paga parte de la nómina, I6 está sobreestimada e I7 subestimado.',
+          'La tesorería es centralizada: no hay caja, bancos ni cuentas por cobrar y por pagar por tienda (I9 e I10 sin datos).',
+          'Los productos no tienen marca de canasta básica: el subsidio cruzado (I8) solo se aproxima con el IVA 0 %.']},
+  O: {q: '¿Cuánto vende la tienda, en qué momentos y con qué eficiencia?', src: 'Ventas del punto de venta, ventas por hora y conteos de inventario',
+    g: [['Ticket promedio y transacciones', 'I11 · ticket en línea y transacciones en barras', 'ticket'],
+        ['Concentración de las ventas', 'I12 · % acumulado de ventas según % de productos (dic – sep)', 'pareto']],
+    lim: ['Solo hay tres conteos completos de inventario (9 ene, 30 abr y 30 sep): rotación y GMROI (I13, I14) usan mayo a septiembre.',
+          'La merma (I15) se aproxima con el ajuste de inventario en valor; faltan las bajas en kilogramos y su motivo.',
+          'No hay registro de días sin existencia por producto: el quiebre de stock (I16) no se puede calcular.']},
+  A: {q: '¿A quién le compra la tienda y cuánto llega directo del productor?', src: 'Compras y transferencias del centro de acopio · mar – sep 2026',
+    g: [['Participación en las entradas', 'I20 · principales fuentes de abastecimiento (mar – sep)', 'prov'],
+        ['Origen de la mercadería vendida', 'Ventas de dic – sep según cómo ingresó cada producto', 'origen']],
+    lim: ['Los proveedores no están clasificados como productor o distribuidor: la desintermediación (I18) es una cota superior.',
+          'Solo los productores agroecológicos tienen parroquia de origen: el origen local (I21) queda parcial.',
+          'No hay fechas de pago por factura, precios mayoristas de referencia ni una canasta comparada (I19, I22, I23).']}
+};
+const ST_CORTO = {ok: 'En meta', warn: 'Vigilancia', bad: 'Acción'};
+function renderApartado() {
+  const a = AP[S.fam], ids = IND.filter(i => i.f === S.fam).map(i => i.id), pin = $('pin');
+  const j = S.mes === 'acum' ? PER.length - 1 : PER.indexOf(S.mes);
+  const prev = id => { const k = V[id]; return k.sp && !k.ax && id !== 'I7' && j >= 1 && k.sp[j - 1] != null ? `<span class="muted">${lbl(PER[j - 1]).toLowerCase()}</span> ${k.f(k.sp[j - 1])}` : '—'; };
+  const tend = id => V[id].sp ? `<span class="tspark">${spark(V[id].sp, V[id].ax ? null : (S.mes === 'acum' ? null : j))}</span>` : '<span class="muted">—</span>';
+  const sem = id => V[id].st === 'na' ? `<span class="muted">${U[id] ? 'Sin dato' : 'Sin meta'}</span>` : `<span class="dot sm ${V[id].st}"></span> ${ST_CORTO[V[id].st]}`;
+  const est = {full: 'Calculado', part: 'Parcial', none: 'Pendiente'};
+  pin.innerHTML = `
+    <div class="phead"><span class="kind">Apartado · ${ids[0]} – ${ids[ids.length - 1]}</span><h2>${FAM_L[S.fam]}</h2><p>${a.q}</p>
+      <div class="fuente">Fuente: ${a.src}<br>Se calcula hasta el corte común, ${fechaL(D.corte || '2026-09-30')}</div></div>
+    <div class="cgs">${a.g.map(([tt, sub, g], n) => `<div class="cg"><h4>${tt}</h4><p class="cg-sub">${sub}</p>${grafAp(g, 'a' + (n + 1))}</div>`).join('')}</div>
+    <div class="sec"><h3>Indicadores del apartado</h3><div style="overflow-x:auto"><table class="dt-tbl ap-tbl"><thead><tr><th>Código</th><th>Indicador y fórmula</th><th>Valor</th><th>Mes anterior</th><th>Tendencia</th><th>Semáforo</th><th>Estado del dato</th></tr></thead><tbody>
+      ${ids.map(id => `<tr data-id="${id}" tabindex="0"><td><b>${id}</b></td><td class="w"><b>${BY[id].n}</b><div class="fxt">${FXT[id]}</div></td><td>${V[id].v}${V[id].w ? `<div class="muted">${V[id].w}</div>` : ''}</td><td>${prev(id)}</td><td>${tend(id)}</td><td class="w">${sem(id)}</td><td><span class="tag ${BY[id].e}">${est[BY[id].e]}</span></td></tr>`).join('')}</tbody></table></div></div>
+    <div class="sec lim"><h3>Qué limita este apartado</h3><ul>${a.lim.map(l => `<li>${l}</li>`).join('')}</ul></div>`;
+  pin.querySelectorAll('tr[data-id]').forEach(tr => { tr.onclick = () => pick(tr.dataset.id); tr.onkeydown = e => { if (e.key === 'Enter') pick(tr.dataset.id); }; });
+  a.g.forEach(([, , g], n) => drawAp(g, 'a' + (n + 1)));
+}
+function grafAp(g, cv) {
+  if (g === 'cascada') return cascada();
+  if (g === 'prov') return D.proveedores.map((p, k) => `<div class="pr"><div class="l"><span>${p.nombre}</span><b>${pct(p.pct)}</b></div><div class="trk"><i style="--c:${k ? 'var(--chart-2)' : 'var(--chart)'};--w:${p.pct / 40};--k:${k}"></i></div></div>`).join('');
+  if (g === 'origen') return D.origen.map((o, k) => `<div class="pr"><div class="l"><span>${o.origen}</span><b>${pct(o.pct)} · ${usd(o.usd)}</b></div><div class="trk"><i style="--c:${k === 3 ? 'var(--warn)' : 'var(--chart)'};--w:${o.pct / 60};--k:${k}"></i></div></div>`).join('');
+  return `<div class="chart" style="height:170px"><canvas id="${cv}"></canvas></div>`;
+}
+function drawAp(g, cv) {
+  if (!$(cv)) return;
+  if (g === 'margen') chartMargen(cv, true);
+  else if (g === 'pe') chartPE(cv);
+  else if (g === 'oss') lineSeries(cv, series(c => c.oss), v => pct(v), [{data: PER.map(() => 100), borderColor: css('--muted'), borderDash: [4, 4], borderWidth: 1.3, pointRadius: 0, fill: false, fmt: () => 'autosuficiencia plena: 100 %'}], v => pct(v, 2));
+  else if (g === 'ticket') lineSeries(cv, series(c => c.ticket), v => usd(v, 2), [{data: PER.map(k => M.transacciones[ix(k)]), yAxisID: 'y2', type: 'bar', backgroundColor: css('--chart-2'), borderRadius: 5, maxBarThickness: 18, order: 2, fmt: v => nf(v) + ' transacciones'}]);
+  else if (g === 'pareto') pareto(cv);
+}
+// cascada: de las ventas (100 %) al resultado, restando costo de ventas y cada rubro de gasto (reparto de dic – oct)
+function cascada() {
+  const r = calc(PER.map(ix)), tot = D.estructura_gastos.reduce((s, g) => s + g.pct, 0);
+  const pasos = [['Ventas', 100, 'ini'], ['Costo de ventas', r.CV / r.V * 100, 'menos'],
+    ...D.estructura_gastos.map(g => [g.rubro.replace(/ \(.*\)/, '').replace(' y servicios bancarios', ''), g.pct / tot * r.pgo, 'menos']), ['Resultado', r.mo, 'fin']];
+  let nivel = 100; const barras = pasos.map(([n, v, t]) => {
+    if (t === 'ini') return [n, 0, 100, t, v];
+    if (t === 'fin') return [n, Math.min(0, v), Math.max(0, v), v < 0 ? 'neg' : t, v];
+    const hi = nivel; nivel -= v; return [n, nivel, hi, t, -v];
+  });
+  const lo = Math.min(0, ...barras.map(b => b[1])), W = 60, H = 140, T = 16, y = v => T + (100 - v) / (100 - lo) * H;
+  return `<svg class="casc" viewBox="0 0 ${barras.length * W} ${H + T + 16}" preserveAspectRatio="none" role="img" aria-label="Cascada de las ventas al resultado">
+    <line x1="0" x2="${barras.length * W}" y1="${y(0)}" y2="${y(0)}" class="casc-0"/>
+    ${barras.map(([n, a, b, t, v], k) => `<rect class="c-${t}" x="${k * W + 8}" y="${y(b)}" width="${W - 16}" height="${Math.max(1.5, y(a) - y(b))}" rx="3"><title>${n}: ${pct(v, 2)} de las ventas</title></rect>
+      <text x="${k * W + W / 2}" y="${t === 'neg' ? y(a) + 12 : y(b) - 4}" text-anchor="middle">${pct(v)}</text>`).join('')}</svg>
+    <div class="casc-l" style="grid-template-columns:repeat(${barras.length},1fr)">${barras.map(b => `<span>${b[0]}</span>`).join('')}</div>`;
+}
+
+/* ---------- pantalla «Fechas»: qué tramo cubre cada fuente y qué ventana usa cada indicador ---------- */
+function renderFechas() {
+  const F = D.fuentes || [], ini = new Date('2025-12-01T00:00'), fin = new Date('2026-11-01T00:00'), x = d => (new Date(d + 'T00:00') - ini) / (fin - ini) * 100;
+  const meses = ['dic', 'ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct'], corte = D.corte || '2026-09-30', real = D.inicio_costo_real + '-01';
+  const srcN = ['Ventas', 'Compras', 'Transferencias', 'Apuntes contables', 'Ajustes de inventario', 'Ventas por hora'];
+  $('pin').innerHTML = `
+    <div class="phead"><span class="kind">Datos y fechas</span><h2>Fechas y cobertura de las fuentes</h2>
+      <p>Cada fuente cubre un tramo distinto. Los indicadores se calculan hasta el corte común, ${fechaL(corte)}, y los de margen desde ${fechaL(real)}, cuando el costo de las transferencias pasa a ser real.</p></div>
+    <div class="cgs"><div class="cg"><h4>Tramo de cada fuente · dic 2025 – oct 2026</h4>
+      <div class="gantt"><div class="gt-ax"><span></span><div>${meses.map(m => `<span>${m}</span>`).join('')}</div></div>
+        ${F.filter(f => f.desde).map(f => `<div class="gt-row"><span class="gt-l">${f.fuente}</span><div class="gt-tr">${f.puntos ? f.puntos.map(p => `<b style="left:${x(p)}%" title="${fechaL(p)}"></b>`).join('') : `<i style="left:${x(f.desde)}%;width:${x(f.hasta) - x(f.desde)}%" title="${fechaL(f.desde)} – ${fechaL(f.hasta)}"></i>`}</div></div>`).join('')}
+        <div class="gt-ln real" style="--xn:${x(real) / 100}"><em>costo real</em></div><div class="gt-ln corte" style="--xn:${x(corte) / 100}"><em>corte común</em></div></div></div></div>
+    <div class="sec"><h3>Fuentes recibidas</h3><div style="overflow-x:auto"><table class="dt-tbl"><thead><tr><th>Fuente</th><th style="text-align:left">Contenido</th><th>Desde</th><th>Hasta</th><th>Registros</th></tr></thead><tbody>
+      ${F.map(f => `<tr><td>${f.fuente}</td><td class="w">${f.contenido}</td><td>${f.desde ? fechaL(f.desde) : 'foto actual'}</td><td>${f.hasta ? fechaL(f.hasta) : '—'}</td><td>${nf(f.registros)}</td></tr>`).join('')}</tbody></table></div></div>
+    <div class="sec"><h3>Ventana de cada indicador</h3><div style="overflow-x:auto"><table class="dt-tbl"><thead><tr><th>Indicador</th><th>Ventana</th><th style="text-align:left">Fuentes</th><th>Estado del dato</th></tr></thead><tbody>
+      ${IND.map(i => `<tr data-id="${i.id}" tabindex="0"><td>${i.id} · ${i.c}</td><td>${V[i.id].w || (i.e === 'none' ? '—' : perCorto().toLowerCase())}</td><td class="w">${i.src.map((on, j) => on ? srcN[j] : '').filter(Boolean).join(', ') || '—'}</td><td><span class="tag ${i.e}">${ETAG[i.e]}</span></td></tr>`).join('')}</tbody></table></div></div>`;
+  $('pin').querySelectorAll('tr[data-id]').forEach(tr => tr.onclick = () => pick(tr.dataset.id));
 }
 function pareto(cv) {
   const P = D.pareto;
   charts[cv] = new Chart($(cv), {type: 'line', data: {labels: P.x, datasets: [{data: P.y, borderColor: css('--chart'), backgroundColor: css('--chart') + '22', fill: true, tension: .4, borderWidth: 2,
     pointRadius: P.x.map(x => x === 20 ? 5 : 0), pointBackgroundColor: css('--surface'), pointBorderWidth: 1.6}]},
-    options: {maintainAspectRatio: false, plugins: {tooltip: {callbacks: {title: c => c[0].label + ' % de los productos', label: c => ' ' + pct(c.raw) + ' de las ventas'}}},
+    options: {maintainAspectRatio: false, plugins: {tooltip: {callbacks: {title: c => c[0].label + ' % de los productos', label: c => ' ' + pct(c.raw, 2) + ' de las ventas'}}},
       scales: {x: {...axX, ticks: {autoSkip: false, maxRotation: 0, callback: (v, i) => [0, 20, 50, 100].includes(P.x[i]) ? P.x[i] + ' %' : ''}}, y: {min: 0, max: 100, border: {display: false}, ticks: {stepSize: 25, callback: v => v + ' %'}}}}});
 }
 
@@ -988,7 +1201,7 @@ const TARJETAS = [
   {t: 'Ventas por franja horaria', s: () => `Picos de 10:00 a 12:59 y de 16:00 a 18:59 · fin de semana ${pct(D.horas.semana.fin_pv)} de las ventas`, b: cardHoras},
   {t: 'Inventario y ajustes', s: () => `${usd(D.inventario.total[2])} al 30 sep · rota ${nf(D.inventario.rot_anual, 1)} veces al año · ajuste ${pct(D.ajustes_total.pct)}`, b: cardInventario},
   {t: 'Pareto ABC', s: () => `Top 20 % = ${pct(D.pareto.y[3])} de las ventas · ${nf(D.pareto.productos)} productos`, b: cardPareto},
-  {t: 'Cobertura de datos', s: () => `${D.cobertura.completos} completos · ${D.cobertura.parciales} parciales · ${D.cobertura.sin_datos} sin datos`, b: cardCobertura},
+  {t: 'Cobertura de datos', s: () => `${COB().completos} completos · ${COB().parciales} parciales · ${COB().sin_datos} sin datos`, b: cardCobertura},
   {t: 'Datos que faltan', s: () => `${HECHOS.size} de ${D.faltan.length} recibidos · ${D.faltan.filter(f => f[2] === 'a').length} de prioridad alta`, b: cardFaltan},
   {t: 'Umbrales del semáforo', s: () => 'Provisionales, por calibrar con EDEC EP', b: cardUmbrales}
 ];
@@ -1007,12 +1220,12 @@ function swapLeft(fn) {
   a.onfinish = () => { fn(); a.cancel(); reveal(left); };
 }
 function openDatos(card = null) {
-  S.datos = true; S.card = card; syncDock();
+  S.datos = true; S.card = card; syncDock(); press($('fam'), '');
   swapLeft(() => { deckList(); $('stage').classList.add('dk'); });
   renderHead(); swap($('pin'), renderPanel);
 }
 function closeDatos(redraw = true) {
-  S.datos = false; S.card = null; syncDock();
+  S.datos = false; S.card = null; syncDock(); press($('fam'), S.fam);
   kill('d1');
   const back = () => { $('stage').classList.remove('dk'); $('deck').innerHTML = ''; };
   if (redraw) { swapLeft(back); renderHead(); swap($('pin'), renderPanel); } else back();
@@ -1034,23 +1247,23 @@ function renderDatosPanel() {
 function cardMensual(db) {
   const rows = D.meses.map((k, i) => {
     const Vv = M.ventas[i], CV = M.costo_ventas[i], GO = M.gastos[i], mo = (Vv - CV - GO) / Vv * 100, ref = i < idx0;
-    return `<tr class="${ref ? 'ref' : ''} ${S.mes === k ? 'sel' : ''}"><td>${lbl(k)} ${k.slice(0, 4)}${ref ? '*' : ''}</td><td>${nf(Vv)}</td><td>${nf(CV)}</td><td>${pct((Vv - CV) / Vv * 100)}</td><td>${nf(GO)}</td><td class="${mo < 0 ? 'neg' : ''}">${pct(mo)}</td><td>${nf(M.compras[i])}</td><td>${M.transferencias[i] == null ? '—' : nf(M.transferencias[i])}</td><td>${nf(M.transacciones[i])}</td><td>${nf(M.ventas_pos[i] / M.transacciones[i], 2)}</td></tr>`;
+    return `<tr class="${ref ? 'ref' : ''} ${S.mes === k ? 'sel' : ''}"><td>${lbl(k)} ${k.slice(0, 4)}${ref ? '*' : ''}</td><td>${nf(Vv, 2)}</td><td>${nf(CV, 2)}</td><td>${pct((Vv - CV) / Vv * 100, 2)}</td><td>${nf(GO, 2)}</td><td class="${mo < 0 ? 'neg' : ''}">${pct(mo, 2)}</td><td>${nf(M.compras[i], 2)}</td><td>${M.transferencias[i] == null ? '—' : nf(M.transferencias[i], 2)}</td><td>${nf(M.transacciones[i])}</td><td>${nf(M.ventas_pos[i] / M.transacciones[i], 2)}</td></tr>`;
   }).join('');
   const ii = PER.map(ix), r = calc(ii);
   db.innerHTML = `<div style="overflow-x:auto"><table class="dt-tbl"><thead><tr><th>Cifras mensuales</th><th>Ventas</th><th>Costo de ventas</th><th>Margen bruto</th><th>Gastos op.</th><th>Margen op.</th><th>Compras</th><th>Transf. netas</th><th>Transacciones</th><th>Ticket</th></tr></thead>
-    <tbody>${rows}<tr class="tot"><td>${perCorto()} 2026</td><td>${nf(r.V)}</td><td>${nf(r.CV)}</td><td>${pct(r.mb)}</td><td>${nf(r.GO)}</td><td class="neg">${pct(r.mo)}</td><td>${nf(sum(M.compras, ii))}</td><td>${nf(sum(M.transferencias, ii))}</td><td>${nf(r.N)}</td><td>${nf(r.ticket, 2)}</td></tr>
-    <tr class="tot"><td>Promedio mensual</td><td>${nf(r.V / r.n)}</td><td>${nf(r.CV / r.n)}</td><td></td><td>${nf(r.GO / r.n)}</td><td></td><td>${nf(sum(M.compras, ii) / r.n)}</td><td>${nf(sum(M.transferencias, ii) / r.n)}</td><td>${nf(r.N / r.n)}</td><td></td></tr></tbody></table></div>
+    <tbody>${rows}<tr class="tot"><td>${perCorto()} 2026</td><td>${nf(r.V, 2)}</td><td>${nf(r.CV, 2)}</td><td>${pct(r.mb, 2)}</td><td>${nf(r.GO, 2)}</td><td class="neg">${pct(r.mo, 2)}</td><td>${nf(sum(M.compras, ii), 2)}</td><td>${nf(sum(M.transferencias, ii), 2)}</td><td>${nf(r.N)}</td><td>${nf(r.ticket, 2)}</td></tr>
+    <tr class="tot"><td>Promedio mensual</td><td>${nf(r.V / r.n, 2)}</td><td>${nf(r.CV / r.n, 2)}</td><td></td><td>${nf(r.GO / r.n, 2)}</td><td></td><td>${nf(sum(M.compras, ii) / r.n, 2)}</td><td>${nf(sum(M.transferencias, ii) / r.n, 2)}</td><td>${nf(r.N / r.n)}</td><td></td></tr></tbody></table></div>
     <p class="cap">USD. Ventas y costo de ventas de los apuntes contables (cuentas 4.1.1 y 5.3.1); gastos operativos, cuenta 6; compras y transferencias de los archivos operativos; transacciones y ticket de las facturas. * Costo de transferencias referencial. En diciembre se vendió mercadería en consignación sin factura; su costo se registró en enero.</p>`;
 }
 function cardGastos(db) {
   db.innerHTML = `<div class="dfit"><table class="dt-tbl"><thead><tr><th>Estructura de gastos</th><th>% del gasto</th></tr></thead><tbody>
-    ${D.estructura_gastos.map(g => `<tr><td>${g.rubro}</td><td>${pct(g.pct)}</td></tr>`).join('')}</tbody></table>
+    ${D.estructura_gastos.map(g => `<tr><td>${g.rubro}</td><td>${pct(g.pct, 2)}</td></tr>`).join('')}</tbody></table>
     <div class="cgs"><div class="cg"><h4>Participación · dic – oct</h4>${D.estructura_gastos.map((g, k) => `<div class="pr"><div class="l"><span>${g.rubro}</span><b>${pct(g.pct)}</b></div><div class="trk"><i style="--c:var(--chart);--w:${g.pct / 40};--k:${k}"></i></div></div>`).join('')}</div></div></div>
     <p class="cap">Gasto operativo de diciembre a octubre (cuenta 6). El gasto de personal registrado, unos USD 1.300 al mes, es bajo para un supermercado: conviene confirmar si parte de la nómina se paga desde EDEC EP.</p>`;
 }
 function cardOrigen(db) {
   db.innerHTML = `<div class="dfit"><table class="dt-tbl"><thead><tr><th>Origen de lo vendido</th><th>USD</th><th>%</th></tr></thead><tbody>
-    ${D.origen.map(o => `<tr><td class="w">${o.origen}</td><td>${nf(o.usd)}</td><td>${pct(o.pct)}</td></tr>`).join('')}<tr class="tot"><td>Total</td><td>${nf(D.origen.reduce((s, o) => s + o.usd, 0))}</td><td>100,0 %</td></tr></tbody></table>
+    ${D.origen.map(o => `<tr><td class="w">${o.origen}</td><td>${nf(o.usd)}</td><td>${pct(o.pct, 2)}</td></tr>`).join('')}<tr class="tot"><td>Total</td><td>${nf(D.origen.reduce((s, o) => s + o.usd, 0))}</td><td>100,00 %</td></tr></tbody></table>
     <div class="cgs"><div class="cg"><h4>Principales fuentes · mar – sep</h4>${D.proveedores.map((p, k) => `<div class="pr"><div class="l"><span>${p.nombre}</span><b>${pct(p.pct)}</b></div><div class="trk"><i style="--c:${k ? 'var(--chart-2)' : 'var(--chart)'};--w:${p.pct / 40};--k:${k}"></i></div></div>`).join('')}</div></div></div>
     <p class="cap">Ventas de diciembre a septiembre según cómo ingresó cada producto (360 productos sin entrada). Los USD 12.283 sin entrada son sobre todo productos que entran a granel con un código y se venden fraccionados con otro (lenteja, chía, almendras, huevo en cubeta, zumo de naranja); el resto, diferencias de código o compras no registradas. Fuentes principales de marzo a septiembre.</p>`;
 }
@@ -1065,7 +1278,7 @@ function cardHoras(db) {
       <div><span>Hora pico</span><b>${h.pico_hora}</b><em>${nf(h.pico_tr, 1)} transacciones en promedio</em></div>
       <div><span>Domingo hasta 19:00</span><b>+ ${usd(dm.extra_mes)} al mes</b><em>el gerente estima ${usd(dm.gerente_mes)}</em></div></div>
     <div style="overflow-x:auto;margin-top:12px"><table class="dt-tbl"><thead><tr><th>Franja horaria</th><th>Ventas</th><th>% ventas</th><th>% trans.</th><th>Ticket</th></tr></thead><tbody>
-    ${h.franjas.map((f, k) => `<tr class="${k === 1 || k === 3 ? 'sel' : ''}"><td>${f.f}</td><td>${nf(f.usd)}</td><td>${pct(f.pv)}</td><td>${pct(f.pt)}</td><td>${nf(f.tk, 2)}</td></tr>`).join('')}
+    ${h.franjas.map((f, k) => `<tr class="${k === 1 || k === 3 ? 'sel' : ''}"><td>${f.f}</td><td>${nf(f.usd)}</td><td>${pct(f.pv, 2)}</td><td>${pct(f.pt, 2)}</td><td>${nf(f.tk, 2)}</td></tr>`).join('')}
     <tr class="tot"><td>Total</td><td>${nf(h.total.usd)}</td><td>100,0 %</td><td>100,0 %</td><td>${nf(h.total.tk, 2)}</td></tr></tbody></table></div>
     <p class="cap">Del ${h.periodo}: ${nf(h.dias)} días y ${nf(h.ordenes)} órdenes del punto de venta. Los montos superan en cerca de 4 % a lo facturado (probablemente impuestos), por eso se usan para la distribución y no para el nivel de ventas. El domingo de 17:00 a 17:59 vende en promedio ${usd(dm.usd_17)} frente a ${usd(dm.usd_17_sem)} el resto de la semana. El mapa muestra el promedio de cada día de la semana en cada hora; las celdas rayadas son horas en que la tienda está cerrada.</p>`;
   drawHeat(S.hm || 'v');
@@ -1128,20 +1341,20 @@ function cardInventario(db) {
       <div><span>Rotación (I13)</span><b>${nf(inv.rot_anual, 1)} al año</b><em>${inv.dias} días de inventario</em></div>
       <div><span>GMROI (I14)</span><b>${nf(inv.gmroi_anual, 2)} al año</b><em>referencia 1</em></div></div></div></div>
     <div style="overflow-x:auto;margin-top:12px"><table class="dt-tbl"><thead><tr><th>Ajuste neto · mar – sep</th><th>Ajuste</th><th>Ventas</th><th>Ajuste / ventas</th></tr></thead><tbody>
-    ${A.map((a, k) => `<tr class="${k === 1 ? 'sel' : ''}"><td>${a.area}</td><td class="neg">${nf(a.aj)}</td><td>${nf(a.ventas)}</td><td class="neg">${pct(a.pct)}</td></tr>`).join('')}
-    <tr class="tot"><td>Total</td><td class="neg">${nf(T.aj)}</td><td>${nf(T.ventas)}</td><td class="neg">${pct(T.pct)}</td></tr></tbody></table></div>
+    ${A.map((a, k) => `<tr class="${k === 1 ? 'sel' : ''}"><td>${a.area}</td><td class="neg">${nf(a.aj)}</td><td>${nf(a.ventas)}</td><td class="neg">${pct(a.pct, 2)}</td></tr>`).join('')}
+    <tr class="tot"><td>Total</td><td class="neg">${nf(T.aj)}</td><td>${nf(T.ventas)}</td><td class="neg">${pct(T.pct, 2)}</td></tr></tbody></table></div>
     <p class="cap">Conteos completos el 9 de enero, el 30 de abril y el 30 de septiembre de 2026. Ajuste neto: faltantes menos sobrantes, al costo. El de frutas y hortalizas (7,5 %) se usa como aproximación de la merma (I15) y explica unos 2,5 puntos del margen bruto; el de granos a granel refleja el reempaque, no merma. Se excluye un registro de 1.444 kg de cebolla perla del 30 de abril, corregido el 4 de mayo.</p>`;
 }
 function cardPareto(db) {
   const P = D.pareto;
   db.innerHTML = `<div class="dfit"><table class="dt-tbl"><thead><tr><th>% de productos</th><th>% de ventas</th></tr></thead><tbody>
-    ${P.x.slice(1).map((x, k) => `<tr class="${x === 20 ? 'sel' : ''}"><td>${x} %</td><td>${pct(P.y[k + 1])}</td></tr>`).join('')}</tbody></table>
+    ${P.x.slice(1).map((x, k) => `<tr class="${x === 20 ? 'sel' : ''}"><td>${x} %</td><td>${pct(P.y[k + 1], 2)}</td></tr>`).join('')}</tbody></table>
     <div class="cgs"><div class="cg"><h4>Curva de Pareto · dic – sep</h4><div class="chart" style="height:170px"><canvas id="d1"></canvas></div></div>
     <div class="cg"><h4>Clases</h4><div class="tl x4" style="grid-template-columns:repeat(3,1fr)">${[['A', 'hasta 80 %'], ['B', '80 – 95 %'], ['C', 'último 5 %']].map(([c, s]) => `<div><span>Clase ${c}</span><b>${nf(P.abc[c])}</b><em>${s}</em></div>`).join('')}</div></div></div></div>`;
   pareto('d1');
 }
 function cardCobertura(db) {
-  const cb = D.cobertura, tot = cb.completos + cb.parciales + cb.sin_datos;
+  const cb = COB(), tot = cb.completos + cb.parciales + cb.sin_datos;
   db.innerHTML = `<table class="dt-tbl"><thead><tr><th>Cobertura por familia</th><th>Completos</th><th>Parciales</th><th>Sin datos</th></tr></thead><tbody>
     ${['C', 'F', 'O', 'A'].map(f => { const it = IND.filter(i => i.f === f), c = e => it.filter(i => i.e === e).length; return `<tr><td>${FAM_L[f]}</td><td>${c('full')}</td><td>${c('part')}</td><td>${c('none')}</td></tr>`; }).join('')}
     <tr class="tot"><td>Total</td><td>${cb.completos}</td><td>${cb.parciales}</td><td>${cb.sin_datos}</td></tr></tbody></table>
@@ -1230,8 +1443,8 @@ function openMes() {
     });
 }
 function openSemaforo() {
-  const c = s => TABLERO.filter(id => V[id].st === s).length;
-  openPop($('semaforo'), `<div class="pop__head">Semáforo del tablero <small>${c('ok')} · ${c('warn')} · ${c('bad')}</small></div>
+  const c = s => TABLERO.filter(id => V[id].st === s).length, P = problemas();
+  openPop($('semaforo'), `<div class="pop__head">Semáforo del tablero <small>${c('ok')} en meta · ${c('warn')} en vigilancia · ${P.n} ${P.n === 1 ? 'problema' : 'problemas'}</small></div>
     ${['bad', 'warn', 'ok', 'na'].flatMap(st => TABLERO.filter(id => V[id].st === st)).map(id => `<button type="button" class="menu__item" role="menuitem" data-id="${id}"><span class="dot sm ${V[id].st}"></span>${BY[id].c}<small>${V[id].v}</small></button>`).join('')}`,
     el => el.querySelectorAll('[data-id]').forEach(b => b.onclick = () => { closePop(); if (S.fam !== 'T') { S.fam = 'T'; S.todos = false; press($('fam'), 'T'); renderHead(); } pick(b.dataset.id); }));
 }

@@ -95,7 +95,8 @@ def construir(carpeta):
         return [round(g.get(m, 0.0), 2) for m in meses]
 
     gastos6 = ap[ap["cod"].str.startswith("6")]
-    pos = ventas.groupby("mes").agg(importe=("Importe", "sum"), n=("Documento SRI", "nunique"))
+    pos = ventas.groupby("mes").agg(importe=("Importe", "sum"), n=("Documento SRI", "nunique"),
+                                    dias=("Fecha de la factura", lambda f: pd.to_datetime(f).dt.date.nunique()))
     mensual = {
         "ventas": por_mes(ap[ap["cod"].str.startswith("4.1.1")], haber_menos_debe),
         "costo_ventas": por_mes(ap[ap["cod"].str.startswith("5.3.1")], debe_menos_haber),
@@ -103,6 +104,7 @@ def construir(carpeta):
         "comisiones": por_mes(gastos6[gastos6["Cuenta"].str.contains("COMISION TARJETA", case=False)], debe_menos_haber),
         "ventas_pos": [round(float(pos["importe"].get(m, 0)), 2) for m in meses],
         "transacciones": [int(pos["n"].get(m, 0)) for m in meses],
+        "dias": [int(pos["dias"].get(m, 0)) for m in meses],   # días con venta: base de la venta diaria promedio (I5)
         "compras": [round(float(compras.loc[compras["mes"] == m, "Importe"].sum()), 2) for m in meses],
         "transferencias": [round(transf_mes[m], 2) if m in transf_mes else None for m in meses],
     }
@@ -140,7 +142,21 @@ def construir(carpeta):
     top = cuota.sort_values(ascending=False).head(PROVEEDORES_TOP)
     proveedores = [{"nombre": str(k).title() if k != NOMBRE_ACOPIO else k, "pct": round(float(v), 1)} for k, v in top.items()]
 
+    # Fechas y registros de cada fuente (pantalla «Fechas»)
+    def rango(fechas):
+        f = pd.to_datetime(fechas, errors="coerce").dropna()
+        return str(f.min().date()), str(f.max().date())
+    productos = pd.read_excel(f["datos"], sheet_name="Productos")
+    fuentes = [
+        {"fuente": "Ventas (punto de venta)", "contenido": "Líneas de factura a clientes", "desde": rango(ventas["Fecha de la factura"])[0], "hasta": rango(ventas["Fecha de la factura"])[1], "registros": len(ventas)},
+        {"fuente": "Compras", "contenido": "Facturas de proveedores directos", "desde": rango(compras["Fecha de la factura"])[0], "hasta": rango(compras["Fecha de la factura"])[1], "registros": len(compras)},
+        {"fuente": "Transferencias", "contenido": "Envíos del centro de acopio y devoluciones", "desde": min(transf_mes) + "-01" if transf_mes else None, "hasta": max(transf_mes) + "-30" if transf_mes else None, "registros": int(len(transf_prod))},
+        {"fuente": "Apuntes contables", "contenido": "Cuentas 4, 5 y 6: ingresos, costos y gastos", "desde": rango(ap["Fecha"])[0], "hasta": rango(ap["Fecha"])[1], "registros": len(ap)},
+        {"fuente": "Productos", "contenido": "Catálogo con categoría, precio y costo actuales", "desde": None, "hasta": None, "registros": len(productos)},
+    ]
+
     return {
+        "fuentes": fuentes,
         "actualizado": str(pd.to_datetime(ventas["Fecha de la factura"]).max().date()),
         "meses": meses,
         "inicio_costo_real": desde,
