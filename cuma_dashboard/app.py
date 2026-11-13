@@ -57,12 +57,19 @@ def datos():
 @app.before_request
 def _clave():
     clave = os.environ.get("DASHBOARD_PASSWORD")
-    if not clave or request.path == "/salud":
+    if not clave or request.path == "/salud" or request.path.startswith("/static/") or request.path.startswith("/apple-touch-icon"):
         return None
     auth = request.authorization
     if auth and hmac.compare_digest(auth.password or "", clave):
         return None
     return Response("Acceso restringido", 401, {"WWW-Authenticate": 'Basic realm="CUMA"'})
+
+
+@app.get("/apple-touch-icon.png")
+@app.get("/apple-touch-icon-precomposed.png")
+def icono_ios():
+    """Ícono de la pantalla de inicio del iPhone (Safari lo busca también en la raíz)."""
+    return app.send_static_file("apple-touch-icon.png")
 
 
 @app.get("/")
