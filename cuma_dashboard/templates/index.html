@@ -630,6 +630,10 @@ tr.done td.w{color:var(--muted);text-decoration:line-through}
 .stage.solo .tile{height:100%;min-height:0!important}
 .stage.solo .tile.big{padding:20px 22px 16px}
 .stage.solo .tile.big .t-s{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.fgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}
+.fgrid>.cg{margin:0;border:1px solid var(--line);border-radius:4px;background:var(--card-bg);padding:20px 22px}
+.cg .dt-tbl td.neg{color:var(--bad)}
+@media (max-width:760px){.fgrid{grid-template-columns:minmax(0,1fr)}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -641,7 +645,6 @@ tr.done td.w{color:var(--muted);text-decoration:line-through}
       <button type="button" class="tbtn" id="b-fechas" data-act="fechas" aria-haspopup="menu" aria-expanded="false" aria-label="Fechas"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path d="M10 21.75h4c3.77 0 5.66 0 6.83-1.17C22 19.41 22 17.52 22 13.75v-2c0-3.77 0-5.66-1.17-6.83C19.66 3.75 17.77 3.75 14 3.75h-4c-3.77 0-5.66 0-6.83 1.17C2 6.09 2 7.98 2 11.75v2c0 3.77 0 5.66 1.17 6.83 1.17 1.17 3.06 1.17 6.83 1.17Z"/><path stroke-linejoin="round" d="M17 12.75h.01M12 12.75h.01M7 12.75h.01M17 16.77h.01M12 16.77h.01M7 16.77h.01"/><path d="M2.04 8.75h19.93M7 3.78V2.25m10 1.53V2.25" opacity=".5"/></g></svg><span class="tip" id="b-fechas-tip">Fechas</span></button>
       <button type="button" class="tbtn" id="b-ind" data-act="ind" aria-haspopup="menu" aria-expanded="false" aria-label="Indicadores"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path d="M12 22c-4.71 0-7.07 0-8.54-1.46C2 19.07 2 16.71 2 12s0-7.07 1.46-8.54C4.93 2 7.29 2 12 2s7.07 0 8.54 1.46C22 4.93 22 7.29 22 12s0 7.07-1.46 8.54C19.07 22 16.71 22 12 22Z" opacity=".5"/><path d="M7 18V9m5 9V6m5 12v-5"/></g></svg><span class="tip" id="b-ind-tip">Indicadores</span></button>
       <button type="button" class="tbtn" id="b-sem" data-act="sem" aria-haspopup="menu" aria-expanded="false" aria-label="Semáforos"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path d="M22 12a10 10 0 1 1-10-10" opacity=".5"/><path d="M14.5 2.31a10 10 0 0 1 7.19 7.19"/></g></svg><span class="dot sm tbtn__dot" id="gdot"></span><span class="tip" id="b-sem-tip">Semáforos</span></button>
-      <button type="button" class="tbtn" id="b-datos" data-act="datos" aria-haspopup="menu" aria-expanded="false" aria-label="Datos"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path d="M4 18V6m16 0v12"/><path d="M4 6c0 2.21 3.58 4 8 4s8-1.79 8-4-3.58-4-8-4-8 1.79-8 4Z"/><path d="M20 12c0 2.21-3.58 4-8 4s-8-1.79-8-4" opacity=".5"/><path d="M20 18c0 2.21-3.58 4-8 4s-8-1.79-8-4"/></g></svg><span class="tip" id="b-datos-tip">Datos</span></button>
     </nav>
     <div class="tbar" role="toolbar" aria-label="Herramientas">
       <button type="button" class="tbtn" id="theme" data-act="tema" aria-haspopup="menu" aria-expanded="false" aria-label="Luz"><svg class="ico ico--moon" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M12 22a10 10 0 0 0 10-10c0-.46-.69-.54-.93-.14A6.5 6.5 0 0 1 9 8.5a6.5 6.5 0 0 1 3.14-5.57c.4-.24.32-.93-.14-.93A10 10 0 0 0 2 12a10 10 0 0 0 10 10Z" opacity=".5"/><path d="M8.68 21.44A10 10 0 0 1 12 2c.46 0 .54.69.14.93A6.5 6.5 0 0 0 10.14 12.18"/></g></svg><svg class="ico ico--sun" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><path d="M12 2v1m0 18v1m10-10h-1M3 12H2m17.07-7.07-.39.39M5.32 18.68l-.39.39m14.14 0-.39-.39M5.32 5.32l-.39-.39" opacity=".5"/></g></svg><span class="tip" id="themetip">Luz</span></button>
@@ -1229,12 +1232,13 @@ function renderPanel() {
   pin.innerHTML = `
     <div class="phead"><nav class="fnav" aria-label="Indicador anterior y siguiente">${nav(ant)}${nav(sig)}</nav><span class="kind"><span class="dot ${k.st}"></span>${i.id} · ${FAM_L[i.f]}</span><h2>${i.n}</h2></div>
     <div class="cgs">
-      <div class="cg"><h4>${k.w ? cap(k.w) : (R.acum ? perCorto() : cap(lblL(S.mes)))}${/\d{4}/.test(k.w || '') ? '' : ' 2026'}</h4>
+      <div class="fgrid"><div class="cg"><h4>${k.w ? cap(k.w) : (R.acum ? perCorto() : cap(lblL(S.mes)))}${/\d{4}/.test(k.w || '') ? '' : ' 2026'}</h4>
         <div class="big num">${k.v}${k.u ? `<small>${k.u}</small>` : ''}</div>
         ${varMes(i.id)}
         <p class="refx"><b>Referencia:</b> ${ref}</p></div>
+      <div class="cg"><h4>Interpretación</h4><p class="interp">${k.s}</p></div></div>
       ${detailViz(i.id)}
-      <div class="cg"><h4>Interpretación</h4><p class="interp">${k.s}</p></div>
+      ${tablaDatos(i.id)}
     </div>
     <div class="sec opciones"><div class="opts" role="group" aria-label="Más detalles">${OPC.map(([o, t]) => `<button type="button" class="opt" data-o="${o}" aria-expanded="${S.opc.has(o)}">${t}<svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>`).join('')}</div>
       ${OPC.map(([o, t, h]) => `<div class="fold ${S.opc.has(o) ? 'open' : ''}" data-o="${o}"><div><div class="fold-in"><h3>${t}</h3>${h}</div></div></div>`).join('')}</div>`;
@@ -1262,7 +1266,8 @@ function detailViz(id) {
   if (id === 'I7') { const mc = series(c => c.mc), raros = PER.filter((m, j) => mc[j] < 2);
     return `<div class="cg">${H('Ventas mensuales y punto de equilibrio del periodo')}<div class="chart" style="height:170px"><canvas id="p1"></canvas></div>
       <p class="cap">Se usa una sola línea del periodo.${raros.length ? ` En ${raros.map(lblL).join(' y ')} el margen de contribución del mes fue menor que 2 % (${raros.map(m => pct(mc[PER.indexOf(m)], 2)).join(', ')}): ahí el punto de equilibrio mensual no existe o se dispara.` : ''} El margen mensual salta con los ajustes de inventario.</p></div>`; }
-  if (['I1', 'I2', 'I3', 'I6', 'I5', 'I17'].includes(id)) return evo;
+  if (COMBO[id]) return `<div class="cg">${H(COMBO[id]().t + ' · ' + perCorto().toLowerCase())}<div class="chart" style="height:240px"><canvas id="p1"></canvas></div>${COMBO[id]().cap ? `<p class="cap">${COMBO[id]().cap}</p>` : ''}</div>`
+    + (id === 'I11' ? `<div class="cg">${H('Ventas por franja horaria · ' + D.horas.periodo)}${vbars(D.horas.franjas.map(f => f.pv), k => k === 1 || k === 3, D.horas.franjas.map(f => f.c), v => nf(v, 0) + ' %')}<div class="tl" style="margin-top:8px"><div><span>Ticket fin de semana</span><b>${usd(D.horas.semana.fin_tk, 2)}</b><em>${pct(D.horas.semana.fin_pv)} de las ventas</em></div><div><span>Ticket entre semana</span><b>${usd(D.horas.semana.sem_tk, 2)}</b><em>${nf(D.horas.semana.sem_tr)} trans. al día</em></div></div></div>` : '');
   if (id === 'I11') { const h = D.horas;
     return evo + `<div class="cg">${H('Ventas por franja horaria · ' + h.periodo)}${vbars(h.franjas.map(f => f.pv), k => k === 1 || k === 3, h.franjas.map(f => f.c), v => nf(v, 0) + ' %')}
       <div class="tl" style="margin-top:8px"><div><span>Ticket fin de semana</span><b>${usd(h.semana.fin_tk, 2)}</b><em>${pct(h.semana.fin_pv)} de las ventas</em></div><div><span>Ticket entre semana</span><b>${usd(h.semana.sem_tk, 2)}</b><em>${nf(h.semana.sem_tr)} trans. al día</em></div></div></div>`; }
@@ -1278,6 +1283,76 @@ function detailViz(id) {
   if (id === 'I12') return `<div class="cg">${H('% acumulado de ventas según % de productos')}<div class="chart" style="height:150px"><canvas id="p1"></canvas></div>
     <div class="tl x4" style="margin-top:8px;grid-template-columns:repeat(3,1fr)">${['A', 'B', 'C'].map(c => `<div><span>Clase ${c}</span><b>${nf(D.pareto.abc[c])}</b></div>`).join('')}</div></div>`;
   return `<div class="empty-st">Este indicador se dibujará cuando llegue el dato que falta.</div>`;
+}
+
+/* ---------- datos de cada indicador: gráfica conjunta (insumos en barras, indicador en línea) y tabla del cálculo ---------- */
+const cM = i => calc([i]), vdM = i => M.ventas[i] / DIAS_MES[i];
+const COMBO = {
+  I1: () => ({t: 'Ventas, costo de ventas y margen bruto', bars: [['Ventas', i => M.ventas[i]], ['Costo de ventas', i => M.costo_ventas[i]]], line: ['Margen bruto', i => cM(i).mb, v => pct(v, 1)]}),
+  I2: () => ({t: 'Ventas, gastos operativos y gasto sobre ventas', bars: [['Ventas', i => M.ventas[i]], ['Gastos operativos', i => M.gastos[i]]], line: ['Gasto / ventas', i => cM(i).pgo, v => pct(v, 1)]}),
+  I3: () => ({t: 'Ventas, costo total y margen operativo', bars: [['Ventas', i => M.ventas[i]], ['Costo de ventas + gastos', i => M.costo_ventas[i] + M.gastos[i]]], line: ['Margen operativo', i => cM(i).mo, v => pct(v, 1)], zero: true}),
+  I6: () => ({t: 'Ventas, costo total y autosuficiencia', bars: [['Ventas', i => M.ventas[i]], ['Costo de ventas + gastos', i => M.costo_ventas[i] + M.gastos[i]]], line: ['Autosuficiencia', i => cM(i).oss, v => pct(v, 1)], ref: [100, 'Autosuficiencia plena · 100 %']}),
+  I5: () => ({t: 'Venta diaria promedio y su crecimiento', bars: [['Venta diaria', i => vdM(i)]], line: ['Crecimiento', i => growth(i), v => sgn(v, 1)], zero: true}),
+  I11: () => ({t: 'Transacciones y ticket promedio', bars: [['Transacciones', i => M.transacciones[i]]], bfmt: v => nf(v), line: ['Ticket promedio', i => cM(i).ticket, v => usd(v, 2)]}),
+  I17: () => ({t: 'Ventas y ventas por m²', bars: [['Ventas', i => M.ventas[i]]], line: ['Ventas por m²', i => M.ventas[i] / D.superficie_m2, v => usd(v, 2)]})
+};
+function chartCombo(cv, o) {
+  const ii = PER.map(ix), si = S.mes === 'acum' ? -1 : PER.indexOf(S.mes), bf = o.bfmt || (v => usd(v, 2));
+  const cols = [css('--chart'), css('--chart-2')], lc = css('--chart-3') || css('--bad');
+  const ds = o.bars.map(([l, f], b) => ({type: 'bar', label: l, data: ii.map(f), yAxisID: 'y', order: 2, borderRadius: 4, maxBarThickness: 30,
+    backgroundColor: ii.map((_, j) => si < 0 || j === si ? cols[b] : cols[b] + '66'), fmt: bf}));
+  ds.unshift({type: 'line', label: o.line[0], data: ii.map(o.line[1]), yAxisID: 'y2', order: 0, borderColor: lc, borderWidth: 2.2, tension: .35,
+    pointRadius: ii.map((_, j) => j === si ? 5 : 3), pointBackgroundColor: css('--surface'), pointBorderColor: lc, pointBorderWidth: 1.8, fmt: o.line[2], spanGaps: false});
+  if (o.ref) ds.unshift({type: 'line', label: o.ref[1], data: ii.map(() => o.ref[0]), yAxisID: 'y2', order: 1, borderColor: css('--muted'), borderDash: [4, 4], borderWidth: 1.2, pointRadius: 0, fmt: () => ''});
+  if (o.zero) ds.unshift({type: 'line', label: 'Cero', data: ii.map(() => 0), yAxisID: 'y2', order: 1, borderColor: css('--muted'), borderWidth: 1, pointRadius: 0, fmt: () => ''});
+  charts[cv] = new Chart($(cv), {data: {labels: PER.map(lbl), datasets: ds},
+    options: {maintainAspectRatio: false, interaction: {mode: 'index', intersect: false},
+      plugins: {legend: {display: true, position: 'bottom', labels: {boxWidth: 10, boxHeight: 10, usePointStyle: true, padding: 14, filter: it => !['Cero'].includes(it.text) && !/plena/.test(it.text)}},
+        tooltip: {filter: c => c.dataset.label !== 'Cero' && !/plena/.test(c.dataset.label), callbacks: {label: c => c.raw == null ? ` ${c.dataset.label}: sin dato` : ` ${c.dataset.label}: ${c.dataset.fmt(c.raw)}`}}},
+      scales: {x: axX, y: {...axY(v => o.bfmt ? nf(v) : usd(v)), beginAtZero: true}, y2: {position: 'right', grid: {display: false}, border: {display: false}, ticks: {maxTicksLimit: 5, callback: v => o.line[2](v).replace(/,0(?=\s|$)/, '')}}}}});
+}
+// columnas: [título, valor del mes, formato, total del periodo (opcional)] · el indicador va en la última columna
+const F2 = v => nf(v, 2), P2 = v => pct(v, 2), N0 = v => nf(v);
+const TAB = {
+  I1: {c: [['Ventas', i => M.ventas[i], F2], ['Costo de ventas', i => M.costo_ventas[i], F2], ['Utilidad bruta', i => M.ventas[i] - M.costo_ventas[i], F2], ['Margen bruto', i => cM(i).mb, P2, r => r.mb]],
+    f: 'Ventas (cuenta 4.1.1) y costo de ventas (cuenta 5.3.1) de los apuntes contables.'},
+  I2: {c: [['Ventas', i => M.ventas[i], F2], ['Gastos operativos', i => M.gastos[i], F2], ['Gasto / ventas', i => cM(i).pgo, P2, r => r.pgo]],
+    f: 'Gastos operativos: cuenta 6 de los apuntes contables, sin los costos de administración que asume la cooperativa.'},
+  I3: {c: [['Ventas', i => M.ventas[i], F2], ['Costo de ventas', i => M.costo_ventas[i], F2], ['Gastos operativos', i => M.gastos[i], F2], ['Resultado operativo', i => M.ventas[i] - M.costo_ventas[i] - M.gastos[i], F2], ['Margen operativo', i => cM(i).mo, P2, r => r.mo]],
+    f: 'Apuntes contables; el margen neto necesita la depreciación y las inversiones que se solicitaron a EDEC EP.'},
+  I6: {c: [['Ventas', i => M.ventas[i], F2], ['Costo de ventas', i => M.costo_ventas[i], F2], ['Gastos operativos', i => M.gastos[i], F2], ['Costo total', i => M.costo_ventas[i] + M.gastos[i], F2], ['Autosuficiencia', i => cM(i).oss, P2, r => r.oss]],
+    f: 'Apuntes contables. La nómina registrada está incompleta: la autosuficiencia puede estar sobreestimada.'},
+  I7: {c: [['Ventas', i => M.ventas[i], F2], ['Costo de ventas', i => M.costo_ventas[i], F2], ['Comisiones de tarjeta', i => M.comisiones[i], F2], ['Costos fijos', i => M.gastos[i] - M.comisiones[i], F2], ['Margen de contribución', i => cM(i).mc, P2, r => r.mc]],
+    f: 'Variables: costo de ventas y comisiones de tarjeta; el resto del gasto se trata como fijo. Punto de equilibrio = costos fijos promedio del mes / margen de contribución del periodo.',
+    x: () => { const r = calc(PER.map(ix)); return `<tr class="tot"><td>Punto de equilibrio del periodo</td><td colspan="4" style="text-align:left;font-family:var(--font)">${usd((r.GO - sum(M.comisiones, PER.map(ix))) / r.n, 2)} al mes de costos fijos ÷ ${pct(r.mc, 2)}</td><td>${r.pe ? usd(r.pe, 2) : 'No alcanzable'}</td></tr>`; }},
+  I5: {c: [['Ventas', i => M.ventas[i], F2], ['Días con venta', i => DIAS_MES[i], N0], ['Venta diaria', i => vdM(i), F2, r => r.V / PER.reduce((a, k) => a + DIAS_MES[ix(k)], 0)], ['Crecimiento', i => growth(i), v => v == null ? '—' : sgn(v, 2), () => tendencia(ix(PER[0]), ix(PER[PER.length - 1]))]],
+    f: 'Ventas de los apuntes contables y días con venta del punto de venta. La fila del periodo muestra la tendencia de la venta diaria del primer al último mes.'},
+  I11: {c: [['Ventas en el punto de venta', i => M.ventas_pos[i], F2], ['Transacciones', i => M.transacciones[i], N0], ['Ticket promedio', i => cM(i).ticket, F2, r => r.ticket]],
+    f: 'Facturas del punto de venta: una transacción es una factura.'},
+  I17: {c: [['Ventas', i => M.ventas[i], F2], ['Ventas por m²', i => M.ventas[i] / D.superficie_m2, F2, r => r.V / r.n / D.superficie_m2], ['Ventas por empleado', i => M.ventas[i] / D.empleados, F2, r => r.V / r.n / D.empleados]],
+    f: `Superficie de ${nf(D.superficie_m2, 2)} m² y ${D.empleados} empleados según el gerente. La fila del periodo es el promedio mensual.`}
+};
+const tbl = (head, rows, cap) => `<div class="cg"><h4>Datos del cálculo</h4><div style="overflow-x:auto"><table class="dt-tbl"><thead><tr>${head.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div>${cap ? `<p class="cap">${cap}</p>` : ''}</div>`;
+function tablaDatos(id) {
+  const falta = D.faltan.filter(f => f[1].split(/,\s*/).includes(id));
+  const ft = falta.length ? `<div class="cg"><h4>Datos que faltan para este indicador</h4>${falta.map(f => `<div class="row" style="display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--line-soft);font-size:13px"><span>${f[0]}<small style="display:block;color:var(--muted)">${f[3]}</small></span><span style="color:var(--muted);text-align:right">${f[4]}</span></div>`).join('')}</div>` : '';
+  const t = TAB[id];
+  if (t) {
+    const ii = PER.map(ix), r = calc(ii);
+    const rows = ii.map(i => `<tr class="${S.mes === D.meses[i] ? 'sel' : ''}"><td>${lbl(D.meses[i])} ${D.meses[i].slice(0, 4)}</td>${t.c.map(([, f, fm]) => { const v = f(i); return `<td class="${typeof v === 'number' && v < 0 ? 'neg' : ''}">${fm(v)}</td>`; }).join('')}</tr>`).join('');
+    const tot = `<tr class="tot"><td>${perCorto()} 2026</td>${t.c.map(([, f, fm, tf]) => { const v = tf ? tf(r) : (fm === P2 ? null : ii.reduce((a, i) => a + (f(i) || 0), 0)); return `<td>${v == null ? '' : fm(v)}</td>`; }).join('')}</tr>`;
+    return tbl(['Mes', ...t.c.map(c => c[0])], rows + tot + (t.x ? t.x() : ''), 'USD. ' + t.f) + ft;
+  }
+  if (id === 'I4') return tbl(['Rubro', '% del gasto operativo'], D.estructura_gastos.map(g => `<tr><td>${g.rubro}</td><td>${pct(g.pct, 1)}</td></tr>`).join('') + `<tr class="tot"><td>Total</td><td>${pct(D.estructura_gastos.reduce((a, g) => a + g.pct, 0), 1)}</td></tr>`, 'Cuenta 6 de los apuntes contables, de diciembre a octubre.') + ft;
+  if (id === 'I12') { const P = D.pareto; return tbl(['% de los productos', '% acumulado de las ventas'], P.x.slice(1).map((x, k) => `<tr class="${x === 20 ? 'sel' : ''}"><td>${x} %</td><td>${pct(P.y[k + 1], 1)}</td></tr>`).join('') + ['A', 'B', 'C'].map(c => `<tr class="tot"><td>Clase ${c}</td><td>${nf(P.abc[c])} productos</td></tr>`).join(''), `${nf(P.productos)} productos con venta, de diciembre a septiembre; ordenados de mayor a menor venta.`) + ft; }
+  if (id === 'I13' || id === 'I14') { const inv = D.inventario;
+    return tbl(['Área', ...inv.conteos], inv.areas.map(a => `<tr><td>${a.area}</td>${a.v.map(v => `<td>${nf(v)}</td>`).join('')}</tr>`).join('') + `<tr class="tot"><td>Total al costo</td>${inv.total.map(v => `<td>${nf(v)}</td>`).join('')}</tr>`
+      + `<tr><td>Costo de ventas may – sep</td><td colspan="3">${nf(inv.costo_may_sep)}</td></tr><tr><td>Inventario promedio (abr y sep)</td><td colspan="3">${nf(inv.promedio)}</td></tr>`
+      + (id === 'I13' ? `<tr class="tot"><td>Rotación del periodo · anualizada</td><td colspan="3">${nf(inv.rot_periodo, 2)} · ${nf(inv.rot_anual, 1)} veces</td></tr>` : `<tr class="tot"><td>GMROI del periodo · anualizado</td><td colspan="3">${nf(inv.gmroi_periodo, 2)} · ${nf(inv.gmroi_anual, 2)}</td></tr>`),
+      'USD. Conteos completos de inventario al costo; hoy solo hay tres.') + ft; }
+  if (id === 'I15') return tbl(['Área', 'Ajuste neto', 'Ventas del área', 'Ajuste / ventas'], D.ajustes.map(a => `<tr class="${a.pct === D.ajustes[1].pct ? 'sel' : ''}"><td>${a.area}</td><td class="neg">${nf(a.aj)}</td><td>${nf(a.ventas)}</td><td>${pct(a.pct, 1)}</td></tr>`).join('') + `<tr class="tot"><td>Total</td><td>${nf(D.ajustes_total.aj)}</td><td>${nf(D.ajustes_total.ventas)}</td><td>${pct(D.ajustes_total.pct, 1)}</td></tr>`, 'USD, marzo a septiembre. El indicador usa el área 2 (frutas y hortalizas).') + ft;
+  if (id === 'I18' || id === 'I20') return tbl(['Proveedor', 'Participación', 'Aporte al HHI (s²)'], D.proveedores.map(p => `<tr><td>${p.nombre}</td><td>${pct(p.pct, 1)}</td><td>${nf(p.pct * p.pct)}</td></tr>`).join('') + `<tr class="tot"><td>Concentración HHI (todos los proveedores)</td><td></td><td>${nf(D.abastecimiento.hhi)}</td></tr>`, 'Entradas de marzo a septiembre; se muestran los seis principales. Las transferencias se tratan como un solo proveedor.') + ft;
+  return ft;
 }
 
 /* ---------- gráficas (Chart.js, tipografía del simulador) ---------- */
@@ -1328,6 +1403,7 @@ function lineSeries(cv, data, fmt, extra = [], fx = fmt) {
 }
 function drawDetail(id) {
   if (!$('p1')) return;
+  if (COMBO[id]) return chartCombo('p1', COMBO[id]());
   const mb = series(c => c.mb);
   if (id === 'I1') chartMargen('p1');
   else if (id === 'I2') lineSeries('p1', series(c => c.pgo), v => pct(v), [], v => pct(v, 2));
@@ -1642,7 +1718,6 @@ function renderHead() {
 function syncNav() {
   const datos = S.datos || S.fam === 'X';
   $('b-ind').setAttribute('aria-pressed', 'false');
-  $('b-datos').setAttribute('aria-pressed', datos);
 }
 const syncDock = syncNav;
 
@@ -1676,10 +1751,12 @@ function openMes() {
   const real = PER[0] === D.inicio_costo_real, it = (v, l, sub = '') => `<button type="button" class="menu__item" role="menuitemradio" aria-checked="${S.mes === v}" data-v="${v}">${l}${sub ? `<small>${sub}</small>` : ''}${S.mes === v ? CK : ''}</button>`;
   openPop($('b-fechas'), `<div class="pop__head">Fechas <small>2026</small></div>
     ${it('acum', 'Acumulado', perCorto())}<hr><div class="pop__sub">Mes por mes</div>${PER.map(k => it(k, cap(lblL(k)), D.meses.indexOf(k) < ix(D.inicio_costo_real) ? 'referencial' : '')).join('')}<hr><div class="pop__sub">Ajuste de los datos</div>
-    <div class="menu__item mrow"><span>Solo costo real <small style="margin:0;display:block">${real ? 'desde abril' : 'incluye dic – mar'}</small></span><button class="switch" id="pop-real" role="switch" aria-checked="${real}" aria-label="Solo meses con costo real" style="margin-left:auto"></button></div>`,
+    <div class="menu__item mrow"><span>Solo costo real <small style="margin:0;display:block">${real ? 'desde abril' : 'incluye dic – mar'}</small></span><button class="switch" id="pop-real" role="switch" aria-checked="${real}" aria-label="Solo meses con costo real" style="margin-left:auto"></button></div>
+    <hr><button type="button" class="menu__item" role="menuitem" data-x="1">Fuentes y fechas de corte<small>corte ${fechaL(D.corte || '2026-09-30')}</small></button>`,
     el => {
       el.querySelectorAll('[data-v]').forEach(b => b.onclick = () => { S.mes = b.dataset.v; closePop(); refresh(); });
       el.querySelector('#pop-real').onclick = () => { closePop(); setInicio(real ? D.meses[0] : D.inicio_costo_real); };
+      el.querySelector('[data-x]').onclick = () => setFam('X');
     });
 }
 function openSemaforo() {
@@ -1707,23 +1784,13 @@ function openInd() {
     ${FAMS.slice(1).map(([f, l]) => it(f, l, n(f) + ' indicadores')).join('')}`,
     el => el.querySelectorAll('[data-v]').forEach(b => b.onclick = () => setFam(b.dataset.v, b.dataset.t === 'true')));
 }
-function openDatosMenu() {
-  const cur = j => S.datos && S.card === j;
-  openPop($('b-datos'), `<div class="pop__head">Datos de CUMA <small>${D.fuentes ? D.fuentes.length + ' fuentes' : ''}</small></div>
-    <button type="button" class="menu__item" role="menuitemradio" aria-checked="${S.fam === 'X' && !S.datos}" data-x="1">Fuentes y fechas<small>corte ${fechaL(D.corte)}</small>${S.fam === 'X' && !S.datos ? CK : ''}</button><hr>
-    ${TARJETAS.map((c, j) => `<button type="button" class="menu__item" role="menuitemradio" aria-checked="${cur(j)}" data-j="${j}">${c.t}${cur(j) ? CK : ''}</button>`).join('')}`,
-    el => {
-      el.querySelector('[data-x]').onclick = () => setFam('X');
-      el.querySelectorAll('[data-j]').forEach(b => b.onclick = () => { closePop(); const j = +b.dataset.j; if (S.datos) pickCard(j); else { if (S.fam === 'X') S.fam = 'T'; openDatos(j); } });
-    });
-}
 function openAjustes() {
   const t = TEMAS.find(x => x.id === theme);
   openPop($('b-ajustes'), `<div class="pop__head">Ajustes</div>
     <div class="pop__sub">Apariencia</div>
     <button type="button" class="menu__item" role="menuitem" data-a="tema"><span class="tema__sw" aria-hidden="true">${t.sw.map(c => `<i style="background:${c}"></i>`).join('')}</span>${t.n}<small>Cambiar</small></button>
     <hr><div class="pop__sub">Atajos de teclado</div>
-    <div class="keys"><kbd>/</kbd><span>Buscar indicador</span><kbd>D</kbd><span>Abrir o cerrar los datos</span><kbd>Esc</kbd><span>Cerrar el menú o la ficha</span></div>`,
+    <div class="keys"><kbd>/</kbd><span>Buscar indicador</span><kbd>Esc</kbd><span>Cerrar el menú o la ficha</span></div>`,
     el => { el.querySelector('[data-a="tema"]').onclick = () => { closePop(true); cycleTheme(); }; });
 }
 
@@ -1777,7 +1844,7 @@ function goResumen() {
 }
 document.querySelector('.top').addEventListener('click', e => {
   const b = e.target.closest('[data-act]'); if (!b) return;
-  ({fechas: openMes, ind: openInd, sem: openSemaforo, datos: openDatosMenu, tema: cycleTheme, buscar: openFinder, ajustes: openAjustes})[b.dataset.act]?.();
+  ({fechas: openMes, ind: openInd, sem: openSemaforo, tema: cycleTheme, buscar: openFinder, ajustes: openAjustes})[b.dataset.act]?.();
 });
 addEventListener('keydown', e => {
   const typing = e.target.closest('input, textarea, select, [contenteditable="true"]');
@@ -1788,7 +1855,6 @@ addEventListener('keydown', e => {
     else if (S.sel) pick(null);
   } else if (!typing && !e.metaKey && !e.ctrlKey && !e.altKey && (e.key === '/')) { e.preventDefault(); openFinder(); }
   else if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); openFinder(); }
-  else if (!typing && !e.metaKey && !e.ctrlKey && !e.altKey && e.key.toLowerCase() === 'd' && !$('finder').open) { S.datos ? closeDatos() : openDatos(); }
 });
 addEventListener('resize', () => { closePop(true); document.querySelectorAll('.gb').forEach(n => slide(n, true)); });
 
