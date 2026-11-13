@@ -634,6 +634,25 @@ tr.done td.w{color:var(--muted);text-decoration:line-through}
 .fgrid>.cg{margin:0;border:1px solid var(--line);border-radius:4px;background:var(--card-bg);padding:20px 22px}
 .cg .dt-tbl td.neg{color:var(--bad)}
 @media (max-width:760px){.fgrid{grid-template-columns:minmax(0,1fr)}}
+/* ficha: nombre arriba · datos a la izquierda, gráficas a la derecha · interpretación abajo */
+.ficha{border:1px solid var(--line);border-radius:4px;background:var(--card-bg);padding:22px 24px 20px;display:flex;flex-direction:column;gap:18px}
+.ficha__h{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.ficha__h h2{margin:4px 0 0}
+.ficha__info{flex:none}
+.ficha__g{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:start}
+.ficha .cg{border:0!important;background:none!important;padding:0!important;margin:0 0 14px;box-shadow:none!important}
+.ficha .cg::before{display:none}
+.ficha__c .cg:last-child,.ficha__d .cg:last-child{margin-bottom:0}
+.ficha__vacio{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+.ficha__i{border-top:1px solid var(--line);padding-top:14px}
+.ficha__i h4{margin:0 0 6px;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:var(--gold)}
+.ficha__i p{margin:0;font-size:14px;line-height:1.55;color:var(--ink)}
+.pop--info .pop__blk{padding:2px 12px 8px;font-size:13px;line-height:1.5;color:var(--ink)}
+.pop--info .pop__blk p{margin:0 0 6px}.pop--info .pop__blk small{color:var(--muted)}
+.pop--info .tbl .row{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px solid var(--line-soft);font-size:12.5px}
+.pop--info .tbl .row .n{color:var(--muted)}
+@media (max-width:980px){.ficha__g{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:760px){.ficha{padding:16px}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -1229,26 +1248,19 @@ function renderPanel() {
   const lista = visibles(), pos = lista.indexOf(i.id), ant = lista[pos - 1], sig = lista[pos + 1];
   const nav = id => id ? `<button type="button" class="fnav__b" data-go="${id}">${id === ant ? '‹ ' : ''}${id} · ${BY[id].c}${id === sig ? ' ›' : ''}</button>` : '<span></span>';
   const ref = i.id === 'I7' && !k.txt ? `Ventas promedio del periodo: ${usd(calc(PER.map(ix)).vmes)} al mes, ${nf(calc(PER.map(ix)).vmes / calc(PER.map(ix)).pe * 100, 0)} % del punto de equilibrio.` : REF[i.id] || 'Sin referencia sectorial disponible; se compara con su propia evolución.';
+  const tab = tablaDatos(i.id, true);
   pin.innerHTML = `
-    <div class="phead"><nav class="fnav" aria-label="Indicador anterior y siguiente">${nav(ant)}${nav(sig)}</nav><span class="kind"><span class="dot ${k.st}"></span>${i.id} · ${FAM_L[i.f]}</span><h2>${i.n}</h2></div>
-    <div class="cgs">
-      <div class="fgrid"><div class="cg"><h4>${k.w ? cap(k.w) : (R.acum ? perCorto() : cap(lblL(S.mes)))}${/\d{4}/.test(k.w || '') ? '' : ' 2026'}</h4>
-        <div class="big num">${k.v}${k.u ? `<small>${k.u}</small>` : ''}</div>
-        ${varMes(i.id)}
-        <p class="refx"><b>Referencia:</b> ${ref}</p></div>
-      <div class="cg"><h4>Interpretación</h4><p class="interp">${k.s}</p></div></div>
-      ${detailViz(i.id)}
-      ${tablaDatos(i.id)}
-    </div>
-    <div class="sec opciones"><div class="opts" role="group" aria-label="Más detalles">${OPC.map(([o, t]) => `<button type="button" class="opt" data-o="${o}" aria-expanded="${S.opc.has(o)}">${t}<svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>`).join('')}</div>
-      ${OPC.map(([o, t, h]) => `<div class="fold ${S.opc.has(o) ? 'open' : ''}" data-o="${o}"><div><div class="fold-in"><h3>${t}</h3>${h}</div></div></div>`).join('')}</div>`;
-  pin.querySelectorAll('[data-go]').forEach(b => b.onclick = () => pick(b.dataset.go));
-  pin.querySelectorAll('.opt').forEach(b => b.onclick = () => {
-    const o = b.dataset.o, on = !S.opc.has(o);
-    on ? S.opc.add(o) : S.opc.delete(o);
-    b.setAttribute('aria-expanded', on);
-    pin.querySelector(`.fold[data-o="${o}"]`).classList.toggle('open', on);
-  });
+    <article class="ficha">
+      <header class="ficha__h"><div><span class="kind"><span class="dot ${k.st}"></span>${i.id} · ${FAM_L[i.f]}</span><h2>${i.n}</h2></div>
+        <button type="button" class="tbtn ficha__info" id="f-info" aria-haspopup="dialog" aria-expanded="false" aria-label="Fórmula y especificaciones"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><circle cx="12" cy="12" r="10" opacity=".5"/><path d="M12 17v-6"/><circle cx="12" cy="8" r=".6" fill="currentColor"/></g></svg><span class="tip">Fórmula y especificaciones</span></button></header>
+      <div class="ficha__g"><div class="ficha__d">${tab || `<p class="ficha__vacio">Sin datos para calcularlo todavía. Falta: ${i.q.charAt(0).toLowerCase() + i.q.slice(1)}.</p>`}</div>
+        <div class="ficha__c">${detailViz(i.id)}</div></div>
+      <div class="ficha__i"><h4>Interpretación</h4><p>${k.s}</p></div>
+    </article>`;
+  const falta = D.faltan.filter(f => f[1].split(/,\s*/).includes(i.id));
+  $('f-info').onclick = () => openPop($('f-info'), `<div class="pop__head">${i.id} · ${i.c}</div>
+    ${OPC.map(([, t, h]) => `<div class="pop__sub">${t}</div><div class="pop__blk">${h}</div>`).join('')}
+    ${falta.length ? `<div class="pop__sub">Datos que faltan</div><div class="pop__blk">${falta.map(f => `<p>${f[0]} <small>· ${f[3]} · ${f[4]}</small></p>`).join('')}</div>` : ''}`, null, 'pop--sema pop--info');
   drawDetail(i.id);
 }
 // variación frente al mes anterior para los indicadores con serie mensual
@@ -1333,8 +1345,8 @@ const TAB = {
     f: `Superficie de ${nf(D.superficie_m2, 2)} m² y ${D.empleados} empleados según el gerente. La fila del periodo es el promedio mensual.`}
 };
 const tbl = (head, rows, cap) => `<div class="cg"><h4>Datos del cálculo</h4><div style="overflow-x:auto"><table class="dt-tbl"><thead><tr>${head.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div>${cap ? `<p class="cap">${cap}</p>` : ''}</div>`;
-function tablaDatos(id) {
-  const falta = D.faltan.filter(f => f[1].split(/,\s*/).includes(id));
+function tablaDatos(id, sinFalta) {
+  const falta = sinFalta ? [] : D.faltan.filter(f => f[1].split(/,\s*/).includes(id));
   const ft = falta.length ? `<div class="cg"><h4>Datos que faltan para este indicador</h4>${falta.map(f => `<div class="row" style="display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--line-soft);font-size:13px"><span>${f[0]}<small style="display:block;color:var(--muted)">${f[3]}</small></span><span style="color:var(--muted);text-align:right">${f[4]}</span></div>`).join('')}</div>` : '';
   const t = TAB[id];
   if (t) {
@@ -1352,7 +1364,7 @@ function tablaDatos(id) {
       'USD. Conteos completos de inventario al costo; hoy solo hay tres.') + ft; }
   if (id === 'I15') return tbl(['Área', 'Ajuste neto', 'Ventas del área', 'Ajuste / ventas'], D.ajustes.map(a => `<tr class="${a.pct === D.ajustes[1].pct ? 'sel' : ''}"><td>${a.area}</td><td class="neg">${nf(a.aj)}</td><td>${nf(a.ventas)}</td><td>${pct(a.pct, 1)}</td></tr>`).join('') + `<tr class="tot"><td>Total</td><td>${nf(D.ajustes_total.aj)}</td><td>${nf(D.ajustes_total.ventas)}</td><td>${pct(D.ajustes_total.pct, 1)}</td></tr>`, 'USD, marzo a septiembre. El indicador usa el área 2 (frutas y hortalizas).') + ft;
   if (id === 'I18' || id === 'I20') return tbl(['Proveedor', 'Participación', 'Aporte al HHI (s²)'], D.proveedores.map(p => `<tr><td>${p.nombre}</td><td>${pct(p.pct, 1)}</td><td>${nf(p.pct * p.pct)}</td></tr>`).join('') + `<tr class="tot"><td>Concentración HHI (todos los proveedores)</td><td></td><td>${nf(D.abastecimiento.hhi)}</td></tr>`, 'Entradas de marzo a septiembre; se muestran los seis principales. Las transferencias se tratan como un solo proveedor.') + ft;
-  return ft;
+  return ft || '';
 }
 
 /* ---------- gráficas (Chart.js, tipografía del simulador) ---------- */
