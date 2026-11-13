@@ -627,6 +627,9 @@ tr.done td.w{color:var(--muted);text-decoration:line-through}
 .pop__sema{padding:6px 10px 4px}
 .pop__sema .sema__t{display:none}
 @media (max-width:760px){.stage.foco .left{margin:0 -12px;padding:2px 12px 8px}.tile.chip{height:36px}.pop__sema .tl.x4{grid-template-columns:1fr 1fr}}
+.stage.solo .tile{height:100%;min-height:0!important}
+.stage.solo .tile.big{padding:20px 22px 16px}
+.stage.solo .tile.big .t-s{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -858,7 +861,7 @@ function COB() {
 const TABLERO = ['I6', 'I1', 'I2', 'I3', 'I7', 'I5', 'I11', 'I15', 'I18', 'I20'];
 
 /* ---------- valores de la vista ---------- */
-const S = {mes: 'acum', fam: 'T', sel: null, todos: false, datos: false, card: null, opc: new Set()};
+const S = {mes: 'acum', fam: 'T', sel: null, todos: false, datos: false, card: null, opc: new Set(), big: null};
 let V = {}, R = null, WORST = 'na';
 function compute() {
   const acum = S.mes === 'acum', ii = acum ? PER.map(ix) : [ix(S.mes)], r = calc(ii), last = ii[ii.length - 1], g = growth(last);
@@ -1070,7 +1073,7 @@ function renderBento(anim = true) {
   ids.forEach(id => {
     html += foco
       ? `<button class="tile chip ${first.has(id) ? '' : 'enter'}" style="--j:${j++}" data-st="${V[id].st}" data-id="${id}" aria-pressed="${S.sel === id}"><span class="dot sm ${V[id].st}"></span><span class="c-id">${id}</span><span class="c-n">${BY[id].c}</span><span class="c-v">${V[id].txt ? '—' : V[id].v}</span></button>`
-      : `<button class="tile ${first.has(id) ? '' : 'enter'}" style="--j:${j++}" data-st="${V[id].st}" data-id="${id}" aria-pressed="false">${tileHTML(id, false)}</button>`;
+      : `<button class="tile ${solo && S.big === id ? 'big' : ''} ${first.has(id) ? '' : 'enter'}" style="--j:${j++}" data-st="${V[id].st}" data-id="${id}" aria-pressed="false">${tileHTML(id, solo && S.big === id)}</button>`;
   });
   if (!foco && !solo && (S.fam === 'T' || S.fam === 'O')) {
     const big = !S.sel;
@@ -1081,17 +1084,82 @@ function renderBento(anim = true) {
     html += `<button class="tile more ${first.has('more') ? '' : 'enter'}" style="--j:${j}" data-id="more"><div class="t-id">${S.todos ? 'TABLERO' : 'SISTEMA'}</div><div class="t-v">${S.todos ? 'Ver menos' : '+' + n}</div><div class="t-n" style="color:var(--muted);font-weight:500">${S.todos ? 'Solo los 10 principales' : 'Ver los 23 indicadores'}</div></button>`;
   }
   grid.innerHTML = html;
+  layoutGrid();
   grid.querySelectorAll('.tile').forEach(b => b.onclick = () => b.dataset.id === 'more' ? toggleTodos() : b.dataset.id === 'hm' ? openDatos(TARJETAS.findIndex(t => t.b === cardHoras)) : pick(S.sel === b.dataset.id ? null : b.dataset.id));
+  if (solo) grid.querySelectorAll('.tile[data-id]').forEach(b => b.onpointerenter = e => {
+    if (e.pointerType !== 'mouse') return;
+    clearTimeout(HV.t);
+    HV.t = setTimeout(() => { if (b.matches(':hover') && performance.now() > HV.lock) expand(b.dataset.id); }, 180);
+  });
+  grid.onpointerenter = () => { HV.over = true; };
+  grid.onpointerleave = () => { HV.over = false; clearTimeout(HV.t); HV.last = performance.now(); };
+  flip(grid, first);
+}
+function flip(grid, first) {
   if (!first.size) return;
   grid.querySelectorAll('[data-id]').forEach(el => {          // FLIP: invertir la diferencia y reproducir
     const f = first.get(el.dataset.id); if (!f) return;
     const l = el.getBoundingClientRect(); if (!l.width) return;
     const dx = f.left - l.left, dy = f.top - l.top, sx = f.width / l.width, sy = f.height / l.height;
     if (Math.abs(dx) + Math.abs(dy) < 1 && Math.abs(sx - 1) + Math.abs(sy - 1) < .01) return;
-    el.animate([{transform: `translate(${dx}px,${dy}px) scale(${sx},${sy})`}, {transform: 'none'}], {duration: 560, easing: 'cubic-bezier(.32,.72,0,1)'});
-    if (Math.abs(sx - 1) + Math.abs(sy - 1) > .01) [...el.children].forEach(c => c.animate([{opacity: 0}, {opacity: 0, offset: .35}, {opacity: 1}], {duration: 560}));
+    el.animate([{transform: `translate(${dx}px,${dy}px) scale(${sx},${sy})`}, {transform: 'none'}], {duration: 620, easing: 'cubic-bezier(.32,.72,0,1)'});
+    if (Math.abs(sx - 1) + Math.abs(sy - 1) > .01) [...el.children].forEach(c => c.animate([{opacity: 0}, {opacity: 0, offset: .35}, {opacity: 1}], {duration: 620}));
   });
 }
+/* cuadrícula que llena la pantalla: una tarjeta grande (2 × 2) y el resto se acomoda; las que sobran se ensanchan para no dejar huecos */
+const HV = {t: 0, lock: 0, over: false, last: 0};
+function layoutGrid() {
+  const g = $('bento'), tiles = [...g.querySelectorAll('.tile[data-id]')];
+  if (!$('stage').classList.contains('solo') || innerWidth < 760 || !tiles.length) {
+    g.style.gridTemplateColumns = g.style.gridTemplateRows = g.style.gridAutoFlow = '';
+    tiles.forEach(t => { t.style.gridColumn = t.style.gridRow = ''; });
+    return;
+  }
+  const gap = 12, W = g.clientWidth, n = tiles.length, cells = n + 3;
+  const avail = Math.max(320, innerHeight - (g.getBoundingClientRect().top + scrollY) - 24);
+  let best = null;
+  for (let C = 6; C >= 2; C--) {
+    if ((W - gap * (C - 1)) / C < 230) continue;
+    const R = Math.ceil(cells / C), h = (avail - gap * (R - 1)) / R;
+    // si no caben en una pantalla, se prefieren más columnas para que la página no se alargue
+    const score = h < 150 ? 600 + (C * R - cells) * 8 - C * 30 : Math.abs(h - 210) + (C * R - cells) * 8;
+    if (!best || score < best.score) best = {C, R, h: Math.max(150, h), score};
+  }
+  if (!best) best = {C: 2, R: Math.ceil(cells / 2), h: 180};
+  const {C, R} = best, occ = Array.from({length: R}, () => Array(C).fill(false));
+  const put = (t, r, c, w, h) => { for (let y = r; y < r + h; y++) for (let x = c; x < c + w; x++) occ[y][x] = true; t.style.gridRow = `${r + 1} / span ${h}`; t.style.gridColumn = `${c + 1} / span ${w}`; t.dataset.r = r; t.dataset.c = c; };
+  const big = S.big && tiles.find(t => t.dataset.id === S.big);
+  if (big) {   // la grande queda donde estaba la pequeña, sin salirse de la rejilla
+    const r0 = Math.min(Math.max(0, +(big.dataset.r || 0)), R - 2), c0 = Math.min(Math.max(0, +(big.dataset.c || 0)), C - 2);
+    put(big, r0, c0, 2, 2);
+  }
+  const rest = tiles.filter(t => t !== big);
+  let free = C * R - (big ? 4 : 0), left = rest.length, k = 0;
+  for (let r = 0; r < R && k < rest.length; r++) for (let c = 0; c < C && k < rest.length; c++) {
+    if (occ[r][c]) continue;
+    const t = rest[k++];
+    if (free - 1 > left - 1 && c + 1 < C && !occ[r][c + 1]) { put(t, r, c, 2, 1); free -= 2; }
+    else if (free - 1 > left - 1 && r + 1 < R && !occ[r + 1][c]) { put(t, r, c, 1, 2); free -= 2; }
+    else { put(t, r, c, 1, 1); free -= 1; }
+    left--;
+  }
+  g.style.gridAutoFlow = 'row';
+  g.style.gridTemplateColumns = `repeat(${C}, minmax(0, 1fr))`;
+  g.style.gridTemplateRows = `repeat(${R}, ${Math.floor(best.h)}px)`;
+}
+function expand(id) {
+  const g = $('bento'); if (S.big === id || !$('stage').classList.contains('solo')) return;
+  const first = new Map(); g.querySelectorAll('[data-id]').forEach(el => first.set(el.dataset.id, el.getBoundingClientRect()));
+  const prev = S.big; S.big = id; HV.lock = performance.now() + 750;
+  [prev, id].forEach(x => { const el = x && g.querySelector(`[data-id="${x}"]`); if (!el) return; el.classList.toggle('big', x === id); el.classList.remove('enter'); el.innerHTML = tileHTML(x, x === id); });
+  layoutGrid(); if (!reduce()) flip(g, first);
+}
+// cada 5 segundos se agranda la siguiente tarjeta, salvo que el mouse esté sobre la cuadrícula
+setInterval(() => {
+  if (HV.over || document.hidden || POP || innerWidth < 760 || !$('stage').classList.contains('solo') || performance.now() - HV.last < 5000) return;
+  const ids = [...$('bento').querySelectorAll('.tile[data-id]')].map(t => t.dataset.id); if (!ids.length) return;
+  expand(ids[(ids.indexOf(S.big) + 1) % ids.length]);
+}, 5000);
 function toggleTodos() { S.todos = !S.todos; if (S.fam !== 'T') { S.fam = 'T'; syncNav(); } S.sel = null; renderHead(); renderBento(); swap($('pin'), renderPanel); }
 function pick(id) {
   if (S.datos) closeDatos(false);
@@ -1573,7 +1641,7 @@ function renderHead() {
 }
 function syncNav() {
   const datos = S.datos || S.fam === 'X';
-  $('b-ind').setAttribute('aria-pressed', !datos);
+  $('b-ind').setAttribute('aria-pressed', 'false');
   $('b-datos').setAttribute('aria-pressed', datos);
 }
 const syncDock = syncNav;
@@ -1745,7 +1813,7 @@ function cycleTheme() {
 }
 
 const topH = () => document.documentElement.style.setProperty('--toph', document.querySelector('.top').offsetHeight + 'px');
-addEventListener('resize', topH);
+addEventListener('resize', () => { topH(); layoutGrid(); });
 applyTheme(); defaults(); compute(); renderHead(); renderBento(false); renderPanel(); topH();
 
 /* entrada de la página: la barra cae con rebote, los íconos aparecen y las tarjetas se abren */
