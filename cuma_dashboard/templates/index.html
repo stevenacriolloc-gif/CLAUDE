@@ -96,6 +96,21 @@
   --lens:#121318; --lens-shadow:inset 0 0 0 1px #ECEAF2;
   --chrome-bg:#1C1E25; --pop-bg:#1C1E25; --pop-solid:#1C1E25; --card-bg:#1C1E25; --sheen:transparent;
   color-scheme:dark}
+:root[data-theme="tinta"]{
+  --bg:#FFFFFF; --surface:#FFFFFF; --surface2:#F4F4F4; --ink:#2E2E2E; --ink-strong:#0A0A0A;
+  --muted:#6A6A6A; --line:#D9D9D9; --line-soft:#ECECEC; --accent:#0A0A0A; --accent-soft:#F0F0F0; --neg:#B0261C;
+  --chart:#1A1A1A; --chart-2:#C9C9C9; --chart-3:#7A7A7A;
+  --ok:#1E5E3A; --warn:#8A5A00; --bad:#B0261C; --na:#8C8C8C;
+  --ok-halo:color-mix(in srgb,#1E5E3A 18%,transparent); --warn-halo:color-mix(in srgb,#8A5A00 20%,transparent); --bad-halo:color-mix(in srgb,#B0261C 16%,transparent); --na-halo:color-mix(in srgb,#8C8C8C 18%,transparent);
+  --dedge:#D9D9D9; --dglass:#FFFFFF; --dscrim:rgba(255,255,255,.35);
+  --glass-flat:#F3F3F3; --glass-hi:transparent; --glass-shadow:rgba(0,0,0,.12);
+  --gold:#0A0A0A; --c1:#1A1A1A; --c2:#555555; --c3:#8A8A8A; --c4:#B0B0B0; --c5:#3A3A3A; --c6:#D5D5D5;
+  --blob-a:transparent; --blob-b:transparent; --blob-c:transparent; --blob-d:transparent;
+  --brand:#0A0A0A; --logo-letra:#0A0A0A; --logo-hoja:#4A4A4A; --band:#0A0A0A; --on-band:#FFFFFF;
+  --rim-line:transparent; --rim-hi:transparent; --rim-mid:transparent; --rim-lo:transparent; --ripple:rgba(0,0,0,.1);
+  --lens:#FFFFFF; --lens-shadow:inset 0 0 0 1px #0A0A0A;
+  --chrome-bg:#FFFFFF; --pop-bg:#FFFFFF; --pop-solid:#FFFFFF; --card-bg:#FFFFFF; --sheen:transparent;
+  color-scheme:light}
 :root[data-theme="gazette-mono"]{
   --bg:#F4F4F2; --surface:#FFFFFF; --surface2:color-mix(in srgb,#0F0F10 6%,#FFFFFF); --ink:#3F3F44; --ink-strong:#0F0F10;
   --muted:#63636B; --line:#BDBDC2; --line-soft:color-mix(in srgb,#BDBDC2 55%,transparent); --accent:#1A1A1D; --accent-soft:#E6E6E8; --neg:#B81F1F;
@@ -1686,6 +1701,7 @@ const TEMAS = [
   {id: 'lavender-press', n: 'Lavender Press', d: 'Lavanda y violeta con acentos bermellón', sw: ['#E8E6EF', '#6C50F6', '#7C63FF', '#E2492C']},
   {id: 'newsprint', n: 'Newsprint', d: 'Papel de periódico, tinta negra y azul de imprenta', sw: ['#F0EADB', '#1A1714', '#2C4F8C', '#B23A1E']},
   {id: 'night-edition', n: 'Night Edition', d: 'Edición nocturna: fondo oscuro y acentos claros', sw: ['#121318', '#F2B84B', '#8FA2FF', '#FF7A59']},
+  {id: 'tinta', n: 'Tinta', d: 'Casi todo blanco, con grises oscuros y negro', sw: ['#FFFFFF', '#0A0A0A', '#6A6A6A', '#C9C9C9']},
   {id: 'gazette-mono', n: 'Gazette Mono', d: 'Monocromo de gaceta con un solo rojo', sw: ['#F4F4F2', '#0F0F10', '#1A1A1D', '#D92B2B']},
   {id: 'swiss-poster', n: 'Swiss Poster', d: 'Cartel suizo: azul, rojo y verde puros', sw: ['#F3EFE6', '#0046C7', '#0046C7', '#E53224']},
   {id: 'riso-pastel', n: 'Riso Pastel', d: 'Risografía: azul, rosa y verde azulado', sw: ['#F5ECEC', '#1F5B8C', '#1F5B8C', '#D94162']}
@@ -1696,7 +1712,7 @@ const applyTheme = () => { document.documentElement.dataset.theme = theme; $('th
 const repaint = () => { applyTheme(); defaults(); compute(); renderHead(); renderBento(false); if (S.datos) deckList(); renderPanel(); };
 function setTheme(id) { theme = id; try { localStorage.setItem('cuma-tema', theme); } catch (e) {} repaint(); }
 function cycleTheme() {
-  openPop($('theme'), `<div class="pop__head">Apariencia <small>7 temas</small></div><div class="temas" role="radiogroup" aria-label="Tema de color">${TEMAS.map(t => `<button type="button" class="tema" role="radio" data-t="${t.id}" aria-checked="${t.id === theme}"><span class="tema__sw">${t.sw.map(c => `<i style="background:${c}"></i>`).join('')}</span><span><b>${t.n}</b><small>${t.d}</small></span>${t.id === theme ? '<em>ACTIVO</em>' : ''}</button>`).join('')}</div>`,
+  openPop($('theme'), `<div class="pop__head">Apariencia <small>8 temas</small></div><div class="temas" role="radiogroup" aria-label="Tema de color">${TEMAS.map(t => `<button type="button" class="tema" role="radio" data-t="${t.id}" aria-checked="${t.id === theme}"><span class="tema__sw">${t.sw.map(c => `<i style="background:${c}"></i>`).join('')}</span><span><b>${t.n}</b><small>${t.d}</small></span>${t.id === theme ? '<em>ACTIVO</em>' : ''}</button>`).join('')}</div>`,
     el => el.querySelectorAll('[data-t]').forEach(b => b.onclick = () => { setTheme(b.dataset.t); closePop(); }));
 }
 
