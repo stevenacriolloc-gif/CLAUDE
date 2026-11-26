@@ -1152,6 +1152,10 @@ tr.done td.w{color:var(--muted);text-decoration:line-through}
 .hm button.hh{min-height:24px}
 .hm.vxm button.rl{min-height:24px}
 .vx-r.on .vx-pc,.vx-r.on small{color:var(--ink)}
+.ix-sec{margin:26px 2px 0;font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.ix-sec span{letter-spacing:.04em;text-transform:none;font-family:var(--font);font-size:11.5px}
+/* filas atenuadas: se apaga la barra y el texto conserva su contraste */
+.vx-r.dim{opacity:1}.vx-r.dim .trk{opacity:.4}.vx-r.dim .vx-n b,.vx-r.dim .vx-v,.vx-r.dim .vx-u{color:var(--ink)}
 </style>
 <style id="base">
 /* base del navegador: preflight de Tailwind CSS 3.4.16 (licencia MIT), en el mismo orden en que lo aplicaba el CDN */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}
@@ -2493,7 +2497,7 @@ const FG = {
     return FIG(16, 'Del inventario según archivos al inventario contado · USD', cv(h, id => { const k = K(), col = bars.map(([, , v], j) => j === 0 ? k.gr : j === N - 1 ? k.dk : v >= 0 ? k.ol : k.lb);
       mk(id, {type: 'bar', data: {labels: bars.map(b => wrap(b[0], 13)), datasets: [{label: 'Monto', data: bars.map(b => b[1]), backgroundColor: col, borderRadius: 5, borderSkipped: false, maxBarThickness: 58,
         dv: bars.map(b => b[2]), fmt: v => usd(v, 2), lev: bars.map(b => b[3]), vlab: (r_, j) => (j && j < N - 1 ? (bars[j][2] >= 0 ? '+' : '−') : '') + nf(Math.abs(bars[j][2]))}]},
-      options: opt({legend: false, mode: 'nearest', yf: v => nf(v), xs: 9.5, skip: false})}); }, 580),
+      options: opt({legend: false, mode: 'nearest', yf: v => nf(v), xs: 9.5, skip: false})}); }, 460),
       {i: 'La diferencia nace antes del primer conteo completo: entradas de la apertura que no constan en los archivos. Después se reduce.'});
   },
   r3(h = 250) {
@@ -3082,13 +3086,10 @@ const TARJETAS = [
   {g: 'res', t: 'Margen y costo', f: '3', s: () => pct(rP_().mb), b: cardMargen},
   {g: 'res', t: 'Sostenibilidad', f: '5', s: () => pct(rP_().oss), b: cardSostenibilidad},
   {g: 'res', t: 'Gasto operativo', f: '6', s: () => pct(rP_().pgo), b: cardGastos},
-  {g: 'ven', t: 'Ventas, clientes y productos', f: '6, 7 y 8', al: ['ventas-por-hora', 'clientes-y-ticket', 'productos', 'productos-por-hora'], s: () => { const h = selHoras(); if (!h) return usd(rP_().ticket, 2); const pk = picoMapa(h.mapa.v); return DIAS[pk[0]] + ' ' + h.mapa.horas[pk[1]] + ':00'; }, b: cardVentas},
-  {g: 'inv', t: 'Entradas y cuadre', f: '9', s: () => usd(sumI(D.fig.f9.cn) + sumI(D.fig.f9.tcor)), b: cardEntradas},
-  {g: 'inv', t: 'Origen de la mercadería', f: '10', s: () => pct(selOrigen()[3].pct) + ' sin entrada', b: cardOrigen},
-  {g: 'inv', t: 'Rotación', s: () => nf(D.inventario.dias) + ' días', b: cardRotacion},
-  {g: 'inv', t: 'Merma', f: '11', s: () => usd(-selMerma().neto), b: cardMerma},
-  {g: 'inv', t: 'Granel y kits', f: '19', s: () => usd(selGranel().ventas), b: cardGranel},
-  {g: 'inv', t: 'Rastreo de la diferencia', f: '15–18', s: () => usd(D.fig.r_comp.reduce((a, x) => a + x[1], 0), 2), b: cardRastreo},
+  {g: 'ven', t: 'Ventas, clientes y productos', f: '6, 7 y 8', al: ['ventas-por-hora', 'clientes-y-ticket', 'productos', 'productos-por-hora'], s: () => { const h = selHoras(); if (!h) return usd(rP_().ticket, 2); const pk = picoMapa(h.mapa.v); return DIAS[pk[0]] + ' ' + h.mapa.horas[pk[1]] + ':00'; }, b: cardVentas,
+    fx: {on: () => vxOn(), cod: () => vxCod(), de: x => { S.vx = vxDeCod(x); }}},
+  {g: 'inv', t: 'Entradas, existencias y merma', f: '9, 10, 11 y 15–19', al: ['entradas-y-cuadre', 'origen-de-la-mercaderia', 'rotacion', 'merma', 'granel-y-kits', 'rastreo-de-la-diferencia'], s: () => nf(D.inventario.dias, 0) + ' días · merma ' + usd(-selMerma().neto), b: cardInventario,
+    fx: {on: () => ixOn(), cod: () => ixCod(), de: x => { S.ix = ixDeCod(x); }}},
   {g: 'abs', t: 'Proveedores', s: () => 'HHI ' + nf(selProv().hhi), b: cardProveedores},
   {g: 'abs', t: 'Financiamiento', s: () => usd(selCap().rows[1].cap), b: cardFinanciamiento},
   {g: 'sec', t: 'Posición frente al sector', f: '12', s: () => nGrupo() + ' compañías' + (SM.an === SEM0.an ? '' : ' · ' + SM.an), b: cardSector},
@@ -3288,7 +3289,7 @@ function cardVentas(db) {
   });
 }
 // en pantallas angostas la fila de análisis también queda fija arriba: la barra de filtros se ubica debajo
-function vxAlto() { const f = $('vx-f'), L = $('stage').querySelector('.left'); if (f) f.style.setProperty('--dkh', (innerWidth <= 980 && L ? L.offsetHeight : 0) + 'px'); }
+function vxAlto() { const f = $('vx-f') || $('ix-f'), L = $('stage').querySelector('.left'); if (f) f.style.setProperty('--dkh', (innerWidth <= 980 && L ? L.offsetHeight : 0) + 'px'); }
 function vxPintar(primera) {
   if (!$('vx-f')) return;
   const sinH = vxOn() && !selHoras();   // meses sin ventas por hora: el filtro queda guardado, pero no hay con qué aplicarlo
@@ -3577,55 +3578,345 @@ function vxDeCod(s) {
   return f;
 }
 
-function cardEntradas(db) {
-  const F = D.fig.f9, ii = SI(), rows = mesRows(i => ({cn: F.cn[i], tr: F.treg[i], im: F.tcor[i] - F.treg[i], tot: F.cn[i] + F.tcor[i]}));
-  db.innerHTML = kp([['Compras netas', usd(sumI(F.cn, ii)), selL()], ['Transferencias', usd(sumI(F.tcor, ii)), selL()], ['Inventario resultante', usd(F.fin), 'al 30 sep · entradas − salidas'], ['Inventario contado', usd(F.cont), '30 sep · diferencia ' + usd(F.cont - F.fin)]])
-    + grid2(FG.f9a(280), FG.f9b(280))
-    + FIG(0, 'Entradas por mes · USD', dt({cols: [{k: 'mes', l: 'Mes', b: true}, {k: 'cn', l: 'Compras', t: 'usd', d: 2}, {k: 'tr', l: 'Transferencias', t: 'usd', d: 2}, {k: 'im', l: 'Corrección del costo', t: 'usd', d: 2}, {k: 'tot', l: 'Total', t: 'usd', d: 2, bar: true}],
-      rows, search: false, mark: markSel, footL: totMeses, foot: {cn: 'sum', tr: 'sum', im: 'sum', tot: 'sum'}, name: 'entradas'}), {i: 'Corrección del costo: costo asignado en enero a transferencias registradas sin costo y un ajuste de USD 0,40 en abril.'});
+/* ---------- entradas, existencias y merma: gráficas enlazadas ---------- */
+// Al tocar un área, el tipo de producto, un origen, una categoría o un producto, el resto se filtra con esa selección; tocar un mes enfoca el periodo en él.
+// Cada gráfica ignora su propio filtro: la lista de áreas sigue mostrando las cuatro y resalta la elegida. Sin filtros, las cifras del informe.
+// El detalle por producto (entradas, conteos y ajustes) se pide aparte, la primera vez que se abre este análisis.
+let IV = null, IVP = null;
+const IXC = {};
+function cargaIV() {
+  if (IV) return Promise.resolve(IV);
+  return IVP || (IVP = fetch('api/inventario', {credentials: 'same-origin'}).then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }).then(prepIV).catch(e => { IVP = null; throw e; }));
 }
-function cardOrigen(db) {
-  db.innerHTML = kp(selOrigen().map((o, k) => [o.origen, pct(o.pct), `${usd(o.usd)} · ${nf(o.n)} productos`, k === 3 ? 'warn' : null]))
-    + grid2(FG.f10a(), FG.f10b(270));
+// arreglos producto × mes en centavos, y lo que no depende del periodo (saldo desde la apertura y costo vendido de mayo a septiembre)
+function prepIV(J) {
+  if (J.meses.join() !== D.meses.join() || DET.meses.join() !== D.meses.join() || J.np !== DET.p.n.length) throw new Error('detalle de inventario de otra versión de los datos');
+  const NM = J.meses.length, NP = J.np, A = () => new Float64Array(NP * NM);
+  const Ec = A(), Et = A(), CV = A(), VV = A(), Fa = A(), So = A(), SN = A(), K = new Float64Array(NP * 3), FD = [];
+  for (let i = 0; i < J.e.length; i += 4) { const q = J.e[i] * NM + J.e[i + 1]; Ec[q] += J.e[i + 2]; Et[q] += J.e[i + 3]; }
+  for (let i = 0, pv = DET.pv; i < pv.length; i += 6) { const q = pv[i] * NM + pv[i + 1]; VV[q] += pv[i + 2]; CV[q] += pv[i + 3]; }
+  for (let i = 0; i < J.k.length; i += 4) for (let w = 0; w < 3; w++) K[J.k[i] * 3 + w] += J.k[i + 1 + w];
+  for (let i = 0; i < J.m.length; i += 7) { const p = J.m[i], q = p * NM + J.m[i + 1]; Fa[q] += J.m[i + 3]; So[q] += J.m[i + 4]; SN[q] += J.m[i + 5]; if (J.m[i + 2] >= 0) FD.push(p, J.m[i + 2], J.m[i + 4] - J.m[i + 3]); }
+  const R5 = ['2026-05', '2026-06', '2026-07', '2026-08', '2026-09'].map(k => D.meses.indexOf(k)).filter(i => i >= 0);
+  const EcA = new Float64Array(NP), EtA = new Float64Array(NP), CVA = new Float64Array(NP), AJ = new Float64Array(NP), CV5 = new Float64Array(NP);
+  for (let p = 0; p < NP; p++) { for (let m = 0; m < NM; m++) { const q = p * NM + m; EcA[p] += Ec[q]; EtA[p] += Et[q]; CVA[p] += CV[q]; AJ[p] += So[q] - Fa[q]; } R5.forEach(m => { CV5[p] += CV[p * NM + m]; }); }
+  return IV = {NM, NP, Ec, Et, CV, VV, Fa, So, SN, K, FD, EcA, EtA, CVA, AJ, CV5, kz: J.kz, mz: J.mz, pa: J.pa, fechas: J.fechas};
 }
-function cardRotacion(db) {
-  const inv = D.inventario, sn = D.rot_sinventa;
-  db.innerHTML = kp([['Rotación (I13)', nf(inv.rot_anual, 1) + ' veces', nf(inv.dias, 0) + ' días · abr – sep', V.I13.st], [tagB(), nf(qv('I13', 'me'), 1) + ' veces', 'mediana · ' + nf(qv('I13d', 'me'), 1) + ' días'], ['GMROI (I14)', nf(inv.gmroi_anual, 2), nomAcc(1) + ' ' + deB() + ' ' + nf(lim('I14').acc, 2), V.I14.st], ['Con existencia y sin venta', nf(sn.n), usd(sn.usd) + ' inmovilizados']])
-    + grid2(secRows(['I13', 'I14'], 'Rotación de inventario y margen sobre inventario de ' + frB() + '; GMROI de cada compañía = margen bruto × rotación / (1 − margen bruto).'), FIG(0, 'Inventario contado por área · USD', dt({cols: [{k: 'area', l: 'Área', b: true}, ...inv.conteos.map((c, j) => ({k: 'v' + j, l: c, t: 'usd', heat: 1}))], rows: inv.areas.map(a => ({area: a.area.replace(/^Área \d · /, ''), v0: a.v[0], v1: a.v[1], v2: a.v[2]})), search: false, foot: {v0: 'sum', v1: 'sum', v2: 'sum'}, name: 'inventario_areas'}), {i: 'En abril se excluye un registro de cebolla perla corregido el 4 de mayo.'}))
-    + FIG(0, 'Días de inventario por categoría', dt({cols: [{k: 'cat', l: 'Categoría', b: true}, {k: 'inv', l: 'Inventario', t: 'usd', bar: true}, {k: 'rot', l: 'Rotación', t: 'num', d: 1, heat: 1}, {k: 'dias', l: 'Días', t: 'num', heat: -1}], rows: D.rot_cat, search: false, top: 16, unit: 'categorías', name: 'rotacion_categorias'}))
-    + FIG(0, 'Rotación por producto', dt({cols: [{k: 'p', l: 'Producto', sub: 'cat'}, {k: 'c', l: 'Clase', t: 'tag', tc: v => 'c' + v}, {k: 'inv', l: 'Inventario', t: 'usd', bar: true}, {k: 'cv', l: 'Costo vendido al año', t: 'usd'}, {k: 'rot', l: 'Rotación', t: 'num', d: 1, heat: 1}, {k: 'dias', l: 'Días', t: 'num', heat: -1}],
-      rows: D.tabla.rot.map(rotRow), filters: ['c', 'cat'], sort: ['dias', 'desc'], top: 15, unit: 'productos', name: 'rotacion_productos'}), {i: 'Costo de lo vendido de mayo a septiembre llevado a un año, sobre el promedio del inventario contado el 30 de abril y el 30 de septiembre. Productos con más de USD 15 de inventario; sin insumos de kits.'});
+
+// filtro: área (1 a 4), tipo (1 perecible, 0 no perecible), categoría, origen (0 a 3) y producto
+S.ix = S.ix || {area: null, tipo: null, cat: null, orig: null, prod: null};
+const IXK = ['area', 'tipo', 'cat', 'orig', 'prod'];
+const ixOn = () => IXK.some(k => S.ix[k] != null);
+const AREA_N = a => a ? D.inventario.areas[a - 1].area.replace(/^Área \d · /, '') : 'Sin área';
+const TIPO_N = t => t ? 'Perecibles' : 'No perecibles';
+const ixChip = (k, v) => k === 'area' ? AREA_N(v) : k === 'tipo' ? TIPO_N(v) : k === 'cat' ? DET.cats[v] : k === 'orig' ? ORIG[v] : DET.p.n[v];
+const ixTxt = (sin = null) => IXK.filter(k => k !== sin && S.ix[k] != null).map(k => ixChip(k, S.ix[k])).join(' · ');
+const perecDe = c => DET.perec[c] ? 1 : 0;
+
+// cálculo de la selección (centavos). Cada bloque ignora su propio filtro: áreas, tipo, categorías, origen y productos.
+function ixCalc() {
+  const X = IV, f = S.ix, NM = X.NM, NP = X.NP, nc = DET.cats.length, ii = SI(), pc = DET.p.c, po = DET.p.o;
+  const pas = (p, sk) => (sk === 'area' || f.area == null || X.pa[p] === f.area) && (sk === 'tipo' || f.tipo == null || perecDe(pc[p]) === f.tipo)
+    && (sk === 'cat' || f.cat == null || pc[p] === f.cat) && (sk === 'orig' || f.orig == null || po[p] === f.orig) && (sk === 'prod' || f.prod == null || p === f.prod);
+  // líneas sin código: no son un producto ni tienen origen
+  const zas = (a, c, sk) => f.prod == null && f.orig == null && (sk === 'area' || f.area == null || a === f.area) && (sk === 'tipo' || f.tipo == null || perecDe(c) === f.tipo) && (sk === 'cat' || f.cat == null || c === f.cat);
+  const T = {ec: 0, et: 0, cv: 0, v: 0, fa: 0, so: 0, sn: 0, k: [0, 0, 0], cv5: 0, ecA: 0, etA: 0, cvA: 0, aj: 0, np: 0, sv: 0, svU: 0};
+  const Mo = {ec: new Float64Array(NM), et: new Float64Array(NM), cv: new Float64Array(NM), fa: new Float64Array(NM), so: new Float64Array(NM), sn: new Float64Array(NM)};
+  const Ar = [0, 1, 2, 3, 4].map(() => ({k: [0, 0, 0], v: 0, aj: 0, e: 0})), Ti = [0, 1].map(() => ({perd: 0, e: 0}));
+  const Ca = [...Array(nc)].map(() => ({e: 0, cv: 0, perd: 0, k4: 0, k9: 0, cv5: 0, any: false}));
+  const Or = [0, 1, 2, 3].map(() => ({v: 0, n: 0, m: new Float64Array(NM)})), Fd = new Float64Array(X.fechas.length);
+  const Pr = [], sel = new Uint8Array(NP);
+  for (let p = 0; p < NP; p++) {
+    const a = X.pa[p], c = pc[p], o = po[p], t = perecDe(c), q0 = p * NM;
+    let e = 0, ec = 0, et = 0, cv = 0, v = 0, fa = 0, so = 0, sn = 0;
+    ii.forEach(m => { const q = q0 + m; ec += X.Ec[q]; et += X.Et[q]; cv += X.CV[q]; v += X.VV[q]; fa += X.Fa[q]; so += X.So[q]; sn += X.SN[q]; });
+    e = ec + et;
+    const k0 = X.K[p * 3], k4 = X.K[p * 3 + 1], k9 = X.K[p * 3 + 2], act = e || cv || fa || so || k4 || k9;   // con movimiento en el periodo o existencia en abril o septiembre
+    if (!act && !k0 && !X.EcA[p] && !X.EtA[p] && !X.CVA[p] && !X.AJ[p]) continue;
+    if (pas(p)) {
+      sel[p] = 1;
+      T.ec += ec; T.et += et; T.cv += cv; T.v += v; T.fa += fa; T.so += so; T.sn += sn; T.k[0] += k0; T.k[1] += k4; T.k[2] += k9; T.cv5 += X.CV5[p];
+      T.ecA += X.EcA[p]; T.etA += X.EtA[p]; T.cvA += X.CVA[p]; T.aj += X.AJ[p]; if (act) T.np++;
+      if ((k4 + k9) / 2 > 1500 && X.CV5[p] <= 0) { T.sv++; T.svU += (k4 + k9) / 2; }   // con existencia y sin venta de mayo a septiembre
+      for (let m = 0; m < NM; m++) { const q = q0 + m; Mo.ec[m] += X.Ec[q]; Mo.et[m] += X.Et[q]; Mo.cv[m] += X.CV[q]; Mo.fa[m] += X.Fa[q]; Mo.so[m] += X.So[q]; Mo.sn[m] += X.SN[q]; }
+    }
+    if (pas(p, 'area')) { const A_ = Ar[a]; A_.k[0] += k0; A_.k[1] += k4; A_.k[2] += k9; A_.v += v; A_.aj += so - fa; A_.e += e; }
+    if (pas(p, 'tipo')) { Ti[t].perd += fa - so; Ti[t].e += e; }
+    if (pas(p, 'cat')) { const C = Ca[c]; C.e += e; C.cv += cv; C.perd += fa - so; C.k4 += k4; C.k9 += k9; C.cv5 += X.CV5[p]; C.any = C.any || !!act; }
+    if (pas(p, 'orig') && o >= 0) { const O = Or[o]; O.v += v; if (v > 0) O.n++; for (let m = 0; m < NM; m++) O.m[m] += X.VV[q0 + m]; }
+    if (pas(p, 'prod') && act) Pr.push({p, e, cv, perd: fa - so, k9, k4, cv5: X.CV5[p]});
+  }
+  for (let i = 0; i < X.FD.length; i += 3) if (sel[X.FD[i]]) Fd[X.FD[i + 1]] += X.FD[i + 2];
+  // líneas de conteo sin código, por área y categoría
+  for (let i = 0; i < X.kz.length; i += 5) {
+    const a = X.kz[i], c = X.kz[i + 1], k = [X.kz[i + 2], X.kz[i + 3], X.kz[i + 4]];
+    if (zas(a, c)) k.forEach((x, w) => { T.k[w] += x; });
+    if (Ar[a] && zas(a, c, 'area')) k.forEach((x, w) => { Ar[a].k[w] += x; });
+    if (zas(a, c, 'cat')) { Ca[c].k4 += k[1]; Ca[c].k9 += k[2]; Ca[c].any = true; }
+  }
+  const enP = new Uint8Array(NM); ii.forEach(m => { enP[m] = 1; });
+  let zP = 0, zK = 0;
+  for (let i = 0; i < X.mz.length; i += 8) {
+    const a = X.mz[i], c = X.mz[i + 1], m = X.mz[i + 2], k = X.mz[i + 3], fa = X.mz[i + 4], so = X.mz[i + 5], sn = X.mz[i + 6], d = so - fa;
+    if (zas(a, c)) { Mo.fa[m] += fa; Mo.so[m] += so; Mo.sn[m] += sn; T.aj += d; if (k >= 0) Fd[k] += d; if (enP[m]) { T.fa += fa; T.so += so; T.sn += sn; zP += fa - so; } }
+    if (!enP[m]) continue;
+    if (Ar[a] && zas(a, c, 'area')) Ar[a].aj += d;
+    if (zas(a, c, 'tipo')) Ti[perecDe(c)].perd -= d;
+    if (zas(a, c, 'cat')) { Ca[c].perd -= d; Ca[c].any = true; }
+  }
+  if (f.prod == null && f.orig == null) for (let i = 0; i < X.kz.length; i += 5) if (zas(X.kz[i], X.kz[i + 1])) zK += X.kz[i + 4];
+  return {T, Mo, Ar, Ti, Ca, Or, Fd, Pr, z: {perd: zP, k9: zK}};
 }
-function cardMerma(db) {
-  const T = selMerma(), F_ = fechasSel();
-  db.innerHTML = kp([['Pérdida neta', usd(-T.neto), selL() + ', al costo', 'bad'], ['Faltantes', usd(T.faltantes)], ['Sobrantes', usd(T.sobrantes), usd(T.sobr_neg) + ' por existencia negativa'], ['Frutas y hortalizas', T.fh_pct == null ? '—' : pct(T.fh_pct), 'de sus entradas']])
-    + grid2(FG.f11a(300), gcol(FG.f11b(), FIG(0, 'Resultado de cada conteo · USD', F_.length ? cv(150, id => { const k = K(), fl = s => { const [, m, d] = s.split('-'); return `${+d} ${MES[+m - 1].toLowerCase()}`; };
-      mk(id, {type: 'bar', data: {labels: F_.map(f => fl(f.d)), datasets: [{label: 'Resultado del conteo', data: F_.map(f => f.neto), backgroundColor: F_.map(f => (f.neto < 0 ? k.al : k.li) + (f.on ? '' : '59')), borderRadius: 3, borderSkipped: false, maxBarThickness: 14, fmt: v => usd(v), tipL: j => `${nf(F_[j].n)} productos`}]},
-        options: opt({legend: false, yf: v => nf(v), xs: 9})}); }) : '<div class="empty-st">Sin conteos en los meses elegidos.</div>', {i: 'Hacia abajo: pérdida neta de la fecha; hacia arriba: sobrante neto.'})))
-    + FIG(0, 'Pérdida por categoría · ' + selL(), dt({cols: [{k: 'cat', l: 'Categoría', b: true}, {k: 'perdida', l: 'Pérdida', t: 'usd', bar: true}, {k: 'entradas', l: 'Entradas', t: 'usd'}, {k: 'pct', l: '% de entradas', t: 'pct', heat: 1}, {k: 'tipo', l: 'Tipo', t: 'tag', tc: v => v === 'Perecible' ? 'full' : 'none'}],
-      rows: T.cat.map(c => ({...c, tipo: c.perec ? 'Perecible' : 'No perecible'})), search: false, filters: ['tipo'], top: 16, unit: 'categorías', name: 'merma_categorias'}))
-    + FIG(0, 'Pérdida por producto · ' + selL(), dt({cols: [{k: 'p', l: 'Producto', sub: 'cat'}, {k: 'neto', l: 'Pérdida neta', t: 'usd', d: 2, bar: true}, {k: 'falt', l: 'Faltantes', t: 'usd', d: 2}, {k: 'sobr', l: 'Sobrantes', t: 'usd', d: 2}, {k: 'n', l: 'Conteos', t: 'num'}, {k: 'tipo', l: 'Tipo', t: 'tag', tc: v => v === 'Perecible' ? 'full' : 'none'}],
-      rows: T.prod, filters: ['tipo', 'cat'], top: 15, unit: 'productos', name: 'merma_productos'}), {i: 'Pérdida neta = faltantes − sobrantes, al costo. Valores negativos: sobrante neto, que suele corregir una existencia negativa.'});
+
+// cambiar un filtro (tocar lo mismo otra vez lo quita); lo que contradice el filtro nuevo se quita
+function ixSet(k, v) {
+  const f = S.ix; f[k] = f[k] === v ? null : v;
+  const quita = (a, b, ok) => { if (f[a] != null && f[b] != null && !ok()) f[k === a ? b : a] = null; };
+  quita('cat', 'prod', () => DET.p.c[f.prod] === f.cat);
+  quita('orig', 'prod', () => DET.p.o[f.prod] === f.orig);
+  quita('tipo', 'cat', () => perecDe(f.cat) === f.tipo);
+  quita('tipo', 'prod', () => perecDe(DET.p.c[f.prod]) === f.tipo);
+  if (IV) quita('area', 'prod', () => IV.pa[f.prod] === f.area);
+  syncHash();
+  if (IV) { ixPintar(); return; }
+  ixAviso('Cargando el detalle de inventario…');
+  cargaIV().then(() => ixPintar()).catch(ixFalla);
 }
-function cardGranel(db) {
-  const G = selGranel(), Gm = D.granel.mes;
-  db.innerHTML = kp([['Ventas a granel', usd(G.ventas), pct(G.pct) + ' de la venta'], ['Margen por producto', G.mgp == null ? '—' : pct(G.mgp), nf(G.productos) + ' productos'], ['Ajuste del área', G.aj_pct == null ? '—' : pct(G.aj_pct), usd(G.aj) + ' sobre sus ventas', 'warn'], ['Inventario del área', usd(G.inv[2]), '30 sep · ' + usd(G.inv[1]) + ' el 30 abr']])
-    + FIG(0, 'Ventas a granel por mes · USD', cv(210, id => { const k = K(); mk(id, {type: 'bar', data: {labels: LBP(), datasets: [{label: 'Ventas a granel', data: SER(Gm), backgroundColor: PER.map(q => dimA(k.li, ix(q))), borderRadius: 5, borderSkipped: false, maxBarThickness: 34, fmt: v => usd(v), vlab: v => nf(v)}]},
-      options: opt({legend: false, yf: v => nf(v)})}); }), {i: 'Área 4, granos secos a granel.'})
-    + FG.r5()
-    + FIG(0, 'Productos a granel · ' + selL(), dt({cols: [{k: 'p', l: 'Producto', b: true}, {k: 'v', l: 'Ventas', t: 'usd', bar: true}, {k: 'q', l: 'Unidades', t: 'num', d: 1}, {k: 'mg', l: 'Margen USD', t: 'usd'}, {k: 'mgp', l: 'Margen %', t: 'pct', heat: 1}],
-      rows: G.tabla, top: 12, unit: 'productos', foot: {v: 'sum', mg: 'sum'}, name: 'granel'}),
-      {i: 'Pendiente para controlar el granel: una matriz que relacione cada código a granel con sus presentaciones y su rendimiento, el registro de cada reempaque y el conteo por kilogramo.'});
+function ixLimpia() { S.ix = {area: null, tipo: null, cat: null, orig: null, prod: null}; syncHash(); ixPintar(); }
+const ixAviso = t => { const el = $('ix-av'); if (el) el.textContent = t; };
+function ixFalla(e) { if (e) console.error(e); ixAviso('No se pudo cargar el detalle de inventario; los filtros se aplicarán cuando vuelva la conexión.'); }
+const ixCarga = () => '<div class="empty-st">Cargando el detalle de inventario…</div>';
+
+function cardInventario(db) {
+  const inv = D.inventario;
+  db.innerHTML = `<div class="vx-f" id="ix-f" role="group" aria-label="Filtros del análisis"></div><div id="ix-k"></div>
+    <div class="g2">${FIG(9, '<span id="ix-te">Entradas y costo de lo vendido por mes · USD</span>', '<div id="ix-e"></div>', {i: 'Barras: entradas al costo. Línea: costo de lo vendido. En enero parte de las transferencias se registró sin costo; el costo imputado las valora con el precio de compra. Toca un mes para enfocar el periodo en él; tócalo otra vez para volver.'})}
+      ${FIG(11, '<span id="ix-tm">Diferencias de conteo por mes · USD</span>', '<div id="ix-m"></div>', {i: 'La merma no se registra a diario: aparece de golpe en el mes del conteo. Los sobrantes por existencia negativa corrigen ventas registradas con otro código. Toca un mes para enfocar el periodo en él.'})}</div>
+    <div class="g2">${FIG(0, '<span id="ix-ta">Inventario contado al 30 de septiembre, por área</span>', '<div id="ix-a"></div>', {i: 'Valor al costo del conteo del 30 de septiembre. Ajuste: sobrantes menos faltantes del periodo, sobre las ventas del área. Toca un área para filtrar.'})}
+      ${gcol(FIG(11, '<span id="ix-tt">Pérdida neta por tipo de producto</span>', '<div id="ix-t"></div>', {cls: 'mid', i: 'Perecibles: frutas, hortalizas, carnes, pollos, pescados, embutidos, huevos, granos y elaborados. Toca un tipo para filtrar.'}),
+        FIG(0, '<span id="ix-tf">Resultado de cada conteo · USD</span>', '<div id="ix-fc"></div>', {i: 'Hacia abajo: pérdida neta de la fecha; hacia arriba: sobrante neto. Toca una fecha para enfocar el periodo en su mes.'}))}</div>
+    <div class="g2">${FIG(10, '<span id="ix-to">Origen de la mercadería vendida</span>', '<div id="ix-o"></div>', {i: 'Ventas sin IVA según cómo ingresó cada producto en todo el periodo de datos. La venta sin entrada es sobre todo granel que se fracciona con otro código. Toca un origen para filtrar.'})}
+      ${FIG(10, '<span id="ix-tom">Origen de lo vendido, mes a mes · %</span>', '<div id="ix-om"></div>', {i: 'Toca una parte de la barra para filtrar ese origen.'})}</div>
+    ${FIG(0, '<span id="ix-tc">Categorías</span>', '<div id="ix-c"></div>', {i: 'Pérdida neta = faltantes − sobrantes, al costo. Días de inventario: promedio de los conteos del 30 de abril y del 30 de septiembre sobre el costo de lo vendido de mayo a septiembre, llevado a un año. Toca una categoría para filtrar.'})}
+    ${FIG(0, '<span id="ix-tp">Productos</span>', '<div id="ix-p"></div>', {i: 'Valores negativos de pérdida: sobrante neto, que suele corregir una existencia negativa. Toca un producto para filtrar.'})}
+    <div class="g2">${FIG(9, '<span id="ix-tq">Cuadre de inventario al 30 de septiembre</span>', '<div id="ix-q"></div>', {i: 'Compras y transferencias, más los ajustes de conteo y menos el costo de lo vendido, dejan el inventario según los archivos; el conteo del 30 de septiembre encontró otro valor. Es un saldo acumulado desde la apertura: no cambia con los meses elegidos.'})}
+      ${secRows(['I13', 'I14'], 'Rotación de inventario y margen sobre inventario de ' + frB() + '; GMROI de cada compañía = margen bruto × rotación / (1 − margen bruto). ProDesarrollo: ' + nf(inv.rot_anual, 1) + ' veces, ' + nf(inv.dias, 0) + ' días.')}</div>
+    <h3 class="ix-sec">Rastreo de la diferencia <span>· toda la tienda</span></h3>
+    ${grid2(FG.r2(290), FG.rc(290))}${FG.r1(290)}${grid2(FG.r3(260), FG.r4(260))}${FG.r5()}
+    ${FIG(0, 'Productos con mayor diferencia entre conteo y archivos', dt({cols: [{k: 'p', l: 'Producto', sub: 'cat'}, {k: 'mec', l: 'Mecanismo', t: 'tag'}, {k: 'arch', l: 'Según archivos', t: 'num', d: 1}, {k: 'cont', l: 'Contado', t: 'num', d: 1}, {k: 'gap', l: 'Diferencia', t: 'num', d: 1}, {k: 'vgap', l: 'USD', t: 'usd', d: 2, bar: true}],
+      rows: D.fig.r_top.map(r => ({...r, _p: DET.p.n.indexOf(r.p)})), filters: ['mec'], top: 15, unit: 'productos', name: 'rastreo_productos', mark: r => r._p >= 0 && r._p === S.ix.prod, click: r => { if (r._p >= 0) ixSet('prod', r._p); }}),
+      {i: 'Unidades al 30 de septiembre. Positivo: se contó más de lo que dejan los archivos. Toca un producto para filtrar el resto del análisis.'})}`;
+  PEND.push(() => {
+    if (!$('ix-f')) return;
+    vxAlto(); addEventListener('resize', vxAlto);
+    ixPintar(true);
+    if (!IV) { ixAviso('Cargando el detalle de inventario…'); cargaIV().then(() => ixPintar()).catch(ixFalla); }
+  });
 }
-function cardRastreo(db) {
-  const C = D.fig.r_comp, tot = C.reduce((a, x) => a + x[1], 0), P = D.fig.r_puente;
-  db.innerHTML = kp([['Diferencia por rastrear', usd(tot, 2), 'contado − archivos'], ['Hasta el 9 de enero', '+' + usd(P[1][1]), 'apertura', 'warn'], ['Después del 9 de enero', usd(P[2][1] + P[3][1]), 'se reduce'], ['Kits y reempaques', usd(C[6][1], 2), 'se compensan']])
-    + grid2(FG.r2(290), FG.rc(290))
-    + FG.r1(290)
-    + grid2(FG.r3(260), FG.r4(260))
-    + FG.r5()
-    + FIG(0, 'Productos con mayor diferencia entre conteo y archivos', dt({cols: [{k: 'p', l: 'Producto', sub: 'cat'}, {k: 'mec', l: 'Mecanismo', t: 'tag'}, {k: 'arch', l: 'Según archivos', t: 'num', d: 1}, {k: 'cont', l: 'Contado', t: 'num', d: 1}, {k: 'gap', l: 'Diferencia', t: 'num', d: 1}, {k: 'vgap', l: 'USD', t: 'usd', d: 2, bar: true}],
-      rows: D.fig.r_top, filters: ['mec'], top: 15, unit: 'productos', name: 'rastreo_productos'}), {i: 'Unidades al 30 de septiembre. Positivo: se contó más de lo que dejan los archivos.'});
+function ixPintar(primera) {
+  if (!$('ix-f')) return;
+  const R = IV ? ixCalc() : null;
+  ixFiltros(); ixKpi(R); ixMesE(R); ixMesM(R); ixAreas(R); ixTipo(R); ixFechas(R); ixOrig(R); ixOrigMes(R); ixCats(R); ixProds(R); ixCuadre(R);
+  if (!primera) ['ix-k', 'ix-a', 'ix-t', 'ix-o', 'ix-c', 'ix-p'].forEach(id => vxFx($(id)));
+}
+
+function ixFiltros() {
+  const el = $('ix-f'), f = S.ix, ch = IXK.filter(k => f[k] != null).map(k => [k, ixChip(k, f[k])]);
+  el.innerHTML = `<span class="vx-fl">${ch.length ? 'Filtros' : 'Sin filtros'}</span>${ch.map(([k, t]) => `<button type="button" class="vx-ch" data-k="${k}" aria-label="Quitar el filtro ${esc(t)}">${esc(t)}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17"/></svg></button>`).join('')}
+    ${ch.length > 1 ? '<button type="button" class="vx-cl">Quitar todo</button>' : ''}<span class="vx-av" id="ix-av" role="status">${ch.length ? '' : 'Toca un área, un tipo, un origen, una categoría o un producto'}</span>`;
+  el.querySelectorAll('.vx-ch').forEach(b => b.onclick = () => ixSet(b.dataset.k, S.ix[b.dataset.k]));
+  const cl = el.querySelector('.vx-cl'); if (cl) cl.onclick = ixLimpia;
+}
+
+const ixRot = (cv5, k4, k9) => { const pr = (k4 + k9) / 2; return pr > 0 && cv5 > 0 ? cv5 * 12 / 5 / pr : null; };
+function ixKpi(R) {
+  const el = $('ix-k'); if (!el) return;
+  const F = D.fig.f9, ii = SI(), inv = D.inventario;
+  if (!R || !ixOn()) {
+    const cn = sumI(F.cn, ii), tr = sumI(F.tcor, ii), ent = cn + tr, perd = -selMerma().neto;
+    el.innerHTML = kp([['Entradas', usd(ent), `compras ${usd(cn)} · transferencias ${usd(tr)}`], ['Pérdida neta', usd(perd), (ent ? pct(perd / ent * 100) + ' de las entradas · ' : '') + 'al costo', perd > 0 ? 'bad' : null],
+      ['Inventario contado', usd(F.cont), '30 sep · según archivos ' + usd(F.fin)], ['Rotación (I13)', nf(inv.rot_anual, 1) + ' veces', nf(inv.dias, 0) + ' días · mediana del sector ' + nf(qv('I13', 'me'), 1) + ' veces', V.I13.st]]);
+    return;
+  }
+  const T = R.T, ent = (T.ec + T.et) / 100, perd = (T.fa - T.so) / 100, rot = ixRot(T.cv5, T.k[1], T.k[2]), fin = (T.ecA + T.etA + T.aj - T.cvA) / 100;
+  el.innerHTML = kp([['Entradas', usd(ent), `compras ${usd(T.ec / 100)} · transferencias ${usd(T.et / 100)}`],
+    ['Pérdida neta', usd(perd), ent > 100 ? pct(perd / ent * 100) + ' de sus entradas · al costo' : 'al costo', perd > 0 ? 'bad' : null],
+    ['Inventario contado', usd(T.k[2] / 100), '30 sep · según archivos ' + usd(fin)],
+    ['Rotación', rot ? nf(rot, 1) + ' veces' : '—', rot ? nf(365 / rot, 0) + ' días de inventario · may – sep' : T.k[1] + T.k[2] > 0 ? 'sin venta de mayo a septiembre' : 'sin existencia contada']]);
+}
+
+// meses: entradas (barras) y costo de lo vendido (línea); tocar un mes enfoca el periodo
+function ixMesE(R) {
+  const el = $('ix-e'); if (!el) return;
+  const k = K(), F = D.fig.f9, filt = !!R && ixOn(), Mo = R && R.Mo;
+  const cn = filt ? PER.map(q => Mo.ec[ix(q)] / 100) : SER(F.cn), tr = filt ? PER.map(q => Mo.et[ix(q)] / 100) : SER(F.treg);
+  const im = filt ? PER.map(() => null) : SER(F.tcor.map((x, j) => Math.max(0, x - F.treg[j]))), sal = R ? PER.map(q => Mo.cv[ix(q)] / 100) : SER(D.fig.r_mes.sal);
+  $('ix-te').textContent = 'Entradas y costo de lo vendido por mes · ' + (filt ? ixTxt() + ' · ' : '') + 'USD';
+  const col = c => PER.map(q => dimA(c, ix(q)));
+  const ch = IXC.e;
+  if (ch && ch.canvas && ch.canvas.isConnected) {
+    const d = ch.data.datasets; ch.data.labels = LBP(); d[0].data = sal; d[1].data = cn; d[2].data = tr; d[3].data = im;
+    d[2].label = filt ? 'Transferencias' : 'Transferencias registradas'; d[3].label = filt ? '_Costo imputado (enero)' : 'Costo imputado (enero)';
+    d[1].backgroundColor = col(k.ol); d[2].backgroundColor = col(k.li); ch.update(); return;
+  }
+  el.innerHTML = cv(280, id => { IXC.e = mk(id, {data: {labels: LBP(), datasets: [
+      {type: 'line', label: 'Costo de lo vendido', data: sal, borderColor: k.dk, backgroundColor: k.dk, borderWidth: 2, pointRadius: ptR(3.5), pointBackgroundColor: k.sf, pointBorderColor: k.dk, pointBorderWidth: 1.6, tension: .3, order: 0, spanGaps: true, fmt: v => usd(v)},
+      {type: 'bar', label: 'Compras netas', data: cn, backgroundColor: col(k.ol), borderRadius: R4(false, true), borderSkipped: false, maxBarThickness: 34, stack: 's', order: 1, fmt: v => usd(v)},
+      {type: 'bar', label: filt ? 'Transferencias' : 'Transferencias registradas', data: tr, backgroundColor: col(k.li), borderRadius: 0, maxBarThickness: 34, stack: 's', order: 1, fmt: v => usd(v)},
+      {type: 'bar', label: filt ? '_Costo imputado (enero)' : 'Costo imputado (enero)', data: im, backgroundColor: hatch(k.al), borderRadius: R4(true, false), borderSkipped: false, maxBarThickness: 34, stack: 's', order: 1, fmt: v => usd(v)}]},
+    options: {...opt({yf: v => nf(v)}), animation: {duration: 450, easing: 'easeOutQuart'},
+      onClick: (e, els) => { if (els.length) mesFoco(PER[els[0].index]); }, onHover: (e, els) => { e.native.target.style.cursor = els.length ? 'pointer' : 'default'; },
+      scales: {x: {...axX, stacked: true, ticks: {maxRotation: 0}}, y: {...axY(v => nf(v)), stacked: true, beginAtZero: true}}}}); });
+  flush(el);
+}
+
+// meses: faltantes, sobrantes y neto de los conteos
+function ixMesM(R) {
+  const el = $('ix-m'); if (!el) return;
+  const k = K(), MM = D.merma_mes, filt = !!R && ixOn(), Mo = R && R.Mo;
+  const fa = filt ? PER.map(q => -Mo.fa[ix(q)] / 100) : SER(MM.faltantes).map(v => -v), so = filt ? PER.map(q => (Mo.so[ix(q)] - Mo.sn[ix(q)]) / 100) : SER(MM.sobrantes);
+  const sn = filt ? PER.map(q => Mo.sn[ix(q)] / 100) : SER(MM.sobr_neg), ne = filt ? PER.map(q => (Mo.so[ix(q)] - Mo.fa[ix(q)]) / 100) : SER(MM.neto);
+  $('ix-tm').textContent = 'Diferencias de conteo por mes · ' + (filt ? ixTxt() + ' · ' : '') + 'USD';
+  const col = c => PER.map(q => dimA(c, ix(q)));
+  const ch = IXC.m;
+  if (ch && ch.canvas && ch.canvas.isConnected) { const d = ch.data.datasets; ch.data.labels = LBP(); d[0].data = ne; d[1].data = fa; d[2].data = so; d[3].data = sn; d[1].backgroundColor = col(k.al); d[2].backgroundColor = col(k.li); ch.update(); return; }
+  el.innerHTML = cv(280, id => { IXC.m = mk(id, {type: 'bar', data: {labels: LBP(), datasets: [
+      {type: 'line', label: 'Neto', data: ne, borderColor: k.dk, backgroundColor: k.dk, borderWidth: 1.8, pointRadius: ptR(4), pointBackgroundColor: k.sf, pointBorderColor: k.dk, pointBorderWidth: 1.6, tension: .3, order: 0, fmt: v => usd(v)},
+      {label: 'Faltantes', data: fa, backgroundColor: col(k.al), borderRadius: R4(false, true), borderSkipped: false, maxBarThickness: 34, stack: 's', order: 1, fmt: v => usd(v)},
+      {label: 'Sobrantes', data: so, backgroundColor: col(k.li), borderRadius: 0, maxBarThickness: 34, stack: 's', order: 1, fmt: v => usd(v)},
+      {label: 'Sobrantes por existencia negativa', data: sn, backgroundColor: hatch(k.pa), borderRadius: R4(true, false), borderSkipped: false, maxBarThickness: 34, stack: 's', order: 1, fmt: v => usd(v)}]},
+    options: {...opt({hl: {lines: [{v: 0, c: css('--line'), dash: [1, 0], w: 1}]}}), animation: {duration: 450, easing: 'easeOutQuart'},
+      onClick: (e, els) => { if (els.length) mesFoco(PER[els[0].index]); }, onHover: (e, els) => { e.native.target.style.cursor = els.length ? 'pointer' : 'default'; },
+      scales: {x: {...axX, stacked: true, ticks: {maxRotation: 0}}, y: {...axY(v => nf(v)), stacked: true}}}}); });
+  flush(el);
+}
+
+// áreas: inventario contado al 30 de septiembre, ventas y ajuste del periodo; tocar un área filtra
+function ixAreas(R) {
+  const el = $('ix-a'); if (!el) return;
+  const f = S.ix, filt = !!R && IXK.some(k => k !== 'area' && f[k] != null);
+  const rows = [1, 2, 3, 4].map(a => {
+    const k4 = filt ? R.Ar[a].k[1] / 100 : D.inventario.areas[a - 1].v[1], k9 = filt ? R.Ar[a].k[2] / 100 : D.inventario.areas[a - 1].v[2];
+    const v = filt ? R.Ar[a].v / 100 : sumD(DET.va[a - 1]) / 100, aj = filt ? R.Ar[a].aj / 100 : sumD(DET.aa[a - 1]) / 100;
+    return {id: a, n: AREA_N(a), v: k9, mov: k4 || v || aj, s: `30 abr ${usd(k4)} · ventas ${usd(v)}${v > 0 ? ' · ajuste ' + pct(aj / v * 100) + ' de sus ventas' : ''}`};
+  }).filter(x => !filt || x.v || x.mov || f.area === x.id);
+  const t = rows.reduce((s, x) => s + x.v, 0); rows.forEach(x => { x.sh = t ? x.v / t * 100 : 0; });
+  $('ix-ta').textContent = 'Inventario contado al 30 de septiembre, por área' + (filt ? ' · ' + ixTxt('area') : '');
+  vxLista(el, rows, f.area, 'a', 'Sin existencias con este filtro.');
+  el.querySelectorAll('[data-a]').forEach(b => b.onclick = () => ixSet('area', +b.dataset.a));
+}
+// tipo de producto (Figura 11): pérdida neta de perecibles y no perecibles
+function ixTipo(R) {
+  const el = $('ix-t'); if (!el) return;
+  const f = S.ix, filt = !!R && IXK.some(k => k !== 'tipo' && f[k] != null), T = selMerma();
+  const val = t => filt ? R.Ti[t].perd / 100 : t ? T.perec : T.no_perec;
+  const rows = [1, 0].map(t => ({id: t, n: TIPO_N(t), v: Math.max(0, val(t)), r: val(t)}));
+  const tot = rows.reduce((s, x) => s + x.v, 0); rows.forEach(x => { x.sh = tot ? x.v / tot * 100 : 0; });
+  $('ix-tt').textContent = 'Pérdida neta por tipo · ' + (filt ? ixTxt('tipo') : selL());
+  vxLista(el, rows.map(x => ({...x, s: x.r < 0 ? 'sobrante neto de ' + usd(-x.r) : ''})), f.tipo, 't', 'Sin pérdida con este filtro.');
+  el.querySelectorAll('[data-t]').forEach(b => b.onclick = () => ixSet('tipo', +b.dataset.t));
+}
+// resultado de cada fecha de conteo del periodo
+function ixFechas(R) {
+  const el = $('ix-fc'); if (!el) return;
+  const F_ = fechasSel(), filt = !!R && ixOn(), k = K();
+  $('ix-tf').textContent = 'Resultado de cada conteo · ' + (filt ? ixTxt() + ' · ' : '') + 'USD';
+  if (!F_.length) { el.innerHTML = '<div class="empty-st">Sin conteos en los meses elegidos.</div>'; IXC.f = null; return; }
+  const ki = F_.map(x => IV ? IV.fechas.indexOf(x.d) : -1), val = F_.map((x, j) => filt ? (ki[j] >= 0 ? R.Fd[ki[j]] / 100 : 0) : x.neto);
+  const fl = s => { const [, m, d] = s.split('-'); return `${+d} ${MES[+m - 1].toLowerCase()}`; };
+  const col = F_.map((x, j) => (val[j] < 0 ? k.al : k.li) + (x.on ? '' : '59'));
+  const ch = IXC.f;
+  if (ch && ch.canvas && ch.canvas.isConnected && ch.data.labels.length === F_.length) { ch.data.datasets[0].data = val; ch.data.datasets[0].backgroundColor = col; ch.update(); return; }
+  el.innerHTML = cv(150, id => { IXC.f = mk(id, {type: 'bar', data: {labels: F_.map(x => fl(x.d)), datasets: [{label: 'Resultado del conteo', data: val, backgroundColor: col, borderRadius: 3, borderSkipped: false, maxBarThickness: 14, fmt: v => usd(v), tipL: j => `${nf(F_[j].n)} líneas de la tienda`}]},
+    options: {...opt({legend: false, yf: v => nf(v), xs: 9}), animation: {duration: 450, easing: 'easeOutQuart'},
+      onClick: (e, els) => { if (els.length) mesFoco(F_[els[0].index].d.slice(0, 7)); }, onHover: (e, els) => { e.native.target.style.cursor = els.length ? 'pointer' : 'default'; }}}); });
+  flush(el);
+}
+
+// origen (Figura 10): ventas según cómo ingresó cada producto; tocar un origen filtra
+function ixOrig(R) {
+  const el = $('ix-o'); if (!el) return;
+  const f = S.ix, filt = !!R && IXK.some(k => k !== 'orig' && f[k] != null);
+  let rows;
+  if (!filt) rows = selOrigen().map((o, j) => ({id: j, n: o.origen, s: nf(o.n) + (o.n === 1 ? ' producto' : ' productos'), v: o.usd, sh: o.pct}));
+  else { const t = R.Or.reduce((s, o) => s + o.v, 0); rows = R.Or.map((o, j) => ({id: j, n: ORIG[j], s: nf(o.n) + (o.n === 1 ? ' producto' : ' productos'), v: o.v / 100, sh: t ? o.v / t * 100 : 0})).filter(x => x.v || x.id === f.orig); }
+  $('ix-to').textContent = 'Origen de la mercadería vendida · ' + (filt ? ixTxt('orig') : selL());
+  vxLista(el, rows, f.orig, 'o', 'Sin ventas con este filtro.');
+  el.querySelectorAll('[data-o]').forEach(b => b.onclick = () => ixSet('orig', +b.dataset.o));
+}
+function ixOrigMes(R) {
+  const el = $('ix-om'); if (!el) return;
+  const k = K(), f = S.ix, filt = !!R && IXK.some(k_ => k_ !== 'orig' && f[k_] != null), col = [k.ol, k.gr, k.li, k.al];
+  const data = filt ? ORIG.map((_, o) => PER.map(q => { const m = ix(q), t = R.Or.reduce((s, x) => s + x.m[m], 0); return t > 0 ? R.Or[o].m[m] / t * 100 : null; })) : ORIG.map(n => SER(D.origen_mes[n]));
+  const bg = o => PER.map(q => f.orig != null && f.orig !== o ? col[o] + '59' : dimA(col[o], ix(q)));
+  $('ix-tom').textContent = 'Origen de lo vendido, mes a mes · ' + (filt ? ixTxt('orig') + ' · ' : '') + '%';
+  const ch = IXC.o;
+  if (ch && ch.canvas && ch.canvas.isConnected) { ch.data.labels = LBP(); ch.data.datasets.forEach((d, o) => { d.data = data[o]; d.backgroundColor = bg(o); }); ch.update(); return; }
+  el.innerHTML = cv(270, id => { IXC.o = mk(id, {type: 'bar', data: {labels: LBP(), datasets: ORIG.map((n, o) => ({label: n, data: data[o], backgroundColor: bg(o), borderRadius: R4(o === ORIG.length - 1, o === 0), borderSkipped: false, maxBarThickness: 34, stack: 's', fmt: v => pct(v)}))},
+    options: {...opt(), animation: {duration: 450, easing: 'easeOutQuart'},
+      onClick: (e, els, c) => { const h = c.getElementsAtEventForMode(e, 'nearest', {intersect: true}, true); if (h.length) ixSet('orig', h[0].datasetIndex); }, onHover: (e, els) => { e.native.target.style.cursor = els.length ? 'pointer' : 'default'; },
+      scales: {x: {...axX, stacked: true, ticks: {maxRotation: 0}}, y: {...axY(v => v + ' %'), stacked: true, max: 100, beginAtZero: true}}}}); });
+  flush(el);
+}
+
+// categorías: entradas, costo vendido, pérdida, existencia y días de inventario; tocar una fila filtra
+function ixCats(R) {
+  const el = $('ix-c'); if (!el) return;
+  if (!R) { el.innerHTML = ixCarga(); return; }
+  const f = S.ix, filt = IXK.some(k => k !== 'cat' && f[k] != null);
+  const rows = R.Ca.map((C, c) => { if (!C.any && !C.e && !C.cv && !C.perd) return null; const e = C.e / 100, perd = C.perd / 100, rot = ixRot(C.cv5, C.k4, C.k9);
+    return {cat: DET.cats[c], tipo: DET.perec[c] ? 'Perecible' : 'No perecible', e, cv: C.cv / 100, perd, pe: e > 100 ? perd / e * 100 : null, inv: C.k9 / 100, dias: rot ? 365 / rot : null, _c: c}; }).filter(Boolean);
+  $('ix-tc').textContent = 'Categorías · ' + (filt ? ixTxt('cat') : selL());
+  el.innerHTML = dt({cols: [{k: 'cat', l: 'Categoría', b: true}, {k: 'e', l: 'Entradas', t: 'usd'}, {k: 'cv', l: 'Costo vendido', t: 'usd'}, {k: 'perd', l: 'Pérdida neta', t: 'usd', bar: true}, {k: 'pe', l: '% de entradas', t: 'pct', heat: 1},
+      {k: 'inv', l: 'Inventario 30 sep', t: 'usd'}, {k: 'dias', l: 'Días', t: 'num', heat: -1}, {k: 'tipo', l: 'Tipo', t: 'tag', tc: v => v === 'Perecible' ? 'full' : 'none'}],
+    rows, search: false, filters: ['tipo'], sort: ['perd', 'desc'], top: 12, unit: 'categorías', foot: {e: 'sum', cv: 'sum', perd: 'sum', inv: 'sum'}, name: 'inventario_categorias',
+    mark: r => r._c === f.cat, click: r => ixSet('cat', r._c)});
+  flush(el);
+}
+// productos: lo mismo por producto; tocar una fila elige el producto
+function ixProds(R) {
+  const el = $('ix-p'); if (!el) return;
+  if (!R) { el.innerHTML = ixCarga(); return; }
+  const f = S.ix, filt = IXK.some(k => k !== 'prod' && f[k] != null), tc = {0: 'full', 1: 'part', 2: 'part', 3: 'none'};
+  const rows = R.Pr.map(x => { const rot = ixRot(x.cv5, x.k4, x.k9), o = DET.p.o[x.p];
+    return {p: DET.p.n[x.p] || '—', cat: DET.cats[DET.p.c[x.p]], o: o >= 0 ? ORIG[o] : '—', _o: o, e: x.e / 100, cv: x.cv / 100, perd: x.perd / 100, inv: x.k9 / 100, dias: rot ? 365 / rot : null, _p: x.p}; });
+  if (R.z.perd || R.z.k9) rows.push({p: 'Líneas de conteo sin código', cat: '—', o: '—', _o: -1, e: null, cv: null, perd: R.z.perd / 100, inv: R.z.k9 / 100, dias: null, _p: null});
+  $('ix-tp').textContent = 'Productos · ' + (filt ? ixTxt('prod') : selL());
+  el.innerHTML = dt({cols: [{k: 'p', l: 'Producto', sub: 'cat'}, {k: 'e', l: 'Entradas', t: 'usd'}, {k: 'cv', l: 'Costo vendido', t: 'usd'}, {k: 'perd', l: 'Pérdida neta', t: 'usd', d: 2, bar: true},
+      {k: 'inv', l: 'Inventario 30 sep', t: 'usd', d: 2}, {k: 'dias', l: 'Días', t: 'num', heat: -1}, {k: 'o', l: 'Origen', t: 'tag', tc: (v, r) => tc[r._o] || ''}],
+    rows, sort: ['perd', 'desc'], top: 15, unit: 'productos', name: 'inventario_productos', mark: r => r._p != null && r._p === f.prod, click: r => { if (r._p != null) ixSet('prod', r._p); }});
+  const T = R.T;
+  if (T.sv) el.insertAdjacentHTML('beforeend', `<p class="vx-nota">${nf(T.sv)} producto${T.sv === 1 ? '' : 's'} con existencia y sin venta de mayo a septiembre: ${usd(T.svU / 100)} inmovilizados.</p>`);
+  flush(el);
+}
+
+// cuadre (Figura 9): saldo desde la apertura de la selección frente al conteo del 30 de septiembre
+function ixCuadre(R) {
+  const el = $('ix-q'); if (!el) return;
+  const F = D.fig.f9, filt = !!R && ixOn(), T = R && R.T;
+  const steps = filt ? [['Compras', T.ecA / 100], ['Transferencias', T.etA / 100], ['Ajustes', T.aj / 100], ['Costo vendido', -T.cvA / 100]] : [['Compras', F.comp], ['Transferencias', F.trn], ['Ajustes', F.ajn], ['Costo vendido', -F.cv]];
+  const fin = filt ? steps.reduce((s, x) => s + x[1], 0) : F.fin, cont = filt ? T.k[2] / 100 : F.cont;
+  let cum = 0; const bars = steps.map(([n, v]) => { const a = cum; cum += v; return [n, [Math.min(a, cum), Math.max(a, cum)], v, cum]; });
+  bars.push(['Inventario resultante', [Math.min(0, fin), Math.max(0, fin)], fin, null], ['Inventario contado', [0, cont], cont, null]);
+  const mx = Math.max(...bars.map(b => Math.abs(b[1][1]))), mil = mx >= 10000, u = v => mil ? v / 1000 : v, d = mil ? 1 : 0;
+  $('ix-tq').textContent = 'Cuadre de inventario al 30 de septiembre · ' + (filt ? ixTxt() + ' · ' : '') + (mil ? 'miles de USD' : 'USD');
+  el.innerHTML = cv(270, id => { const k = K(), col = [k.ol, k.ol, k.al, k.al, k.li, k.gr];
+    mk(id, {type: 'bar', data: {labels: bars.map(b => wrap(b[0], 12)), datasets: [{label: 'Monto', data: bars.map(b => b[1].map(u)), backgroundColor: col, borderRadius: 5, borderSkipped: false, maxBarThickness: 58,
+      dv: bars.map(b => b[2]), fmt: v => usd(v), lev: bars.map((b, j) => j < 4 ? u(b[3]) : null), vlab: (r_, j) => (j < 4 ? (bars[j][2] >= 0 ? '+' : '−') : bars[j][2] < 0 ? '−' : '') + nf(Math.abs(u(bars[j][2])), d)}]},
+    options: opt({legend: false, mode: 'nearest', yf: v => nf(v), xs: 9.5, skip: false, hl: {lines: [{v: 0, c: css('--line'), dash: [1, 0], w: 1}]}})}); });
+  flush(el);
+}
+
+// código del filtro en el enlace de la vista: a2 (área), t1 (tipo), k12 (categoría), o3 (origen), p345 (producto)
+const ixCod = () => { const f = S.ix; return [['area', 'a'], ['tipo', 't'], ['cat', 'k'], ['orig', 'o'], ['prod', 'p']].filter(([k]) => f[k] != null).map(([k, c]) => c + f[k]).join('-'); };
+function ixDeCod(s) {
+  const f = {area: null, tipo: null, cat: null, orig: null, prod: null};
+  String(s || '').split('-').forEach(t => {
+    const m = /^([atkop])(\d+)$/.exec(t); if (!m) return; const a = +m[2];
+    if (m[1] === 'a' && a >= 1 && a <= 4) f.area = a; else if (m[1] === 't' && a <= 1) f.tipo = a; else if (m[1] === 'k' && a < DET.cats.length) f.cat = a;
+    else if (m[1] === 'o' && a < ORIG.length) f.orig = a; else if (m[1] === 'p' && a < DET.p.n.length) f.prod = a;
+  });
+  return f;
 }
 function cardProveedores(db) {
   const P = selProv(), top = P.rows.slice(0, 10), tc = P.rows.filter(x => x.r).slice(0, 5).map(x => x.r), pm = provMes([0, ...tc]), nm = [P.rows.find(x => x.r === 0) ? 'Centro de acopio' : null, ...tc.map(r => DET.pr.n[r])];
@@ -3914,7 +4205,7 @@ function hashDe() {
   if (S.mes !== 'acum') q.push('m=' + S.mes);
   else if (PER.join() !== D.meses.slice(idx0).join()) q.push('p=' + perCod(PER));
   if (S.fam === 'X') q.push('v=fechas'); else if (S.fam !== 'T') q.push('v=' + S.fam); else if (S.todos) q.push('v=todos');
-  if (S.datos) { q.push('d=' + (S.card == null ? '' : slug(TARJETAS[S.card].t))); if (S.card != null && TARJETAS[S.card].b === cardVentas && vxOn()) q.push('x=' + vxCod()); } else if (S.sel) q.push('i=' + S.sel);
+  if (S.datos) { q.push('d=' + (S.card == null ? '' : slug(TARJETAS[S.card].t))); const fx = S.card != null && TARJETAS[S.card].fx; if (fx && fx.on()) q.push('x=' + fx.cod()); } else if (S.sel) q.push('i=' + S.sel);
   if (!semInforme()) q.push('b=' + Object.keys(SEM0).map(k => SM[k]).join('.'));
   return q.length ? '#' + q.join('&') : '';
 }
@@ -3929,7 +4220,7 @@ function leeHash() {
   const v = q.get('v'); if (v === 'fechas') S.fam = 'X'; else if (v === 'todos') S.todos = true; else if (v && FAM_L[v]) S.fam = v;
   const i = q.get('i'); if (i && BY[i]) { S.sel = i; if (!visibles().includes(i)) { if (S.fam !== 'T' && BY[i].f !== S.fam) S.fam = BY[i].f; if (!visibles().includes(i)) S.todos = true; } }
   const d = q.get('d'); if (d != null) { const j = TARJETAS.findIndex(t => slug(t.t) === d || (t.al || []).includes(d)); S.datos = true; S.card = j < 0 ? 0 : j; }
-  if (q.get('x')) S.vx = vxDeCod(q.get('x'));
+  const fx = S.datos && S.card != null && TARJETAS[S.card].fx; if (q.get('x') && fx) fx.de(q.get('x'));
 }
 addEventListener('hashchange', () => { if (location.hash !== hashDe()) location.reload(); });
 // aviso breve en la parte baja de la pantalla
