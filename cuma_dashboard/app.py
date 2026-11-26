@@ -62,7 +62,7 @@ def _clave():
     auth = request.authorization
     if auth and hmac.compare_digest(auth.password or "", clave):
         return None
-    return Response("Acceso restringido", 401, {"WWW-Authenticate": 'Basic realm="CUMA"'})
+    return Response("Acceso restringido", 401, {"WWW-Authenticate": 'Basic realm="ProDesarrollo"'})
 
 
 @app.get("/apple-touch-icon.png")
@@ -96,9 +96,9 @@ def salud():
     return {"ok": True, "origen": _estado["origen"]}
 
 
-FORM = """<!doctype html><meta charset=utf-8><title>Actualizar datos · CUMA</title>
+FORM = """<!doctype html><meta charset=utf-8><title>Actualizar datos · ProDesarrollo</title>
 <body style="font:14px system-ui;max-width:560px;margin:48px auto;padding:0 16px">
-<h2>Actualizar los Excel de CUMA</h2>
+<h2>Actualizar los Excel de ProDesarrollo</h2>
 <p>Sube el archivo de ventas (Datos_Cuma…xlsx), los apuntes contables (Apuntes_Cuma…xlsx) y los de transferencias (transferencias_CUMA_AAAA_MM.xlsx).</p>
 <form method=post enctype=multipart/form-data>
 <p><input type=password name=token placeholder="Clave de administración" required></p>

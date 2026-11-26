@@ -3,7 +3,7 @@
 # Hasta marzo de 2026 las transferencias no tenían costo propio: los indicadores de margen se calculan desde aquí.
 INICIO_COSTO_REAL = "2026-03"
 
-NOMBRE_ACOPIO = "Centro de acopio EDEC"
+NOMBRE_ACOPIO = "Centro de acopio de la empresa pública municipal"
 PROVEEDORES_TOP = 6
 
 # I18: cota superior mientras no se clasifiquen los proveedores (el acopio se trata como fuente propia).
@@ -21,17 +21,17 @@ RUBROS_GASTO = [
 COBERTURA = {"completos": 10, "parciales": 5, "sin_datos": 8, "tablero_pct": 80}
 
 FALTAN = [
-    ["Bajas y mermas con su motivo", "I15", "a", "Administración de CUMA"],
-    ["Inventario mensual por producto", "I13, I14, I15", "a", "Administración de CUMA"],
+    ["Bajas y mermas con su motivo", "I15", "a", "Administración de la tienda"],
+    ["Inventario mensual por producto", "I13, I14, I15", "a", "Administración de la tienda"],
     ["Confirmar desde qué mes el costo de transferencias es real", "I1, I6, I7", "a", "Administrador del sistema"],
-    ["Registro de reempaques o tabla de códigos a granel y empacados", "I1, I15, I18", "m", "Administración de CUMA"],
+    ["Registro de reempaques o tabla de códigos a granel y empacados", "I1, I15, I18", "m", "Administración de la tienda"],
     ["Transferencias de diciembre de 2025", "I1, I18, I20", "m", "Administrador del sistema"],
-    ["Confirmar nómina pagada desde EDEC EP y número de empleados", "I2, I6, I7, I17", "m", "Administrador del sistema"],
+    ["Confirmar la nómina y el número de empleados", "I2, I6, I7, I17", "m", "Administrador del sistema"],
     ["Categorías corregidas en el catálogo", "I8, I12, I15", "m", "Administrador del sistema"],
-    ["Marca de canasta básica o precio regulado", "I8", "m", "Administración de CUMA"],
-    ["Días sin existencia por producto", "I16", "b", "Administración de CUMA"],
+    ["Marca de canasta básica o precio regulado", "I8", "m", "Administración de la tienda"],
+    ["Días sin existencia por producto", "I16", "b", "Administración de la tienda"],
     ["Hora de cada venta", "I11, I17", "b", "Administrador del sistema"],
-    ["Parroquia de origen de proveedores directos", "I21", "b", "Administración de CUMA"],
-    ["Fechas de pago a proveedores", "I19", "b", "Tesorería de EDEC EP"],
+    ["Parroquia de origen de proveedores directos", "I21", "b", "Administración de la tienda"],
+    ["Fechas de pago a proveedores", "I19", "b", "Tesorería de la Cooperativa"],
     ["Precios mayoristas y de una canasta de referencia", "I22, I23", "b", "Levantamiento propio"],
 ]

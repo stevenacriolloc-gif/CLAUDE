@@ -1,4 +1,4 @@
-# Tablero de indicadores · CUMA
+# Tablero de indicadores · ProDesarrollo
 
 Flask + Pandas. Lee los Excel de CUMA, calcula los indicadores y los inyecta en `templates/index.html`.
 
@@ -13,3 +13,6 @@ python app.py # http://localhost:8000
 - `python -m cuma.calculo datos` imprime todo lo que se calcula desde los Excel.
 - Los Excel nunca se suben al repositorio (`.gitignore`): contienen datos de clientes.
 - En Render (`render.yaml` en la raíz): `DASHBOARD_PASSWORD` protege el tablero (usuario `cuma`) y `ADMIN_TOKEN` habilita `/actualizar` para subir Excel desde el navegador (el disco del plan gratuito se borra al reiniciar; la instantánea queda como respaldo).
+
+- La instantánea `datos_publicados/indicadores.json` sale de la base corregida del trabajo de titulación: cifras mensuales, umbrales del semáforo tomados de los cuartiles de nueve supermercados del sector (Superintendencia de Compañías, 2025), proveedores, productos, rotación, merma y granel.
+- El botón de base de datos de la barra superior abre el análisis: comparación con el sector, proveedores, financiamiento, productos con más venta y margen, productos por hora, rotación, merma y granel.

@@ -39,14 +39,14 @@
    10673.36
   ],
   "gastos": [
-   1825.55,
-   3612.08,
-   4467.72,
-   3768.79,
-   4089.58,
-   4039.47,
-   3938.83,
-   3720.24,
+   1873.68,
+   3614.38,
+   4642.44,
+   3805.79,
+   4080.15,
+   4055.13,
+   3961.84,
+   3739.99,
    3592.85,
    3369.25
   ],
@@ -66,8 +66,8 @@
    7283.05,
    15628.43,
    12671.35,
-   13388.52,
-   12529.95,
+   13393.97,
+   12524.5,
    11954.15,
    12812.32,
    11533.57,
@@ -76,39 +76,39 @@
   ],
   "transacciones": [
    838,
-   1637,
+   1636,
    1443,
-   1577,
-   1463,
-   1411,
+   1576,
+   1462,
+   1409,
    1387,
-   1448,
+   1443,
    1265,
-   1327
+   1326
   ],
   "compras": [
-   18060,
-   5927,
-   4710,
-   5561,
-   6087,
-   5687,
-   7777,
-   6115,
-   4791,
-   7515
+   18059.95,
+   5926.99,
+   4710.1,
+   5560.93,
+   6087.2,
+   5686.99,
+   7776.63,
+   6115.31,
+   4791.02,
+   7515.15
   ],
   "transferencias": [
-   null,
-   2844,
-   5733,
-   4266,
-   2764,
-   2501,
-   4112,
-   3170,
-   2370,
-   3739
+   0.0,
+   8569.05,
+   5733.21,
+   4266.38,
+   2763.41,
+   2501.41,
+   4111.96,
+   3170.38,
+   2370.44,
+   3738.64
   ],
   "dias": [
    13,
@@ -121,50 +121,71 @@
    31,
    31,
    30
+  ],
+  "otros": [
+   88.11,
+   75.61,
+   62.06,
+   9.13,
+   -57.62,
+   15.78,
+   1.98,
+   2.72,
+   59.06,
+   3.88
   ]
  },
  "estructura_gastos": [
   {
    "rubro": "Personal socio",
-   "pct": 33.7
+   "pct": 34.8,
+   "usd": 12790.0
   },
   {
    "rubro": "Energía eléctrica",
-   "pct": 32.5
+   "pct": 30.2,
+   "usd": 11085.0
   },
   {
    "rubro": "Servicios ocasionales (personal contratado)",
-   "pct": 24.1
+   "pct": 25.0,
+   "usd": 9170.0
   },
   {
    "rubro": "Comisiones de tarjeta y servicios bancarios",
-   "pct": 5.3
+   "pct": 5.5,
+   "usd": 2003.0
   },
   {
    "rubro": "Otros gastos",
-   "pct": 4.4
+   "pct": 4.6,
+   "usd": 1688.0
   }
  ],
  "origen": [
   {
-   "origen": "Solo compras directas",
-   "usd": 61934,
-   "pct": 51.7
+   "origen": "Solo compras",
+   "usd": 62140.0,
+   "pct": 51.8,
+   "n": 2602
   },
   {
-   "origen": "Compras directas y transferencias",
-   "usd": 17261,
-   "pct": 14.4
+   "origen": "Compras y transferencias",
+   "usd": 16891.0,
+   "pct": 14.1,
+   "n": 149
   },
   {
    "origen": "Solo transferencias",
-   "usd": 28432,
-   "pct": 23.7
+   "usd": 28462.0,
+   "pct": 23.7,
+   "n": 403
   },
   {
    "origen": "Sin entrada registrada",
-   "usd": 12283,
-   "pct": 10.2
+   "usd": 12416.0,
+   "pct": 10.4,
+   "n": 368
   }
  ],
  "horas": {
@@ -492,82 +513,80 @@
    {
     "area": "Área 1 · Carnes, pollos y pescados",
     "v": [
-     343,
-     455,
-     473
+     402.0,
+     510.0,
+     471.0
     ]
    },
    {
     "area": "Área 2 · Frutas, hortalizas y elaborados",
     "v": [
-     1138,
-     1119,
-     867
+     1120.0,
+     1112.0,
+     848.0
     ]
    },
    {
     "area": "Área 3 · Abarrotes, lácteos, limpieza y aseo",
     "v": [
-     18389,
-     15497,
-     12596
+     18237.0,
+     15021.0,
+     12088.0
     ]
    },
    {
     "area": "Área 4 · Granos secos a granel",
     "v": [
-     375,
-     196,
-     294
+     96.0,
+     44.0,
+     86.0
     ]
    }
   ],
   "total": [
-   20246,
-   17267,
-   14229
+   20550.0,
+   17329.0,
+   14192.0
   ],
-  "promedio": 15748,
-  "costo_may_sep": 52629,
-  "rot_periodo": 3.34,
-  "rot_anual": 8.0,
-  "dias": 46,
-  "gmroi_periodo": 0.37,
-  "gmroi_anual": 0.88
+  "promedio": 16584.5,
+  "rot_anual": 7.43,
+  "dias": 49,
+  "gmroi_anual": 1.12,
+  "costo_r6": 61631.0
  },
  "ajustes": [
   {
    "area": "Área 1 · Carnes, pollos y pescados",
-   "aj": -105,
-   "ventas": 8631,
-   "pct": -1.2
+   "aj": -526.0,
+   "ventas": 14079.0,
+   "pct": -3.7
   },
   {
    "area": "Área 2 · Frutas, hortalizas y elaborados",
-   "aj": -2122,
-   "ventas": 28111,
-   "pct": -7.5
+   "aj": -2700.0,
+   "ventas": 37300.0,
+   "pct": -7.2
   },
   {
    "area": "Área 3 · Abarrotes, lácteos, limpieza y aseo",
-   "aj": -766,
-   "ventas": 44832,
-   "pct": -1.7
+   "aj": -574.0,
+   "ventas": 64006.0,
+   "pct": -0.9
   },
   {
    "area": "Área 4 · Granos secos a granel",
-   "aj": -600,
-   "ventas": 2753,
-   "pct": -21.8
+   "aj": -392.0,
+   "ventas": 4524.0,
+   "pct": -8.7
   }
  ],
  "ajustes_total": {
-  "aj": -3594,
-  "ventas": 84327,
-  "pct": -4.3
+  "aj": -4225.0,
+  "ventas": 119910.0,
+  "pct": -3.5
  },
  "superficie_m2": 542.67,
- "empleados": 3,
+ "empleados": 3.7,
  "pareto": {
   "x": [
    0,
@@ -584,99 +603,131 @@
    100
   ],
   "y": [
-   0,
-   48.9,
-   62.0,
+   0.0,
+   49.0,
+   62.1,
    76.2,
    84.0,
    89.1,
    92.8,
-   95.4,
+   95.5,
    97.4,
    98.8,
    99.6,
-   100
+   100.0
   ],
-  "productos": 3506,
+  "productos": 3520,
   "abc": {
-   "A": 850,
-   "B": 1187,
-   "C": 1469
+   "A": 852,
+   "B": 1191,
+   "C": 1477
   }
  },
  "proveedores": [
   {
-   "nombre": "Centro de acopio EDEC",
-   "pct": 34.4
+   "nombre": "Centro de acopio de la empresa pública municipal",
+   "pct": 34.0
   },
   {
-   "nombre": "Corporación Favorita",
-   "pct": 19.4
+   "nombre": "Corporación Favorita C. A.",
+   "pct": 17.0
   },
   {
-   "nombre": "Galindo Galindo Elías",
-   "pct": 5.3
+   "nombre": "Galindo Galindo Elias Alberto",
+   "pct": 3.2
   },
   {
-   "nombre": "Alpina Ecuador",
-   "pct": 2.7
+   "nombre": "Narvaez Ortiz Laura Leonor",
+   "pct": 2.9
   },
   {
-   "nombre": "Arias Arias Andersson",
-   "pct": 2.4
+   "nombre": "Dibeal Cía. Ltda.",
+   "pct": 2.8
   },
   {
-   "nombre": "Paucar Tigre Martha",
+   "nombre": "Alpina Productos Alimenticios Alpiecuador S. A.",
    "pct": 2.3
+  },
+  {
+   "nombre": "Arias Arias Andersson Vicente",
+   "pct": 2.1
+  },
+  {
+   "nombre": "Sucesores de Jacobo Paredes M.s.a.",
+   "pct": 1.5
   }
  ],
  "abastecimiento": {
-  "hhi": 1559,
-  "desintermediacion_max": 30.5,
-  "transferencias_pct": 33.0,
-  "favorita_pct": 20.0
+  "hhi": 1504,
+  "hhi_sin_acopio": 798,
+  "desint_min": 2.7,
+  "desint_max": 26.5,
+  "transferencias_pct": 34.0,
+  "cadena_pct": 17.0,
+  "recurrencia": 56.5
  },
  "cobertura": {
-  "completos": 13,
-  "parciales": 4,
+  "completos": 14,
+  "parciales": 3,
   "sin_datos": 6,
   "tablero_pct": 100,
-  "tablero_completos": 8
+  "tablero_completos": 9
  },
  "faltan": [
   [
-   "Listas de materiales de los productos a granel y reempacados",
+   "Matriz de granel: cada código a granel con sus presentaciones y su rendimiento",
    "I1, I15, I18",
    "a",
-   "Gerencia de la cooperativa",
+   "Gerencia de la Cooperativa",
    "Alta; ofrecida por el gerente"
   ],
   [
-   "Bajas y mermas en kilogramos y con su motivo",
+   "Causa de cada pérdida y bajas en kilogramos",
    "I15",
    "a",
-   "Administración de CUMA",
-   "Baja; registro irregular"
+   "Administración de la tienda",
+   "Media; registro irregular"
   ],
   [
-   "Inversiones, activos fijos y depreciación",
+   "Depreciación y gastos que asume la empresa pública municipal",
    "I3",
    "m",
-   "EDEC EP",
-   "Media; solicitado"
+   "Empresa pública municipal",
+   "Media; pedido por oficio"
   ],
   [
-   "Categorías corregidas y marca de canasta básica",
-   "I8, I12, I15",
+   "Existencia de cada producto día por día",
+   "I16",
    "m",
-   "Gerencia y administración",
+   "Reporte de existencias por fecha del sistema",
    "Media"
   ],
   [
-   "Precios mayoristas y canasta de referencia",
+   "Ubicación y tipo de cada proveedor",
+   "I18, I21",
+   "m",
+   "Registro de proveedores de la Cooperativa",
+   "Media"
+  ],
+  [
+   "Fecha de pago de cada factura de compra",
+   "I19",
+   "b",
+   "Registro de pagos de la Cooperativa",
+   "Media"
+  ],
+  [
+   "Caja, bancos, cuentas por cobrar y por pagar de la tienda",
+   "I9, I10",
+   "b",
+   "Tesorería de la Cooperativa",
+   "Baja; tesorería centralizada"
+  ],
+  [
+   "Precios mayoristas y una canasta en otros comercios",
    "I22, I23",
    "b",
-   "Levantamiento propio",
+   "Levantamiento de precios",
    "Alta; depende del equipo"
   ]
  ],
@@ -697,7 +748,7 @@
   },
   {
    "fuente": "Transferencias",
-   "contenido": "Envíos del centro de acopio y devoluciones",
+   "contenido": "Envíos del centro de acopio de la empresa pública municipal y devoluciones",
    "desde": "2026-01-02",
    "hasta": "2026-09-30",
    "registros": 9783
@@ -743,5 +794,4778 @@
    "registros": 35
   }
  ],
- "corte": "2026-09-30"
+ "corte": "2026-09-30",
+ "gasto_sobre_ventas_r6": {
+  "personal": 18.9,
+  "energia": 10.8,
+  "comisiones": 1.7,
+  "otros": 0.7
+ },
+ "origen_mes": {
+  "Solo compras": [
+   44.3,
+   45.6,
+   43.6,
+   50.9,
+   54.3,
+   56.9,
+   55.3,
+   56.5,
+   56.9,
+   54.1
+  ],
+  "Compras y transferencias": [
+   16.5,
+   16.3,
+   16.2,
+   14.4,
+   13.0,
+   12.6,
+   13.5,
+   12.8,
+   12.7,
+   12.9
+  ],
+  "Solo transferencias": [
+   23.6,
+   26.3,
+   26.8,
+   24.4,
+   23.4,
+   21.7,
+   22.5,
+   22.4,
+   20.8,
+   24.2
+  ],
+  "Sin entrada registrada": [
+   15.7,
+   11.9,
+   13.5,
+   10.3,
+   9.3,
+   8.8,
+   8.7,
+   8.3,
+   9.6,
+   8.8
+  ]
+ },
+ "merma_mes": {
+  "faltantes": [
+   7.0,
+   3896.0,
+   0.0,
+   1725.0,
+   1637.0,
+   550.0,
+   388.0,
+   727.0,
+   412.0,
+   1376.0
+  ],
+  "sobrantes": [
+   81.0,
+   2094.0,
+   0.0,
+   378.0,
+   728.0,
+   72.0,
+   33.0,
+   80.0,
+   20.0,
+   325.0
+  ],
+  "sobr_neg": [
+   58.0,
+   1049.0,
+   0.0,
+   748.0,
+   342.0,
+   420.0,
+   13.0,
+   28.0,
+   0.0,
+   24.0
+  ],
+  "neto": [
+   132.0,
+   -754.0,
+   0.0,
+   -598.0,
+   -567.0,
+   -57.0,
+   -343.0,
+   -620.0,
+   -392.0,
+   -1027.0
+  ]
+ },
+ "merma_tot": {
+  "faltantes": 10718.0,
+  "sobrantes": 6492.0,
+  "sobr_neg": 2681.0,
+  "neto": -4225.0,
+  "perec": 3227.0,
+  "no_perec": 999.0
+ },
+ "merma_cat": [
+  {
+   "cat": "Frutas",
+   "perdida": 1650.0,
+   "entradas": 17002.0,
+   "pct": 9.7,
+   "perec": true
+  },
+  {
+   "cat": "Hortalizas",
+   "perdida": 832.0,
+   "entradas": 10923.0,
+   "pct": 7.6,
+   "perec": true
+  },
+  {
+   "cat": "Confiteria",
+   "perdida": 515.0,
+   "entradas": 9098.0,
+   "pct": 5.7,
+   "perec": false
+  },
+  {
+   "cat": "Granos Secos",
+   "perdida": 447.0,
+   "entradas": 3018.0,
+   "pct": 14.8,
+   "perec": false
+  },
+  {
+   "cat": "Pollos",
+   "perdida": 407.0,
+   "entradas": 5121.0,
+   "pct": 7.9,
+   "perec": true
+  },
+  {
+   "cat": "Lacteos",
+   "perdida": 235.0,
+   "entradas": 11575.0,
+   "pct": 2.0,
+   "perec": false
+  },
+  {
+   "cat": "Carnes",
+   "perdida": 207.0,
+   "entradas": 1718.0,
+   "pct": 12.1,
+   "perec": true
+  },
+  {
+   "cat": "Conservas",
+   "perdida": 134.0,
+   "entradas": 3145.0,
+   "pct": 4.2,
+   "perec": false
+  },
+  {
+   "cat": "Granos",
+   "perdida": 118.0,
+   "entradas": 1403.0,
+   "pct": 8.4,
+   "perec": true
+  },
+  {
+   "cat": "Snack",
+   "perdida": 83.0,
+   "entradas": 3021.0,
+   "pct": 2.7,
+   "perec": false
+  },
+  {
+   "cat": "Huevos",
+   "perdida": 73.0,
+   "entradas": 4791.0,
+   "pct": 1.5,
+   "perec": true
+  },
+  {
+   "cat": "Especias y Condimentos",
+   "perdida": 72.0,
+   "entradas": 1830.0,
+   "pct": 3.9,
+   "perec": false
+  },
+  {
+   "cat": "Panaderia",
+   "perdida": 68.0,
+   "entradas": 1958.0,
+   "pct": 3.5,
+   "perec": false
+  },
+  {
+   "cat": "Aceites y Grasas",
+   "perdida": 59.0,
+   "entradas": 1985.0,
+   "pct": 3.0,
+   "perec": false
+  },
+  {
+   "cat": "Limpieza",
+   "perdida": -67.0,
+   "entradas": 3739.0,
+   "pct": -1.8,
+   "perec": false
+  },
+  {
+   "cat": "Congelados",
+   "perdida": -82.0,
+   "entradas": 2263.0,
+   "pct": -3.6,
+   "perec": false
+  }
+ ],
+ "merma_top": [
+  {
+   "p": "Platano Verde 1kg",
+   "cat": "Frutas",
+   "neto": 294.66,
+   "falt": 294.66,
+   "sobr": 0.0,
+   "n": 8
+  },
+  {
+   "p": "Digestiveg Mix de Frutas y Veg 960g",
+   "cat": "Hortalizas",
+   "neto": 234.0,
+   "falt": 234.0,
+   "sobr": 0.0,
+   "n": 2
+  },
+  {
+   "p": "Pepa de Sambo 1kg",
+   "cat": "Granos Secos",
+   "neto": 195.8,
+   "falt": 195.8,
+   "sobr": 0.0,
+   "n": 4
+  },
+  {
+   "p": "Aguacate 1kg",
+   "cat": "Frutas",
+   "neto": 190.56,
+   "falt": 190.56,
+   "sobr": 0.0,
+   "n": 9
+  },
+  {
+   "p": "Pavo Andino 1kg",
+   "cat": "Pollos",
+   "neto": 151.22,
+   "falt": 151.22,
+   "sobr": 0.0,
+   "n": 1
+  },
+  {
+   "p": "Tomate de Arbol (7-9u) 1kg",
+   "cat": "Frutas",
+   "neto": 103.04,
+   "falt": 103.04,
+   "sobr": 0.0,
+   "n": 6
+  },
+  {
+   "p": "Pitahaya (2-4u) 1kg",
+   "cat": "Frutas",
+   "neto": 102.8,
+   "falt": 105.36,
+   "sobr": 2.56,
+   "n": 8
+  },
+  {
+   "p": "Wisky Jack Daniels 750ml",
+   "cat": "Bebidas con Alcohol",
+   "neto": 86.37,
+   "falt": 86.37,
+   "sobr": 0.0,
+   "n": 1
+  },
+  {
+   "p": "Maracuya (5-7u) 1kg",
+   "cat": "Frutas",
+   "neto": 82.24,
+   "falt": 82.24,
+   "sobr": 0.0,
+   "n": 8
+  },
+  {
+   "p": "Pollo Pelado S/m Avigal 1kg",
+   "cat": "Pollos",
+   "neto": 80.03,
+   "falt": 80.03,
+   "sobr": 0.0,
+   "n": 2
+  },
+  {
+   "p": "Arroz de Cebada 1kg",
+   "cat": "Granos Secos",
+   "neto": 74.83,
+   "falt": 74.83,
+   "sobr": 0.0,
+   "n": 4
+  },
+  {
+   "p": "Whisky Grant Scotch 750ml",
+   "cat": "Bebidas con Alcohol",
+   "neto": 74.74,
+   "falt": 74.74,
+   "sobr": 0.0,
+   "n": 1
+  },
+  {
+   "p": "Durazno 1kg",
+   "cat": "Frutas",
+   "neto": 73.66,
+   "falt": 76.39,
+   "sobr": 2.73,
+   "n": 8
+  },
+  {
+   "p": "Banano Filipino(guineo 5) X7 1kg",
+   "cat": "Frutas",
+   "neto": 71.24,
+   "falt": 71.24,
+   "sobr": 0.0,
+   "n": 9
+  },
+  {
+   "p": "Lomo Fino de Res 1kg",
+   "cat": "Carnes",
+   "neto": 70.09,
+   "falt": 70.09,
+   "sobr": 0.0,
+   "n": 5
+  },
+  {
+   "p": "Maiz Blanco Pelado Mote Grueso 1kg",
+   "cat": "Granos Secos",
+   "neto": 69.69,
+   "falt": 69.69,
+   "sobr": 0.0,
+   "n": 3
+  },
+  {
+   "p": "Camaron Mediano Pelado Empacado 36 1kg",
+   "cat": "Pescados y Mariscos",
+   "neto": 66.55,
+   "falt": 80.91,
+   "sobr": 14.36,
+   "n": 3
+  },
+  {
+   "p": "Vino de Jamaica Amazonicas 75oml",
+   "cat": "Bebidas con Alcohol",
+   "neto": 66.0,
+   "falt": 66.0,
+   "sobr": 0.0,
+   "n": 1
+  },
+  {
+   "p": "Arandano Deshidratado Importado 1kg",
+   "cat": "Granos Secos",
+   "neto": 64.79,
+   "falt": 64.79,
+   "sobr": 0.0,
+   "n": 6
+  },
+  {
+   "p": "Carne Pura de Res Kg",
+   "cat": "Carnes",
+   "neto": 63.97,
+   "falt": 63.97,
+   "sobr": 0.0,
+   "n": 2
+  }
+ ],
+ "sobrante_top": [
+  {
+   "p": "Trucha Plato 1kg",
+   "cat": "Pescados y Mariscos",
+   "neto": 237.32
+  },
+  {
+   "p": "Guayaba Rosada Funda 1kg",
+   "cat": "Frutas",
+   "neto": 126.05
+  },
+  {
+   "p": "Detox Mix Veg y Frut 960g",
+   "cat": "Hortalizas",
+   "neto": 97.5
+  },
+  {
+   "p": "Stand Fast \" Grant's \" 750ml",
+   "cat": "Bebidas con Alcohol",
+   "neto": 90.65
+  },
+  {
+   "p": "Maiz Blanco Pelado/mote 1kg",
+   "cat": "Granos Secos",
+   "neto": 69.54
+  },
+  {
+   "p": "Cerveza Mahou 5e Botella 330ml",
+   "cat": "Bebidas con Alcohol",
+   "neto": 63.61
+  },
+  {
+   "p": "Cafe Lojano Moicafe Especial 600g",
+   "cat": "Cafe, Te, Infusiones",
+   "neto": 57.0
+  },
+  {
+   "p": "Harina de Maca Instantánea 225g",
+   "cat": "Harinas",
+   "neto": 42.5
+  }
+ ],
+ "merma_fechas": [
+  {
+   "d": "2025-12-30",
+   "neto": 132.0,
+   "falt": 7.0,
+   "sobr": 139.0,
+   "n": 18
+  },
+  {
+   "d": "2026-01-03",
+   "neto": 674.0,
+   "falt": 246.0,
+   "sobr": 920.0,
+   "n": 174
+  },
+  {
+   "d": "2026-01-09",
+   "neto": -1427.0,
+   "falt": 3650.0,
+   "sobr": 2223.0,
+   "n": 755
+  },
+  {
+   "d": "2026-03-10",
+   "neto": -607.0,
+   "falt": 802.0,
+   "sobr": 196.0,
+   "n": 194
+  },
+  {
+   "d": "2026-03-12",
+   "neto": 337.0,
+   "falt": 519.0,
+   "sobr": 855.0,
+   "n": 108
+  },
+  {
+   "d": "2026-03-18",
+   "neto": -329.0,
+   "falt": 404.0,
+   "sobr": 75.0,
+   "n": 77
+  },
+  {
+   "d": "2026-04-06",
+   "neto": -23.0,
+   "falt": 23.0,
+   "sobr": 0.0,
+   "n": 10
+  },
+  {
+   "d": "2026-04-07",
+   "neto": -138.0,
+   "falt": 223.0,
+   "sobr": 86.0,
+   "n": 104
+  },
+  {
+   "d": "2026-04-09",
+   "neto": 24.0,
+   "falt": 14.0,
+   "sobr": 39.0,
+   "n": 12
+  },
+  {
+   "d": "2026-04-10",
+   "neto": 82.0,
+   "falt": 26.0,
+   "sobr": 107.0,
+   "n": 34
+  },
+  {
+   "d": "2026-04-30",
+   "neto": -514.0,
+   "falt": 1351.0,
+   "sobr": 837.0,
+   "n": 463
+  },
+  {
+   "d": "2026-05-01",
+   "neto": -57.0,
+   "falt": 550.0,
+   "sobr": 493.0,
+   "n": 162
+  },
+  {
+   "d": "2026-06-12",
+   "neto": 3.0,
+   "falt": 3.0,
+   "sobr": 6.0,
+   "n": 12
+  },
+  {
+   "d": "2026-06-23",
+   "neto": -36.0,
+   "falt": 36.0,
+   "sobr": 0.0,
+   "n": 10
+  },
+  {
+   "d": "2026-06-25",
+   "neto": -51.0,
+   "falt": 58.0,
+   "sobr": 7.0,
+   "n": 17
+  },
+  {
+   "d": "2026-06-27",
+   "neto": -46.0,
+   "falt": 46.0,
+   "sobr": 0.0,
+   "n": 13
+  },
+  {
+   "d": "2026-06-29",
+   "neto": -212.0,
+   "falt": 245.0,
+   "sobr": 33.0,
+   "n": 75
+  },
+  {
+   "d": "2026-07-03",
+   "neto": -8.0,
+   "falt": 40.0,
+   "sobr": 32.0,
+   "n": 19
+  },
+  {
+   "d": "2026-07-06",
+   "neto": -342.0,
+   "falt": 375.0,
+   "sobr": 34.0,
+   "n": 91
+  },
+  {
+   "d": "2026-07-08",
+   "neto": -4.0,
+   "falt": 16.0,
+   "sobr": 12.0,
+   "n": 6
+  },
+  {
+   "d": "2026-07-17",
+   "neto": -86.0,
+   "falt": 86.0,
+   "sobr": 0.0,
+   "n": 32
+  },
+  {
+   "d": "2026-07-29",
+   "neto": -37.0,
+   "falt": 37.0,
+   "sobr": 0.0,
+   "n": 10
+  },
+  {
+   "d": "2026-07-30",
+   "neto": -14.0,
+   "falt": 17.0,
+   "sobr": 3.0,
+   "n": 7
+  },
+  {
+   "d": "2026-07-31",
+   "neto": -119.0,
+   "falt": 146.0,
+   "sobr": 27.0,
+   "n": 82
+  },
+  {
+   "d": "2026-08-31",
+   "neto": -379.0,
+   "falt": 399.0,
+   "sobr": 20.0,
+   "n": 106
+  },
+  {
+   "d": "2026-09-07",
+   "neto": 26.0,
+   "falt": 14.0,
+   "sobr": 40.0,
+   "n": 18
+  },
+  {
+   "d": "2026-09-10",
+   "neto": 0.0,
+   "falt": 0.0,
+   "sobr": 0.0,
+   "n": 5
+  },
+  {
+   "d": "2026-09-30",
+   "neto": -1053.0,
+   "falt": 1361.0,
+   "sobr": 309.0,
+   "n": 388
+  }
+ ],
+ "merma_i15": {
+  "perec_pct": 7.4,
+  "fh_pct": 8.9,
+  "fh_r6": 7.3
+ },
+ "prod_top": [
+  {
+   "p": "Aguacate 1kg",
+   "cat": "Frutas",
+   "v": 2340.0,
+   "mg": 559.0,
+   "mgp": 23.9,
+   "q": 919.0,
+   "n": 1439,
+   "c": "A"
+  },
+  {
+   "p": "Huevo Cubano X30",
+   "cat": "Pollos",
+   "v": 1910.0,
+   "mg": 583.0,
+   "mgp": 30.5,
+   "q": 474.0,
+   "n": 437,
+   "c": "A"
+  },
+  {
+   "p": "Pollo Pelado S/m Avigal 1kg",
+   "cat": "Pollos",
+   "v": 1277.0,
+   "mg": 242.0,
+   "mgp": 18.9,
+   "q": 372.0,
+   "n": 148,
+   "c": "A"
+  },
+  {
+   "p": "Huevos Runa Yerba Buena X12",
+   "cat": "Huevos",
+   "v": 1171.0,
+   "mg": 160.0,
+   "mgp": 13.6,
+   "q": 293.0,
+   "n": 210,
+   "c": "A"
+  },
+  {
+   "p": "Leche Nutri C21 Semidescremada 1lt",
+   "cat": "Lacteos",
+   "v": 899.0,
+   "mg": 122.0,
+   "mgp": 13.6,
+   "q": 906.0,
+   "n": 369,
+   "c": "A"
+  },
+  {
+   "p": "Leche Nutri C13 Entera Funda 1lt",
+   "cat": "Lacteos",
+   "v": 881.0,
+   "mg": 105.0,
+   "mgp": 11.9,
+   "q": 895.0,
+   "n": 410,
+   "c": "A"
+  },
+  {
+   "p": "Frutilla Agroecologica 1kg",
+   "cat": "Frutas",
+   "v": 875.0,
+   "mg": 153.0,
+   "mgp": 17.5,
+   "q": 262.0,
+   "n": 366,
+   "c": "A"
+  },
+  {
+   "p": "Platano Maduro 1kg",
+   "cat": "Frutas",
+   "v": 852.0,
+   "mg": 243.0,
+   "mgp": 28.5,
+   "q": 1033.0,
+   "n": 905,
+   "c": "A"
+  },
+  {
+   "p": "Arandanos Tarrina 125g",
+   "cat": "Frutas",
+   "v": 812.0,
+   "mg": 186.0,
+   "mgp": 22.9,
+   "q": 485.0,
+   "n": 373,
+   "c": "A"
+  },
+  {
+   "p": "Tomate de Arbol (7-9u) 1kg",
+   "cat": "Frutas",
+   "v": 782.0,
+   "mg": 163.0,
+   "mgp": 20.9,
+   "q": 428.0,
+   "n": 548,
+   "c": "A"
+  },
+  {
+   "p": "Pechuga Pollo sin Piel Avigal 1kg",
+   "cat": "Pollos",
+   "v": 739.0,
+   "mg": 140.0,
+   "mgp": 18.9,
+   "q": 118.0,
+   "n": 142,
+   "c": "A"
+  },
+  {
+   "p": "Papaya Cubana ± Und 2.8kg",
+   "cat": "Frutas",
+   "v": 719.0,
+   "mg": 141.0,
+   "mgp": 19.6,
+   "q": 316.0,
+   "n": 293,
+   "c": "A"
+  },
+  {
+   "p": "Huevo Cubano X15",
+   "cat": "Pollos",
+   "v": 708.0,
+   "mg": 43.0,
+   "mgp": 6.0,
+   "q": 341.0,
+   "n": 338,
+   "c": "A"
+  },
+  {
+   "p": "Piña Hawaiana ±2.3kg",
+   "cat": "Frutas",
+   "v": 692.0,
+   "mg": 151.0,
+   "mgp": 21.9,
+   "q": 325.0,
+   "n": 310,
+   "c": "A"
+  },
+  {
+   "p": "Manzana Royal (5-7u) 1kg",
+   "cat": "Frutas",
+   "v": 684.0,
+   "mg": 143.0,
+   "mgp": 20.9,
+   "q": 326.0,
+   "n": 473,
+   "c": "A"
+  },
+  {
+   "p": "Choclo con Corteza 1kg (gs)",
+   "cat": "Granos",
+   "v": 644.0,
+   "mg": 123.0,
+   "mgp": 19.1,
+   "q": 638.0,
+   "n": 501,
+   "c": "A"
+  },
+  {
+   "p": "Muslos de Pollo Avigal 1kg",
+   "cat": "Pollos",
+   "v": 637.0,
+   "mg": 117.0,
+   "mgp": 18.3,
+   "q": 140.0,
+   "n": 180,
+   "c": "A"
+  },
+  {
+   "p": "Platano Verde 1kg",
+   "cat": "Frutas",
+   "v": 635.0,
+   "mg": 176.0,
+   "mgp": 27.8,
+   "q": 773.0,
+   "n": 614,
+   "c": "A"
+  },
+  {
+   "p": "Tomate Riñon Agroecologico 1kg",
+   "cat": "Hortalizas",
+   "v": 611.0,
+   "mg": 98.0,
+   "mgp": 16.1,
+   "q": 499.0,
+   "n": 573,
+   "c": "A"
+  },
+  {
+   "p": "Gallina Criolla 1kg",
+   "cat": "Pollos",
+   "v": 608.0,
+   "mg": 114.0,
+   "mgp": 18.7,
+   "q": 172.0,
+   "n": 65,
+   "c": "A"
+  },
+  {
+   "p": "Leche Nutri Deslactosada Politileno 900ml",
+   "cat": "Lacteos",
+   "v": 587.0,
+   "mg": 103.0,
+   "mgp": 17.5,
+   "q": 544.0,
+   "n": 283,
+   "c": "A"
+  },
+  {
+   "p": "Pollo Pelado sin Menudencia 1kg",
+   "cat": "Pollos",
+   "v": 577.0,
+   "mg": 119.0,
+   "mgp": 20.6,
+   "q": 159.0,
+   "n": 61,
+   "c": "A"
+  },
+  {
+   "p": "Cebolla Perla Pelada Gs (6-8u) 1kg",
+   "cat": "Hortalizas",
+   "v": 572.0,
+   "mg": 135.0,
+   "mgp": 23.5,
+   "q": 430.0,
+   "n": 718,
+   "c": "A"
+  },
+  {
+   "p": "Uva Verde sin Pepa 1kg",
+   "cat": "Frutas",
+   "v": 556.0,
+   "mg": 103.0,
+   "mgp": 18.6,
+   "q": 109.0,
+   "n": 203,
+   "c": "A"
+  },
+  {
+   "p": "Pechuga de Pollo con Piel Avigal Kg",
+   "cat": "Pollos",
+   "v": 553.0,
+   "mg": 102.0,
+   "mgp": 18.5,
+   "q": 117.0,
+   "n": 107,
+   "c": "A"
+  }
+ ],
+ "prod_top_mg": [
+  {
+   "p": "Huevo Cubano X30",
+   "cat": "Pollos",
+   "v": 1910.0,
+   "mg": 583.0,
+   "mgp": 30.5,
+   "q": 474.0,
+   "n": 437,
+   "c": "A"
+  },
+  {
+   "p": "Aguacate 1kg",
+   "cat": "Frutas",
+   "v": 2340.0,
+   "mg": 559.0,
+   "mgp": 23.9,
+   "q": 919.0,
+   "n": 1439,
+   "c": "A"
+  },
+  {
+   "p": "Platano Maduro 1kg",
+   "cat": "Frutas",
+   "v": 852.0,
+   "mg": 243.0,
+   "mgp": 28.5,
+   "q": 1033.0,
+   "n": 905,
+   "c": "A"
+  },
+  {
+   "p": "Pollo Pelado S/m Avigal 1kg",
+   "cat": "Pollos",
+   "v": 1277.0,
+   "mg": 242.0,
+   "mgp": 18.9,
+   "q": 372.0,
+   "n": 148,
+   "c": "A"
+  },
+  {
+   "p": "Zumo de Naranja Gs 1lt",
+   "cat": "Elaborados",
+   "v": 478.0,
+   "mg": 217.0,
+   "mgp": 45.4,
+   "q": 175.0,
+   "n": 131,
+   "c": "A"
+  },
+  {
+   "p": "Arandanos Tarrina 125g",
+   "cat": "Frutas",
+   "v": 812.0,
+   "mg": 186.0,
+   "mgp": 22.9,
+   "q": 485.0,
+   "n": 373,
+   "c": "A"
+  },
+  {
+   "p": "Platano Verde 1kg",
+   "cat": "Frutas",
+   "v": 635.0,
+   "mg": 176.0,
+   "mgp": 27.8,
+   "q": 773.0,
+   "n": 614,
+   "c": "A"
+  },
+  {
+   "p": "Tomate de Arbol (7-9u) 1kg",
+   "cat": "Frutas",
+   "v": 782.0,
+   "mg": 163.0,
+   "mgp": 20.9,
+   "q": 428.0,
+   "n": 548,
+   "c": "A"
+  },
+  {
+   "p": "Papa Super Chola Lavada C 1kg",
+   "cat": "Hortalizas",
+   "v": 430.0,
+   "mg": 162.0,
+   "mgp": 37.8,
+   "q": 425.0,
+   "n": 271,
+   "c": "A"
+  },
+  {
+   "p": "Huevos Runa Yerba Buena X12",
+   "cat": "Huevos",
+   "v": 1171.0,
+   "mg": 160.0,
+   "mgp": 13.6,
+   "q": 293.0,
+   "n": 210,
+   "c": "A"
+  },
+  {
+   "p": "Frutilla Agroecologica 1kg",
+   "cat": "Frutas",
+   "v": 875.0,
+   "mg": 153.0,
+   "mgp": 17.5,
+   "q": 262.0,
+   "n": 366,
+   "c": "A"
+  },
+  {
+   "p": "Piña Hawaiana ±2.3kg",
+   "cat": "Frutas",
+   "v": 692.0,
+   "mg": 151.0,
+   "mgp": 21.9,
+   "q": 325.0,
+   "n": 310,
+   "c": "A"
+  },
+  {
+   "p": "Manzana Royal (5-7u) 1kg",
+   "cat": "Frutas",
+   "v": 684.0,
+   "mg": 143.0,
+   "mgp": 20.9,
+   "q": 326.0,
+   "n": 473,
+   "c": "A"
+  },
+  {
+   "p": "Arroz Onix 1.5kg",
+   "cat": "Granos Secos",
+   "v": 347.0,
+   "mg": 142.0,
+   "mgp": 40.9,
+   "q": 160.0,
+   "n": 119,
+   "c": "A"
+  },
+  {
+   "p": "Papaya Cubana ± Und 2.8kg",
+   "cat": "Frutas",
+   "v": 719.0,
+   "mg": 141.0,
+   "mgp": 19.6,
+   "q": 316.0,
+   "n": 293,
+   "c": "A"
+  }
+ ],
+ "prod_neg": [
+  {
+   "p": "Promocion Babaco Und",
+   "cat": "Frutas",
+   "v": 15.0,
+   "mg": -8.0,
+   "mgp": -54.0,
+   "q": 15.0,
+   "n": 15,
+   "c": "B"
+  },
+  {
+   "p": "Salsa Picante Macha 250g",
+   "cat": "Salsas y Aderezos",
+   "v": 20.0,
+   "mg": -6.0,
+   "mgp": -31.1,
+   "q": 5.0,
+   "n": 5,
+   "c": "B"
+  },
+  {
+   "p": "Pulpa de Tomate de Arbol Adaf Guel 500g",
+   "cat": "Congelados",
+   "v": 6.0,
+   "mg": -6.0,
+   "mgp": -96.0,
+   "q": 3.0,
+   "n": 2,
+   "c": "C"
+  },
+  {
+   "p": "Pavo Andino 1kg",
+   "cat": "Pollos",
+   "v": 223.0,
+   "mg": -5.0,
+   "mgp": -2.3,
+   "q": 51.0,
+   "n": 4,
+   "c": "A"
+  },
+  {
+   "p": "Salsa Ranch Winh Bone 237g",
+   "cat": "Salsas y Aderezos",
+   "v": 7.0,
+   "mg": -4.0,
+   "mgp": -52.4,
+   "q": 3.0,
+   "n": 3,
+   "c": "C"
+  },
+  {
+   "p": "Mix de Mariscos Pronaca 227g",
+   "cat": "Pescados y Mariscos",
+   "v": 4.0,
+   "mg": -2.0,
+   "mgp": -53.1,
+   "q": 1.0,
+   "n": 1,
+   "c": "C"
+  },
+  {
+   "p": "Promocion Tomate de Arbol Und",
+   "cat": "Frutas",
+   "v": 8.0,
+   "mg": -1.0,
+   "mgp": -18.2,
+   "q": 8.0,
+   "n": 5,
+   "c": "C"
+  },
+  {
+   "p": "Papa Super Chola 2da Lavada Malla 1kg",
+   "cat": "Hortalizas",
+   "v": 2.0,
+   "mg": -1.0,
+   "mgp": -62.9,
+   "q": 2.0,
+   "n": 1,
+   "c": "C"
+  },
+  {
+   "p": "Mora Congelada 1kg",
+   "cat": "Congelados",
+   "v": 40.0,
+   "mg": -1.0,
+   "mgp": -2.8,
+   "q": 18.0,
+   "n": 20,
+   "c": "A"
+  },
+  {
+   "p": "Sambo ±2.5kg",
+   "cat": "Hortalizas",
+   "v": 8.0,
+   "mg": -1.0,
+   "mgp": -14.6,
+   "q": 4.0,
+   "n": 4,
+   "c": "C"
+  },
+  {
+   "p": "Aceite Ikiam Ishpink Para Masaje Chankuap 120ml",
+   "cat": "Aseo Personal",
+   "v": 4.0,
+   "mg": -1.0,
+   "mgp": -27.7,
+   "q": 1.0,
+   "n": 1,
+   "c": "C"
+  },
+  {
+   "p": "Corn Flakes Kelloggs 410g",
+   "cat": "Confiteria",
+   "v": 28.0,
+   "mg": -1.0,
+   "mgp": -3.6,
+   "q": 7.0,
+   "n": 7,
+   "c": "A"
+  }
+ ],
+ "prod_neg_tot": {
+  "n": 36,
+  "usd": 47.0
+ },
+ "cat_margen": [
+  {
+   "cat": "Frutas",
+   "v": 18769.0,
+   "mg": 4344.0,
+   "mgp": 23.1,
+   "n": 105
+  },
+  {
+   "cat": "Hortalizas",
+   "v": 12760.0,
+   "mg": 3044.0,
+   "mgp": 23.9,
+   "n": 164
+  },
+  {
+   "cat": "Lacteos",
+   "v": 12336.0,
+   "mg": 1785.0,
+   "mgp": 14.5,
+   "n": 364
+  },
+  {
+   "cat": "Confiteria",
+   "v": 9477.0,
+   "mg": 1851.0,
+   "mgp": 19.5,
+   "n": 532
+  },
+  {
+   "cat": "Pollos",
+   "v": 9104.0,
+   "mg": 1821.0,
+   "mgp": 20.0,
+   "n": 22
+  },
+  {
+   "cat": "Granos Secos",
+   "v": 7007.0,
+   "mg": 1591.0,
+   "mgp": 22.7,
+   "n": 113
+  },
+  {
+   "cat": "Cafe, Te, Infusiones",
+   "v": 4361.0,
+   "mg": 786.0,
+   "mgp": 18.0,
+   "n": 132
+  },
+  {
+   "cat": "Bebidas sin Alcohol",
+   "v": 3652.0,
+   "mg": 743.0,
+   "mgp": 20.3,
+   "n": 205
+  },
+  {
+   "cat": "Limpieza",
+   "v": 3390.0,
+   "mg": 765.0,
+   "mgp": 22.6,
+   "n": 280
+  },
+  {
+   "cat": "Snack",
+   "v": 3316.0,
+   "mg": 633.0,
+   "mgp": 19.1,
+   "n": 209
+  },
+  {
+   "cat": "Conservas",
+   "v": 2998.0,
+   "mg": 520.0,
+   "mgp": 17.3,
+   "n": 105
+  },
+  {
+   "cat": "Pescados y Mariscos",
+   "v": 2959.0,
+   "mg": 641.0,
+   "mgp": 21.7,
+   "n": 31
+  },
+  {
+   "cat": "Huevos",
+   "v": 2919.0,
+   "mg": 436.0,
+   "mgp": 14.9,
+   "n": 18
+  },
+  {
+   "cat": "Bebidas con Alcohol",
+   "v": 2788.0,
+   "mg": 546.0,
+   "mgp": 19.6,
+   "n": 118
+  },
+  {
+   "cat": "Congelados",
+   "v": 2522.0,
+   "mg": 420.0,
+   "mgp": 16.7,
+   "n": 119
+  },
+  {
+   "cat": "Panaderia",
+   "v": 2348.0,
+   "mg": 390.0,
+   "mgp": 16.6,
+   "n": 56
+  },
+  {
+   "cat": "Aceites y Grasas",
+   "v": 2276.0,
+   "mg": 431.0,
+   "mgp": 18.9,
+   "n": 64
+  },
+  {
+   "cat": "Carnes",
+   "v": 2016.0,
+   "mg": 400.0,
+   "mgp": 19.8,
+   "n": 25
+  }
+ ],
+ "prod_disp": [
+  [
+   2340.0,
+   23.9,
+   "A",
+   "Aguacate 1kg"
+  ],
+  [
+   1910.0,
+   30.5,
+   "A",
+   "Huevo Cubano X30"
+  ],
+  [
+   1277.0,
+   18.9,
+   "A",
+   "Pollo Pelado S/m Avigal 1kg"
+  ],
+  [
+   1171.0,
+   13.6,
+   "A",
+   "Huevos Runa Yerba Buena X12"
+  ],
+  [
+   899.0,
+   13.6,
+   "A",
+   "Leche Nutri C21 Semidescremada 1lt"
+  ],
+  [
+   881.0,
+   11.9,
+   "A",
+   "Leche Nutri C13 Entera Funda 1lt"
+  ],
+  [
+   875.0,
+   17.5,
+   "A",
+   "Frutilla Agroecologica 1kg"
+  ],
+  [
+   852.0,
+   28.5,
+   "A",
+   "Platano Maduro 1kg"
+  ],
+  [
+   812.0,
+   22.9,
+   "A",
+   "Arandanos Tarrina 125g"
+  ],
+  [
+   782.0,
+   20.9,
+   "A",
+   "Tomate de Arbol (7-9u) 1kg"
+  ],
+  [
+   739.0,
+   18.9,
+   "A",
+   "Pechuga Pollo sin Piel Avigal 1kg"
+  ],
+  [
+   719.0,
+   19.6,
+   "A",
+   "Papaya Cubana ± Und 2.8kg"
+  ],
+  [
+   708.0,
+   6.0,
+   "A",
+   "Huevo Cubano X15"
+  ],
+  [
+   692.0,
+   21.9,
+   "A",
+   "Piña Hawaiana ±2.3kg"
+  ],
+  [
+   684.0,
+   20.9,
+   "A",
+   "Manzana Royal (5-7u) 1kg"
+  ],
+  [
+   644.0,
+   19.1,
+   "A",
+   "Choclo con Corteza 1kg (gs)"
+  ],
+  [
+   637.0,
+   18.3,
+   "A",
+   "Muslos de Pollo Avigal 1kg"
+  ],
+  [
+   635.0,
+   27.8,
+   "A",
+   "Platano Verde 1kg"
+  ],
+  [
+   611.0,
+   16.1,
+   "A",
+   "Tomate Riñon Agroecologico 1kg"
+  ],
+  [
+   608.0,
+   18.7,
+   "A",
+   "Gallina Criolla 1kg"
+  ],
+  [
+   587.0,
+   17.5,
+   "A",
+   "Leche Nutri Deslactosada Politileno 900ml"
+  ],
+  [
+   577.0,
+   20.6,
+   "A",
+   "Pollo Pelado sin Menudencia 1kg"
+  ],
+  [
+   572.0,
+   23.5,
+   "A",
+   "Cebolla Perla Pelada Gs (6-8u) 1kg"
+  ],
+  [
+   556.0,
+   18.6,
+   "A",
+   "Uva Verde sin Pepa 1kg"
+  ],
+  [
+   553.0,
+   18.5,
+   "A",
+   "Pechuga de Pollo con Piel Avigal Kg"
+  ],
+  [
+   539.0,
+   19.9,
+   "A",
+   "Manzana Winter 1kg"
+  ],
+  [
+   524.0,
+   18.3,
+   "A",
+   "Pierna de Pollo Avigal 1"
+  ],
+  [
+   523.0,
+   20.0,
+   "A",
+   "Sandia Verde Clara #6 ±5.3kg"
+  ],
+  [
+   521.0,
+   24.7,
+   "A",
+   "Tomate Riñon (5-7u) 1kg"
+  ],
+  [
+   516.0,
+   22.6,
+   "A",
+   "Camaron Mediano Pelado Empacado 36 1kg"
+  ],
+  [
+   503.0,
+   20.9,
+   "A",
+   "Cebolla Roja Pelada Gs (6-8u) 1kg"
+  ],
+  [
+   478.0,
+   45.4,
+   "A",
+   "Zumo de Naranja Gs 1lt"
+  ],
+  [
+   472.0,
+   15.2,
+   "A",
+   "Huevo Criollo Und"
+  ],
+  [
+   458.0,
+   21.3,
+   "A",
+   "Arroz Onix en Arroba"
+  ],
+  [
+   454.0,
+   24.4,
+   "A",
+   "Tilapia Filete Emp 1kg"
+  ],
+  [
+   445.0,
+   25.3,
+   "A",
+   "Naranja S/p Americana Washinton 1kg"
+  ],
+  [
+   439.0,
+   26.9,
+   "A",
+   "Granadilla Colombiana (10-13u) 1kg"
+  ],
+  [
+   430.0,
+   37.8,
+   "A",
+   "Papa Super Chola Lavada C 1kg"
+  ],
+  [
+   426.0,
+   9.0,
+   "A",
+   "Cigarrillo Malboro Rojo 1/2 Cajetilla"
+  ],
+  [
+   423.0,
+   19.8,
+   "A",
+   "Papa Chaucha 3ra 1 Funda"
+  ],
+  [
+   414.0,
+   23.7,
+   "A",
+   "Kiwi (17-20u) 1kg"
+  ],
+  [
+   411.0,
+   23.7,
+   "A",
+   "Banano Filipino(guineo 5) X7 1kg"
+  ],
+  [
+   401.0,
+   20.8,
+   "A",
+   "Melon Und"
+  ],
+  [
+   400.0,
+   23.8,
+   "A",
+   "Manzana Verde 1kg"
+  ],
+  [
+   399.0,
+   20.4,
+   "A",
+   "Quesillo Gs 1kg"
+  ],
+  [
+   396.0,
+   28.7,
+   "A",
+   "Arveja Desvainada 1kg"
+  ],
+  [
+   389.0,
+   15.0,
+   "A",
+   "Tomate Cherry Agroecologico 1kg"
+  ],
+  [
+   381.0,
+   19.0,
+   "A",
+   "Pollo Pelado sin Menudencia Ave Campo Kg"
+  ],
+  [
+   379.0,
+   24.1,
+   "A",
+   "Canela en Rama Funda 50g"
+  ],
+  [
+   375.0,
+   25.6,
+   "A",
+   "Mango Tomy 1kg"
+  ],
+  [
+   373.0,
+   23.4,
+   "A",
+   "Huevo de Codorniz Tarrina X24 Prod del Campo"
+  ],
+  [
+   366.0,
+   8.8,
+   "A",
+   "Papa Malla 2kg"
+  ],
+  [
+   365.0,
+   19.1,
+   "A",
+   "Lomo Falda de Res al Vacio 1kg"
+  ],
+  [
+   358.0,
+   14.6,
+   "A",
+   "Miel de Abeja Sanlu 1200ml"
+  ],
+  [
+   351.0,
+   24.0,
+   "A",
+   "Nueces Gs 225g"
+  ],
+  [
+   350.0,
+   10.7,
+   "A",
+   "Detox Mix Veg y Frut 960gr"
+  ],
+  [
+   347.0,
+   40.9,
+   "A",
+   "Arroz Onix 1.5kg"
+  ],
+  [
+   345.0,
+   24.4,
+   "A",
+   "Durazno 1kg"
+  ],
+  [
+   340.0,
+   23.9,
+   "A",
+   "Haba Tierna Desvainada 1kg"
+  ],
+  [
+   338.0,
+   21.3,
+   "A",
+   "Naranja ±200g"
+  ],
+  [
+   325.0,
+   22.4,
+   "A",
+   "Limon Sutil (20-23u) 1kg"
+  ],
+  [
+   321.0,
+   30.9,
+   "A",
+   "Corvina de Roca Fileteada Emp 1kg"
+  ],
+  [
+   321.0,
+   17.1,
+   "A",
+   "Almendras 225g"
+  ],
+  [
+   307.0,
+   19.3,
+   "A",
+   "Pera Forelle 1kg"
+  ],
+  [
+   299.0,
+   22.6,
+   "A",
+   "Uva Rosada con Pepa 1kg"
+  ],
+  [
+   298.0,
+   10.4,
+   "A",
+   "Queso Fresco la Chonta 500g"
+  ],
+  [
+   288.0,
+   29.2,
+   "A",
+   "Brocoli 450 a 650kg"
+  ],
+  [
+   286.0,
+   26.4,
+   "A",
+   "Pitahaya (2-4u) 1kg"
+  ],
+  [
+   281.0,
+   18.6,
+   "A",
+   "Carne Molida de Res al Vacio 1kg"
+  ],
+  [
+   281.0,
+   18.1,
+   "A",
+   "Corvinilla Filete Seafood 450g"
+  ],
+  [
+   280.0,
+   26.8,
+   "A",
+   "Lechuga Crespa Hortana 200g"
+  ],
+  [
+   275.0,
+   18.1,
+   "A",
+   "Yogurt Griego El Tokte 900g"
+  ],
+  [
+   271.0,
+   29.0,
+   "A",
+   "Lenteja Seca 500g"
+  ],
+  [
+   266.0,
+   12.3,
+   "A",
+   "Leche Lechera Semidescremada 1lt"
+  ],
+  [
+   264.0,
+   17.7,
+   "A",
+   "Rondos Bocaditos de Maiz Japs 300g"
+  ],
+  [
+   261.0,
+   21.3,
+   "A",
+   "Melloco Pintado 1kg"
+  ],
+  [
+   258.0,
+   24.1,
+   "A",
+   "Pepa de Sambo 100g"
+  ],
+  [
+   253.0,
+   17.0,
+   "A",
+   "Queso Para Nacho Ricos 99g"
+  ],
+  [
+   249.0,
+   24.3,
+   "A",
+   "Pechuga Pollo Plato 1kg"
+  ],
+  [
+   245.0,
+   26.0,
+   "A",
+   "Pimiento Morron Rojo 1kg"
+  ],
+  [
+   245.0,
+   19.1,
+   "A",
+   "Aceite Girasol 1lt"
+  ],
+  [
+   243.0,
+   34.3,
+   "A",
+   "Yuca Troceada al Vacio 1kg"
+  ],
+  [
+   242.0,
+   17.4,
+   "A",
+   "Cafe Alamor 400g"
+  ],
+  [
+   240.0,
+   29.0,
+   "A",
+   "Apio Tallo Rama Und"
+  ],
+  [
+   240.0,
+   16.9,
+   "A",
+   "Lomo Fino de Res al Vacio 1kg"
+  ],
+  [
+   240.0,
+   23.4,
+   "A",
+   "Naranjilla 1kg"
+  ],
+  [
+   235.0,
+   20.8,
+   "A",
+   "Esparragos Atado Und"
+  ],
+  [
+   235.0,
+   24.1,
+   "A",
+   "Pepinillo 1kg"
+  ],
+  [
+   233.0,
+   25.7,
+   "A",
+   "Zanahoria (7-9u) 1kg"
+  ],
+  [
+   232.0,
+   21.0,
+   "A",
+   "Mandarina sin Pepa 1kg"
+  ],
+  [
+   232.0,
+   31.8,
+   "A",
+   "Flor de Jamaica Deshidratada Und"
+  ],
+  [
+   231.0,
+   31.6,
+   "A",
+   "Tomate Cherry 1kg"
+  ],
+  [
+   231.0,
+   11.3,
+   "A",
+   "Chia Gs 200g"
+  ],
+  [
+   227.0,
+   23.4,
+   "A",
+   "Ciruela Pasas S/p 200g"
+  ],
+  [
+   226.0,
+   12.7,
+   "A",
+   "Maiz Blanco Pelado-mote Gs 1000g"
+  ],
+  [
+   225.0,
+   25.6,
+   "A",
+   "Nueces 100g"
+  ],
+  [
+   223.0,
+   -2.3,
+   "A",
+   "Pavo Andino 1kg"
+  ],
+  [
+   221.0,
+   42.9,
+   "A",
+   "Melloco Pintado al Vacio 1kg"
+  ],
+  [
+   221.0,
+   14.9,
+   "A",
+   "Atun Real Tripack"
+  ],
+  [
+   215.0,
+   35.7,
+   "A",
+   "Cereza Yumbo 1kg"
+  ],
+  [
+   213.0,
+   19.2,
+   "A",
+   "Mora 1kg"
+  ],
+  [
+   211.0,
+   14.2,
+   "A",
+   "Naranja sin Pepa 1kg"
+  ],
+  [
+   206.0,
+   24.2,
+   "A",
+   "Maracuya (5-7u) 1kg"
+  ],
+  [
+   206.0,
+   23.0,
+   "A",
+   "Manzana Roja 1kg"
+  ],
+  [
+   205.0,
+   13.8,
+   "A",
+   "Huevo Runa la Hacienda X12"
+  ],
+  [
+   204.0,
+   16.4,
+   "A",
+   "Frejol Seco 500g"
+  ],
+  [
+   204.0,
+   25.5,
+   "A",
+   "Aceite de Oliva la Española Extra Virgen 500ml"
+  ],
+  [
+   204.0,
+   21.6,
+   "A",
+   "Carne Fileteada de Res al Vacio 1kg"
+  ],
+  [
+   202.0,
+   19.8,
+   "A",
+   "Lomo Fino de Res 1kg"
+  ],
+  [
+   200.0,
+   21.5,
+   "A",
+   "Vainita 1kg"
+  ],
+  [
+   194.0,
+   19.0,
+   "A",
+   "Almendras Gs 100g"
+  ],
+  [
+   193.0,
+   21.7,
+   "A",
+   "Papaya Hawaiana 600±800 Und"
+  ],
+  [
+   192.0,
+   12.5,
+   "A",
+   "Salmon Pacific Select 227g"
+  ],
+  [
+   192.0,
+   13.7,
+   "A",
+   "Cafe Patawasi 450g"
+  ],
+  [
+   191.0,
+   11.2,
+   "A",
+   "Huevo la Hacienda X30"
+  ],
+  [
+   190.0,
+   17.8,
+   "A",
+   "Crema de Leche Nutri Tetrafino 500ml"
+  ],
+  [
+   189.0,
+   26.3,
+   "A",
+   "Coliflor 350 a 500g"
+  ],
+  [
+   187.0,
+   12.5,
+   "A",
+   "Huevo la Hacienda X15"
+  ],
+  [
+   186.0,
+   20.0,
+   "A",
+   "Cafe Cubanito 400g"
+  ],
+  [
+   185.0,
+   24.3,
+   "A",
+   "Quinua 500g"
+  ],
+  [
+   181.0,
+   18.4,
+   "A",
+   "Queso Fresco Supremo 500g"
+  ],
+  [
+   178.0,
+   8.9,
+   "A",
+   "Cromo World Cup Panini"
+  ],
+  [
+   177.0,
+   16.5,
+   "A",
+   "Mantequilla de Almendras 200g"
+  ],
+  [
+   173.0,
+   12.5,
+   "A",
+   "Pan Supan Blanco"
+  ],
+  [
+   172.0,
+   13.1,
+   "A",
+   "Queso Fresco Lakya 500g"
+  ],
+  [
+   171.0,
+   25.2,
+   "A",
+   "Pimiento Morron Amarillo 1kg"
+  ],
+  [
+   169.0,
+   17.1,
+   "A",
+   "Ricacao Nestle 400g"
+  ],
+  [
+   168.0,
+   18.5,
+   "A",
+   "Yogurt Griego Natural El Tokte 400g"
+  ],
+  [
+   168.0,
+   17.9,
+   "A",
+   "Arroz San Isidro 1.5kg"
+  ],
+  [
+   165.0,
+   15.8,
+   "A",
+   "Champiñones Guipi Rebanado 125g"
+  ],
+  [
+   163.0,
+   8.6,
+   "A",
+   "Sandia Verde Clara Mitad"
+  ],
+  [
+   163.0,
+   25.5,
+   "A",
+   "Zapallo Rodajas 1kg"
+  ],
+  [
+   162.0,
+   20.0,
+   "A",
+   "Cafe Patawasi 225g"
+  ],
+  [
+   161.0,
+   17.3,
+   "A",
+   "Rosconcitos 80g"
+  ],
+  [
+   161.0,
+   22.0,
+   "A",
+   "Babaco Und 1kg"
+  ],
+  [
+   160.0,
+   25.9,
+   "A",
+   "Trucha Plato 1kg"
+  ],
+  [
+   158.0,
+   8.9,
+   "A",
+   "Papa Malla 1kg"
+  ],
+  [
+   158.0,
+   7.4,
+   "A",
+   "Cafe Buen Dia 170g"
+  ],
+  [
+   156.0,
+   16.6,
+   "A",
+   "Whisky Johnnie Walker Red Laber 750ml"
+  ],
+  [
+   156.0,
+   19.0,
+   "A",
+   "Granola Tokte 350g"
+  ],
+  [
+   155.0,
+   18.1,
+   "A",
+   "Pan de Chocolate Sahi 400g"
+  ],
+  [
+   155.0,
+   16.9,
+   "A",
+   "Pan Blanco de Masa Madre"
+  ],
+  [
+   154.0,
+   12.9,
+   "A",
+   "Filetes de Salmón Mr Fish"
+  ],
+  [
+   152.0,
+   16.1,
+   "A",
+   "Culantro Atado 200g"
+  ],
+  [
+   151.0,
+   15.9,
+   "A",
+   "Queso Mozzarella Light Kiosko 500g"
+  ],
+  [
+   151.0,
+   13.1,
+   "A",
+   "Atun Real Tun Tun Agua 80g X3"
+  ],
+  [
+   150.0,
+   12.8,
+   "A",
+   "Queso Mozzarella Kiosko 500g"
+  ],
+  [
+   150.0,
+   31.7,
+   "A",
+   "Agua Mineral Guitig 500ml"
+  ],
+  [
+   150.0,
+   23.5,
+   "A",
+   "Ajo Seco 1kg"
+  ],
+  [
+   150.0,
+   23.9,
+   "A",
+   "Garbanzo 500g"
+  ],
+  [
+   150.0,
+   38.5,
+   "A",
+   "Pimiento Rojo 1kg"
+  ],
+  [
+   150.0,
+   18.9,
+   "A",
+   "Miel de Abeja Sanlu 600ml"
+  ],
+  [
+   149.0,
+   32.1,
+   "A",
+   "Zanahoria Atado ± 700g"
+  ],
+  [
+   149.0,
+   14.9,
+   "A",
+   "Queso Mozzarella la Hacienda 500g"
+  ],
+  [
+   148.0,
+   17.1,
+   "A",
+   "Pechuga de Pollo 1kg"
+  ],
+  [
+   146.0,
+   19.7,
+   "A",
+   "Mantequilla Nutri sin Sal 250g"
+  ],
+  [
+   146.0,
+   25.5,
+   "A",
+   "Sagsuma 1kg"
+  ],
+  [
+   146.0,
+   20.5,
+   "A",
+   "Chuleta de Cerdo Lomo 1kg"
+  ],
+  [
+   146.0,
+   14.0,
+   "A",
+   "Yogurt Toni Natural 950g"
+  ],
+  [
+   145.0,
+   21.5,
+   "A",
+   "Arroz San Isidro Gourmet Arroba"
+  ],
+  [
+   145.0,
+   17.7,
+   "A",
+   "Mandarina Patateña 1kg"
+  ],
+  [
+   145.0,
+   23.9,
+   "A",
+   "Bacalao Salado 1kg"
+  ],
+  [
+   145.0,
+   10.3,
+   "A",
+   "Digestiveg Mix de Frutas y Veg 960g"
+  ],
+  [
+   145.0,
+   26.3,
+   "A",
+   "Azucar San Carlos 2kg"
+  ],
+  [
+   142.0,
+   13.8,
+   "A",
+   "Gaseosa Coca Cola 3lt"
+  ],
+  [
+   141.0,
+   14.3,
+   "A",
+   "Queso Andino Salinerito 500g"
+  ],
+  [
+   139.0,
+   20.9,
+   "A",
+   "Pan Taqueños Byg 400g"
+  ],
+  [
+   138.0,
+   22.8,
+   "A",
+   "Frejol Seco Mantequilla 500g"
+  ],
+  [
+   137.0,
+   27.4,
+   "A",
+   "Melcochas Doña Blanquita 80g"
+  ],
+  [
+   136.0,
+   16.8,
+   "A",
+   "Queso Andino Salinerito 1kg"
+  ],
+  [
+   135.0,
+   17.2,
+   "A",
+   "Pan Artesanal Integral Bimbo 560g"
+  ],
+  [
+   135.0,
+   25.2,
+   "A",
+   "Jarabe de Jengibre Chankuap Adultos 130ml"
+  ],
+  [
+   134.0,
+   14.8,
+   "A",
+   "Cafe Buen Dia 85g"
+  ],
+  [
+   133.0,
+   23.2,
+   "A",
+   "Mix de Ensaladas Frescas Und"
+  ],
+  [
+   133.0,
+   16.0,
+   "A",
+   "Alas de Pollo Avigal 1kg"
+  ],
+  [
+   133.0,
+   16.3,
+   "A",
+   "Yogurt Griego El Tokte Frutos Rojos 400g"
+  ],
+  [
+   132.0,
+   17.6,
+   "A",
+   "Pan Integral Rustico 400g"
+  ],
+  [
+   132.0,
+   27.0,
+   "A",
+   "Pimiento Verde 1kg"
+  ],
+  [
+   131.0,
+   21.2,
+   "A",
+   "Lechuga Repollo Agroecologica Und"
+  ],
+  [
+   130.0,
+   16.7,
+   "A",
+   "Champiñones Guipi Rebanados 200g"
+  ],
+  [
+   130.0,
+   22.9,
+   "A",
+   "Clavo de Olor 100g"
+  ],
+  [
+   130.0,
+   25.2,
+   "A",
+   "Cerveza Club Lata 473ml"
+  ],
+  [
+   129.0,
+   10.2,
+   "A",
+   "Leche la Lechera Entera Tapa con Vit a y D 1lt"
+  ],
+  [
+   129.0,
+   23.5,
+   "A",
+   "Papa Super Chola 1kg"
+  ],
+  [
+   128.0,
+   24.7,
+   "A",
+   "Frejol Blanco Desvainado 1kg"
+  ],
+  [
+   126.0,
+   15.6,
+   "A",
+   "Queso Mozarella Salinerito 500g"
+  ],
+  [
+   126.0,
+   17.5,
+   "A",
+   "Pan de Masa Madre Semi Integral"
+  ],
+  [
+   126.0,
+   16.6,
+   "A",
+   "Champiñones Guipi Enteros 200g"
+  ],
+  [
+   125.0,
+   19.2,
+   "A",
+   "Champiñones Guipi Enteros 400g"
+  ],
+  [
+   124.0,
+   21.5,
+   "A",
+   "Miel de Abeja Sanlu 300ml"
+  ],
+  [
+   124.0,
+   13.4,
+   "A",
+   "Helado San Sebas Limon 700ml"
+  ],
+  [
+   122.0,
+   15.1,
+   "A",
+   "Stand Fast \" Grant's \" 750ml"
+  ],
+  [
+   121.0,
+   16.5,
+   "A",
+   "Helado San Sebas Maracuya 350ml"
+  ],
+  [
+   120.0,
+   12.3,
+   "A",
+   "Huevo la Hacienda X8"
+  ],
+  [
+   120.0,
+   22.2,
+   "A",
+   "Limon Meyer 1kg"
+  ],
+  [
+   120.0,
+   15.3,
+   "A",
+   "Papel Higienico Familia Acolchamax Rojo"
+  ],
+  [
+   119.0,
+   19.6,
+   "A",
+   "Agua Mineral Guitig 1.5lt"
+  ],
+  [
+   119.0,
+   22.0,
+   "A",
+   "Tomate Taconazo Hortana"
+  ],
+  [
+   116.0,
+   22.9,
+   "A",
+   "Lechuga Criolla Hortana"
+  ],
+  [
+   115.0,
+   25.0,
+   "A",
+   "Zanahoria Baby Hortana"
+  ],
+  [
+   113.0,
+   20.3,
+   "A",
+   "Tuna 1kg"
+  ],
+  [
+   113.0,
+   30.6,
+   "A",
+   "Granola Artesanatta"
+  ],
+  [
+   112.0,
+   19.9,
+   "A",
+   "Rondos Bocaditos de Maiz Japs 150g"
+  ],
+  [
+   112.0,
+   15.2,
+   "A",
+   "Pan Integral El Horno X10"
+  ],
+  [
+   111.0,
+   1.8,
+   "A",
+   "Frejol Seco Rojo 500g"
+  ],
+  [
+   110.0,
+   16.2,
+   "A",
+   "Atun Real Lomitos en Agua 180g"
+  ],
+  [
+   110.0,
+   21.7,
+   "A",
+   "Lechuga Crespa Agroecologica Und"
+  ],
+  [
+   110.0,
+   11.8,
+   "A",
+   "Pan Integral Supan 500g"
+  ],
+  [
+   109.0,
+   17.4,
+   "A",
+   "Media Papaya Cubana Und"
+  ],
+  [
+   108.0,
+   15.1,
+   "A",
+   "Pan de Molde Integral 400g"
+  ],
+  [
+   107.0,
+   22.0,
+   "A",
+   "Chocolate Manicho 25g"
+  ],
+  [
+   106.0,
+   16.6,
+   "A",
+   "Atun Van Camps Tripack de 80g"
+  ],
+  [
+   106.0,
+   6.0,
+   "A",
+   "Queso Mozzarella Light Alpina 700g"
+  ],
+  [
+   105.0,
+   18.3,
+   "A",
+   "Papel Higienico Gama Triple Hoja 4u"
+  ],
+  [
+   105.0,
+   21.5,
+   "A",
+   "Papel Higienico Acolcha Supermega"
+  ],
+  [
+   104.0,
+   28.6,
+   "A",
+   "Uvilla Plato Und 330g"
+  ],
+  [
+   103.0,
+   22.2,
+   "A",
+   "Galleta de Coco Nestle 225g"
+  ],
+  [
+   103.0,
+   15.1,
+   "A",
+   "Cafe Don Mathias 400g"
+  ],
+  [
+   103.0,
+   20.4,
+   "A",
+   "Culantro Agroecologico Atado 200g"
+  ],
+  [
+   103.0,
+   25.8,
+   "A",
+   "Maiz Dulce Hortana"
+  ],
+  [
+   103.0,
+   26.1,
+   "A",
+   "Aceite Española de Oliva Extra Virgen 250ml"
+  ],
+  [
+   103.0,
+   13.4,
+   "A",
+   "Helado San Sebas Maracuya 700ml"
+  ],
+  [
+   102.0,
+   11.8,
+   "A",
+   "Queso Mozzarella Kiosko 350g"
+  ],
+  [
+   102.0,
+   16.3,
+   "A",
+   "Helado San Sebas Limon 350ml"
+  ],
+  [
+   101.0,
+   28.3,
+   "A",
+   "Pera 1kg"
+  ],
+  [
+   100.0,
+   18.2,
+   "A",
+   "Manteca Blanca de Cerdo 450g"
+  ],
+  [
+   100.0,
+   18.8,
+   "A",
+   "Atun Van Camps en Aceite de Oliva X3"
+  ],
+  [
+   100.0,
+   12.5,
+   "A",
+   "Papel Higienico Familia Acolchamax X8"
+  ],
+  [
+   100.0,
+   20.4,
+   "A",
+   "Camote Amarillo Gs 1kg"
+  ],
+  [
+   99.0,
+   16.2,
+   "A",
+   "Leña ( Atado Mediano)"
+  ],
+  [
+   98.0,
+   11.5,
+   "A",
+   "Canguil Americano 500g"
+  ],
+  [
+   97.0,
+   17.2,
+   "A",
+   "Champiñones Guipi Rebanados 400g"
+  ],
+  [
+   97.0,
+   13.9,
+   "A",
+   "Camaron Mediano Pelado 450g"
+  ],
+  [
+   96.0,
+   29.9,
+   "A",
+   "Turron Crocante Ghovies 20g"
+  ],
+  [
+   96.0,
+   25.4,
+   "A",
+   "Leche Natural de Almendras Nature Heart 1lt"
+  ],
+  [
+   95.0,
+   22.1,
+   "A",
+   "Muslos de Pollo 1kg"
+  ],
+  [
+   94.0,
+   13.3,
+   "A",
+   "Queso Nutri 500g"
+  ],
+  [
+   94.0,
+   15.8,
+   "A",
+   "Leche Condensada la Lechera"
+  ],
+  [
+   94.0,
+   30.8,
+   "A",
+   "Pollo Desmechado Plumrose Lata 180g"
+  ],
+  [
+   94.0,
+   28.2,
+   "A",
+   "Cebollin Hoja Gs Atado ±250g"
+  ],
+  [
+   93.0,
+   22.2,
+   "A",
+   "Azucar Blanca San Carlos 1kg"
+  ],
+  [
+   92.0,
+   24.3,
+   "A",
+   "Mix de Frutos Secos Mystura 250g"
+  ],
+  [
+   92.0,
+   17.3,
+   "A",
+   "Kefir El Tokte 1lt"
+  ],
+  [
+   92.0,
+   17.4,
+   "A",
+   "Filete de Corvina Ecuapez 454g"
+  ],
+  [
+   91.0,
+   15.2,
+   "A",
+   "Gaseosa Coca Cola 1.35lt"
+  ],
+  [
+   90.0,
+   37.3,
+   "A",
+   "Espinaca Atado ±300g"
+  ],
+  [
+   90.0,
+   22.8,
+   "A",
+   "Saviloe Uva 320ml"
+  ],
+  [
+   90.0,
+   15.7,
+   "A",
+   "Quesitos Funda 25g"
+  ],
+  [
+   89.0,
+   22.9,
+   "A",
+   "Linaza 200g"
+  ]
+ ],
+ "rot_lentos": [
+  {
+   "p": "Velas Ecologicas Natuartec 100g",
+   "cat": "Descartables",
+   "inv": 68.0,
+   "rot": 0.2,
+   "dias": 1521.0,
+   "c": "A"
+  },
+  {
+   "p": "Vino Anthony Fresa 750ml",
+   "cat": "Bebidas con Alcohol",
+   "inv": 43.0,
+   "rot": 0.3,
+   "dias": 1130.0,
+   "c": "A"
+  },
+  {
+   "p": "Conserva Durazno en Mitades Snob 820g",
+   "cat": "Conservas",
+   "inv": 49.0,
+   "rot": 0.5,
+   "dias": 684.0,
+   "c": "A"
+  },
+  {
+   "p": "Cafe Don Mathias 400g",
+   "cat": "Cafe, Te, Infusiones",
+   "inv": 44.0,
+   "rot": 0.9,
+   "dias": 399.0,
+   "c": "A"
+  },
+  {
+   "p": "Aceite la Favorita Original 1lt",
+   "cat": "Aceites y Grasas",
+   "inv": 51.0,
+   "rot": 0.9,
+   "dias": 389.0,
+   "c": "A"
+  },
+  {
+   "p": "Dog Chow Adultos Med y Gra Carne Pollo 2kg",
+   "cat": "Para Animales",
+   "inv": 58.0,
+   "rot": 1.0,
+   "dias": 380.0,
+   "c": "A"
+  },
+  {
+   "p": "Atun Real en Aceite de Oliva 80g X3",
+   "cat": "Conservas",
+   "inv": 54.0,
+   "rot": 1.5,
+   "dias": 247.0,
+   "c": "A"
+  },
+  {
+   "p": "Dog Chow Adultos Mini y Peqñ Carne Pollo 2kg",
+   "cat": "Para Animales",
+   "inv": 55.0,
+   "rot": 2.4,
+   "dias": 152.0,
+   "c": "A"
+  },
+  {
+   "p": "Jarabe de Jengibre Chankuap Adultos 130ml",
+   "cat": "Cafe, Te, Infusiones",
+   "inv": 41.0,
+   "rot": 4.1,
+   "dias": 88.0,
+   "c": "A"
+  },
+  {
+   "p": "Miel de Abeja Sanlu 1200ml",
+   "cat": "Confiteria",
+   "inv": 58.0,
+   "rot": 5.2,
+   "dias": 71.0,
+   "c": "A"
+  },
+  {
+   "p": "Corvina de Roca Fileteada Emp 1kg",
+   "cat": "Pescados y Mariscos",
+   "inv": 50.0,
+   "rot": 5.9,
+   "dias": 62.0,
+   "c": "A"
+  },
+  {
+   "p": "Arroz Onix en Arroba",
+   "cat": "Granos Secos",
+   "inv": 70.0,
+   "rot": 8.3,
+   "dias": 44.0,
+   "c": "A"
+  },
+  {
+   "p": "Leche Nutri C21 Semidescremada 1lt",
+   "cat": "Lacteos",
+   "inv": 53.0,
+   "rot": 18.7,
+   "dias": 20.0,
+   "c": "A"
+  }
+ ],
+ "rot_rapidos": [
+  {
+   "p": "Pollo Pelado S/m Avigal 1kg",
+   "cat": "Pollos",
+   "inv": 32.0,
+   "rot": 64.3,
+   "dias": 6.0,
+   "c": "A"
+  },
+  {
+   "p": "Platano Maduro 1kg",
+   "cat": "Frutas",
+   "inv": 15.0,
+   "rot": 50.1,
+   "dias": 7.0,
+   "c": "A"
+  },
+  {
+   "p": "Tomate de Arbol (7-9u) 1kg",
+   "cat": "Frutas",
+   "inv": 16.0,
+   "rot": 49.7,
+   "dias": 7.0,
+   "c": "A"
+  },
+  {
+   "p": "Pechuga de Pollo con Piel Avigal Kg",
+   "cat": "Pollos",
+   "inv": 18.0,
+   "rot": 48.1,
+   "dias": 8.0,
+   "c": "A"
+  },
+  {
+   "p": "Huevos Runa Yerba Buena X12",
+   "cat": "Huevos",
+   "inv": 36.0,
+   "rot": 39.8,
+   "dias": 9.0,
+   "c": "A"
+  },
+  {
+   "p": "Leche Nutri C13 Entera Funda 1lt",
+   "cat": "Lacteos",
+   "inv": 32.0,
+   "rot": 32.3,
+   "dias": 11.0,
+   "c": "A"
+  },
+  {
+   "p": "Manzana Royal (5-7u) 1kg",
+   "cat": "Frutas",
+   "inv": 18.0,
+   "rot": 31.0,
+   "dias": 12.0,
+   "c": "A"
+  },
+  {
+   "p": "Sandia Verde Clara #6 ±5.3kg",
+   "cat": "Frutas",
+   "inv": 22.0,
+   "rot": 24.1,
+   "dias": 15.0,
+   "c": "A"
+  },
+  {
+   "p": "Pera Forelle 1kg",
+   "cat": "Frutas",
+   "inv": 15.0,
+   "rot": 24.1,
+   "dias": 15.0,
+   "c": "A"
+  },
+  {
+   "p": "Kiwi (17-20u) 1kg",
+   "cat": "Frutas",
+   "inv": 16.0,
+   "rot": 20.8,
+   "dias": 18.0,
+   "c": "A"
+  },
+  {
+   "p": "Leche Nutri Deslactosada Politileno 900ml",
+   "cat": "Lacteos",
+   "inv": 28.0,
+   "rot": 19.9,
+   "dias": 18.0,
+   "c": "A"
+  },
+  {
+   "p": "Cafe Alamor 400g",
+   "cat": "Cafe, Te, Infusiones",
+   "inv": 16.0,
+   "rot": 19.3,
+   "dias": 19.0,
+   "c": "A"
+  }
+ ],
+ "rot_sinventa": {
+  "n": 25,
+  "usd": 666.0
+ },
+ "rot_cat": [
+  {
+   "cat": "Cafe, Te, Infusiones",
+   "inv": 703.0,
+   "rot": 3.0,
+   "dias": 124.0
+  },
+  {
+   "cat": "Conservas",
+   "inv": 527.0,
+   "rot": 2.0,
+   "dias": 180.0
+  },
+  {
+   "cat": "Bebidas con Alcohol",
+   "inv": 457.0,
+   "rot": 1.1,
+   "dias": 329.0
+  },
+  {
+   "cat": "Confiteria",
+   "inv": 375.0,
+   "rot": 3.1,
+   "dias": 118.0
+  },
+  {
+   "cat": "Para Animales",
+   "inv": 346.0,
+   "rot": 1.8,
+   "dias": 207.0
+  },
+  {
+   "cat": "Limpieza",
+   "inv": 286.0,
+   "rot": 1.0,
+   "dias": 368.0
+  },
+  {
+   "cat": "Pescados y Mariscos",
+   "inv": 247.0,
+   "rot": 5.4,
+   "dias": 67.0
+  },
+  {
+   "cat": "Aceites y Grasas",
+   "inv": 245.0,
+   "rot": 3.5,
+   "dias": 104.0
+  },
+  {
+   "cat": "Lacteos",
+   "inv": 175.0,
+   "rot": 16.9,
+   "dias": 22.0
+  },
+  {
+   "cat": "Descartables",
+   "inv": 175.0,
+   "rot": 0.7,
+   "dias": 506.0
+  },
+  {
+   "cat": "Huevos",
+   "inv": 164.0,
+   "rot": 8.9,
+   "dias": 41.0
+  }
+ ],
+ "hora_top": [
+  {
+   "f": "07:00 – 09:59",
+   "v": 9367.0,
+   "p": [
+    {
+     "p": "Pollo Pelado S/m Avigal 1kg",
+     "v": 257.0,
+     "pct": 2.7
+    },
+    {
+     "p": "Aguacate 1kg",
+     "v": 160.0,
+     "pct": 1.7
+    },
+    {
+     "p": "Huevo Cubano X30",
+     "v": 151.0,
+     "pct": 1.6
+    },
+    {
+     "p": "Cigarrillo Malboro Rojo 1/2 Cajetilla",
+     "v": 138.0,
+     "pct": 1.5
+    },
+    {
+     "p": "Papaya Cubana ± Und 2.8kg",
+     "v": 118.0,
+     "pct": 1.3
+    },
+    {
+     "p": "Tomate de Arbol (7-9u) 1kg",
+     "v": 117.0,
+     "pct": 1.2
+    },
+    {
+     "p": "Huevos Runa Yerba Buena X12",
+     "v": 116.0,
+     "pct": 1.2
+    },
+    {
+     "p": "Frutilla Agroecologica 1kg",
+     "v": 92.0,
+     "pct": 1.0
+    }
+   ]
+  },
+  {
+   "f": "10:00 – 12:59",
+   "v": 36456.0,
+   "p": [
+    {
+     "p": "Aguacate 1kg",
+     "v": 854.0,
+     "pct": 2.3
+    },
+    {
+     "p": "Huevo Cubano X30",
+     "v": 545.0,
+     "pct": 1.5
+    },
+    {
+     "p": "Huevos Runa Yerba Buena X12",
+     "v": 500.0,
+     "pct": 1.4
+    },
+    {
+     "p": "Pollo Pelado S/m Avigal 1kg",
+     "v": 457.0,
+     "pct": 1.3
+    },
+    {
+     "p": "Pechuga Pollo sin Piel Avigal 1kg",
+     "v": 355.0,
+     "pct": 1.0
+    },
+    {
+     "p": "Frutilla Agroecologica 1kg",
+     "v": 305.0,
+     "pct": 0.8
+    },
+    {
+     "p": "Muslos de Pollo Avigal 1kg",
+     "v": 293.0,
+     "pct": 0.8
+    },
+    {
+     "p": "Tomate de Arbol (7-9u) 1kg",
+     "v": 272.0,
+     "pct": 0.7
+    }
+   ]
+  },
+  {
+   "f": "13:00 – 15:59",
+   "v": 21459.0,
+   "p": [
+    {
+     "p": "Aguacate 1kg",
+     "v": 439.0,
+     "pct": 2.0
+    },
+    {
+     "p": "Huevo Cubano X30",
+     "v": 308.0,
+     "pct": 1.4
+    },
+    {
+     "p": "Pollo Pelado S/m Avigal 1kg",
+     "v": 204.0,
+     "pct": 1.0
+    },
+    {
+     "p": "Leche Nutri C21 Semidescremada 1lt",
+     "v": 191.0,
+     "pct": 0.9
+    },
+    {
+     "p": "Frutilla Agroecologica 1kg",
+     "v": 173.0,
+     "pct": 0.8
+    },
+    {
+     "p": "Huevos Runa Yerba Buena X12",
+     "v": 172.0,
+     "pct": 0.8
+    },
+    {
+     "p": "Platano Maduro 1kg",
+     "v": 153.0,
+     "pct": 0.7
+    },
+    {
+     "p": "Tomate Riñon Agroecologico 1kg",
+     "v": 153.0,
+     "pct": 0.7
+    }
+   ]
+  },
+  {
+   "f": "16:00 – 18:59",
+   "v": 30953.0,
+   "p": [
+    {
+     "p": "Aguacate 1kg",
+     "v": 533.0,
+     "pct": 1.7
+    },
+    {
+     "p": "Huevo Cubano X30",
+     "v": 504.0,
+     "pct": 1.6
+    },
+    {
+     "p": "Leche Nutri C13 Entera Funda 1lt",
+     "v": 285.0,
+     "pct": 0.9
+    },
+    {
+     "p": "Pollo Pelado S/m Avigal 1kg",
+     "v": 263.0,
+     "pct": 0.8
+    },
+    {
+     "p": "Leche Nutri C21 Semidescremada 1lt",
+     "v": 261.0,
+     "pct": 0.8
+    },
+    {
+     "p": "Frutilla Agroecologica 1kg",
+     "v": 255.0,
+     "pct": 0.8
+    },
+    {
+     "p": "Huevos Runa Yerba Buena X12",
+     "v": 232.0,
+     "pct": 0.7
+    },
+    {
+     "p": "Arandanos Tarrina 125g",
+     "v": 213.0,
+     "pct": 0.7
+    }
+   ]
+  },
+  {
+   "f": "19:00 – cierre",
+   "v": 10562.0,
+   "p": [
+    {
+     "p": "Huevo Cubano X30",
+     "v": 263.0,
+     "pct": 2.5
+    },
+    {
+     "p": "Aguacate 1kg",
+     "v": 144.0,
+     "pct": 1.4
+    },
+    {
+     "p": "Arroz Onix en Arroba",
+     "v": 137.0,
+     "pct": 1.3
+    },
+    {
+     "p": "Leche Nutri C13 Entera Funda 1lt",
+     "v": 122.0,
+     "pct": 1.2
+    },
+    {
+     "p": "Huevos Runa Yerba Buena X12",
+     "v": 107.0,
+     "pct": 1.0
+    },
+    {
+     "p": "Leche Nutri C21 Semidescremada 1lt",
+     "v": 106.0,
+     "pct": 1.0
+    },
+    {
+     "p": "Pollo Pelado S/m Avigal 1kg",
+     "v": 97.0,
+     "pct": 0.9
+    },
+    {
+     "p": "Platano Verde 1kg",
+     "v": 97.0,
+     "pct": 0.9
+    }
+   ]
+  }
+ ],
+ "hora_cat": {
+  "horas": [
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20
+  ],
+  "cats": [
+   "Frutas",
+   "Hortalizas",
+   "Lacteos",
+   "Confiteria",
+   "Pollos",
+   "Granos Secos",
+   "Cafe, Te, Infusiones",
+   "Bebidas sin Alcohol",
+   "Limpieza",
+   "Snack"
+  ],
+  "pct": [
+   [
+    21.2,
+    16.9,
+    21.4,
+    15.7,
+    15.5,
+    18.1,
+    15.4,
+    14.4,
+    14.7,
+    13.1,
+    15.4,
+    14.3,
+    13.8,
+    6.4
+   ],
+   [
+    19.0,
+    13.4,
+    11.2,
+    11.6,
+    11.9,
+    11.2,
+    11.6,
+    12.3,
+    10.0,
+    9.3,
+    8.8,
+    9.7,
+    8.6,
+    5.9
+   ],
+   [
+    6.0,
+    9.7,
+    9.2,
+    9.6,
+    9.5,
+    8.3,
+    9.0,
+    10.5,
+    11.3,
+    10.3,
+    10.8,
+    12.0,
+    14.9,
+    11.2
+   ],
+   [
+    2.6,
+    7.6,
+    6.7,
+    6.1,
+    7.0,
+    6.9,
+    7.7,
+    8.9,
+    9.4,
+    9.0,
+    8.5,
+    9.0,
+    8.0,
+    8.2
+   ],
+   [
+    2.9,
+    10.3,
+    10.5,
+    7.4,
+    8.9,
+    8.1,
+    6.4,
+    5.7,
+    6.0,
+    6.0,
+    8.1,
+    6.6,
+    7.0,
+    14.6
+   ],
+   [
+    2.2,
+    5.8,
+    6.3,
+    6.2,
+    5.3,
+    5.3,
+    6.1,
+    4.6,
+    6.2,
+    5.4,
+    6.7,
+    5.6,
+    4.3,
+    7.8
+   ],
+   [
+    5.1,
+    4.6,
+    3.2,
+    5.0,
+    4.1,
+    3.1,
+    3.5,
+    4.7,
+    4.1,
+    3.3,
+    3.1,
+    3.9,
+    2.8,
+    1.0
+   ],
+   [
+    1.0,
+    2.0,
+    1.8,
+    2.8,
+    2.5,
+    2.6,
+    3.5,
+    3.8,
+    4.3,
+    3.1,
+    3.0,
+    3.0,
+    3.5,
+    4.6
+   ],
+   [
+    1.8,
+    2.7,
+    2.4,
+    3.4,
+    2.9,
+    2.3,
+    3.6,
+    2.4,
+    3.5,
+    3.7,
+    2.9,
+    2.4,
+    3.7,
+    3.7
+   ],
+   [
+    5.2,
+    1.4,
+    2.1,
+    2.0,
+    2.3,
+    2.8,
+    3.5,
+    3.0,
+    2.3,
+    3.0,
+    2.8,
+    3.5,
+    3.6,
+    2.4
+   ]
+  ],
+  "cobertura": 96.6
+ },
+ "hhi_mes": [
+  null,
+  3649.0,
+  3250.0,
+  2207.0,
+  1393.0,
+  1506.0,
+  1557.0,
+  1509.0,
+  1934.0,
+  1684.0
+ ],
+ "prov_top": [
+  {
+   "p": "Centro de acopio de la empresa pública municipal",
+   "tipo": "Transferencias",
+   "usd": 37225.0,
+   "pct": 34.0,
+   "fact": 601,
+   "prod": 1256,
+   "meses": 9
+  },
+  {
+   "p": "Corporación Favorita C. A.",
+   "tipo": "Sociedad u organización",
+   "usd": 18563.0,
+   "pct": 17.0,
+   "fact": 44,
+   "prod": 1115,
+   "meses": 10
+  },
+  {
+   "p": "Galindo Galindo Elias Alberto",
+   "tipo": "Persona natural",
+   "usd": 3505.0,
+   "pct": 3.2,
+   "fact": 136,
+   "prod": 6,
+   "meses": 7
+  },
+  {
+   "p": "Narvaez Ortiz Laura Leonor",
+   "tipo": "Persona natural",
+   "usd": 3212.0,
+   "pct": 2.9,
+   "fact": 17,
+   "prod": 175,
+   "meses": 8
+  },
+  {
+   "p": "Dibeal Cía. Ltda.",
+   "tipo": "Sociedad u organización",
+   "usd": 3044.0,
+   "pct": 2.8,
+   "fact": 13,
+   "prod": 198,
+   "meses": 8
+  },
+  {
+   "p": "Alpina Productos Alimenticios Alpiecuador S. A.",
+   "tipo": "Sociedad u organización",
+   "usd": 2466.0,
+   "pct": 2.3,
+   "fact": 35,
+   "prod": 128,
+   "meses": 10
+  },
+  {
+   "p": "Arias Arias Andersson Vicente",
+   "tipo": "Persona natural",
+   "usd": 2289.0,
+   "pct": 2.1,
+   "fact": 23,
+   "prod": 2,
+   "meses": 10
+  },
+  {
+   "p": "Sucesores de Jacobo Paredes M.s.a.",
+   "tipo": "Sociedad u organización",
+   "usd": 1662.0,
+   "pct": 1.5,
+   "fact": 4,
+   "prod": 71,
+   "meses": 4
+  },
+  {
+   "p": "Distribuidora Importadora Dipor S. A.",
+   "tipo": "Sociedad u organización",
+   "usd": 1651.0,
+   "pct": 1.5,
+   "fact": 51,
+   "prod": 164,
+   "meses": 10
+  },
+  {
+   "p": "Paucar Tigre Martha Veronica",
+   "tipo": "Persona natural · agroecológico",
+   "usd": 1547.0,
+   "pct": 1.4,
+   "fact": 52,
+   "prod": 43,
+   "meses": 7
+  },
+  {
+   "p": "Procesadora Nacional de Alimentos C. A.",
+   "tipo": "Sociedad u organización",
+   "usd": 1531.0,
+   "pct": 1.4,
+   "fact": 10,
+   "prod": 147,
+   "meses": 5
+  },
+  {
+   "p": "Laura Narvaez E Hijos Lanarv Cía.ltda.",
+   "tipo": "Sociedad u organización",
+   "usd": 1367.0,
+   "pct": 1.2,
+   "fact": 2,
+   "prod": 64,
+   "meses": 1
+  },
+  {
+   "p": "Avila Carrion Paul Estevan",
+   "tipo": "Persona natural",
+   "usd": 1087.0,
+   "pct": 1.0,
+   "fact": 17,
+   "prod": 1,
+   "meses": 10
+  },
+  {
+   "p": "Barros Castro Cristiam Mauricio",
+   "tipo": "Persona natural",
+   "usd": 1002.0,
+   "pct": 0.9,
+   "fact": 7,
+   "prod": 16,
+   "meses": 6
+  },
+  {
+   "p": "Stauros S. A. S.",
+   "tipo": "Sociedad u organización",
+   "usd": 986.0,
+   "pct": 0.9,
+   "fact": 28,
+   "prod": 11,
+   "meses": 9
+  },
+  {
+   "p": "The Tesalia Springs Company S. A.",
+   "tipo": "Sociedad u organización",
+   "usd": 985.0,
+   "pct": 0.9,
+   "fact": 26,
+   "prod": 51,
+   "meses": 10
+  },
+  {
+   "p": "Italimentos Cía. Ltda.",
+   "tipo": "Sociedad u organización",
+   "usd": 931.0,
+   "pct": 0.9,
+   "fact": 44,
+   "prod": 52,
+   "meses": 10
+  },
+  {
+   "p": "Lacteos San Antonio C. A.",
+   "tipo": "Sociedad u organización",
+   "usd": 901.0,
+   "pct": 0.8,
+   "fact": 6,
+   "prod": 26,
+   "meses": 5
+  },
+  {
+   "p": "Ugalde Sanchez Ramiro",
+   "tipo": "Persona natural",
+   "usd": 891.0,
+   "pct": 0.8,
+   "fact": 5,
+   "prod": 12,
+   "meses": 5
+  },
+  {
+   "p": "Campoverde Bernal Manuel Eugenio",
+   "tipo": "Persona natural",
+   "usd": 836.0,
+   "pct": 0.8,
+   "fact": 2,
+   "prod": 90,
+   "meses": 2
+  },
+  {
+   "p": "Figueroa Figueroa Augusto Marcelo",
+   "tipo": "Persona natural",
+   "usd": 768.0,
+   "pct": 0.7,
+   "fact": 29,
+   "prod": 3,
+   "meses": 4
+  }
+ ],
+ "prov_curva": {
+  "n": 145,
+  "top1": 34.0,
+  "top5": 59.9,
+  "top10": 68.7,
+  "top20": 78.3,
+  "hhi": 1504.0,
+  "hhi_sin_acopio": 798.0
+ },
+ "prov_tipo": [
+  {
+   "t": "Centro de acopio (transferencias)",
+   "usd": 37225.0,
+   "pct": 34.0
+  },
+  {
+   "t": "Sociedad u organización",
+   "usd": 42332.0,
+   "pct": 38.7
+  },
+  {
+   "t": "Persona natural",
+   "usd": 29053.0,
+   "pct": 26.5
+  },
+  {
+   "t": "Sin determinar",
+   "usd": 845.0,
+   "pct": 0.8
+  }
+ ],
+ "prov_agro": {
+  "usd": 2922.0,
+  "pct": 2.7,
+  "n": 9,
+  "lista": [
+   {
+    "p": "Paucar Tigre Martha Veronica",
+    "usd": 1547.0,
+    "meses": 7,
+    "prod": 43
+   },
+   {
+    "p": "Asociacion de Productores de Animales Menores Luchando Para El Futuro",
+    "usd": 556.0,
+    "meses": 3,
+    "prod": 5
+   },
+   {
+    "p": "Arbito Sichique Blanca Narcisa de Jesus",
+    "usd": 291.0,
+    "meses": 6,
+    "prod": 10
+   },
+   {
+    "p": "Sivisapa Pinos Karen Viviana",
+    "usd": 154.0,
+    "meses": 3,
+    "prod": 1
+   },
+   {
+    "p": "Vargas Juca Carmen Janneth",
+    "usd": 148.0,
+    "meses": 4,
+    "prod": 1
+   },
+   {
+    "p": "Chicaiza Chapa Mayra Alexandra",
+    "usd": 87.0,
+    "meses": 2,
+    "prod": 6
+   },
+   {
+    "p": "Viscaino Panama Johanna Katherine",
+    "usd": 52.0,
+    "meses": 1,
+    "prod": 1
+   },
+   {
+    "p": "Sucozhañay Lliguisupa Maria Nube",
+    "usd": 49.0,
+    "meses": 2,
+    "prod": 2
+   },
+   {
+    "p": "Peñaloza Alvarracin Egma Beatriz",
+    "usd": 39.0,
+    "meses": 1,
+    "prod": 1
+   }
+  ]
+ },
+ "prov_recurrencia": {
+  "mes": [
+   "2025-12",
+   "2026-01",
+   "2026-02",
+   "2026-03",
+   "2026-04",
+   "2026-05",
+   "2026-06",
+   "2026-07",
+   "2026-08"
+  ],
+  "pct": [
+   41.2,
+   39.3,
+   76.5,
+   62.5,
+   54.3,
+   54.8,
+   52.8,
+   48.6,
+   63.0
+  ],
+  "prom": 56.5,
+  "n_pn": 98
+ },
+ "prov_mes": {
+  "nombres": [
+   "Centro de acopio",
+   "Corporación Favorita C. A.",
+   "Galindo Galindo Elias Alberto",
+   "Narvaez Ortiz Laura Leonor",
+   "Dibeal Cía. Ltda.",
+   "Alpina Productos Alimenticios Alpiecuador S. A."
+  ],
+  "v": [
+   [
+    0.0,
+    8569.0,
+    5733.0,
+    4266.0,
+    2763.0,
+    2501.0,
+    4112.0,
+    3170.0,
+    2370.0,
+    3739.0
+   ],
+   [
+    2552.0,
+    1629.0,
+    1469.0,
+    1574.0,
+    1575.0,
+    1741.0,
+    1976.0,
+    1375.0,
+    2122.0,
+    2550.0
+   ],
+   [
+    0.0,
+    0.0,
+    0.0,
+    270.0,
+    477.0,
+    544.0,
+    497.0,
+    779.0,
+    287.0,
+    650.0
+   ],
+   [
+    2346.0,
+    0.0,
+    262.0,
+    135.0,
+    20.0,
+    226.0,
+    222.0,
+    0.0,
+    -36.0,
+    37.0
+   ],
+   [
+    2395.0,
+    0.0,
+    155.0,
+    0.0,
+    255.0,
+    269.0,
+    101.0,
+    -8.0,
+    -66.0,
+    -56.0
+   ],
+   [
+    307.0,
+    165.0,
+    193.0,
+    232.0,
+    295.0,
+    377.0,
+    306.0,
+    161.0,
+    240.0,
+    190.0
+   ]
+  ],
+  "resto": [
+   10459.0,
+   4133.0,
+   2631.0,
+   3351.0,
+   3466.0,
+   2530.0,
+   4673.0,
+   3809.0,
+   2244.0,
+   4144.0
+  ]
+ },
+ "financiamiento": {
+  "cap": {
+   "cd": 336.7829508196721,
+   "Vm": 11822.118333333332,
+   "rows": [
+    {
+     "lab": "Cuartil 1 del sector",
+     "pmp": 60.6242698087528,
+     "dd": 30.6242698087528,
+     "cap": 10313.731952889564,
+     "meses": 0.8724098052553948
+    },
+    {
+     "lab": "Mediana del sector",
+     "pmp": 73.8006849709752,
+     "dd": 43.8006849709752,
+     "cap": 14751.323932447893,
+     "meses": 1.2477733276324472
+    },
+    {
+     "lab": "Mediana de las compañías locales",
+     "pmp": 91.3706666001603,
+     "dd": 61.370666600160305,
+     "cap": 20668.59419137228,
+     "meses": 1.7482987065943725
+    },
+    {
+     "lab": "Cuartil 3 del sector",
+     "pmp": 91.8365314527041,
+     "dd": 61.836531452704094,
+     "cap": 20825.48953109515,
+     "meses": 1.7615700455624903
+    }
+   ],
+   "ccc": -11.6110027325968,
+   "dinv": 49.1093362007085
+  },
+  "pmp_med": 73.8,
+  "pmp_loc": 91.4,
+  "pmc_med": 11.0,
+  "cce_med": -11.6,
+  "cce_loc": -21.9,
+  "pmp_q1": 60.6,
+  "pmp_q3": 91.8,
+  "dias_inv": 49.1,
+  "compras_pn_pct": 40.2
+ },
+ "kits": [
+  {
+   "fam": "Huevos (unidad → cubetas de 30 y 15)",
+   "u": "u",
+   "ent": 19797.0,
+   "der": 19337.0,
+   "vin": -2030.0,
+   "vder": 1908.0,
+   "neto": -122.0
+  },
+  {
+   "fam": "Nueces 1 kg → fundas de 225, 200 y 100 g",
+   "u": "kg",
+   "ent": 55.7,
+   "der": 52.9,
+   "vin": -422.0,
+   "vder": 458.0,
+   "neto": 36.0
+  },
+  {
+   "fam": "Almendras 1 kg → fundas de 225 y 100 g",
+   "u": "kg",
+   "ent": 33.8,
+   "der": 33.6,
+   "vin": -428.0,
+   "vder": 423.0,
+   "neto": -6.0
+  },
+  {
+   "fam": "Lenteja 1 kg → funda de 500 g",
+   "u": "kg",
+   "ent": 169.5,
+   "der": 146.0,
+   "vin": -170.0,
+   "vder": 193.0,
+   "neto": 23.0
+  },
+  {
+   "fam": "Garbanzo 1 kg → funda de 500 g",
+   "u": "kg",
+   "ent": 65.0,
+   "der": 56.5,
+   "vin": -117.0,
+   "vder": 114.0,
+   "neto": -3.0
+  },
+  {
+   "fam": "Mote 1 kg → funda de 1.000 g",
+   "u": "kg",
+   "ent": 96.0,
+   "der": 79.0,
+   "vin": -147.0,
+   "vder": 198.0,
+   "neto": 51.0
+  },
+  {
+   "fam": "Cigarrillos por unidad → media cajetilla",
+   "u": "u",
+   "ent": 1400.0,
+   "der": 1420.0,
+   "vin": -353.0,
+   "vder": 387.0,
+   "neto": 34.0
+  },
+  {
+   "fam": "Sandía entera → mitades",
+   "u": "u",
+   "ent": 245.0,
+   "der": 70.5,
+   "vin": -178.0,
+   "vder": 149.0,
+   "neto": -29.0
+  },
+  {
+   "fam": "Papaya entera → media papaya",
+   "u": "u",
+   "ent": 369.0,
+   "der": 48.5,
+   "vin": -84.0,
+   "vder": 90.0,
+   "neto": 6.0
+  },
+  {
+   "fam": "Melloco 1 kg → melloco al vacío",
+   "u": "kg",
+   "ent": 136.8,
+   "der": 52.2,
+   "vin": -173.0,
+   "vder": 126.0,
+   "neto": -46.0
+  },
+  {
+   "fam": "Lomo fino 1 kg → lomo fino al vacío",
+   "u": "kg",
+   "ent": 25.5,
+   "der": 12.1,
+   "vin": -177.0,
+   "vder": 199.0,
+   "neto": 22.0
+  },
+  {
+   "fam": "Pechuga de pollo 1 kg → pechuga en plato",
+   "u": "kg",
+   "ent": 51.0,
+   "der": 36.8,
+   "vin": -155.0,
+   "vder": 189.0,
+   "neto": 34.0
+  }
+ ],
+ "granel": {
+  "ventas": 4524.0,
+  "pct": 3.77,
+  "productos": 52,
+  "mgp": 23.2,
+  "mes": [
+   354.0,
+   740.0,
+   654.0,
+   487.0,
+   421.0,
+   309.0,
+   443.0,
+   358.0,
+   389.0,
+   369.0
+  ],
+  "top": [
+   {
+    "p": "Canela en Rama Funda 50g",
+    "v": 379.0,
+    "q": 291.0,
+    "mgp": 24.1
+   },
+   {
+    "p": "Nueces Gs 225g",
+    "v": 351.0,
+    "q": 138.1,
+    "mgp": 24.0
+   },
+   {
+    "p": "Almendras 225g",
+    "v": 321.0,
+    "q": 94.4,
+    "mgp": 17.1
+   },
+   {
+    "p": "Lenteja Seca 500g",
+    "v": 271.0,
+    "q": 292.0,
+    "mgp": 29.0
+   },
+   {
+    "p": "Ciruela Pasas S/p 200g",
+    "v": 227.0,
+    "q": 120.0,
+    "mgp": 23.4
+   },
+   {
+    "p": "Maiz Blanco Pelado-mote Gs 1000g",
+    "v": 226.0,
+    "q": 79.0,
+    "mgp": 12.7
+   },
+   {
+    "p": "Nueces 100g",
+    "v": 225.0,
+    "q": 190.0,
+    "mgp": 25.6
+   },
+   {
+    "p": "Frejol Seco 500g",
+    "v": 204.0,
+    "q": 107.0,
+    "mgp": 16.4
+   },
+   {
+    "p": "Almendras Gs 100g",
+    "v": 194.0,
+    "q": 124.0,
+    "mgp": 19.0
+   },
+   {
+    "p": "Quinua 500g",
+    "v": 185.0,
+    "q": 108.0,
+    "mgp": 24.3
+   },
+   {
+    "p": "Garbanzo 500g",
+    "v": 150.0,
+    "q": 113.0,
+    "mgp": 23.9
+   },
+   {
+    "p": "Frejol Seco Mantequilla 500g",
+    "v": 138.0,
+    "q": 71.0,
+    "mgp": 22.8
+   },
+   {
+    "p": "Clavo de Olor 100g",
+    "v": 130.0,
+    "q": 70.0,
+    "mgp": 22.9
+   },
+   {
+    "p": "Frejol Seco Rojo 500g",
+    "v": 111.0,
+    "q": 66.0,
+    "mgp": 1.8
+   }
+  ],
+  "aj": -392.0,
+  "aj_pct": -8.7,
+  "inv": [
+   96.0,
+   44.0,
+   86.0
+  ],
+  "sin_entrada": {
+   "origen": "Sin entrada registrada",
+   "usd": 12416.0,
+   "pct": 10.4,
+   "n": 368
+  }
+ },
+ "sector": {
+  "emp": [
+   {
+    "c": "Megatienda del Sur",
+    "grp": "Local",
+    "v": 75.3
+   },
+   {
+    "c": "Santa Cecilia",
+    "grp": "Local",
+    "v": 17.9
+   },
+   {
+    "c": "La Despensa",
+    "grp": "Local",
+    "v": 5.5
+   },
+   {
+    "c": "Comisariato Económico",
+    "grp": "Local",
+    "v": 10.7
+   },
+   {
+    "c": "Favorita",
+    "grp": "Nacional",
+    "v": 2648.1
+   },
+   {
+    "c": "El Rosado",
+    "grp": "Nacional",
+    "v": 1633.1
+   },
+   {
+    "c": "Tía",
+    "grp": "Nacional",
+    "v": 786.6
+   },
+   {
+    "c": "Tuti",
+    "grp": "Nacional",
+    "v": 1008.1
+   },
+   {
+    "c": "Santa María",
+    "grp": "Nacional",
+    "v": 206.3
+   }
+  ],
+  "sem": [
+   {
+    "lab": "I1 Margen bruto",
+    "u": "pct",
+    "s": 1,
+    "q1": 0.142455743798825,
+    "me": 0.169547196124758,
+    "q3": 0.247807451258077,
+    "loc": 0.139228045659415,
+    "pd": 0.131130334650967,
+    "st": "Requiere acción"
+   },
+   {
+    "lab": "I2 Gastos operativos sobre ventas",
+    "u": "pct",
+    "s": -1,
+    "q1": 0.111694648181541,
+    "me": 0.135463634554674,
+    "q3": 0.195835096918876,
+    "loc": 0.105313249573057,
+    "pd": 0.321420258721259,
+    "st": "Requiere acción"
+   },
+   {
+    "lab": "I4 Gasto de personal sobre ventas",
+    "u": "pct",
+    "s": -1,
+    "q1": 0.0582384134534749,
+    "me": 0.0666282487172669,
+    "q3": 0.08464249679613,
+    "loc": 0.0586830753822205,
+    "pd": 0.189290385211562,
+    "st": "Requiere acción"
+   },
+   {
+    "lab": "I3 Margen operativo",
+    "u": "pct",
+    "s": 1,
+    "q1": 0.0313613741617881,
+    "me": 0.047107142574533,
+    "q3": 0.0513990965452084,
+    "loc": 0.0392342583681606,
+    "pd": -0.190289924070291,
+    "st": "Requiere acción"
+   },
+   {
+    "lab": "I6 Autosuficiencia operativa",
+    "u": "pctx",
+    "s": 1,
+    "q1": 1.00686267013149,
+    "me": 1.01351617423791,
+    "q3": 1.04444898846583,
+    "loc": 1.02898258135187,
+    "pd": 0.8401314501431889,
+    "st": "Requiere acción"
+   },
+   {
+    "lab": "I13 Rotación de inventario",
+    "u": "x",
+    "s": 1,
+    "q1": 6.38459428592787,
+    "me": 7.91692413172373,
+    "q3": 9.48761164181877,
+    "loc": 9.28526695668833,
+    "pd": 7.43239530887274,
+    "st": "En vigilancia"
+   },
+   {
+    "lab": "I13 Días de inventario",
+    "u": "d",
+    "s": -1,
+    "q1": 38.481254029307,
+    "me": 47.5234246108354,
+    "q3": 57.1695288731244,
+    "loc": 39.309586003565,
+    "pd": 49.1093362007085,
+    "st": "En vigilancia"
+   },
+   {
+    "lab": "I14 Margen sobre inventario (GMROI)",
+    "u": "x",
+    "s": 1,
+    "q1": 1.7735968302792218,
+    "me": 2.0936480604167125,
+    "q3": 2.749942014965188,
+    "loc": 1.3910520337408419,
+    "pd": 1.1214036597997468,
+    "st": "Requiere acción"
+   }
+  ],
+  "prof": [
+   {
+    "lab": "Margen bruto",
+    "u": "%",
+    "s": 1,
+    "m": 100,
+    "vals": {
+     "Megatienda del Sur": 0.130293225126362,
+     "Santa Cecilia": 0.136000347520005,
+     "La Despensa": 0.163093744726749,
+     "Comisariato Económico": 0.142455743798825,
+     "Favorita": 0.247807451258077,
+     "El Rosado": 0.251356009384067,
+     "Tía": 0.329371322392455,
+     "Tuti": 0.169547196124758,
+     "Santa María": 0.218026813629528
+    },
+    "q1": 0.142455743798825,
+    "me": 0.169547196124758,
+    "q3": 0.247807451258077,
+    "loc": 0.139228045659415,
+    "pd": 0.131130334650967
+   },
+   {
+    "lab": "Margen operativo",
+    "u": "%",
+    "s": 1,
+    "m": 100,
+    "vals": {
+     "Megatienda del Sur": 0.0313613741617881,
+     "Santa Cecilia": 0.0210337658255835,
+     "La Despensa": 0.0513990965452084,
+     "Comisariato Económico": 0.047107142574533,
+     "Favorita": 0.087904381063698,
+     "El Rosado": 0.0510264435914646,
+     "Tía": 0.0526195842978136,
+     "Tuti": 0.0340835615700836,
+     "Santa María": 0.0221917167106521
+    },
+    "q1": 0.0313613741617881,
+    "me": 0.047107142574533,
+    "q3": 0.0513990965452084,
+    "loc": 0.0392342583681606,
+    "pd": -0.190289924070291
+   },
+   {
+    "lab": "Cobertura de costos",
+    "u": "%",
+    "s": 1,
+    "m": 100,
+    "vals": {
+     "Megatienda del Sur": 1.01351617423791,
+     "Santa Cecilia": 1.00531329403895,
+     "La Despensa": 1.05355647627926,
+     "Comisariato Económico": 1.04444898846583,
+     "Favorita": 1.08465967442025,
+     "El Rosado": 1.00954859361272,
+     "Tía": 1.01542789721177,
+     "Tuti": 1.00658185967123,
+     "Santa María": 1.00686267013149
+    },
+    "q1": 1.00686267013149,
+    "me": 1.01351617423791,
+    "q3": 1.04444898846583,
+    "loc": 1.02898258135187,
+    "pd": 0.8401314501431889
+   },
+   {
+    "lab": "Gasto de administración y ventas",
+    "u": "%",
+    "s": -1,
+    "m": 100,
+    "vals": {
+     "Megatienda del Sur": 0.0989318509645742,
+     "Santa Cecilia": 0.114966581694421,
+     "La Despensa": 0.111694648181541,
+     "Comisariato Económico": 0.0953486012242924,
+     "Favorita": 0.159903070194379,
+     "El Rosado": 0.200329565792603,
+     "Tía": 0.276751738094642,
+     "Tuti": 0.135463634554674,
+     "Santa María": 0.195835096918876
+    },
+    "q1": 0.111694648181541,
+    "me": 0.135463634554674,
+    "q3": 0.195835096918876,
+    "loc": 0.105313249573057,
+    "pd": 0.321420258721259
+   },
+   {
+    "lab": "Gasto de personal",
+    "u": "%",
+    "s": -1,
+    "m": 100,
+    "vals": {
+     "Megatienda del Sur": 0.0446870021063441,
+     "Santa Cecilia": 0.0586830753822205,
+     "La Despensa": 0.06423892655659,
+     "Favorita": 0.0690175708779439,
+     "El Rosado": 0.0867589975269375,
+     "Tía": 0.108122398850277,
+     "Tuti": 0.0569044276672383,
+     "Santa María": 0.0839369965525275
+    },
+    "q1": 0.0582384134534749,
+    "me": 0.0666282487172669,
+    "q3": 0.08464249679613,
+    "loc": 0.0586830753822205,
+    "pd": 0.189290385211562
+   },
+   {
+    "lab": "Gasto de ocupación",
+    "u": "%",
+    "s": -1,
+    "m": 100,
+    "vals": {
+     "Megatienda del Sur": 0.0134144998657745,
+     "Santa Cecilia": 0.0109580610441933,
+     "La Despensa": 0.0117348976418501,
+     "Favorita": 0.0201027711892508,
+     "El Rosado": 0.0472681652242053,
+     "Tía": 0.029758770040895,
+     "Tuti": 0.0177292151374487,
+     "Santa María": 0.0577949559748897
+    },
+    "q1": 0.0129945993097934,
+    "me": 0.0189159931633498,
+    "q3": 0.0341361188367226,
+    "loc": 0.0117348976418501,
+    "pd": 0.111178890528784
+   },
+   {
+    "lab": "Rotación de inventario",
+    "u": "veces",
+    "s": 1,
+    "m": 1,
+    "vals": {
+     "Megatienda del Sur": 9.28526695668833,
+     "Santa Cecilia": 6.34694560031665,
+     "La Despensa": 9.75544665211355,
+     "Favorita": 6.39714384779827,
+     "El Rosado": 6.19445233155931,
+     "Tía": 6.54858130675912,
+     "Tuti": 15.3727881469362,
+     "Santa María": 9.39833330505384
+    },
+    "q1": 6.38459428592787,
+    "me": 7.91692413172373,
+    "q3": 9.48761164181877,
+    "loc": 9.28526695668833,
+    "pd": 7.43239530887274
+   },
+   {
+    "lab": "Rotación del activo",
+    "u": "veces",
+    "s": 1,
+    "m": 1,
+    "vals": {
+     "Megatienda del Sur": 2.59465384869133,
+     "Santa Cecilia": 1.96367542023203,
+     "La Despensa": 5.12778396396932,
+     "Favorita": 0.949660292842752,
+     "El Rosado": 1.42885734232011,
+     "Tía": 1.12908636971272,
+     "Tuti": 2.68629611665719,
+     "Santa María": 1.98066454820942
+    },
+    "q1": 1.35391459916826,
+    "me": 1.97216998422072,
+    "q3": 2.61756441568279,
+    "loc": 2.59465384869133,
+    "pd": 0.9493316120301
+   },
+   {
+    "lab": "Rentabilidad del activo",
+    "u": "%",
+    "s": 1,
+    "m": 100,
+    "vals": {
+     "Megatienda del Sur": 0.0369614199432524,
+     "Santa Cecilia": 0.00597031105254461,
+     "La Despensa": 0.169661476179166,
+     "Favorita": 0.0587694568668938,
+     "El Rosado": 0.0226315741992792,
+     "Tía": 0.0124735479715365,
+     "Tuti": 0.017565416127521,
+     "Santa María": 0.0178986072886917
+    },
+    "q1": 0.0162924490885249,
+    "me": 0.0202650907439855,
+    "q3": 0.0424134291741628,
+    "loc": 0.0369614199432524,
+    "pd": -0.18030294472941
+   }
+  ],
+  "ref": [
+   {
+    "k": "pmc",
+    "lab": "Período medio de cobro (días)",
+    "q1": 2.4,
+    "me": 11.0,
+    "q3": 16.7,
+    "loc": 12.0
+   },
+   {
+    "k": "pmp",
+    "lab": "Período medio de pago (días)",
+    "q1": 60.6,
+    "me": 73.8,
+    "q3": 91.8,
+    "loc": 91.4
+   },
+   {
+    "k": "cce",
+    "lab": "Ciclo de conversión del efectivo (días)",
+    "q1": -26.1,
+    "me": -11.6,
+    "q3": 6.8,
+    "loc": -21.9
+   },
+   {
+    "k": "rc",
+    "lab": "Razón corriente (veces)",
+    "q1": 0.84,
+    "me": 1.08,
+    "q3": 1.47,
+    "loc": 0.91
+   },
+   {
+    "k": "crec",
+    "lab": "Crecimiento de ventas 2025 (%)",
+    "q1": 3.6,
+    "me": 5.0,
+    "q3": 12.1,
+    "loc": 5.0
+   }
+  ],
+  "casc": {
+   "ref": 0.03391479608635799,
+   "steps": [
+    [
+     "Margen bruto",
+     -0.008097711008447972
+    ],
+    [
+     "Gasto de personal",
+     -0.1306073098293413
+    ],
+    [
+     "Gasto de ocupación",
+     -0.09944399288693417
+    ],
+    [
+     "Otros gastos",
+     0.013944293568073956
+    ]
+   ],
+   "pd": -0.19028992407029152,
+   "mb_r": 0.139228045659415,
+   "pe_r": 0.0586830753822205,
+   "oc_r": 0.0117348976418501,
+   "ot_r": 0.0348952765489864,
+   "ad_r": 0.105313249573057,
+   "mb_p": 0.13113033465096702,
+   "pe_p": 0.1892903852115618,
+   "oc_p": 0.11117889052878427,
+   "ot_p": 0.020950982980912445,
+   "Vanual": 141865.41999999998,
+   "mo_obs": 0.0392342583681606
+  },
+  "vesp": {
+   "act": 149437.16,
+   "pd_rot": 0.9493316120301,
+   "Vanual": 141865.41999999998,
+   "Vm": 11822.118333333332,
+   "PE": 31424.903049516688,
+   "rows": [
+    {
+     "lab": "Cuartil 1 del sector",
+     "rot": 1.35391459916826,
+     "va": 202325.15258224314,
+     "vm": 16860.429381853595,
+     "x": 1.4261766721040487,
+     "xpe": 0.5365308321011004
+    },
+    {
+     "lab": "Mediana del sector",
+     "rot": 1.97216998422072,
+     "va": 294715.48147918924,
+     "vm": 24559.623456599104,
+     "x": 2.0774300141584137,
+     "xpe": 0.7815337860517864
+    },
+    {
+     "lab": "Mediana de las compañías locales",
+     "rot": 2.59465384869133,
+     "va": 387737.7023315021,
+     "vm": 32311.47519429184,
+     "x": 2.733137520979405,
+     "xpe": 1.0282124066819927
+    },
+    {
+     "lab": "Cuartil 3 del sector",
+     "rot": 2.61756441568279,
+     "va": 391161.3923966956,
+     "vm": 32596.782699724634,
+     "x": 2.757270886708654,
+     "xpe": 1.0372914324782927
+    }
+   ]
+  },
+  "esc": [
+   [
+    "Situación actual",
+    {
+     "I1": 0.13113033465096702,
+     "I2": 0.3214202587212585,
+     "I3": -0.1902899240702915,
+     "I6": 0.8401314501431887,
+     "res": -2249.6300000000006,
+     "pe": 31424.903049516684,
+     "x": 2.6581448572471027
+    }
+   ],
+   [
+    "Margen bruto del cuartil 1",
+    {
+     "I1": 0.142455743798825,
+     "I2": 0.3214202587212585,
+     "I3": -0.1789645149224335,
+     "I6": 0.848201949543657,
+     "res": -2115.739672880608,
+     "pe": 28602.230627483943,
+     "x": 2.4193828737814145
+    }
+   ],
+   [
+    "Margen bruto del sector (mediana)",
+    {
+     "I1": 0.169547196124758,
+     "I2": 0.3214202587212585,
+     "I3": -0.15187306259650052,
+     "I6": 0.8681512160253534,
+     "res": -1795.4613176615694,
+     "pe": 23543.55376694876,
+     "x": 1.9914835144701588
+    }
+   ],
+   [
+    "Margen bruto del cuartil 3",
+    {
+     "I1": 0.247807451258077,
+     "I2": 0.3214202587212585,
+     "I3": -0.07361280746318152,
+     "I6": 0.9314344920706379,
+     "res": -870.259320678615,
+     "pe": 15582.347315746125,
+     "x": 1.318067276641154
+    }
+   ],
+   [
+    "Gasto sobre ventas del cuartil 3",
+    {
+     "I1": 0.13113033465096702,
+     "I2": 0.195835096918876,
+     "I3": -0.06470476226790897,
+     "I6": 0.9392275074170962,
+     "res": -764.9473562614215,
+     "pe": 18487.702604527374,
+     "x": 1.5638231730771919
+    }
+   ],
+   [
+    "Gasto sobre ventas del sector (mediana)",
+    {
+     "I1": 0.13113033465096702,
+     "I2": 0.135463634554674,
+     "I3": -0.004333299903706983,
+     "I6": 0.9956853965669341,
+     "res": -51.228784235445886,
+     "pe": 12268.514775699077,
+     "x": 1.0377594293830656
+    }
+   ],
+   [
+    "Gasto sobre ventas del cuartil 1",
+    {
+     "I1": 0.13113033465096702,
+     "I2": 0.111694648181541,
+     "I3": 0.01943568646942602,
+     "I6": 1.019820919649265,
+     "res": 229.77098533111993,
+     "pe": 9819.944127143306,
+     "x": 0.8306416709986104
+    }
+   ],
+   [
+    "Estructura desfavorable (margen Q1, gasto Q3)",
+    {
+     "I1": 0.142455743798825,
+     "I2": 0.195835096918876,
+     "I3": -0.05337935312005099,
+     "I6": 0.9493256128839583,
+     "res": -631.0570291420286,
+     "pe": 16827.08560258105,
+     "x": 1.4233562148617516
+    }
+   ],
+   [
+    "Estructura mediana del sector",
+    {
+     "I1": 0.169547196124758,
+     "I2": 0.135463634554674,
+     "I3": 0.03408356157008399,
+     "I6": 1.0352862423849896,
+     "res": 402.93989810298535,
+     "pe": 9191.577673513904,
+     "x": 0.7774899061530771
+    }
+   ],
+   [
+    "Estructura favorable (margen Q3, gasto Q1)",
+    {
+     "I1": 0.247807451258077,
+     "I2": 0.111694648181541,
+     "I3": 0.136112803076536,
+     "I6": 1.1575585372271642,
+     "res": 1609.1416646525058,
+     "pe": 4869.315897944253,
+     "x": 0.4118818439005858
+    }
+   ],
+   [
+    "Estructura mediana de las compañías locales",
+    {
+     "I1": 0.139228045659415,
+     "I2": 0.105313249573057,
+     "I3": 0.03391479608635799,
+     "I6": 1.0351053881675945,
+     "res": 400.9447325837943,
+     "pe": 8558.649336075838,
+     "x": 0.723952264286181
+    }
+   ]
+  ],
+  "pe": 31424.9
+ },
+ "margen_prod": {
+  "r6": 19.5,
+  "basicos": 19.8,
+  "no_basicos": 18.5,
+  "nb_aporte": 26.6,
+  "nb_venta": 28.0
+ }
 }
