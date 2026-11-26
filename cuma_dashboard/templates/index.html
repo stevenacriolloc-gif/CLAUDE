@@ -70,6 +70,22 @@
   --lens:#F2F2EA; --lens-shadow:inset 0 0 0 1px #1A1A16;
   --chrome-bg:#FAFAF5; --pop-bg:#FAFAF5; --pop-solid:#FAFAF5; --card-bg:#FAFAF5; --sheen:transparent;
   color-scheme:light}
+/* Oliva Noche: la misma familia oliva sobre fondo casi negro; el semáforo tampoco usa rojo */
+:root[data-theme="oliva-noche"]{
+  --bg:#13140E; --surface:#1C1E15; --surface2:color-mix(in srgb,#EEF0E2 6%,#1C1E15); --ink:#C6C8B5; --ink-strong:#EEF0E2;
+  --muted:#9A9C89; --line:#3A3D2D; --line-soft:color-mix(in srgb,#3A3D2D 55%,transparent); --accent:#BCCB72; --accent-soft:#262A17; --neg:#C99A6E;
+  --chart:#A5BA4C; --chart-2:#3A3D2D; --chart-3:#E6E3CF;
+  --ok:#9DBA48; --warn:#D9B443; --bad:#BF8E62; --na:#8C8E7D;
+  --ok-halo:color-mix(in srgb,#9DBA48 22%,transparent); --warn-halo:color-mix(in srgb,#D9B443 26%,transparent); --bad-halo:color-mix(in srgb,#BF8E62 22%,transparent); --na-halo:color-mix(in srgb,#8C8E7D 20%,transparent);
+  --dedge:#3A3D2D; --dglass:#1C1E15; --dscrim:color-mix(in srgb,#13140E 30%,transparent);
+  --glass-flat:color-mix(in srgb,#EEF0E2 6%,transparent); --glass-hi:transparent; --glass-shadow:color-mix(in srgb,#000 40%,transparent);
+  --gold:#BCCB72; --c1:#C3D07E; --c2:#93A63E; --c3:#5F6E26; --c4:#A3A594; --c5:#3E481C; --c6:#56584B;
+  --blob-a:transparent; --blob-b:transparent; --blob-c:transparent; --blob-d:transparent;
+  --brand:#EEF0E2; --logo-letra:#A5BA4C; --logo-hoja:#C3D07E; --band:#BCCB72; --on-band:#13140E;
+  --rim-line:transparent; --rim-hi:transparent; --rim-mid:transparent; --rim-lo:transparent; --ripple:color-mix(in srgb,#EEF0E2 14%,transparent);
+  --lens:#13140E; --lens-shadow:inset 0 0 0 1px #EEF0E2;
+  --chrome-bg:#1C1E15; --pop-bg:#1C1E15; --pop-solid:#1C1E15; --card-bg:#1C1E15; --sheen:transparent;
+  color-scheme:dark}
 :root[data-theme="lavender-press"]{
   --bg:#E8E6EF; --surface:#F4F3F8; --surface2:color-mix(in srgb,#121116 6%,#F4F3F8); --ink:#4A4752; --ink-strong:#121116;
   --muted:#625F6B; --line:#B8B4C4; --line-soft:color-mix(in srgb,#B8B4C4 55%,transparent); --accent:#5A3BE6; --accent-soft:#E4DFFC; --neg:#B5321A;
@@ -200,7 +216,7 @@ button{font:inherit;color:inherit}
 .tbtn:hover .tip,.tbtn:focus-visible .tip{opacity:1;transform:translate(-50%,0)}
 .tbtn[aria-expanded="true"] .tip{opacity:0}
 .top .ico--sun{display:none}
-:root[data-theme="night-edition"] .top .ico--sun{display:block}:root[data-theme="night-edition"] .top .ico--moon{display:none}
+:root[data-theme="night-edition"] .top .ico--sun,:root[data-theme="oliva-noche"] .top .ico--sun{display:block}:root[data-theme="night-edition"] .top .ico--moon,:root[data-theme="oliva-noche"] .top .ico--moon{display:none}
 .keys{display:grid;grid-template-columns:auto 1fr;gap:8px 12px;padding:4px 12px 10px;font-size:12.5px;color:var(--muted)}
 .keys kbd{font:600 11px var(--font);border:1px solid var(--line);border-radius:7px;padding:2px 7px;color:var(--ink);justify-self:start}
 .top>*{pointer-events:auto}
@@ -256,7 +272,7 @@ button{font:inherit;color:inherit}
 .gb{position:relative;display:flex;flex-wrap:nowrap;justify-content:center;gap:3px;padding:4px;isolation:isolate;max-width:100%;overflow-x:auto;scrollbar-width:none}
 .gb::-webkit-scrollbar{display:none}
 .gb button{appearance:none;margin:0;position:relative;z-index:1;cursor:pointer;background:transparent;border:0;border-radius:4px;padding:8px 16px;font-size:12.5px;font-weight:600;color:var(--ink);white-space:nowrap;transition:color .45s var(--spring),background-color .2s}
-:root[data-theme="night-edition"] .gb button{color:var(--ink)}
+:root[data-theme="night-edition"] .gb button,:root[data-theme="oliva-noche"] .gb button{color:var(--ink)}
 .gb button:hover,.gb button[aria-pressed="true"]{color:var(--ink-strong)}
 .gb button:not([aria-pressed="true"]):hover{background:var(--glass-flat)}
 /* lente: los bordes izquierdo y derecho viajan a ritmos distintos y al llegar rebota como gelatina */
@@ -731,6 +747,8 @@ tr.done td.w{color:var(--muted);text-decoration:line-through}
 /* ---------- piezas nuevas: franjas del sector, pares, cascada, kits, financiamiento ---------- */
 :root[data-theme="oliva"]{--sem-ok:#6E8B23;--sem-warn:#C29A22;--sem-bad:#5C3D22;--sem-na:#ABABA2}
 :root[data-theme="oliva"] .trk{height:8px;border-radius:4px}:root[data-theme="oliva"] .trk i{border-radius:4px}
+:root[data-theme="oliva-noche"]{--sem-ok:#9DBA48;--sem-warn:#D9B443;--sem-bad:#BF8E62;--sem-na:#6F7163}
+:root[data-theme="oliva-noche"] .trk{height:8px;border-radius:4px}:root[data-theme="oliva-noche"] .trk i{border-radius:4px}
 .strip{display:block;width:100%;height:auto;overflow:visible}
 .strip .s-trk{stroke:color-mix(in srgb,var(--ink) 9%,transparent);stroke-width:9;stroke-linecap:round}
 .strip .s-iqr{fill:var(--accent-soft)}
@@ -789,7 +807,7 @@ tr.done td.w{color:var(--muted);text-decoration:line-through}
 .tipbox.on{opacity:1;transform:none}
 .fg .chart canvas{display:block}
 .fimg{display:block;width:100%;height:auto;border-radius:3px;mix-blend-mode:multiply}
-:root[data-theme="night-edition"] .fimg{mix-blend-mode:normal;background:#fff;padding:6px}
+:root[data-theme="night-edition"] .fimg,:root[data-theme="oliva-noche"] .fimg{mix-blend-mode:normal;background:#fff;padding:6px}
 .f3{display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:18px;align-items:center}
 .f3b{display:flex;flex-direction:column;gap:4px;padding-left:16px;border-left:1px solid var(--line)}
 .f3b b{font-size:32px;font-weight:300;letter-spacing:-.03em;line-height:1;color:var(--accent)}
@@ -3035,6 +3053,7 @@ addEventListener('resize', () => { closePop(true); document.querySelectorAll('.g
 
 const TEMAS = [
   {id: 'oliva', n: 'Oliva', d: 'Verde oliva amarillento y grises del informe', sw: ['#F2F2EA', '#3B4718', '#7A8B2E', '#ABABA2']},
+  {id: 'oliva-noche', n: 'Oliva Noche', d: 'Versión oscura del oliva: fondo casi negro y verdes claros', sw: ['#13140E', '#BCCB72', '#93A63E', '#8C8E7D']},
   {id: 'forest-ochre', n: 'Forest & Ochre', d: 'Guía de campo: verdes, ocre y óxido sobre papel avena', sw: ['#EAE6D6', '#24432E', '#2C5E3B', '#B84A24']},
   {id: 'lavender-press', n: 'Lavender Press', d: 'Lavanda y violeta con acentos bermellón', sw: ['#E8E6EF', '#6C50F6', '#7C63FF', '#E2492C']},
   {id: 'newsprint', n: 'Newsprint', d: 'Papel de periódico, tinta negra y azul de imprenta', sw: ['#F0EADB', '#1A1714', '#2C4F8C', '#B23A1E']},
