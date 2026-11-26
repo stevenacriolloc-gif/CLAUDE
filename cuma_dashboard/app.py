@@ -15,7 +15,7 @@ import os
 import re
 import threading
 
-from flask import Flask, Response, abort, jsonify, request
+from flask import Flask, Response, abort, jsonify, request, send_file
 
 from cuma import calculo
 
@@ -23,6 +23,7 @@ BASE = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.environ.get("DATA_DIR", os.path.join(BASE, "datos"))
 SNAPSHOT = os.path.join(BASE, "datos_publicados", "indicadores.json")
 PLANTILLA = os.path.join(BASE, "templates", "index.html")
+VENTAS_HORA = os.path.join(BASE, "datos_publicados", "ventas_hora.json")   # venta por día, hora y producto: se pide aparte
 INICIO, FIN = '<script type="application/json" id="cuma-data">', "</script>"
 # Lo que se recalcula desde los Excel; el resto (inventario, horas, supuestos del informe) viene de la instantánea.
 RECALCULADAS = ("actualizado", "meses", "mensual", "pareto")
@@ -94,6 +95,12 @@ def tablero():
 @app.get("/api/indicadores")
 def api():
     return jsonify(datos())
+
+
+@app.get("/api/ventas-hora")
+def ventas_hora():
+    """Venta por día de la semana, hora y producto. Va aparte para no cargar la página de inicio; pide la misma clave que el tablero."""
+    return send_file(VENTAS_HORA, mimetype="application/json", conditional=True, max_age=0)
 
 
 @app.get("/salud")

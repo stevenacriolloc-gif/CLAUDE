@@ -1103,6 +1103,55 @@ tr.done td.w{color:var(--muted);text-decoration:line-through}
 /* menú de indicadores: buscar, con la lupa a la izquierda y el atajo a la derecha */
 .menu__item .mi-ico{width:18px;height:18px;flex:none}
 .menu__item kbd{font:600 11px var(--font);border:1px solid var(--line);border-radius:7px;padding:1px 7px;color:var(--ink)}
+/* ventas, clientes y productos: gráficas enlazadas */
+.vx-f{position:sticky;top:0;z-index:6;display:flex;flex-wrap:wrap;align-items:center;gap:6px;min-height:46px;padding:7px 10px;border:1px solid var(--line);border-radius:4px;background:color-mix(in srgb,var(--card-bg) 86%,transparent);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4)}
+.vx-fl{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-right:4px}
+.vx-ch{display:inline-flex;align-items:center;gap:6px;padding:5px 8px 5px 12px;border-radius:999px;background:var(--accent);color:var(--bg);font-size:12.5px;font-weight:600;transition:transform .3s var(--spring),opacity .2s;animation:vxIn .38s var(--expo) both}
+.vx-ch svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;opacity:.8}
+.vx-ch:hover{transform:scale(1.03)}.vx-ch:active{transform:scale(.97)}
+.vx-cl{padding:5px 10px;border-radius:999px;font-size:12.5px;font-weight:500;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+.vx-cl:hover{background:var(--glass-flat)}
+.vx-av{font-size:12px;color:var(--muted)}
+@keyframes vxIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:none}}
+.vx-g1{grid-template-columns:minmax(0,1.6fr) minmax(0,1fr)}
+@container (max-width:820px){.vx-g1{grid-template-columns:minmax(0,1fr)}}
+/* mapa enlazado: encabezados y celdas son botones */
+.hm button.hh,.hm button.rl{cursor:pointer;border-radius:4px;transition:background .2s,color .2s}
+.hm button.rl{text-align:left;padding:2px 0}
+.hm button.hh:hover,.hm button.rl:hover{color:var(--ink-strong);background:var(--glass-flat)}
+.hm button.hh.on,.hm button.rl.on{color:var(--bg);background:var(--ink-strong)}
+.hm button.rl.on{padding-left:4px}
+.hm.vxh .c{transition:transform .35s var(--spring),box-shadow .3s,background-color .45s var(--ease),opacity .35s var(--ease),color .3s}
+.hm .c.dim{opacity:.3}
+.hm .c.sel{box-shadow:0 0 0 2px var(--surface),0 0 0 3.5px var(--ink-strong);z-index:1}
+.hm .c:focus-visible{outline:2px solid var(--ink-strong);outline-offset:1px}
+.hm.vxm .c{cursor:pointer;transition:opacity .3s var(--ease)}
+.hm.vxm button.rl{font-size:10.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* listas que se pueden tocar: productos y categorías */
+.vx-l{display:flex;flex-direction:column;gap:2px}
+.vx-r{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:10px;row-gap:5px;align-items:center;width:100%;padding:7px 8px;border-radius:4px;text-align:left;transition:background .2s,opacity .3s var(--ease)}
+.vx-r:hover{background:var(--glass-flat)}
+.vx-r.on{background:color-mix(in srgb,var(--accent) 12%,transparent)}
+.vx-r.dim{opacity:.5}
+.vx-r .trk{grid-column:1/-1}
+.vx-n{display:flex;flex-direction:column;min-width:0}
+.vx-n b{font-size:12.5px;font-weight:500;color:var(--ink-strong);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vx-n small{font-size:10.5px;color:var(--muted)}
+.vx-v{display:flex;flex-direction:column;align-items:flex-end;font-family:var(--mono);font-size:11.5px;font-weight:600;color:var(--ink-strong);white-space:nowrap}
+.vx-v small{font-family:var(--font);font-size:10.5px;font-weight:400;color:var(--muted)}
+.vx-nota{margin:8px 8px 0;font-size:11.5px;color:var(--muted)}
+/* en pantallas angostas la página entera se desplaza: la barra de filtros queda bajo la barra superior */
+@media (max-width:980px){.vx-f{top:calc(var(--toph,64px) + var(--dkh,0px))}}
+.hm .tt i.u{font-style:normal}
+@media (max-width:640px){.hm .tt i.u{display:none}}
+.vx-r{padding:6px 8px}
+.vx-r.vx-rc{grid-template-columns:minmax(0,8.5em) minmax(0,1fr) 4.8em 3.8em;padding:6px 8px}
+.vx-rc .trk{grid-column:auto}
+.vx-u{font-family:var(--mono);font-size:11.5px;font-weight:600;color:var(--ink-strong);text-align:right;white-space:nowrap}
+.vx-pc{font-size:11px;color:var(--muted);text-align:right;white-space:nowrap}
+.hm button.hh{min-height:24px}
+.hm.vxm button.rl{min-height:24px}
+.vx-r.on .vx-pc,.vx-r.on small{color:var(--ink)}
 </style>
 <style id="base">
 /* base del navegador: preflight de Tailwind CSS 3.4.16 (licencia MIT), en el mismo orden en que lo aplicaba el CDN */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}
@@ -1638,7 +1687,7 @@ function renderBento(anim = true) {
   }
   grid.innerHTML = html;
   layoutGrid();
-  grid.querySelectorAll('.tile').forEach(b => b.onclick = () => b.dataset.id === 'more' ? toggleTodos() : b.dataset.id === 'hm' ? openDatos(TARJETAS.findIndex(t => t.b === cardHoras)) : pick(S.sel === b.dataset.id ? null : b.dataset.id));
+  grid.querySelectorAll('.tile').forEach(b => b.onclick = () => b.dataset.id === 'more' ? toggleTodos() : b.dataset.id === 'hm' ? openDatos(TARJETAS.findIndex(t => t.b === cardVentas)) : pick(S.sel === b.dataset.id ? null : b.dataset.id));
   if (foco) grid.querySelectorAll('.tile.chip').forEach(b => b.onclick = () => pick(b.dataset.id === S.sel ? null : b.dataset.id));
   if (solo) grid.querySelectorAll('.tile[data-id]').forEach(b => b.onpointerenter = e => {
     if (e.pointerType !== 'mouse') return;
@@ -1994,7 +2043,7 @@ const K = () => ({ol: css('--c1'), li: css('--c2'), lb: css('--c3'), al: css('--
 const kUSD = v => nf(v / 1000, Math.abs(v) < 100000 ? 1 : 0);
 const WL = (n = 13) => innerWidth < 700 ? Math.min(n, 9) : n;   // ancho de las etiquetas partidas en líneas
 // la leyenda muestra el color pleno aunque el primer mes de la serie esté atenuado
-const unDim = c => typeof c === 'string' && /^#[0-9a-f]{6}(59|66)$/i.test(c) ? c.slice(0, 7) : c;
+const unDim = c => typeof c === 'string' && /^#[0-9a-f]{6}(59|66|22|d9)$/i.test(c) ? c.slice(0, 7) : c;
 const legLbl = ch => Chart.defaults.plugins.legend.labels.generateLabels(ch).map(it => ({...it, fillStyle: unDim(it.fillStyle), strokeStyle: unDim(it.strokeStyle)}));
 // opciones comunes: leyenda abajo con puntos, ayuda con formato, ejes sin bordes
 function opt(o = {}) {
@@ -3033,10 +3082,7 @@ const TARJETAS = [
   {g: 'res', t: 'Margen y costo', f: '3', s: () => pct(rP_().mb), b: cardMargen},
   {g: 'res', t: 'Sostenibilidad', f: '5', s: () => pct(rP_().oss), b: cardSostenibilidad},
   {g: 'res', t: 'Gasto operativo', f: '6', s: () => pct(rP_().pgo), b: cardGastos},
-  {g: 'ven', t: 'Ventas por hora', f: '8', s: () => { const h = selHoras(); if (!h) return '—'; const pk = picoMapa(h.mapa.v); return DIAS[pk[0]] + ' ' + h.mapa.horas[pk[1]] + ':00'; }, b: cardHoras},
-  {g: 'ven', t: 'Clientes y ticket', f: '6', s: () => usd(rP_().ticket, 2), b: cardClientes},
-  {g: 'ven', t: 'Productos', f: '7', s: () => nf(selProd().nP), b: cardProductos},
-  {g: 'ven', t: 'Productos por hora', s: () => { const H = selFranjas(); return H && H[1].p.length ? H[1].p[0].p : '—'; }, b: cardProdHora},
+  {g: 'ven', t: 'Ventas, clientes y productos', f: '6, 7 y 8', al: ['ventas-por-hora', 'clientes-y-ticket', 'productos', 'productos-por-hora'], s: () => { const h = selHoras(); if (!h) return usd(rP_().ticket, 2); const pk = picoMapa(h.mapa.v); return DIAS[pk[0]] + ' ' + h.mapa.horas[pk[1]] + ':00'; }, b: cardVentas},
   {g: 'inv', t: 'Entradas y cuadre', f: '9', s: () => usd(sumI(D.fig.f9.cn) + sumI(D.fig.f9.tcor)), b: cardEntradas},
   {g: 'inv', t: 'Origen de la mercadería', f: '10', s: () => pct(selOrigen()[3].pct) + ' sin entrada', b: cardOrigen},
   {g: 'inv', t: 'Rotación', s: () => nf(D.inventario.dias) + ' días', b: cardRotacion},
@@ -3132,49 +3178,405 @@ function cardGastos(db) {
     + FIG(0, 'Gasto por rubro · ' + selL(), dt({cols: [{k: 'n', l: 'Rubro', b: true}, {k: 'v', l: 'USD', t: 'usd', bar: true}, {k: 'pg', l: '% del gasto', t: 'pct', heat: 1}, {k: 'pv', l: '% de las ventas', t: 'pct', d: 2}, {k: 'pm', l: 'Al mes', t: 'usd'}, {k: 'sp', l: 'Por mes', t: 'spark'}],
       rows, search: false, foot: {v: 'sum', pg: 'sum', pv: 'sum', pm: 'sum'}, name: 'gasto_rubros'}));
 }
-function cardHoras(db) {
-  const h = selHoras();
-  if (!h) { db.innerHTML = sinHoras(); return; }
-  const w = h.semana, pk = picoMapa(h.mapa.v);
-  db.innerHTML = kp([['Hora pico', `${DIAS[pk[0]]} ${h.mapa.horas[pk[1]]}:00`, usd(h.mapa.v[pk[0]][pk[1]]) + ' promedio'], ['Fin de semana', usd(w.fin_dia), 'al día · ' + pct(w.fin_pv) + ' de la venta'], ['Entre semana', usd(w.sem_dia), 'al día'], ['Ticket fin de semana', usd(w.fin_tk, 2), 'entre semana ' + usd(w.sem_tk, 2) + ' · con IVA']])
-    + FG.f8a()
-    + grid2(FG.f8b(230), FIG(0, 'Ventas por franja horaria', dt({cols: [{k: 'f', l: 'Franja', b: true}, {k: 'usd', l: 'Ventas', t: 'usd', bar: true}, {k: 'pv', l: '% ventas', t: 'pct', heat: 1}, {k: 'pt', l: '% trans.', t: 'pct'}, {k: 'tk', l: 'Ticket', t: 'usd', d: 2}],
-      rows: h.franjas, search: false, foot: {usd: 'sum'}, name: 'franjas'}), {i: horasNota(h)}));
-  PEND.push(() => { if (!$('hm')) return; drawHeat(S.hm || 'v'); menu($('hm-mode'), [['v', 'Ventas'], ['t', 'Transacciones']], S.hm || 'v', v => { S.hm = v; drawHeat(v); }); });
+/* ---------- ventas, clientes y productos: gráficas enlazadas ---------- */
+// Al tocar una celda del mapa, un día, una hora, una franja, una categoría o un producto, el resto de gráficas se filtra con esa selección.
+// Cada gráfica ignora su propio filtro: el mapa sigue mostrando todas las celdas y resalta la elegida. Sin filtros, todo usa las cifras del periodo.
+// El detalle por día, hora y producto (órdenes unidas con sus facturas, sin IVA) se pide aparte, la primera vez que se abre este análisis.
+let VH = null, VHP = null, VXR = null;
+const VXC = {};
+function cargaVH() {
+  if (VH) return Promise.resolve(VH);
+  return VHP || (VHP = fetch('api/ventas-hora', {credentials: 'same-origin'}).then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); }).then(prepVH).catch(e => { VHP = null; throw e; }));
 }
-function cardClientes(db) {
-  const ii = SI(), r = calc(ii), need = r.pe ? r.pe / r.ticket : null;
-  const rows = mesRows(i => ({n: M.transacciones[i], tk: calc([i]).ticket, v: M.ventas[i], g: growth(i), dia: M.transacciones[i] / DIAS_MES[i]}));
-  db.innerHTML = kp([['Transacciones', nf(r.trans), 'al mes'], ['Ticket promedio', usd(r.ticket, 2), 'sin IVA'], ['Para el equilibrio', need ? nf(need) : '—', 'transacciones al mes', V.I11.st], ['Al día', nf(r.N / sumI(DIAS_MES, ii), 0), 'transacciones']])
-    + FG.f6b(280)
-    + FIG(0, 'Clientes por mes', dt({cols: [{k: 'mes', l: 'Mes', b: true}, {k: 'n', l: 'Transacciones', t: 'num', bar: true}, {k: 'dia', l: 'Al día', t: 'num', d: 1}, {k: 'tk', l: 'Ticket', t: 'usd', d: 2, heat: 1}, {k: 'v', l: 'Ventas', t: 'usd'}, {k: 'g', l: 'Crecimiento', t: 'sg', d: 1, heat: 1}],
-      rows, search: false, mark: markSel, name: 'clientes'}), {i: 'Crecimiento: variación de las ventas frente al mes anterior; la tienda abrió el 19 de diciembre, por eso enero no tiene variación.'});
+function prepVH(J) {
+  if (J.meses.join() !== DET.meses.join() || J.horas.join() !== DET.h.horas.join()) throw new Error('detalle por hora de otra versión de los datos');
+  const NM = J.meses.length, NH = J.horas.length; let n = 0; J.p.forEach(a => { n += (a.length - 1) / 4; });
+  const P = new Int32Array(n), CM = new Int32Array(n), V_ = new Float64Array(n), C_ = new Float64Array(n), N_ = new Int32Array(n);
+  let k = 0;
+  J.p.forEach(a => { let cm = 0; for (let i = 1; i < a.length; i += 4) { cm += a[i]; P[k] = a[0]; CM[k] = cm; V_[k] = a[i + 1]; C_[k] = a[i + 2]; N_[k] = a[i + 3]; k++; } });
+  const CAT = new Map(); J.c.forEach(a => { const x = []; let cm = 0; for (let i = 1; i < a.length; i += 2) { cm += a[i]; x.push(cm, a[i + 1]); } CAT.set(a[0], x); });
+  const TOT = new Int32Array(7 * NH * NM); { let cm = 0; for (let i = 0; i < J.t.length; i += 2) { cm += J.t[i]; TOT[cm] = J.t[i + 1]; } }
+  return VH = {P, CM, V: V_, C: C_, N: N_, n, CAT, TOT, NM, NH};
 }
-function cardProductos(db) {
-  const P = selProd(), mp = P.mg, neg = P.idx.filter(p => P.V[p] - P.C[p] < 0), negUsd = -neg.reduce((a, p) => a + P.V[p] - P.C[p], 0) / 100;
-  const top = P.idx.slice(0, 600).map(p => pRow(P, p)), disp = P.idx.slice(0, 250).map(p => pRow(P, p)).filter(x => x.mgp != null && x.mgp > -40 && x.mgp < 80);
+
+// filtro: cel = {t: 'c' celda, d, j} | {t: 'd' día, d} | {t: 'h' hora, j} | {t: 'b' franja, b}; cat = índice de categoría; prod = índice de producto
+S.vx = S.vx || {cel: null, cat: null, prod: null};
+const vxOn = () => !!(S.vx.cel || S.vx.cat != null || S.vx.prod != null);
+const FRJ = [[7, 10, '07:00 – 09:59'], [10, 13, '10:00 – 12:59'], [13, 16, '13:00 – 15:59'], [16, 19, '16:00 – 18:59'], [19, 24, '19:00 – cierre']];
+const enCel = (f, d, j) => { const hh = DET.h.horas[j]; return f.t === 'c' ? d === f.d && j === f.j : f.t === 'd' ? d === f.d : f.t === 'h' ? j === f.j : hh >= FRJ[f.b][0] && hh < FRJ[f.b][1]; };
+const celMask = f => { if (!f) return null; const NH = DET.h.horas.length, m = new Uint8Array(7 * NH); for (let d = 0; d < 7; d++) for (let j = 0; j < NH; j++) if (enCel(f, d, j)) m[d * NH + j] = 1; return m; };
+const celTxt = f => f.t === 'c' ? `${DIAS[f.d]} ${DET.h.horas[f.j]}:00` : f.t === 'd' ? cap(DIAS_L[f.d]) : f.t === 'h' ? `${DET.h.horas[f.j]}:00 – ${DET.h.horas[f.j]}:59` : FRJ[f.b][2];
+const vxTxt = (sinCel = false) => { const f = S.vx; return [!sinCel && f.cel ? celTxt(f.cel) : '', f.cat != null ? DET.cats[f.cat] : '', f.prod != null ? DET.p.n[f.prod] : ''].filter(Boolean).join(' · '); };
+// días de operación regular de cada día de la semana en los meses elegidos (promedios por día)
+const diasSem = (ms = dSel()) => { const out = [0, 0, 0, 0, 0, 0, 0]; ms.forEach(i => DET.h.d[i].forEach((x, d) => { out[d] += x; })); return out; };
+const diasDe = (f, ms) => { const ds = diasSem(ms); return ds.reduce((a, x, d) => a + (!f || DET.h.horas.some((_, j) => enCel(f, d, j)) ? x : 0), 0); };
+
+// cálculo de la selección (centavos): productos (celdas + categoría), mapa (categoría + producto), categorías (celdas), meses (todo menos el mes)
+function vxCalc() {
+  const X = VH, f = S.vx, NM = X.NM, NH = X.NH, NC = 7 * NH, ms = dSel(), msk = celMask(f.cel), cat = f.cat, prod = f.prod, pc = DET.p.c, nc = DET.cats.length;
+  const enM = new Uint8Array(NM); ms.forEach(i => { enM[i] = 1; });
+  const dia = f.cel && (f.cel.t === 'c' || f.cel.t === 'd') ? f.cel.d : null;
+  const np = DET.p.n.length, pV = new Float64Array(np), pC = new Float64Array(np), pN = new Float64Array(np);
+  const cV = new Float64Array(NC), cN = new Float64Array(NC), kV = new Float64Array(nc), mV = new Float64Array(NM), mN = new Float64Array(NM);
+  const hk = [...Array(nc)].map(() => new Float64Array(NH)), hT = new Float64Array(NH);
+  let tV = 0, sV = 0, sC = 0, sN = 0;
+  for (let k = 0; k < X.n; k++) {
+    const c = X.CM[k], cel = (c / NM) | 0, m = c % NM, p = X.P[k], v = X.V[k], kc = pc[p];
+    const inCel = !msk || msk[cel], inCat = cat == null || kc === cat, inProd = prod == null || p === prod;
+    if (enM[m]) {
+      tV += v;
+      if (inCel && inCat) { pV[p] += v; pC[p] += X.C[k]; pN[p] += X.N[k]; }
+      if (inCat && inProd) { cV[cel] += v; if (prod != null) cN[cel] += X.N[k]; }
+      if (inCel) kV[kc] += v;
+      if (inCel && inCat && inProd) { sV += v; sC += X.C[k]; if (prod != null) sN += X.N[k]; }
+      if (dia == null || ((cel / NH) | 0) === dia) { hk[kc][cel % NH] += v; hT[cel % NH] += v; }
+    }
+    if (inCel && inCat && inProd) { mV[m] += v; if (prod != null) mN[m] += X.N[k]; }
+  }
+  // transacciones sin producto elegido: facturas con la categoría o todas las facturas
+  if (prod == null) {
+    const add = (c, n) => { const cel = (c / NM) | 0, m = c % NM, inCel = !msk || msk[cel]; if (enM[m]) { cN[cel] += n; if (inCel) sN += n; } if (inCel) mN[m] += n; };
+    if (cat != null) { const a = X.CAT.get(cat) || []; for (let i = 0; i < a.length; i += 2) add(a[i], a[i + 1]); }
+    else for (let c = 0; c < X.TOT.length; c++) if (X.TOT[c]) add(c, X.TOT[c]);
+  }
+  return {pV, pC, pN, cV, cN, kV, mV, mN, hk, hT, dia, tV, sV, sC, sN, msk};
+}
+
+// cambiar un filtro (tocar lo mismo otra vez lo quita)
+function vxSet(k, v) {
+  const f = S.vx, same = k === 'cel' ? !!(f.cel && v && JSON.stringify(f.cel) === JSON.stringify(v)) : f[k] === v;
+  f[k] = same ? null : v;
+  if (k === 'cat' && f.cat != null && f.prod != null && DET.p.c[f.prod] !== f.cat) f.prod = null;
+  if (k === 'prod' && f.prod != null && f.cat != null && DET.p.c[f.prod] !== f.cat) f.cat = null;
+  syncHash();
+  if (VH) { vxPintar(); return; }
+  vxAviso('Cargando el detalle por hora…');
+  cargaVH().then(() => vxPintar()).catch(vxFalla);
+}
+function vxLimpia() { S.vx = {cel: null, cat: null, prod: null}; syncHash(); vxPintar(); }
+// tocar un mes enfoca el periodo en ese mes; tocarlo otra vez vuelve al periodo anterior
+function mesFoco(k) {
+  if (S.mes === k) { if (!S.vxPer) return; [S.mes, PER] = S.vxPer; S.vxPer = null; }
+  else { if (S.mes === 'acum' || !S.vxPer) S.vxPer = [S.mes, PER]; S.mes = k; PER = D.meses.slice(Math.min(ix(k), idx0)); }
+  refresh();
+}
+const vxAviso = t => { const el = $('vx-av'); if (el) el.textContent = t; };
+function vxFalla() { vxAviso('No se pudo cargar el detalle por hora; los filtros se aplicarán cuando vuelva la conexión.'); }
+// al actualizar, cada bloque aparece con un fundido corto
+const vxFx = el => { if (el && !reduce()) el.animate([{opacity: .35}, {opacity: 1}], {duration: 280, easing: 'cubic-bezier(.16,1,.3,1)'}); };
+
+function cardVentas(db) {
+  const h = selHoras(), mp = selProd().mg;
+  db.innerHTML = `<div class="vx-f" id="vx-f" role="group" aria-label="Filtros del análisis"></div><div id="vx-k"></div>
+    <div class="g2 vx-g1">${FIG(8, '<span id="vx-t8">Venta promedio por hora y día</span>', '<div class="hm vxh" id="hm" role="group" aria-label="Venta promedio por hora y día"></div><div class="hm-foot"><span class="hm-info" id="hm-info"></span><span class="hm-lg"><em>Menos</em><i></i><em>Más</em></span></div>',
+        {tools: '<nav class="gb hm-mode" id="hm-mode" aria-label="Medida"></nav>', i: `Días de operación regular${h ? ' de ' + mesesL(h.meses) : ''}. Promedio de cada día de la semana en cada hora, con IVA; con una categoría o un producto elegido, ventas sin IVA de las facturas unidas a sus órdenes. Toca una celda, un día o una hora para filtrar; las celdas rayadas son horas en que la tienda está cerrada.`})}
+      ${FIG(0, '<span id="vx-tp">Productos con más venta</span>', '<div id="vx-p"></div>', {i: 'Ventas sin IVA. Toca un producto para ver en qué días y horas se vende.'})}</div>
+    <div class="g2">${FIG(6, '<span id="vx-tm">Transacciones y ticket promedio (I11)</span>', '<div id="vx-m"></div>', {i: 'Barras: transacciones al mes. Línea: ticket promedio sin IVA. Toca un mes para enfocar el periodo en él; tócalo otra vez para volver.'})}
+      ${FIG(0, '<span id="vx-tc">Categorías</span>', '<div id="vx-c"></div>', {i: 'Peso de cada categoría en la venta de la selección, sin IVA. Toca una categoría para filtrar.'})}</div>
+    <div class="g2">${FIG(8, '<span id="vx-td">Venta promedio diaria · USD con IVA</span>', '<div id="vx-d"></div>', {i: 'Sábado y domingo en verde oscuro. Toca un día para filtrar.'})}
+      ${FIG(0, '<span id="vx-tb">Ventas por franja horaria</span>', '<div id="vx-b"></div>', {i: 'Toca una franja para filtrar.'})}</div>
+    ${FIG(0, '<span id="vx-tt">Detalle de productos</span>', '<div id="vx-tb2"></div>', {i: `Margen promedio por producto de ${selL()}: ${pct(mp)}. Toca una fila para elegir el producto.`})}
+    <div class="g2">${FG.f7(280)}${FIG(0, 'Venta y margen de los 250 productos con más venta', '<div id="vx-s"></div>', {i: `Eje horizontal en escala logarítmica: venta de cada producto de ${selL()}. Con un filtro, se resaltan los productos que se venden en la selección.`})}</div>
+    ${FIG(0, '<span id="vx-th">Peso de cada categoría en la venta de cada hora · %</span>', '<div id="vx-hc"></div>', {i: 'Cada columna es la venta de esa hora. Toca una categoría, una hora o una celda para filtrar.'})}
+    ${FIG(0, '<span id="vx-tq">Clientes por mes</span>', '<div id="vx-q"></div>', {i: 'Crecimiento: variación de las ventas frente al mes anterior. Toca un mes para enfocar el periodo en él.'})}`;
+  PEND.push(() => {
+    if (!$('vx-f')) return;
+    menu($('hm-mode'), [['v', 'Ventas'], ['t', 'Transacciones']], S.hm || 'v', v => { S.hm = v; vxHeat(VXR); });
+    vxAlto(); addEventListener('resize', vxAlto);
+    vxPintar(true);
+    if (vxOn() || !VH) cargaVH().then(() => { if (vxOn()) vxPintar(); }).catch(() => { if (vxOn()) vxFalla(); });
+  });
+}
+// en pantallas angostas la fila de análisis también queda fija arriba: la barra de filtros se ubica debajo
+function vxAlto() { const f = $('vx-f'), L = $('stage').querySelector('.left'); if (f) f.style.setProperty('--dkh', (innerWidth <= 980 && L ? L.offsetHeight : 0) + 'px'); }
+function vxPintar(primera) {
+  if (!$('vx-f')) return;
+  const sinH = vxOn() && !selHoras();   // meses sin ventas por hora: el filtro queda guardado, pero no hay con qué aplicarlo
+  const R = VXR = VH && vxOn() && !sinH ? vxCalc() : null;
+  vxFiltros(); if (sinH) vxAviso('Los meses elegidos no tienen ventas por hora: el registro empieza en febrero de 2026.'); vxKpi(R); vxHeat(R); vxProd(R); vxMes(R); vxCat(R); vxDia(R); vxFranja(R); vxTabla(R); vxDisp(R); vxHC(R); vxClientes(R);
+  if (!primera) ['vx-k', 'vx-p', 'vx-c', 'vx-b', 'vx-tb2', 'vx-hc', 'vx-q'].forEach(id => vxFx($(id)));
+}
+
+// barra de filtros: lo elegido, para quitarlo de uno en uno o todo junto
+function vxFiltros() {
+  const el = $('vx-f'), f = S.vx, ch = [];
+  if (f.cel) ch.push(['cel', celTxt(f.cel)]);
+  if (f.cat != null) ch.push(['cat', DET.cats[f.cat]]);
+  if (f.prod != null) ch.push(['prod', DET.p.n[f.prod]]);
+  el.innerHTML = `<span class="vx-fl">${ch.length ? 'Filtros' : 'Sin filtros'}</span>${ch.map(([k, t]) => `<button type="button" class="vx-ch" data-k="${k}" aria-label="Quitar el filtro ${esc(t)}">${esc(t)}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17"/></svg></button>`).join('')}
+    ${ch.length > 1 ? '<button type="button" class="vx-cl">Quitar todo</button>' : ''}<span class="vx-av" id="vx-av" role="status">${ch.length ? '' : 'Toca el mapa, un día, una franja, una categoría o un producto'}</span>`;
+  el.querySelectorAll('.vx-ch').forEach(b => b.onclick = () => vxSet(b.dataset.k, S.vx[b.dataset.k]));
+  const cl = el.querySelector('.vx-cl'); if (cl) cl.onclick = vxLimpia;
+}
+
+function vxKpi(R) {
+  const el = $('vx-k'), f = S.vx;
+  if (!R) {
+    const r = calc(SI()), need = r.pe ? r.pe / r.ticket : null, h = selHoras(), P = selProd(), pk = h ? picoMapa(h.mapa.v) : null;
+    el.innerHTML = kp([['Transacciones', nf(r.trans), 'al mes' + (need ? ' · el equilibrio exige ' + nf(need) : ''), V.I11.st], ['Ticket promedio', usd(r.ticket, 2), 'sin IVA'],
+      h ? ['Hora pico', `${DIAS[pk[0]]} ${h.mapa.horas[pk[1]]}:00`, usd(h.mapa.v[pk[0]][pk[1]]) + ' promedio · con IVA'] : ['Hora pico', '—', 'sin ventas por hora'],
+      ['Productos con venta', nf(P.nP), nf(P.abc[0]) + ' hacen el 80 % de la venta']]);
+    return;
+  }
+  const dias = diasDe(f.cel), lid = (() => { let b = -1; for (let p = 0; p < R.pV.length; p++) if (R.pV[p] > 0 && (b < 0 || R.pV[p] > R.pV[b])) b = p; return b; })();
+  const totP = R.pV.reduce((a, b) => a + b, 0), quien = f.prod != null ? 'con el producto' : f.cat != null ? 'con la categoría' : '';
+  el.innerHTML = kp([['Ventas', usd(R.sV / 100), (R.tV ? pct(R.sV / R.tV * 100) + ' de la venta' : '') + ' · sin IVA'],
+    ['Transacciones', nf(R.sN), (dias ? nf(R.sN / dias, 1) + ' por día' : '') + (quien ? ' · facturas ' + quien : '')],
+    ['Ticket', R.sN ? usd(R.sV / 100 / R.sN, 2) : '—', quien ? 'gasto por factura ' + quien : 'sin IVA'],
+    f.prod != null ? ['Margen', R.sV ? pct((R.sV - R.sC) / R.sV * 100) : '—', 'del producto en la selección']
+      : ['Producto líder', lid >= 0 ? esc(DET.p.n[lid]) : '—', lid >= 0 && totP ? pct(R.pV[lid] / totP * 100) + ' de la selección' : '']]);
+}
+
+// mapa de calor enlazado: botones con foco itinerante (flechas) y valores que cambian en su sitio, con transición
+function vxHeat(R) {
+  const el = $('hm'), info = $('hm-info'); if (!el) return;
+  const h_ = selHoras();
+  if (!h_) { el.innerHTML = sinHoras(); el.dataset.k = ''; if (info) info.textContent = ''; return; }
+  const md = S.hm || 'v', f = S.vx, H = h_.mapa, NH = H.horas.length, base = H[md], ds = diasSem(), filt = !!R && (f.cat != null || f.prod != null);
+  const M_ = filt ? base.map((r, d) => r.map((v0, j) => v0 == null || !ds[d] ? null : (md === 'v' ? R.cV[d * NH + j] / 100 : R.cN[d * NH + j]) / ds[d])) : base;
+  const all = M_.flat().filter(v => v != null), max = Math.max(...all, 1e-9), chico = max < 20;
+  const fmt = v => md === 'v' ? usd(v, chico ? 2 : 0) : nf(v, 1), num = v => md === 'v' ? nf(v, chico ? 1 : 0) : nf(v, 1);
+  const pk = picoMapa(M_), msk = celMask(f.cel), key = md + NH;
+  $('vx-t8').textContent = 'Venta promedio por hora y día' + (filt ? ' · ' + vxTxt(true) + ' · sin IVA' : '');
+  if (el.dataset.k !== key) {
+    let html = '<span></span>' + DIAS.map((x, d) => `<button type="button" class="hh" data-d="${d}" aria-label="Filtrar el ${DIAS_L[d]}">${x}</button>`).join('') + '<span class="hh">Semana</span>';
+    H.horas.forEach((hh, j) => {
+      html += `<button type="button" class="rl" data-j="${j}" aria-label="Filtrar de ${hh}:00 a ${hh}:59">${hh}:00</button>`;
+      for (let d = 0; d < 7; d++) html += `<button type="button" class="c" data-d="${d}" data-j="${j}" tabindex="-1" style="--k:${j * 7 + d}"></button>`;
+      html += `<span class="tt" data-tj="${j}"></span>`;
+    });
+    html += '<span class="rl">Día</span>' + DIAS.map((_, d) => `<span class="tt tc" data-td="${d}"></span>`).join('') + '<span></span>';
+    el.innerHTML = html; el.dataset.k = key; vxHeatEv(el);
+  }
+  let foco = null;
+  el.querySelectorAll('.c').forEach(b => {
+    const d = +b.dataset.d, j = +b.dataset.j, v = M_[d][j], cerr = base[d][j] == null, a = v == null ? 0 : v / max, sel = msk ? !!msk[d * NH + j] : false;
+    b.classList.toggle('off', cerr); b.disabled = cerr; b.classList.toggle('hi', a > .55); b.classList.toggle('pk', !cerr && d === pk[0] && j === pk[1]);
+    b.classList.toggle('sel', sel && f.cel.t === 'c'); b.classList.toggle('dim', !!msk && !sel);   // aro solo en una celda; con un día, una hora o una franja basta atenuar el resto
+    b.style.background = cerr ? '' : `color-mix(in srgb,var(--accent) ${Math.round(8 + a * 92)}%,transparent)`;
+    b.textContent = !cerr && a > .12 && !(msk && !sel) ? num(v) : '';   // las celdas atenuadas no llevan cifra
+    b.setAttribute('aria-pressed', String(sel && f.cel.t === 'c'));
+    b.setAttribute('aria-label', `${cap(DIAS_L[d])}, ${H.horas[j]}:00: ${cerr ? 'cerrado' : fmt(v || 0)}`);
+    b.tabIndex = -1; if (!cerr && (sel && !foco || !foco && d === pk[0] && j === pk[1])) foco = b;
+  });
+  if (foco) foco.tabIndex = 0;
+  el.querySelectorAll('.hh[data-d]').forEach(b => { const on = !!f.cel && f.cel.t === 'd' && f.cel.d === +b.dataset.d; b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); });
+  el.querySelectorAll('.rl[data-j]').forEach(b => { const on = !!f.cel && (f.cel.t === 'h' && f.cel.j === +b.dataset.j || f.cel.t === 'b' && enCel(f.cel, 0, +b.dataset.j)); b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); });
+  // totales: en pantallas angostas el signo $ se oculta para que las cifras quepan en su columna
+  const tot = v => md === 'v' ? `<i class="u">$\u00a0</i>${nf(v, chico ? 2 : 0)}` : nf(v, 1);
+  el.querySelectorAll('[data-tj]').forEach(t => { t.innerHTML = tot(M_.reduce((s, r) => s + (r[+t.dataset.tj] || 0), 0)); });
+  el.querySelectorAll('[data-td]').forEach(t => { t.innerHTML = tot(M_[+t.dataset.td].reduce((s, v) => s + (v || 0), 0)); });
+  const unit = md === 'v' ? 'en ventas' : 'transacciones';
+  el._M = M_; el._fmt = fmt; el._unit = unit; el._base = filt ? null : H;
+  el._txt = `${f.cel ? 'Elegido: ' + celTxt(f.cel) + '. ' : ''}Pico${filt ? ' de ' + vxTxt(true) : ''}: ${DIAS_L[pk[0]]} a las ${H.horas[pk[1]]}:00, ${fmt(M_[pk[0]][pk[1]] || 0)} ${unit}`;
+  if (info) info.textContent = el._txt;
+}
+function vxHeatEv(el) {
+  el.onclick = e => {
+    const b = e.target.closest('button'); if (!b || b.disabled) return;
+    if (b.classList.contains('c')) vxSet('cel', {t: 'c', d: +b.dataset.d, j: +b.dataset.j});
+    else if (b.dataset.d != null) vxSet('cel', {t: 'd', d: +b.dataset.d});
+    else if (b.dataset.j != null) vxSet('cel', {t: 'h', j: +b.dataset.j});
+  };
+  const muestra = b => { const info = $('hm-info'); if (!info) return; const d = +b.dataset.d, j = +b.dataset.j, v = el._M[d][j], hs = DET.h.horas;
+    info.textContent = b.disabled ? `${cap(DIAS_L[d])} a las ${hs[j]}:00: cerrado` : `${cap(DIAS_L[d])} de ${hs[j]}:00 a ${hs[j]}:59: ${el._fmt(v || 0)} ${el._unit}` + (el._base ? ` · ${(S.hm || 'v') === 'v' ? nf(el._base.t[d][j], 1) + ' transacciones' : usd(el._base.v[d][j]) + ' en ventas'}` : ''); };
+  el.onmouseover = e => { const b = e.target.closest('.c'); if (b) muestra(b); };
+  el.onmouseleave = () => { const info = $('hm-info'); if (info) info.textContent = el._txt; };
+  el.onfocusin = e => { if (e.target.classList.contains('c')) muestra(e.target); };
+  // flechas: se mueve por las celdas abiertas; Intro o espacio filtra
+  el.onkeydown = e => {
+    const b = e.target; if (!b.classList || !b.classList.contains('c')) return;
+    const mv = {ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1]}[e.key]; if (!mv) return;
+    e.preventDefault(); let d = +b.dataset.d, j = +b.dataset.j;
+    for (let k = 0; k < 20; k++) { d += mv[0]; j += mv[1]; const n = el.querySelector(`.c[data-d="${d}"][data-j="${j}"]`); if (!n) return; if (!n.disabled) { b.tabIndex = -1; n.tabIndex = 0; n.focus(); return; } }
+  };
+}
+
+// lista de barras que se puede tocar (productos y categorías)
+// compacto: una línea por fila (nombre, barra, monto y porcentaje)
+function vxLista(el, filas, on, attr, vacio, compacto) {
+  if (!filas.length) { el.innerHTML = `<div class="empty-st">${vacio}</div>`; return; }
+  const max = Math.max(...filas.map(x => x.v), 1e-9);
+  const barra = (x, k) => `<span class="trk"><i style="--c:${x.id === on ? 'var(--accent)' : 'var(--chart)'};--w:${clamp(x.v / max, 0, 1)};--k:${k}"></i></span>`;
+  el.innerHTML = `<div class="vx-l">${filas.map((x, k) => `<button type="button" class="vx-r${compacto ? ' vx-rc' : ''}${x.id === on ? ' on' : on != null ? ' dim' : ''}" data-${attr}="${x.id}" aria-pressed="${x.id === on}">${compacto
+    ? `<span class="vx-n"><b>${esc(x.n)}</b></span>${barra(x, k)}<span class="vx-u">${usd(x.v)}</span><span class="vx-pc">${pct(x.sh)}</span>`
+    : `<span class="vx-n"><b>${esc(x.n)}</b>${x.s ? `<small>${esc(x.s)}</small>` : ''}</span><span class="vx-v">${usd(x.v)}<small>${pct(x.sh)}</small></span>${barra(x, k)}`}</button>`).join('')}</div>`;
+}
+function vxProd(R) {
+  const el = $('vx-p'); if (!el) return;
+  const f = S.vx; let ids, val, tot;
+  if (!R) { const P = selProd(); ids = P.idx; val = p => P.V[p]; tot = P.Vt; }
+  else { ids = []; for (let p = 0; p < R.pV.length; p++) if (R.pV[p] > 0) ids.push(p); ids.sort((a, b) => R.pV[b] - R.pV[a]); val = p => R.pV[p]; tot = ids.reduce((a, p) => a + R.pV[p], 0); }
+  const top = ids.slice(0, 8); if (f.prod != null && !top.includes(f.prod) && val(f.prod) > 0) top.push(f.prod);
+  $('vx-tp').textContent = 'Productos con más venta' + (R && (f.cel || f.cat != null) ? ' · ' + [f.cel ? celTxt(f.cel) : '', f.cat != null ? DET.cats[f.cat] : ''].filter(Boolean).join(' · ') : '');
+  vxLista(el, top.map(p => ({id: p, n: DET.p.n[p], s: DET.cats[DET.p.c[p]], v: val(p) / 100, sh: tot ? val(p) / tot * 100 : 0})), f.prod, 'p', 'Sin ventas con este filtro.');
+  if (ids.length) el.insertAdjacentHTML('beforeend', `<p class="vx-nota">${nf(ids.length)} productos con venta${R ? ' en la selección' : ' en ' + selL()}.</p>`);
+  el.querySelectorAll('[data-p]').forEach(b => b.onclick = () => vxSet('prod', +b.dataset.p));
+}
+function vxCat(R) {
+  const el = $('vx-c'); if (!el) return;
+  const f = S.vx, on = f.cat != null ? f.cat : f.prod != null ? DET.p.c[f.prod] : null; let rows;
+  if (!R) { const C = selCat(), t = C.reduce((a, x) => a + x.v, 0); rows = C.map(x => ({id: DET.cats.indexOf(x.cat), n: x.cat, v: x.v, sh: t ? x.v / t * 100 : 0})); }
+  else { const t = R.kV.reduce((a, b) => a + b, 0); rows = [...R.kV].map((v, c) => ({id: c, n: DET.cats[c], v: v / 100, sh: t ? v / t * 100 : 0})).filter(x => x.v > 0).sort((a, b) => b.v - a.v); }
+  const top = rows.slice(0, 10); if (on != null && !top.some(x => x.id === on)) { const x = rows.find(x => x.id === on); if (x) top.push(x); }
+  $('vx-tc').textContent = 'Categorías' + (R && f.cel ? ' · ' + celTxt(f.cel) : '');
+  vxLista(el, top, on, 'c', 'Sin ventas con este filtro.', true);
+  el.querySelectorAll('[data-c]').forEach(b => b.onclick = () => vxSet('cat', +b.dataset.c));
+}
+
+// meses: transacciones (barras) y ticket (línea); tocar un mes enfoca el periodo
+function vxMes(R) {
+  const el = $('vx-m'); if (!el) return;
+  const k = K(), f = S.vx; let bars, line, need = null;
+  if (!R) { const rP = calc(SI()); need = rP.pe ? rP.pe / rP.ticket : null; bars = SER(M.transacciones); line = PER.map(q => calc([ix(q)]).ticket); }
+  else { bars = PER.map(q => R.mN[ix(q)] || null); line = PER.map(q => { const m = ix(q); return R.mN[m] ? R.mV[m] / 100 / R.mN[m] : null; }); }
+  $('vx-tm').textContent = R ? 'Transacciones y ticket · ' + vxTxt() : 'Transacciones y ticket promedio (I11)';
+  const col = PER.map(q => dimA(R ? k.li : k.ol, ix(q))), hl = need ? {lines: [{v: need, c: k.ac, t: `punto de equilibrio: ${nf(need)} al mes`}]} : null;
+  const ch = VXC.m;
+  if (ch && ch.canvas && ch.canvas.isConnected) {
+    ch.data.labels = LBP(); ch.data.datasets[0].data = line; ch.data.datasets[1].data = bars; ch.data.datasets[1].backgroundColor = col;
+    ch.options.plugins.hl = hl; ch.options.scales.y.suggestedMax = need ? need * 1.08 : undefined;
+    Object.assign(ch.options.scales.y2, R ? {suggestedMin: undefined, suggestedMax: undefined} : {suggestedMin: 6, suggestedMax: 11});
+    ch.update(); return;
+  }
+  el.innerHTML = cv(300, id => { VXC.m = mk(id, {data: {labels: LBP(), datasets: [
+      {type: 'line', label: 'Ticket promedio', data: line, yAxisID: 'y2', borderColor: k.lb, backgroundColor: k.lb, borderWidth: 2.4, pointRadius: 4.5, pointBackgroundColor: k.lb, pointBorderColor: k.sf, pointBorderWidth: 1.5, tension: .3, order: 0, spanGaps: true, fmt: v => usd(v, 2)},
+      {type: 'bar', label: 'Transacciones', data: bars, backgroundColor: col, borderRadius: 5, borderSkipped: false, maxBarThickness: 34, order: 1, fmt: v => nf(v)}]},
+    options: {...opt({hl}), animation: {duration: 450, easing: 'easeOutQuart'},
+      onClick: (e, els) => { if (els.length) mesFoco(PER[els[0].index]); }, onHover: (e, els) => { e.native.target.style.cursor = els.length ? 'pointer' : 'default'; },
+      scales: {x: {...axX, ticks: {maxRotation: 0}}, y: {...axY(v => nf(v)), beginAtZero: true, suggestedMax: need ? need * 1.08 : undefined},
+        y2: {position: 'right', ...(R ? {} : {suggestedMin: 6, suggestedMax: 11}), grid: {display: false}, border: {display: false}, ticks: {maxTicksLimit: 5, callback: v => usd(v, v < 10 ? 2 : 0)}}}}}); });
+  flush(el);
+}
+
+// días de la semana: venta promedio diaria; tocar un día filtra
+function vxDia(R) {
+  const el = $('vx-d'); if (!el) return;
+  const h_ = selHoras(); if (!h_) { el.innerHTML = sinHoras(); VXC.d = null; return; }
+  const k = K(), f = S.vx, filt = !!R && (f.cat != null || f.prod != null), NH = h_.mapa.horas.length, ds = diasSem();
+  const d = filt ? DIAS.map((_, dd) => ds[dd] ? [...Array(NH).keys()].reduce((a, j) => a + R.cV[dd * NH + j], 0) / 100 / ds[dd] : 0) : h_.dia;
+  const selD = f.cel && (f.cel.t === 'd' || f.cel.t === 'c') ? f.cel.d : null;
+  const col = d.map((_, j) => { const c = j > 4 ? k.ol : k.li; return selD == null || selD === j ? c : c + '59'; });
+  $('vx-td').textContent = filt ? 'Venta promedio diaria · ' + vxTxt(true) + ' · USD sin IVA' : 'Venta promedio diaria · USD con IVA';
+  const ch = VXC.d;
+  if (ch && ch.canvas && ch.canvas.isConnected) { ch.data.datasets[0].data = d; ch.data.datasets[0].backgroundColor = col; ch.data.datasets[0].vlab = v => nf(v, filt && Math.max(...d) < 20 ? 1 : 0); ch.update(); return; }
+  el.innerHTML = cv(220, id => { VXC.d = mk(id, {type: 'bar', data: {labels: DIAS, datasets: [{label: 'Venta diaria', data: d, backgroundColor: col, borderRadius: 6, borderSkipped: false, maxBarThickness: 46, fmt: v => usd(v, v < 20 ? 2 : 0), vlab: v => nf(v)}]},
+    options: {...opt({legend: false, yf: v => nf(v)}), animation: {duration: 450, easing: 'easeOutQuart'},
+      onClick: (e, els) => { if (els.length) vxSet('cel', {t: 'd', d: els[0].index}); }, onHover: (e, els) => { e.native.target.style.cursor = els.length ? 'pointer' : 'default'; }}}); });
+  flush(el);
+}
+
+// franjas horarias: tabla; tocar una fila filtra la franja
+function vxFranja(R) {
+  const el = $('vx-b'); if (!el) return;
+  const h_ = selHoras(); if (!h_) { el.innerHTML = sinHoras(); return; }
+  const f = S.vx, filt = !!R && (f.cat != null || f.prod != null), H = DET.h.horas, NH = H.length;
+  let rows;
+  if (!filt) rows = h_.franjas.map((x, b) => ({...x, _b: b}));
+  else {
+    const tv = R.cV.reduce((a, b) => a + b, 0), tn = R.cN.reduce((a, b) => a + b, 0);
+    rows = FRJ.map(([a, b_, l], b) => { let u = 0, o = 0; for (let d = 0; d < 7; d++) for (let j = 0; j < NH; j++) if (H[j] >= a && H[j] < b_) { u += R.cV[d * NH + j]; o += R.cN[d * NH + j]; }
+      return {f: l, usd: u / 100, pv: tv ? u / tv * 100 : 0, pt: tn ? o / tn * 100 : 0, tk: o ? u / 100 / o : null, _b: b}; });
+  }
+  $('vx-tb').textContent = 'Ventas por franja horaria' + (filt ? ' · ' + vxTxt(true) + ' · sin IVA' : ' · con IVA');
+  el.innerHTML = dt({cols: [{k: 'f', l: 'Franja', b: true}, {k: 'usd', l: 'Ventas', t: 'usd', bar: true}, {k: 'pv', l: '% ventas', t: 'pct', heat: 1}, {k: 'pt', l: '% trans.', t: 'pct'}, {k: 'tk', l: 'Ticket', t: 'usd', d: 2}],
+    rows, search: false, foot: {usd: 'sum'}, mark: r => !!f.cel && f.cel.t === 'b' && f.cel.b === r._b, click: r => vxSet('cel', {t: 'b', b: r._b}), name: 'franjas'});
+  flush(el);
+}
+
+// detalle de productos: con filtro, productos de la selección; tocar una fila elige el producto
+function vxTabla(R) {
+  const el = $('vx-tb2'); if (!el) return;
+  const f = S.vx; let rows, mp, cols;
+  const nivel = r => r.mgp == null ? '—' : r.mgp < 0 ? 'Bajo el costo' : r.mgp >= mp ? 'Sobre el promedio' : 'Bajo el promedio';
+  const tag = {k: 'nivel', l: 'Nivel', t: 'tag', tc: v => v === 'Bajo el costo' ? 'none' : v === 'Sobre el promedio' ? 'full' : 'part'};
+  if (!R) {
+    const P = selProd(); mp = P.mg;
+    rows = P.idx.slice(0, 600).map(p => ({...pRow(P, p), _p: p})).map(r => ({...r, nivel: nivel(r)}));
+    cols = [{k: 'p', l: 'Producto', sub: 'cat'}, {k: 'v', l: 'Ventas', t: 'usd', bar: true}, {k: 'mg', l: 'Margen USD', t: 'usd'}, {k: 'mgp', l: 'Margen %', t: 'pct', heat: 1}, tag, {k: 'q', l: 'Unidades', t: 'num'}, {k: 'n', l: 'Facturas', t: 'num'}];
+  } else {
+    const ids = []; let V_ = 0, C_ = 0; for (let p = 0; p < R.pV.length; p++) if (R.pV[p] > 0) { ids.push(p); V_ += R.pV[p]; C_ += R.pC[p]; }
+    ids.sort((a, b) => R.pV[b] - R.pV[a]); mp = V_ ? (V_ - C_) / V_ * 100 : null;
+    rows = ids.slice(0, 600).map(p => { const v = R.pV[p] / 100, mg = (R.pV[p] - R.pC[p]) / 100; return {p: DET.p.n[p] || '—', cat: DET.cats[DET.p.c[p]], v, sh: V_ ? R.pV[p] / V_ * 100 : 0, mg, mgp: v ? mg / v * 100 : null, n: R.pN[p], _p: p}; }).map(r => ({...r, nivel: nivel(r)}));
+    cols = [{k: 'p', l: 'Producto', sub: 'cat'}, {k: 'v', l: 'Ventas', t: 'usd', bar: true}, {k: 'sh', l: '% de la selección', t: 'pct', heat: 1}, {k: 'mg', l: 'Margen USD', t: 'usd'}, {k: 'mgp', l: 'Margen %', t: 'pct'}, tag, {k: 'n', l: 'Facturas', t: 'num'}];
+  }
+  $('vx-tt').textContent = 'Detalle de productos' + (R && (f.cel || f.cat != null) ? ' · ' + [f.cel ? celTxt(f.cel) : '', f.cat != null ? DET.cats[f.cat] : ''].filter(Boolean).join(' · ') : '');
+  el.innerHTML = dt({cols, rows, filters: R ? ['nivel', 'cat'] : ['nivel', 'cat', 'c'], top: 15, unit: 'productos', name: 'productos', mark: r => r._p === f.prod, click: r => vxSet('prod', r._p)});
+  flush(el);
+}
+
+// dispersión de los 250 productos del periodo: con filtro se resaltan los que se venden en la selección
+function vxDisp(R) {
+  const el = $('vx-s'); if (!el) return;
+  const ch = VXC.s;
+  if (ch && ch.canvas && ch.canvas.isConnected) { ch.update(); return; }
+  const P = selProd(), mp = P.mg, disp = P.idx.slice(0, 250).map(p => ({...pRow(P, p), _p: p})).filter(x => x.mgp != null && x.mgp > -40 && x.mgp < 80);
   const xs = disp.map(x => x.v), xmin = Math.max(1, Math.min(...xs) * .8), xmax = Math.max(...xs) * 1.25;
   const TK = [1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000].filter(t => t >= xmin && t <= xmax);
-  db.innerHTML = kp([['Productos con venta', nf(P.nP), selL()], ['Clase A', nf(P.abc[0]), '80\u00a0% de la venta'], ['Margen por producto', pct(mp), selL()], ['Vendidos bajo el costo', nf(neg.length), usd(negUsd) + ' de pérdida']])
-    + grid2(FG.f7(280), FIG(0, 'Venta y margen de los 250 productos con más venta', cv(280, id => { const k = K(), G_ = [['Sobre el margen promedio', d => d.mgp >= mp, k.ol], ['Bajo el margen promedio', d => d.mgp >= 0 && d.mgp < mp, k.lb], ['Vendidos bajo el costo', d => d.mgp < 0, k.al]];
-      mk(id, {type: 'scatter', data: {datasets: G_.map(([l, f, c]) => ({label: l, data: disp.filter(f).map(d => ({x: d.v, y: d.mgp, n: d.p})), backgroundColor: c + 'd9', borderColor: k.sf, borderWidth: .8, pointRadius: 4.2, pointHoverRadius: 7}))},
-      options: {...opt({mode: 'nearest'}), interaction: {mode: 'nearest', intersect: true}, plugins: {...opt().plugins, tooltip: {callbacks: {label: c => ` ${c.raw.n}: ${usd(c.raw.x)} · ${pct(c.raw.y)}`}}, hl: {lines: [{v: mp, c: k.dk, t: 'margen por producto ' + pct(mp), left: true}]}},
-        scales: {x: {type: 'logarithmic', min: xmin, max: xmax, grid: {color: c => TK.includes(c.tick && c.tick.value) ? css('--line-soft') : 'transparent'}, border: {display: false}, ticks: {maxRotation: 0, autoSkip: false, callback: v => TK.includes(v) ? usd(v) : ''}}, y: {...axY(v => v + '\u00a0%'), min: -10, max: 50}}}}); }), {i: `Eje horizontal en escala logarítmica: venta de cada producto de ${selL()}.`}))
-    + FIG(0, 'Productos con más venta', dt({cols: [{k: 'p', l: 'Producto', sub: 'cat'}, {k: 'v', l: 'Ventas', t: 'usd', bar: true}, {k: 'mg', l: 'Margen USD', t: 'usd'}, {k: 'mgp', l: 'Margen %', t: 'pct', heat: 1}, {k: 'nivel', l: 'Nivel', t: 'tag', tc: v => v === 'Bajo el costo' ? 'none' : v === 'Sobre el promedio' ? 'full' : 'part'}, {k: 'q', l: 'Unidades', t: 'num'}, {k: 'n', l: 'Facturas', t: 'num'}],
-      rows: top.map(r => ({...r, nivel: r.mgp < 0 ? 'Bajo el costo' : r.mgp >= mp ? 'Sobre el promedio' : 'Bajo el promedio'})), filters: ['nivel', 'cat', 'c'], top: 15, unit: 'productos', name: 'productos'}),
-      {i: `Los ${nf(top.length)} productos con más venta de ${selL()}. Margen promedio por producto: ${pct(mp)}.`});
+  const vivo = p => !VXR || (VXR.pV[p] > 0 && (S.vx.prod == null || S.vx.prod === p));
+  el.innerHTML = cv(280, id => { const k = K(), G_ = [['Sobre el margen promedio', d => d.mgp >= mp, k.ol], ['Bajo el margen promedio', d => d.mgp >= 0 && d.mgp < mp, k.lb], ['Vendidos bajo el costo', d => d.mgp < 0, k.al]];
+    VXC.s = mk(id, {type: 'scatter', data: {datasets: G_.map(([l, fn, c]) => ({label: l, data: disp.filter(fn).map(d => ({x: d.v, y: d.mgp, n: d.p, p: d._p})),
+        backgroundColor: cx => cx.raw && !vivo(cx.raw.p) ? c + '22' : c + 'd9', borderColor: cx => cx.raw && !vivo(cx.raw.p) ? 'transparent' : k.sf, borderWidth: .8,
+        pointRadius: cx => cx.raw && S.vx.prod === cx.raw.p ? 7.5 : 4.2, pointHoverRadius: 7}))},
+      options: {...opt({mode: 'nearest'}), interaction: {mode: 'nearest', intersect: true}, animation: {duration: 350},
+        onClick: (e, els, c) => { if (els.length) { const r = c.data.datasets[els[0].datasetIndex].data[els[0].index]; vxSet('prod', r.p); } }, onHover: (e, els) => { e.native.target.style.cursor = els.length ? 'pointer' : 'default'; },
+        plugins: {...opt().plugins, tooltip: {callbacks: {label: c => ` ${c.raw.n}: ${usd(c.raw.x)} · ${pct(c.raw.y)}`}}, hl: {lines: [{v: mp, c: k.dk, t: 'margen por producto ' + pct(mp), left: true}]}},
+        scales: {x: {type: 'logarithmic', min: xmin, max: xmax, grid: {color: c => TK.includes(c.tick && c.tick.value) ? css('--line-soft') : 'transparent'}, border: {display: false}, ticks: {maxRotation: 0, autoSkip: false, callback: v => TK.includes(v) ? usd(v) : ''}}, y: {...axY(v => v + ' %'), min: -10, max: 50}}}}); });
+  flush(el);
 }
-function cardProdHora(db) {
-  const H = selFranjas(), HC = selHoraCat();
-  if (!H || !HC) { db.innerHTML = sinHoras(); return; }
-  const mx = Math.max(...HC.pct.flat().filter(v => v != null));
-  let grid = '<span></span>' + HC.horas.map(h => `<span class="hh">${h}</span>`).join('');
-  HC.cats.forEach((c, i) => { grid += `<span class="rl">${c}</span>` + HC.pct[i].map((v, j) => v == null ? '<span class="c off"></span>' : `<span class="c ${v / mx > .55 ? 'hi' : ''}" style="background:color-mix(in srgb,var(--accent) ${Math.round(6 + v / mx * 90)}%,transparent)" title="${c} · ${HC.horas[j]}:00: ${pct(v)} de la venta de esa hora">${v / mx > .25 ? nf(v, 0) : ''}</span>`).join(''); });
-  const vw = views('prodhora', H.map((b, k) => [String(k), b.f.replace(':00', '').replace(':59', '').replace(' – ', '–')]), v => { const b = H[+v];
-    return b.p.length ? kp([['Ventas de la franja', usd(b.v), 'sin IVA'], ['Producto líder', b.p[0].p, pct(b.p[0].pct) + ' de la franja']]) + dt({cols: [{k: 'p', l: 'Producto', b: true}, {k: 'v', l: 'Ventas', t: 'usd', bar: true}, {k: 'pct', l: '% de la franja', t: 'pct', heat: 1}], rows: b.p, search: false, name: 'productos_franja'}) : '<div class="empty-st">Sin ventas en esta franja.</div>'; });
-  db.innerHTML = FIG(0, 'Productos con más venta en cada franja', vw.box, {tools: vw.nav})
-    + FIG(0, 'Peso de cada categoría en la venta de cada hora · %', `<div class="hm hm2" style="--nc:${HC.horas.length}">${grid}</div>`, {i: `Cada columna es la venta de esa hora. Órdenes del punto de venta unidas con sus facturas (${pct(HC.cobertura)} de la venta de los días regulares de ${selL()}).`});
+
+// categoría × hora: con un día elegido, solo ese día; tocar una categoría, una hora o una celda filtra
+function vxHC(R) {
+  const el = $('vx-hc'); if (!el) return;
+  const f = S.vx; let HC;
+  if (R && R.dia != null) {
+    const H = DET.h.horas, top = [...R.hk.keys()].map(c => [c, R.hk[c].reduce((a, b) => a + b, 0)]).filter(x => x[1] > 0).sort((a, b) => b[1] - a[1]).slice(0, 10).map(x => x[0]);
+    HC = {horas: H, ci: top, cats: top.map(c => DET.cats[c]), pct: top.map(c => [...R.hk[c]].map((x, j) => R.hT[j] > 0 ? x / R.hT[j] * 100 : null))};
+  } else { const B = selHoraCat(); if (B) HC = {...B, ci: B.cats.map(c => DET.cats.indexOf(c))}; }
+  if (!HC) { el.innerHTML = sinHoras(); return; }
+  $('vx-th').textContent = 'Peso de cada categoría en la venta de cada hora · %' + (R && R.dia != null ? ' · ' + DIAS_L[R.dia] : '');
+  const mx = Math.max(...HC.pct.flat().filter(v => v != null), 1e-9), onC = f.cat, onJ = f.cel && f.cel.t === 'h' ? f.cel.j : f.cel && f.cel.t === 'c' ? f.cel.j : null;
+  let g = '<span></span>' + HC.horas.map((h, j) => `<button type="button" class="hh${onJ === j ? ' on' : ''}" data-j="${j}" aria-pressed="${onJ === j}" aria-label="Filtrar de ${h}:00 a ${h}:59">${h}</button>`).join('');
+  HC.cats.forEach((c, i) => {
+    const ci = HC.ci[i], rowOn = onC === ci;
+    g += `<button type="button" class="rl${rowOn ? ' on' : ''}" data-c="${ci}" aria-pressed="${rowOn}" title="${esc(c)}">${esc(c)}</button>` + HC.pct[i].map((v, j) => {
+      const dim = (onC != null && !rowOn) || (onJ != null && onJ !== j);
+      return v == null ? `<span class="c off${dim ? ' dim' : ''}"></span>` : `<button type="button" class="c ${v / mx > .55 ? 'hi' : ''}${dim ? ' dim' : ''}" data-c="${ci}" data-j="${j}" style="background:color-mix(in srgb,var(--accent) ${Math.round(6 + v / mx * 90)}%,transparent)" aria-label="${esc(c)} a las ${HC.horas[j]}:00: ${pct(v)} de la venta de esa hora" title="${esc(c)} · ${HC.horas[j]}:00: ${pct(v)} de la venta de esa hora">${v / mx > .25 && !dim ? nf(v, 0) : ''}</button>`;
+    }).join('');
+  });
+  el.innerHTML = `<div class="hm hm2 vxm" style="--nc:${HC.horas.length}">${g}</div>`;
+  el.querySelectorAll('button').forEach(b => b.onclick = () => {
+    const c = b.dataset.c, j = b.dataset.j;
+    if (c != null && j != null) { S.vx.cat = +c === S.vx.cat && S.vx.cel && S.vx.cel.t === 'h' && S.vx.cel.j === +j ? null : +c; if (S.vx.prod != null && DET.p.c[S.vx.prod] !== S.vx.cat) S.vx.prod = null; vxSet('cel', {t: 'h', j: +j}); }
+    else if (c != null) vxSet('cat', +c); else vxSet('cel', {t: 'h', j: +j});
+  });
 }
+
+// clientes por mes: con filtro, las facturas, el ticket y la venta de la selección en cada mes
+function vxClientes(R) {
+  const el = $('vx-q'); if (!el) return;
+  const f = S.vx; let rows;
+  if (!R) rows = mesRows(i => ({n: M.transacciones[i], tk: calc([i]).ticket, v: M.ventas[i], g: growth(i), dia: M.transacciones[i] / DIAS_MES[i]}));
+  else rows = mesRows(i => { const n = R.mN[i] || 0, v = R.mV[i] / 100, dd = diasDe(f.cel, [i]), pv = i > 0 ? R.mV[i - 1] : 0;
+    return {n: n || null, tk: n ? v / n : null, v: v || null, g: pv > 0 && R.mV[i] > 0 && DET.h.d[i - 1].some(x => x) ? (R.mV[i] - pv) / pv * 100 : null, dia: dd && n ? n / dd : null}; });
+  $('vx-tq').textContent = 'Clientes por mes' + (R ? ' · ' + vxTxt() : '');
+  el.innerHTML = dt({cols: [{k: 'mes', l: 'Mes', b: true}, {k: 'n', l: R ? 'Facturas' : 'Transacciones', t: 'num', bar: true}, {k: 'dia', l: 'Al día', t: 'num', d: 1}, {k: 'tk', l: 'Ticket', t: 'usd', d: 2, heat: 1}, {k: 'v', l: R ? 'Ventas sin IVA' : 'Ventas', t: 'usd'}, {k: 'g', l: 'Crecimiento', t: 'sg', d: 1, heat: 1}],
+    rows, search: false, mark: markSel, click: r => mesFoco(D.meses[r._i]), name: 'clientes'});
+  flush(el);
+}
+// código del filtro en el enlace de la vista: c5.5 (celda), d5 (día), h5 (hora), b1 (franja), k12 (categoría), p345 (producto)
+const vxCod = () => { const f = S.vx, c = f.cel; return [c ? (c.t === 'c' ? `c${c.d}.${c.j}` : c.t === 'd' ? 'd' + c.d : c.t === 'h' ? 'h' + c.j : 'b' + c.b) : '', f.cat != null ? 'k' + f.cat : '', f.prod != null ? 'p' + f.prod : ''].filter(Boolean).join('-'); };
+function vxDeCod(s) {
+  const f = {cel: null, cat: null, prod: null}, NH = DET.h.horas.length;
+  String(s || '').split('-').forEach(t => {
+    const m = /^([cdhbkp])(\d+)(?:\.(\d+))?$/.exec(t); if (!m) return; const a = +m[2], b = m[3] != null ? +m[3] : null;
+    if (m[1] === 'c' && a < 7 && b != null && b < NH) f.cel = {t: 'c', d: a, j: b}; else if (m[1] === 'd' && a < 7) f.cel = {t: 'd', d: a};
+    else if (m[1] === 'h' && a < NH) f.cel = {t: 'h', j: a}; else if (m[1] === 'b' && a < FRJ.length) f.cel = {t: 'b', b: a};
+    else if (m[1] === 'k' && a < DET.cats.length) f.cat = a; else if (m[1] === 'p' && a < DET.p.n.length) f.prod = a;
+  });
+  return f;
+}
+
 function cardEntradas(db) {
   const F = D.fig.f9, ii = SI(), rows = mesRows(i => ({cn: F.cn[i], tr: F.treg[i], im: F.tcor[i] - F.treg[i], tot: F.cn[i] + F.tcor[i]}));
   db.innerHTML = kp([['Compras netas', usd(sumI(F.cn, ii)), selL()], ['Transferencias', usd(sumI(F.tcor, ii)), selL()], ['Inventario resultante', usd(F.fin), 'al 30 sep · entradas − salidas'], ['Inventario contado', usd(F.cont), '30 sep · diferencia ' + usd(F.cont - F.fin)]])
@@ -3319,36 +3721,6 @@ function cardCobertura(db) {
 }
 const DIAS = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'], DIAS_L = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'];
 function picoMapa(M_) { let pk = [0, 0]; M_.forEach((r, d) => r.forEach((v, j) => { if (v != null && v > (M_[pk[0]][pk[1]] || 0)) pk = [d, j]; })); return pk; }
-// filas = horas, columnas = días de la semana; a la derecha el total de la hora en la semana y abajo el total de cada día
-function drawHeat(m) {
-  const h_ = selHoras(), el0 = $('hm'); if (!h_) { if (el0) el0.innerHTML = sinHoras(); return; }
-  const H = h_.mapa, M_ = H[m], all = M_.flat().filter(v => v != null), max = Math.max(...all);
-  const fmt = v => m === 'v' ? usd(v) : nf(v, 1), cell = v => m === 'v' ? nf(v, 0) : nf(v, 1);
-  const unit = m === 'v' ? 'en ventas' : 'transacciones';
-  const pk = picoMapa(M_);
-  let html = '<span></span>' + DIAS.map(x => `<span class="hh">${x}</span>`).join('') + '<span class="hh">Semana</span>';
-  H.horas.forEach((h, j) => {
-    html += `<span class="rl">${h}:00</span>`;
-    M_.forEach((r, d) => {
-      const v = r[j];
-      if (v == null) { html += `<span class="c off" data-d="${d}" data-j="${j}"></span>`; return; }
-      const a = v / max, p = Math.round(8 + a * 92);
-      html += `<span class="c ${a > .55 ? 'hi' : ''} ${d === pk[0] && j === pk[1] ? 'pk' : ''}" style="--k:${j * 7 + d};background:color-mix(in srgb,var(--accent) ${p}%,transparent)" data-d="${d}" data-j="${j}">${a > .12 ? cell(v) : ''}</span>`;
-    });
-    html += `<span class="tt">${fmt(M_.reduce((s, r) => s + (r[j] || 0), 0))}</span>`;
-  });
-  html += '<span class="rl">Día</span>' + M_.map(r => `<span class="tt tc">${fmt(r.reduce((s, v) => s + (v || 0), 0))}</span>`).join('') + '<span></span>';
-  const el = $('hm'); if (!el) return;
-  el.innerHTML = html;
-  const info_ = $('hm-info'), base = `Pico: ${DIAS_L[pk[0]]} a las ${H.horas[pk[1]]}:00, ${fmt(M_[pk[0]][pk[1]])} ${unit}`;
-  info_.textContent = base;
-  el.querySelectorAll('.c').forEach(c => {
-    c.onmouseenter = () => { const d = +c.dataset.d, j = +c.dataset.j, v = M_[d][j];
-      info_.textContent = v == null ? `${cap(DIAS_L[d])} a las ${H.horas[j]}:00: cerrado` : `${cap(DIAS_L[d])} de ${H.horas[j]}:00 a ${H.horas[j]}:59: ${fmt(v)} ${unit} · ${m === 'v' ? nf(H.t[d][j], 1) + ' transacciones' : usd(H.v[d][j]) + ' en ventas'}`; };
-    c.onmouseleave = () => { info_.textContent = base; };
-    c.onclick = c.onmouseenter;
-  });
-}
 // mapa en miniatura para la tarjeta de la pila: grande sin indicador abierto, del tamaño de una tarjeta si hay uno abierto
 function miniHeat(grande) {
   const h_ = selHoras();
@@ -3542,7 +3914,7 @@ function hashDe() {
   if (S.mes !== 'acum') q.push('m=' + S.mes);
   else if (PER.join() !== D.meses.slice(idx0).join()) q.push('p=' + perCod(PER));
   if (S.fam === 'X') q.push('v=fechas'); else if (S.fam !== 'T') q.push('v=' + S.fam); else if (S.todos) q.push('v=todos');
-  if (S.datos) q.push('d=' + (S.card == null ? '' : slug(TARJETAS[S.card].t))); else if (S.sel) q.push('i=' + S.sel);
+  if (S.datos) { q.push('d=' + (S.card == null ? '' : slug(TARJETAS[S.card].t))); if (S.card != null && TARJETAS[S.card].b === cardVentas && vxOn()) q.push('x=' + vxCod()); } else if (S.sel) q.push('i=' + S.sel);
   if (!semInforme()) q.push('b=' + Object.keys(SEM0).map(k => SM[k]).join('.'));
   return q.length ? '#' + q.join('&') : '';
 }
@@ -3556,7 +3928,8 @@ function leeHash() {
   else if (p && p.length) { if (p.length === 1) { S.mes = p[0]; PER = D.meses.slice(Math.min(ix(p[0]), idx0)); } else { S.mes = 'acum'; PER = p; } }
   const v = q.get('v'); if (v === 'fechas') S.fam = 'X'; else if (v === 'todos') S.todos = true; else if (v && FAM_L[v]) S.fam = v;
   const i = q.get('i'); if (i && BY[i]) { S.sel = i; if (!visibles().includes(i)) { if (S.fam !== 'T' && BY[i].f !== S.fam) S.fam = BY[i].f; if (!visibles().includes(i)) S.todos = true; } }
-  const d = q.get('d'); if (d != null) { const j = TARJETAS.findIndex(t => slug(t.t) === d); S.datos = true; S.card = j < 0 ? 0 : j; }
+  const d = q.get('d'); if (d != null) { const j = TARJETAS.findIndex(t => slug(t.t) === d || (t.al || []).includes(d)); S.datos = true; S.card = j < 0 ? 0 : j; }
+  if (q.get('x')) S.vx = vxDeCod(q.get('x'));
 }
 addEventListener('hashchange', () => { if (location.hash !== hashDe()) location.reload(); });
 // aviso breve en la parte baja de la pantalla
