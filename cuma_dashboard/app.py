@@ -12,6 +12,7 @@ Variables de entorno opcionales:
 import hmac
 import json
 import os
+import re
 import threading
 
 from flask import Flask, Response, abort, jsonify, request
@@ -80,6 +81,10 @@ def tablero():
     j = html.index(FIN, i)
     carga = json.dumps(datos(), ensure_ascii=False).replace("</", "<\\/")
     html = html[:i] + "\n" + carga + "\n" + html[j:]
+    # vista previa de enlaces (Open Graph): las direcciones de la imagen y de la página deben ser absolutas
+    esquema = "https" if request.headers.get("X-Forwarded-Proto", request.scheme).split(",")[0].strip() == "https" else "http"
+    origen = esquema + "://" + re.sub(r"[^A-Za-z0-9.:\-\[\]]", "", request.host)
+    html = html.replace("__ORIGEN__", origen)
     nombre = os.environ.get("NOMBRE")
     if nombre:   # solo el texto visible: los identificadores internos van en minúsculas («cuma-data») y no cambian
         html = html.replace("CUMA", nombre)
