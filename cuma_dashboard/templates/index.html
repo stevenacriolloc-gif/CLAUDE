@@ -1309,9 +1309,35 @@ button.kx-i:focus-visible,.kx-sb:focus-visible,.mini-b:focus-visible{outline:2px
 @keyframes mgIn{from{opacity:0;transform:scale(.2)}}
 @media (prefers-reduced-motion:reduce){.mg-arc,.mg-arcs,.mg-p{animation:none}.mg-a,.mg-c,.mg-d{transition:none}}
 
-/* finanzas: el menú de tarjetas y la sección elegida comparten el mismo lugar */
-#fz-k{min-width:0}
-#fz-g{margin-top:2px}
+/* finanzas: al elegir una tarjeta, el menú se contrae y a su lado aparecen los indicadores de la sección */
+.fz-k{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,0fr);column-gap:0;min-width:0;transition:grid-template-columns .65s var(--spring),column-gap .65s var(--spring)}
+.fz-k.abierto{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);column-gap:12px}
+.fz-menu,.fz-det{min-width:0}
+.fz-det{overflow:hidden}
+.fz-det .kx-i{animation:fzIn .6s var(--spring) both}
+.fz-det .kx-i:nth-child(2){animation-delay:60ms}.fz-det .kx-i:nth-child(3){animation-delay:120ms}
+@keyframes fzIn{from{opacity:0;transform:translateX(-14px) scale(.96)}}
+.fz-k.abierto .fz-menu .kx-s{display:none}
+.fz-k.abierto .fz-menu .kx-v{font-size:clamp(18px,1.4vw,22px)}
+.fz-k.abierto .fz-menu .kx-v small{display:none}
+.fz-k.abierto .fz-menu .kx-st{gap:0;width:22px;height:22px;padding:0;justify-content:center;font-size:0;line-height:0}
+.fz-k.abierto .fz-menu .kx-l i{display:none}
+.fz-menu>.kx,.fz-det>.kx{height:100%;grid-auto-rows:1fr}
+.fz-k.abierto .fz-menu .kx-l{white-space:normal;line-height:1.25}
+.fz-k .kx-i,.fz-k .kx-v{transition:font-size .5s var(--spring),border-color .3s var(--ease),background-color .3s var(--ease)}
+.kx-fz.on{border-color:var(--ink-strong);background:var(--glass-flat)}
+@container (max-width:1099px){
+  .fz-k{grid-template-columns:minmax(0,1fr);grid-template-rows:auto 0fr;row-gap:0;transition:grid-template-rows .6s var(--spring),row-gap .6s var(--spring)}
+  .fz-k.abierto{grid-template-columns:minmax(0,1fr);grid-template-rows:auto 1fr;row-gap:12px}
+  .fz-k.abierto .fz-menu .kx-s{display:-webkit-box}
+}
+.fz-col{display:flex;flex-direction:column;gap:14px;min-width:0}
+.fz-pr{cursor:pointer;border-radius:6px;margin:0 -6px;padding:2px 6px;transition:opacity .3s var(--ease),background-color .3s var(--ease)}
+.fz-pr:hover{background:var(--glass-flat)}
+.fz-pr.on{background:var(--glass-flat)}
+.fz-pr.dim{opacity:.38}
+.fz-pr:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+@media (prefers-reduced-motion:reduce){.fz-k,.fz-det .kx-i{transition:none;animation:none}}
 </style>
 <style id="base">
 /* base del navegador: preflight de Tailwind CSS 3.4.16 (licencia MIT), en el mismo orden en que lo aplicaba el CDN */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}
@@ -2118,8 +2144,9 @@ const ptR = (r, R_ = r + 2.5) => PER.map(q => S.mes !== 'acum' && q === S.mes ? 
 
 /* ---------- meses elegidos: todo lo que suma meses se recalcula con esta selección ---------- */
 // SI: meses que suman (un mes o el acumulado). Las series mensuales muestran el periodo (PER) y resaltan el mes elegido.
-const SI = () => S.mes === 'acum' ? PER.map(ix) : [ix(S.mes)];
-const selL = () => S.mes === 'acum' ? perCorto().toLowerCase() : lblL(S.mes);
+let SIX = null;   // meses elegidos dentro de una sección (finanzas: el mes tocado en la evolución)
+const SI = () => SIX || (S.mes === 'acum' ? PER.map(ix) : [ix(S.mes)]);
+const selL = () => SIX && SIX.length === 1 ? `${lblL(D.meses[SIX[0]])} ${D.meses[SIX[0]].slice(0, 4)}` : S.mes === 'acum' ? perCorto().toLowerCase() : lblL(S.mes);
 const selN = () => SI().length;
 const hiA = (col, i) => S.mes === 'acum' || D.meses[i] === S.mes ? col : col + '59';
 const LBP = () => PER.map(lbl);
@@ -2129,7 +2156,7 @@ const dmi = i => DET ? DET.meses.indexOf(D.meses[i]) : -1;
 const dSel = () => new Set(SI().map(dmi).filter(x => x >= 0));
 const dMask = () => [...dSel()].reduce((a, i) => a | (1 << i), 0);
 let AGG = {k: null};
-const memo = (name, f) => { const k = S.mes + '|' + PER.join(','); if (AGG.k !== k) AGG = {k}; return name in AGG ? AGG[name] : (AGG[name] = f()); };
+const memo = (name, f) => { const k = S.mes + '|' + PER.join(',') + '|' + (SIX ? SIX.join(',') : ''); if (AGG.k !== k) AGG = {k}; return name in AGG ? AGG[name] : (AGG[name] = f()); };
 // cálculo de un solo mes (índice de D.meses) sin tocar la vista: se fija el mes, se calcula y se restaura el periodo y la memoria
 function enMes(i, f) {
   const s0 = S.mes, p0 = PER, a0 = AGG;
@@ -2381,7 +2408,7 @@ const FG = {
     const L = LBP(), oss = PER.map(k => calc([ix(k)]).oss);
     return FIG(5, 'Autosuficiencia operativa mensual (I6)', cv(h, id => { const k = K(); mk(id, {type: 'bar', data: {labels: L, datasets: [
         {label: 'Autosuficiencia', data: oss, backgroundColor: oss.map((v, j) => dimA(v >= 100 ? k.ol : k.al, ix(PER[j]))), borderRadius: 5, borderSkipped: false, maxBarThickness: 34, fmt: v => pct(v), vlab: v => nf(v, 0)}]},
-      options: opt({legend: false, yf: v => v + '\u00a0%', y: {min: 60, max: 120}, zero: false, hl: {lines: [{v: 100, c: k.dk, t: '100\u00a0%'}, {v: lim('I6').meta, c: k.ac, dash: [2, 3], t: refK('I6'), left: true}]}})}); }),
+      options: opt({legend: false, yf: v => v + '\u00a0%', y: {min: 60, max: 120}, zero: false, hl: {lines: [{v: 100, c: k.dk, t: '100\u00a0%'}]}})}); }),
       {i: 'Ventas sobre el costo total de cada mes. Verde oscuro: el mes cubre sus costos.'});
   },
   // Fig. 6 · estructura del gasto operativo
@@ -4127,8 +4154,8 @@ function kx(items) {
     const cab = `<span class="kx-h"><span class="kx-l">${x.l}${x.id ? ` <i>${x.id}</i>` : ''}</span>${pill(x.st)}${!x.id && x.i ? info(x.i) : ''}</span>`;
     const txt = `<b class="kx-v num">${x.v}${x.u ? `<small>${x.u}</small>` : ''}</b>${x.s ? `<span class="kx-s">${x.s}</span>` : ''}`;
     const cuerpo = x.g ? `${cab}<span class="kx-b"><span class="kx-tx">${txt}</span><span class="kx-gr" aria-hidden="true">${x.g}</span></span>` : cab + txt;
-    if (x.fz != null) return `<button type="button" class="kx-i kx-fz${x.st && STC[x.st] ? ' ' + x.st : ''}" data-fz="${x.fz}" aria-label="${esc(sinEt(x.l))}: ${esc(sinEt(x.v))}${x.st && STC[x.st] ? '. ' + ST[x.st] : ''}. ${x.fz ? 'Ver la sección' : 'Volver a las cuatro tarjetas'}">${cuerpo}</button>`;
-    return x.id
+    if (x.fz != null) return `<button type="button" class="kx-i kx-fz${x.on ? ' on' : ''}${x.st && STC[x.st] ? ' ' + x.st : ''}" data-fz="${x.fz}" aria-pressed="${!!x.on}" aria-label="${esc(sinEt(x.l))}: ${esc(sinEt(x.v))}${x.st && STC[x.st] ? '. ' + ST[x.st] : ''}. Ver sus indicadores">${cuerpo}</button>`;
+    return x.id && !x.nb
       ? `<button type="button" class="kx-i${x.st && STC[x.st] ? ' ' + x.st : ''}${x.g ? ' kx-g' : ''}" data-id="${x.id}" aria-label="${esc(sinEt(x.l))} (${x.id}): ${esc(sinEt(x.v))}${x.st && STC[x.st] ? '. ' + ST[x.st] : ''}. Abrir la ficha">${cuerpo}</button>`
       : `<div class="kx-i${x.st && STC[x.st] ? ' ' + x.st : ''}${x.g ? ' kx-g' : ''}">${cuerpo}</div>`;
   }).join('')}</div>`;
@@ -4280,118 +4307,129 @@ function secResumen(el) {
 }
 
 /* ---------- 2. Finanzas y rentabilidad ---------- */
-// menú de cuatro tarjetas; al tocar una, el menú se reemplaza por los indicadores de esa sección (otro toque vuelve al menú).
-// Debajo, la evolución (izquierda) y la composición (derecha) de la sección, vinculadas: elegir un elemento en una filtra la otra
+// cuatro tarjetas de menú; al tocar una, se contraen y a su lado aparecen los indicadores de esa sección (otro toque las recoge).
+// Debajo, las gráficas de la sección: evolución a la izquierda y composición a la derecha, vinculadas por mes (y por rubro en el gasto)
 S.fz = S.fz || {k: null, c: null, m: null, t: 'g'};
 const FZN = {mb: 'Margen bruto', mo: 'Margen operativo', oss: 'Autosuficiencia', pe: 'Punto de equilibrio'};
-function fzDef(s) {
-  const com = i => (M.comisiones || [])[i] || 0, mb = i => M.ventas[i] - M.costo_ventas[i];
-  const rub = D.fig.gastos_mes.map((g, j) => ({id: 'g' + j, n: g.n, v: i => g.v[i] || 0}));
-  if (s === 'mb') return {t1: 'Ventas por mes: costo de ventas y margen bruto', t2: 'Composición de las ventas',
-    comps: [{id: 'cv', n: 'Costo de ventas', v: i => M.costo_ventas[i]}, {id: 'mb', n: 'Margen bruto', v: mb}], lines: []};
-  if (s === 'mo') return {t1: 'Gasto operativo por rubro y margen bruto por mes', t2: 'Composición del gasto operativo', comps: rub, lines: [{n: 'Margen bruto', v: mb}]};
-  if (s === 'oss') return {t1: 'Costos totales e ingresos por mes', t2: 'Composición de los costos totales',
-    comps: [{id: 'cv', n: 'Costo de ventas', v: i => M.costo_ventas[i]}, ...rub], lines: [{n: 'Ingresos', v: i => M.ventas[i]}]};
-  return {t1: 'Ventas, costos y punto de equilibrio por mes', t2: 'Costos variables y fijos',
-    comps: [{id: 'var', n: 'Costos variables', v: i => M.costo_ventas[i] + com(i)}, {id: 'fij', n: 'Costos fijos', v: i => M.gastos[i] - com(i)}],
-    lines: [{n: 'Ventas', v: i => M.ventas[i]}, {n: 'Punto de equilibrio', v: i => calc([i]).pe, dash: true}]};
+// ventas, costo de ventas y gasto operativo de cada mes
+const figMensual = () => FIG(0, 'Ventas, costo de ventas y gasto operativo por mes · USD', cv(320, id => { const k = K(), col = c => PER.map(q => dimA(c, ix(q))), ref = j => ix(PER[j]) < idx0;
+        mk(id, {data: {labels: LBP(), datasets: [
+          {type: 'line', label: 'Costo de ventas', data: SER(M.costo_ventas), borderColor: k.dk, backgroundColor: k.dk, borderWidth: 2, pointRadius: ptR(3.5), pointBackgroundColor: k.sf, pointBorderColor: k.dk, pointBorderWidth: 1.6, tension: .3, order: 0,
+            segment: {borderDash: c => ref(c.p0DataIndex) || ref(c.p1DataIndex) ? [4, 4] : undefined}, fmt: v => usd(v)},
+          {type: 'line', label: 'Gasto operativo', data: SER(M.gastos), borderColor: k.mu, backgroundColor: k.mu, borderWidth: 2, borderDash: [6, 4], pointRadius: ptR(3.5), pointBackgroundColor: k.sf, pointBorderColor: k.mu, pointBorderWidth: 1.6, tension: .3, order: 0, fmt: v => usd(v)},
+          {type: 'bar', label: 'Ventas', data: SER(M.ventas), backgroundColor: col(k.li), borderRadius: 4, borderSkipped: false, maxBarThickness: 44, order: 1, fmt: v => usd(v)}]},
+        options: {...opt({yf: v => nf(v)}), onClick: (e, els) => { if (els.length) mesFoco(PER[els[0].index]); }, onHover: (e, els) => { e.native.target.style.cursor = els.length ? 'pointer' : 'default'; },
+          scales: {x: {...axX, ticks: {maxRotation: 0}}, y: {...axY(v => nf(v)), beginAtZero: true}}}}); }),
+      {i: `Barras: ventas. Líneas: costo de ventas y gasto operativo. El costo de las transferencias es real desde ${lblL(D.inicio_costo_real)} de 2026; antes es referencial (tramo punteado). Toca un mes para enfocar el periodo en él.`});
+// gasto operativo por mes y rubro (con un rubro elegido, solo ese rubro)
+function fzGastoMes(rubro) {
+  const gm = D.fig.gastos_mes, uno = rubro && gm.find(x => x.n === rubro);
+  const sets = uno ? [[uno.n, uno.v]] : [...gm.slice(0, 3).map(x => [x.n, x.v]), ['Otros rubros', D.meses.map((_, i) => gm.slice(3).reduce((a, x) => a + x.v[i], 0))]];
+  return FIG(0, 'Gasto operativo por mes y rubro · USD' + (uno ? ' · ' + uno.n : ''), cv(250, id => { const k = K(), col = [k.ol, k.al, k.li, k.gr];
+    mk(id, {type: 'bar', data: {labels: LBP(), datasets: sets.map(([n, v], j) => ({label: n, data: SER(v), backgroundColor: PER.map(q => dimA(col[j], ix(q))), borderRadius: R4(j === sets.length - 1, j === 0), borderSkipped: false, maxBarThickness: 34, stack: 's', fmt: x => usd(x)}))},
+      options: {...opt({yf: v => nf(v)}), scales: {x: {...axX, stacked: true}, y: {...axY(v => nf(v)), stacked: true, beginAtZero: true}}}}); }));
 }
-function fzTarjetas() {
-  const r = calc(SI()), com = sum(M.comisiones || [], SI()), res = r.V - r.CV - r.GO, k = S.fz.k;
-  if (!k) return kx([
+// gráficas y tablas de cada sección (las de siempre, ordenadas: evolución a la izquierda, composición a la derecha)
+const FZG = {
+  mb: {izq: () => FG.f3b(270), der: () => FG.f3a(), tab: () => {
+    return FIG(0, 'Margen por categoría · ' + selL(), dt({cols: [{k: 'cat', l: 'Categoría', b: true}, {k: 'v', l: 'Ventas', t: 'usd', bar: true}, {k: 'mg', l: 'Margen USD', t: 'usd'}, {k: 'mgp', l: 'Margen %', t: 'pct', heat: 1}, {k: 'n', l: 'Productos', t: 'num'}],
+      rows: selCat(), top: 12, unit: 'categorías', name: 'margen_categorias'}), {i: `Margen con el costo de cada venta, de ${selL()}.`}); }},
+  mo: {izq: () => fzGastoMes(S.fz.c), der: () => FG.f6a(), tab: () => {
+    const ii = SI(), r = calc(ii), rows = D.fig.gastos_mes.map(x => { const v = sumI(x.v, ii); return {n: x.n, v, pg: 0, pv: v / r.V * 100, pm: v / r.n, sp: PER.map(k => x.v[ix(k)])}; }).filter(x => Math.abs(x.v) > 1);
+    const tot = rows.reduce((a, x) => a + x.v, 0); rows.forEach(x => { x.pg = x.v / tot * 100; });
+    return FIG(0, 'Gasto por rubro · ' + selL(), dt({cols: [{k: 'n', l: 'Rubro', b: true}, {k: 'v', l: 'USD', t: 'usd', bar: true}, {k: 'pg', l: '% del gasto', t: 'pct', heat: 1}, {k: 'pv', l: '% de las ventas', t: 'pct', d: 2}, {k: 'pm', l: 'Al mes', t: 'usd'}, {k: 'sp', l: 'Por mes', t: 'spark'}],
+      rows, search: false, foot: {v: 'sum', pg: 'sum', pv: 'sum', pm: 'sum'}, name: 'gasto_rubros'})); }},
+  oss: {izq: () => FG.f5b(260), der: () => FG.f4(300), tab: () => {
+    const rows = mesRows(i => { const c = calc([i]); return {mb: c.mb, pgo: c.pgo, mo: c.mo, oss: c.oss, mc: c.mc}; });
+    return FIG(0, 'Indicadores mensuales', dt({cols: [{k: 'mes', l: 'Mes', b: true}, {k: 'mb', l: 'Margen bruto', t: 'pct', heat: 1}, {k: 'pgo', l: 'Gasto / ventas', t: 'pct', heat: -1}, {k: 'mo', l: 'Margen operativo', t: 'pct', bar: true}, {k: 'oss', l: 'Autosuficiencia', t: 'pct', heat: 1}, {k: 'mc', l: 'Margen de contribución', t: 'pct'}],
+      rows, search: false, mark: markSel, name: 'indicadores_mensuales'})); }},
+  pe: {izq: () => figMensual(), der: () => FG.f5a(260), tab: () => {
+    const rows = mesRows(i => { const c = calc([i]); return {v: M.ventas[i], cv: M.costo_ventas[i], mb: c.mb, go: M.gastos[i], pgo: c.pgo, res: M.ventas[i] - M.costo_ventas[i] - M.gastos[i] + (M.otros ? M.otros[i] : 0), oss: c.oss, real: i >= idx0 ? 'Real' : 'Referencial'}; });
+    const sumF = k => R_ => R_.reduce((a, x) => a + x[k], 0);
+    return FIG(0, 'Estado de resultados por mes · USD', dt({cols: [{k: 'mes', l: 'Mes', b: true}, {k: 'v', l: 'Ventas', t: 'usd', bar: true}, {k: 'cv', l: 'Costo', t: 'usd'}, {k: 'mb', l: 'Margen bruto', t: 'pct', heat: 1}, {k: 'go', l: 'Gastos', t: 'usd'}, {k: 'pgo', l: 'Gasto / ventas', t: 'pct', heat: -1}, {k: 'res', l: 'Resultado', t: 'usd', bar: true}, {k: 'oss', l: 'Autosuf.', t: 'pct', heat: 1}, {k: 'real', l: 'Costo', t: 'tag', tc: v => v === 'Real' ? 'full' : 'none'}],
+      rows, search: false, filters: ['real'], top: 12, mark: markSel, footL: totMeses, foot: {v: sumF('v'), cv: sumF('cv'), mb: R_ => (sumF('v')(R_) - sumF('cv')(R_)) / sumF('v')(R_) * 100, go: sumF('go'), pgo: R_ => sumF('go')(R_) / sumF('v')(R_) * 100, res: sumF('res'), oss: R_ => sumF('v')(R_) / (sumF('cv')(R_) + sumF('go')(R_)) * 100}, name: 'estado_resultados'}),
+      {i: 'Meses del periodo elegido. El resultado incluye otros ingresos y gastos financieros. El costo de las transferencias es real desde abril de 2026; antes es referencial.'}); }}
+};
+function fzMenu() {
+  const r = calc(SI()), res = r.V - r.CV - r.GO, k = S.fz.k;
+  return kx([
     xi('I1', {fz: 'mb', s: `${usd(r.V - r.CV)} de margen · ${selL()}`}),
     xi('I3', {fz: 'mo', l: 'Margen operativo', s: `resultado ${usd(res)} · ${usd(res / r.n)} al mes`}),
     xi('I6', {fz: 'oss', s: `ingresos ${usd(r.V)} · costos ${usd(r.CV + r.GO)}`}),
-    xi('I7', {fz: 'pe', s: `margen de contribución ${pct(r.mc)}`})]);
+    xi('I7', {fz: 'pe', s: `margen de contribución ${pct(r.mc)}`})].map(x => ({...x, on: x.fz === k})));
+}
+function fzDetalle(k) {
+  if (!k) return '';
+  const r = calc(SI()), com = sum(M.comisiones || [], SI()), res = r.V - r.CV - r.GO;
   const T = {
     mb: [{l: 'Ingresos', v: usd(r.V), s: `${usd(r.vmes)} al mes · ${selL()}`}, {l: 'Costo de ventas', v: usd(r.CV), s: `${pct(r.CV / r.V * 100)} de las ventas`}, xi('I1', {s: `${usd(r.V - r.CV)} de margen`})],
     mo: [{l: 'Margen bruto', v: usd(r.V - r.CV), s: `${pct(r.mb)} de las ventas`}, {l: 'Gasto operativo', v: usd(r.GO), s: `${pct(r.pgo)} de las ventas`}, xi('I3', {l: 'Margen operativo', s: `resultado ${usd(res)} · ${usd(res / r.n)} al mes`})],
     oss: [{l: 'Ingresos', v: usd(r.V), s: `${usd(r.vmes)} al mes`}, {l: 'Costos totales', v: usd(r.CV + r.GO), s: 'costo de ventas y gasto operativo'}, xi('I6', {s: `los ingresos cubren ${pct(r.oss)} de los costos`})],
     pe: [{l: 'Margen de contribución', v: pct(r.mc), s: 'después del costo de ventas y las comisiones'}, {l: 'Costos fijos', v: usd((r.GO - com) / r.n), u: 'al mes', s: 'gasto operativo sin comisiones'}, xi('I7', {s: `ventas de ${usd(r.vmes)} al mes`})]
   }[k];
-  return kx(T.map(x => ({...x, fz: ''})));
+  return kx(T.map(x => ({...x, nb: true})));
 }
 function secFinanzas(el) {
-  const s = S.fz.k || 'mb';
-  el.innerHTML = `<div id="fz-k">${fzTarjetas()}</div>
-    <section class="sgr" id="fz-g"><header class="sgr-h"><h2 id="fz-h">${FZN[s]}</h2><nav class="gb vw" id="fz-v" aria-label="Vista de la sección"></nav></header><div id="fz-b"></div></section>`;
+  el.innerHTML = `<div class="fz-k${S.fz.k ? ' abierto' : ''}" id="fz-k"><div class="fz-menu" id="fz-menu">${fzMenu()}</div><div class="fz-det" id="fz-det">${fzDetalle(S.fz.k)}</div></div><div id="fz-b"></div>`;
   PEND.push(() => {
     if (!$('fz-k')) return;
-    $('fz-k').onclick = e => { const b = e.target.closest('[data-fz]'); if (b) fzIr(b.dataset.fz || null); };
-    menu($('fz-v'), [['g', 'Gráficas'], ['t', 'Tablas']], S.fz.t, v => { S.fz.t = v; fzCuerpo(true); });
+    $('fz-menu').onclick = e => { const b = e.target.closest('[data-fz]'); if (b) fzIr(b.dataset.fz); };
     fzCuerpo();
   });
 }
-// tocar una tarjeta: el menú se reemplaza por la sección (o vuelve al menú) y las gráficas pasan a esa sección
+// tocar una tarjeta: se abre su sección junto al menú; tocar la misma, la recoge
+let FZT = 0;
 function fzIr(k) {
-  const antes = S.fz.k || 'mb';
-  S.fz.k = k; S.fz.c = S.fz.m = null;
-  const kk = $('fz-k'); swap(kk, () => { kk.innerHTML = fzTarjetas(); });
-  if ((k || 'mb') !== antes) fzCuerpo(true);
+  const antes = S.fz.k, nuevo = antes === k ? null : k, kk = $('fz-k'), det = $('fz-det');
+  S.fz.k = nuevo; S.fz.c = S.fz.m = null; clearTimeout(FZT);
+  $('fz-menu').querySelectorAll('[data-fz]').forEach(b => { const on = b.dataset.fz === nuevo; b.setAttribute('aria-pressed', on); b.classList.toggle('on', on); });
+  if (nuevo) { if (antes && det.innerHTML) swap(det, () => { det.innerHTML = fzDetalle(nuevo); }); else det.innerHTML = fzDetalle(nuevo); kk.classList.add('abierto'); }
+  else { kk.classList.remove('abierto'); FZT = setTimeout(() => { if (!S.fz.k) det.innerHTML = ''; }, reduce() ? 0 : 650); }
+  if ((nuevo || 'mb') !== (antes || 'mb')) fzCuerpo(true);
 }
-let FZC = null;
+// cuerpo: gráficas en dos columnas o tablas; el botón que alterna vive dentro de la primera figura
 function fzCuerpo(anim) {
-  const b = $('fz-b'); if (!b) return; const s = S.fz.k || 'mb';
-  $('fz-h').textContent = FZN[s];
+  const b = $('fz-b'); if (!b) return; const s = S.fz.k || 'mb', G = FZG[s];
   const pinta = () => {
-    FZC = null;
-    b.innerHTML = S.fz.t === 't' ? fzTablas(s) : grid2(FIG(0, '<span id="fz-t1"></span>', '<div id="fz-e"></div>'), FIG(0, '<span id="fz-t2"></span>', '<div id="fz-c"></div>'));
-    flush(b); if (S.fz.t !== 't') fzPinta();
+    b.innerHTML = S.fz.t === 't' ? G.tab() : `<div class="g2 fz-cols"><div class="fz-col" id="fz-izq">${G.izq()}</div><div class="fz-col" id="fz-der">${fzDerHTML()}</div></div>`;
+    flush(b);
+    const fc = b.querySelector('.fg figcaption'); if (fc) { fc.classList.remove('fc1'); fc.querySelector('.fgr').insertAdjacentHTML('afterbegin', '<nav class="gb vw" id="fz-v" aria-label="Ver gráficas o tablas"></nav>');
+      menu($('fz-v'), [['g', 'Gráficas'], ['t', 'Tablas']], S.fz.t, v => { S.fz.t = v; S.fz.m = S.fz.c = null; fzCuerpo(true); }); }
+    if (S.fz.t !== 't') fzVincula();
   };
   anim ? swap(b, pinta) : pinta();
 }
-// evolución y composición de la sección, con el mes y el elemento elegidos
-function fzPinta() {
-  const el = $('fz-e'), ec = $('fz-c'); if (!el || !ec) return;
-  const s = S.fz.k || 'mb', d = fzDef(s), f = S.fz, k = K(), pal = [...PALS(), k.mu, k.dk];
-  const cs = d.comps.map((c, j) => ({...c, col: pal[j % pal.length]})), elegido = cs.find(c => c.id === f.c);
-  if (f.c != null && !elegido) f.c = null;
-  const mesTx = i => `${lblL(D.meses[i])} ${D.meses[i].slice(0, 4)}`;
-  // izquierda: barras apiladas por mes (solo el elemento elegido, si lo hay) y líneas de referencia de la sección
-  const tenue = (c, i) => f.m == null || i === f.m ? c : c + '40', vis = elegido ? [elegido] : cs;
-  const ds = vis.map(c => ({type: 'bar', label: c.n, data: PER.map(q => c.v(ix(q))), backgroundColor: PER.map(q => tenue(c.col, ix(q))), borderRadius: 3, borderSkipped: false, maxBarThickness: 40, stack: 'c', order: 2, fmt: v => usd(v)}));
-  if (!elegido) d.lines.forEach((l, j) => ds.push({type: 'line', label: l.n, data: PER.map(q => l.v(ix(q))), stack: 'l' + j, borderColor: j ? k.ac : k.dk, backgroundColor: j ? k.ac : k.dk, borderWidth: 2, borderDash: l.dash ? [5, 4] : undefined,
-    pointRadius: PER.map(q => ix(q) === f.m ? 5.5 : 3.5), pointBackgroundColor: k.sf, pointBorderColor: j ? k.ac : k.dk, pointBorderWidth: 1.6, tension: .3, order: 0, spanGaps: true, fmt: v => usd(v)}));
-  $('fz-t1').textContent = d.t1 + (elegido ? ' · ' + elegido.n : '') + ' · USD';
-  if (FZC && FZC.canvas && FZC.canvas.isConnected) { FZC.data.labels = LBP(); FZC.data.datasets = ds; FZC.update(); }
-  else el.innerHTML = cv(310, id => { FZC = mk(id, {data: {labels: LBP(), datasets: ds},
-      options: {...opt({yf: v => nf(v)}), animation: {duration: 450, easing: 'easeOutQuart'},
-        onClick: (e, els) => { const b = els.find(x => x.element && x.datasetIndex != null); if (!b) return; const m = ix(PER[b.index]); f.m = f.m === m ? null : m; fzPinta(); },
-        onHover: (e, els) => { e.native.target.style.cursor = els.length ? 'pointer' : 'default'; },
-        scales: {x: {...axX, stacked: true, ticks: {maxRotation: 0}}, y: {...axY(v => nf(v)), stacked: true, beginAtZero: true}}}}); });
-  if (!FZC || !FZC.canvas || !FZC.canvas.isConnected) flush(el);
-  // derecha: composición del periodo (o del mes elegido); tocar un elemento filtra la evolución
-  const ii = f.m != null ? [f.m] : SI(), filas = cs.map(c => ({id: c.id, n: c.n, v: ii.reduce((a, i) => a + c.v(i), 0)})), tot = filas.reduce((a, x) => a + x.v, 0);
-  filas.forEach(x => { x.sh = tot ? x.v / tot * 100 : 0; });
-  $('fz-t2').textContent = `${d.t2} · ${f.m != null ? mesTx(f.m) : selL()}`;
-  vxLista(ec, filas.filter(x => Math.abs(x.v) >= .5 || x.id === f.c).sort((a, b) => b.v - a.v), f.c, 'fc', 'Sin datos en el periodo.', true);
-  ec.querySelectorAll('[data-fc]').forEach(b => b.onclick = () => { f.c = f.c === b.dataset.fc ? null : b.dataset.fc; fzPinta(); });
+// la composición se calcula con el mes elegido en la evolución
+function fzDerHTML() {
+  const s = S.fz.k || 'mb';
+  SIX = S.fz.m != null ? [S.fz.m] : null;
+  try { return FZG[s].der(); } finally { SIX = null; }
 }
-// tablas de datos de la sección
-function fzTablas(s) {
-  const ii = SI(), r = calc(ii), sumF = k => R_ => R_.reduce((a, x) => a + x[k], 0), com = i => (M.comisiones || [])[i] || 0;
-  if (s === 'mb') {
-    const rows = mesRows(i => { const c = calc([i]); return {v: M.ventas[i], cv: M.costo_ventas[i], m: M.ventas[i] - M.costo_ventas[i], mb: c.mb, real: i >= idx0 ? 'Real' : 'Referencial'}; });
-    return FIG(0, 'Estado de resultados: ventas, costo y margen bruto', dt({cols: [{k: 'mes', l: 'Mes', b: true}, {k: 'v', l: 'Ventas', t: 'usd', bar: true}, {k: 'cv', l: 'Costo de ventas', t: 'usd'}, {k: 'm', l: 'Margen bruto USD', t: 'usd'}, {k: 'mb', l: 'Margen bruto', t: 'pct', heat: 1}, {k: 'real', l: 'Costo', t: 'tag', tc: v => v === 'Real' ? 'full' : 'none'}],
-      rows, search: false, filters: ['real'], top: 12, mark: markSel, footL: totMeses, foot: {v: sumF('v'), cv: sumF('cv'), m: sumF('m'), mb: R_ => sumF('m')(R_) / sumF('v')(R_) * 100}, name: 'margen_bruto'}));
+function fzDer() { const d = $('fz-der'); if (!d) return; d.innerHTML = fzDerHTML(); flush(d); fzVincula(); }
+function fzIzq() { const d = $('fz-izq'); if (!d) return; const nav = $('fz-v'); d.innerHTML = FZG[S.fz.k || 'mb'].izq(); flush(d);
+  const fc = d.querySelector('.fg figcaption'); if (fc && nav) { fc.classList.remove('fc1'); fc.querySelector('.fgr').prepend(nav); } fzVincula(); }
+const fzTenue = c => typeof c !== 'string' ? c : /^#[0-9a-f]{6}$/i.test(c) ? c + '40' : /^#[0-9a-f]{8}$/i.test(c) ? c.slice(0, 7) + '30' : c;
+// vínculos: tocar un mes en una gráfica mensual elige ese mes; tocar un rubro del gasto filtra la evolución
+function fzVincula() {
+  const b = $('fz-b'); if (!b) return; const j = S.fz.m == null ? -1 : PER.indexOf(D.meses[S.fz.m]);
+  b.querySelectorAll('canvas').forEach(cv => { const ch = Chart.getChart(cv); if (!ch || ch.data.labels.length !== PER.length) return;
+    if (!ch._fz) { ch._fz = 1; ch.options.onClick = (e, els) => { if (!els.length) return; const m = ix(PER[els[0].index]); S.fz.m = S.fz.m === m ? null : m; fzDer(); };
+      ch.options.onHover = (e, els) => { e.native.target.style.cursor = els.length ? 'pointer' : 'default'; }; }
+    ch.data.datasets.forEach(ds => {
+      if (!('_bg' in ds)) { ds._bg = ds.backgroundColor; ds._pr = ds.pointRadius; }
+      const linea = (ds.type || ch.config.type) === 'line';
+      if (linea) ds.pointRadius = j < 0 ? ds._pr : PER.map((_, i) => i === j ? 6.5 : Array.isArray(ds._pr) ? ds._pr[i] : ds._pr ?? 3);
+      else ds.backgroundColor = j < 0 ? ds._bg : PER.map((_, i) => { const c = Array.isArray(ds._bg) ? ds._bg[i] : ds._bg; return i === j ? c : fzTenue(c); });
+    });
+    ch.update('none'); });
+  // gasto operativo: cada rubro de la estructura es un botón que filtra la gráfica mensual
+  if ((S.fz.k || 'mb') === 'mo') {
+    const der = $('fz-der'); if (!der) return;
+    der.querySelectorAll('.pr').forEach(p => { const n = p.querySelector('.l span').textContent.trim(), on = S.fz.c === n;
+      p.classList.add('fz-pr'); p.setAttribute('role', 'button'); p.tabIndex = 0; p.setAttribute('aria-pressed', on); p.classList.toggle('on', on); p.classList.toggle('dim', S.fz.c != null && !on);
+      p.onclick = () => { S.fz.c = S.fz.c === n ? null : n; fzIzq(); fzDer(); };
+      p.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); p.click(); } }; });
   }
-  if (s === 'mo') {
-    const rowsG = D.fig.gastos_mes.map(x => { const v = sumI(x.v, ii); return {n: x.n, v, pg: 0, pv: v / r.V * 100, pm: v / r.n, sp: PER.map(k => x.v[ix(k)])}; }).filter(x => Math.abs(x.v) > 1);
-    const totG = rowsG.reduce((a, x) => a + x.v, 0); rowsG.forEach(x => { x.pg = x.v / totG * 100; });
-    const rows = mesRows(i => { const c = calc([i]); return {m: M.ventas[i] - M.costo_ventas[i], go: M.gastos[i], pgo: c.pgo, res: M.ventas[i] - M.costo_ventas[i] - M.gastos[i], mo: c.mo}; });
-    return grid2(FIG(0, 'Gasto operativo por rubro', dt({cols: [{k: 'n', l: 'Rubro', b: true}, {k: 'v', l: 'USD', t: 'usd', bar: true}, {k: 'pg', l: '% del gasto', t: 'pct', heat: 1}, {k: 'pv', l: '% de las ventas', t: 'pct', d: 2}, {k: 'pm', l: 'Al mes', t: 'usd'}, {k: 'sp', l: 'Por mes', t: 'spark'}],
-        rows: rowsG, search: false, foot: {v: 'sum', pg: 'sum', pv: 'sum', pm: 'sum'}, name: 'gasto_rubros'})),
-      FIG(0, 'Resultado operativo por mes', dt({cols: [{k: 'mes', l: 'Mes', b: true}, {k: 'm', l: 'Margen bruto', t: 'usd'}, {k: 'go', l: 'Gasto operativo', t: 'usd'}, {k: 'pgo', l: 'Gasto / ventas', t: 'pct'}, {k: 'res', l: 'Resultado', t: 'usd', bar: true}, {k: 'mo', l: 'Margen operativo', t: 'pct'}],
-        rows, search: false, top: 12, mark: markSel, footL: totMeses, foot: {m: sumF('m'), go: sumF('go'), res: sumF('res')}, name: 'resultado_operativo'})));
-  }
-  if (s === 'oss') {
-    const rows = mesRows(i => { const c = calc([i]); return {v: M.ventas[i], cv: M.costo_ventas[i], go: M.gastos[i], ct: M.costo_ventas[i] + M.gastos[i], oss: c.oss}; });
-    return FIG(0, 'Autosuficiencia por mes', dt({cols: [{k: 'mes', l: 'Mes', b: true}, {k: 'v', l: 'Ingresos', t: 'usd', bar: true}, {k: 'cv', l: 'Costo de ventas', t: 'usd'}, {k: 'go', l: 'Gasto operativo', t: 'usd'}, {k: 'ct', l: 'Costos totales', t: 'usd'}, {k: 'oss', l: 'Autosuficiencia', t: 'pct', heat: 1}],
-      rows, search: false, top: 12, mark: markSel, footL: totMeses, foot: {v: sumF('v'), cv: sumF('cv'), go: sumF('go'), ct: sumF('ct'), oss: R_ => sumF('v')(R_) / sumF('ct')(R_) * 100}, name: 'autosuficiencia'}));
-  }
-  const rows = mesRows(i => { const c = calc([i]); return {v: M.ventas[i], cvar: M.costo_ventas[i] + com(i), cf: M.gastos[i] - com(i), mc: c.mc, pe: c.pe}; });
-  return FIG(0, 'Punto de equilibrio por mes', dt({cols: [{k: 'mes', l: 'Mes', b: true}, {k: 'v', l: 'Ventas', t: 'usd', bar: true}, {k: 'cvar', l: 'Costos variables', t: 'usd'}, {k: 'cf', l: 'Costos fijos', t: 'usd'}, {k: 'mc', l: 'Margen de contribución', t: 'pct'}, {k: 'pe', l: 'Punto de equilibrio', t: 'usd'}],
-    rows, search: false, top: 12, mark: markSel, footL: totMeses, foot: {v: sumF('v'), cvar: sumF('cvar'), cf: sumF('cf')}, name: 'punto_equilibrio'}));
 }
 // financiamiento y capital de trabajo (en la sección de abastecimiento y proveedores)
 function fzFinanciamiento() {
@@ -4480,8 +4518,8 @@ const NM_RAMA = {claro: ['#6E8B23', '#C29A22', '#3F7F6A', '#9AAE3A', '#7D7466', 
 // análisis de datos: sección, título con que se ubica (o #id), pestaña que abre e indicadores que calcula o muestra
 const NM_AN = [
   {n: 'Indicadores clave', s: 'res', ind: ['I5', 'I1', 'I2', 'I15', 'I13', 'I14', 'I17']},
-  {n: 'Evolución mensual', s: 'fin', q: 'Ventas por mes', ind: ['I5', 'I1', 'I2']},
-  {n: 'Estado de resultados', s: 'fin', q: 'Composición de las ventas', ind: ['I1', 'I2', 'I3', 'I6', 'I7']},
+  {n: 'Evolución mensual', s: 'fin', q: 'Margen bruto mensual', ind: ['I5', 'I1', 'I2']},
+  {n: 'Estado de resultados', s: 'fin', q: 'De dónde sale el costo', ind: ['I1', 'I2', 'I3', 'I6', 'I7']},
   {n: 'Estructura del gasto', s: 'fin', q: '#fz-k', ind: ['I4', 'I2']},
   {n: 'Financiamiento', s: 'abs', q: 'Financiamiento y capital', ind: ['I9', 'I13']},
   {n: 'Ventas por hora', s: 'ven', q: 'Venta promedio por hora', ind: ['I11']},
