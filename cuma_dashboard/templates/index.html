@@ -1253,34 +1253,60 @@ button.kx-i:focus-visible,.kx-sb:focus-visible,.mini-b:focus-visible{outline:2px
 @keyframes mpDest{0%,35%{box-shadow:0 0 0 2px var(--accent)}100%{box-shadow:0 0 0 2px transparent}}
 @media (prefers-reduced-motion:reduce){.mp-e path,.mn,.mn .mo{transition:none}.ms.hit .mg,.mp-dest{animation:none}}
 
-/* tarjetas con mini gráfica: texto a la izquierda, gráfica a la derecha; en tarjetas angostas, la gráfica arriba */
-.kx-b{display:flex;align-items:center;gap:12px;min-width:0;flex:1}
-.kx-tx{display:flex;flex-direction:column;gap:6px;min-width:0;flex:1}
-.kx-gr{flex:none;position:relative;display:block;width:92px;height:70px}
+/* tarjetas con mini gráfica: la gráfica arriba y el valor debajo; en la computadora la gráfica crece
+   y, al pasar el cursor, se desplaza y despliega sus detalles */
+.kx-b{display:flex;flex-direction:column;align-items:stretch;gap:10px;min-width:0;flex:1}
+.kx-tx{display:flex;flex-direction:column;gap:6px;min-width:0}
+.kx-gr{flex:none;order:-1;position:relative;display:block;width:100%;height:100px}
 .kx-g{gap:8px}
-@container (max-width:620px){.kx-b{flex-direction:column;align-items:stretch;gap:8px}.kx-gr{order:-1;width:100%;height:62px}}
+@container (max-width:620px){.kx-b{gap:8px}.kx-gr{height:70px}}
+@container (min-width:1100px){
+  .kx-g .kx-b{gap:12px}
+  .kx-g .kx-gr{height:158px;margin:4px 0 2px}
+  .kx-g .kx-tx{min-height:70px;justify-content:flex-end}
+  button.kx-g{transition:transform .5s var(--spring),box-shadow .5s var(--ease),border-color .3s var(--ease)}
+  button.kx-g:hover{transform:translateY(-3px);box-shadow:0 18px 34px -24px var(--glass-shadow,rgba(0,0,0,.35))}
+}
 .mg{position:absolute;inset:0;display:block;width:100%;height:100%;overflow:visible}
+.mg-a{transform-box:view-box;transform-origin:110px 65px;transition:transform .7s var(--spring)}
+.mg-c{transition:opacity .3s var(--ease),transform .5s var(--spring)}
+.mg-d{opacity:0;transform:translateY(6px);transition:opacity .3s var(--ease),transform .6s var(--spring);pointer-events:none}
+@media (hover:hover){@container (min-width:1100px){
+  .kx-g:hover .mg-a,.kx-g:focus-visible .mg-a{transform:var(--mv,none)}
+  .kx-g:hover .mg-c,.kx-g:focus-visible .mg-c{opacity:0;transform:translateY(-5px)}
+  .kx-g:hover .mg-gp,.kx-g:focus-visible .mg-gp{opacity:1;transition-delay:.15s}
+  .kx-g:hover .mg-d,.kx-g:focus-visible .mg-d{opacity:1;transform:none;transition:opacity .4s var(--ease) .12s,transform .7s var(--spring) .12s}
+}}
 .mg-off{fill:color-mix(in srgb,var(--ink) 13%,transparent)}
 .mg-on{fill:var(--c2)}
 .mg-hi{fill:var(--c1)}
 .mg-dim{fill:color-mix(in srgb,var(--c2) 38%,transparent)}
-.mg-trk{fill:none;stroke:color-mix(in srgb,var(--ink) 10%,transparent);stroke-width:6.5}
-.mg-arc{fill:none;stroke:var(--c2);stroke-width:6.5;stroke-linecap:round;stroke-dasharray:var(--p) 100;animation:mgArc 1.3s var(--expo) both}
-.mg-t{font:600 12.5px var(--font);fill:var(--ink-strong);font-variant-numeric:tabular-nums}
-.mg-u{font:500 7.5px var(--font);fill:var(--muted)}
+.mg-trk{fill:none;stroke:color-mix(in srgb,var(--ink) 10%,transparent);stroke-width:13}
+.mg-arc{fill:none;stroke:var(--c2);stroke-width:13;stroke-linecap:round;stroke-dasharray:var(--p) 100;animation:mgArc 1.3s var(--expo) both}
+.mg-t{font:600 23px var(--font);fill:var(--ink-strong);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.mg-ts{font-size:16px}
+.mg-u{font:500 10.5px var(--font);fill:var(--muted)}
+.mg-dt{font:500 10.5px var(--font);fill:var(--muted);font-variant-numeric:tabular-nums}
+.mg-b{font-weight:700;fill:var(--ink-strong)}
+.mg-dl{font:500 10.5px var(--font);fill:var(--muted)}
+.mg-dv{font:600 13.5px var(--font);fill:var(--ink-strong);font-variant-numeric:tabular-nums}
+.mg-in{font:700 11px var(--font);fill:var(--card-bg,#fff)}
+.mg-tag rect{fill:var(--ink-strong)}
+.mg-tt{font:600 10px var(--font);fill:var(--card-bg,#fff);font-variant-numeric:tabular-nums}
 .mg-p{transform-box:fill-box;transform-origin:center;animation:mgIn .6s var(--spring) both;animation-delay:var(--d,0ms)}
-.mg-ts{font-size:11px}
-.mg-ln{stroke:var(--c2);stroke-width:2.4;stroke-linecap:round}
-.mg-lo{stroke:color-mix(in srgb,var(--ink) 13%,transparent);stroke-width:2.4;stroke-linecap:round}
-.mg-mt{stroke:var(--ink-strong);stroke-width:2.2;stroke-linecap:round}
-.mg-bt{fill:none;stroke:color-mix(in srgb,var(--ink) 30%,transparent);stroke-width:1.4}
+.mg-ln{stroke:var(--c2);stroke-width:4.6;stroke-linecap:round}
+.mg-lo{stroke:color-mix(in srgb,var(--ink) 13%,transparent);stroke-width:4.6;stroke-linecap:round}
+.mg-mt{stroke:var(--ink-strong);stroke-width:4;stroke-linecap:round}
+.mg-bt{fill:none;stroke:color-mix(in srgb,var(--ink) 30%,transparent);stroke-width:2.4}
 .mg-bn{fill:color-mix(in srgb,var(--ink) 30%,transparent)}
 .mg-lo2{fill:color-mix(in srgb,var(--ink) 10%,transparent)}
-.mg-arcs{fill:none;stroke:var(--c2);stroke-width:2;stroke-dasharray:var(--p) 100;animation:mgArc 1.3s var(--expo) both .5s}
-.mg-meta{fill:none;stroke:color-mix(in srgb,var(--ink) 40%,transparent);stroke-width:1.1;stroke-dasharray:1.6 1.6}
+.mg-arcs{fill:none;stroke:var(--c2);stroke-width:5;stroke-dasharray:var(--p) 100;animation:mgArc 1.3s var(--expo) both .5s}
+.mg-meta{fill:none;stroke:color-mix(in srgb,var(--ink) 40%,transparent);stroke-width:2;stroke-dasharray:3 3}
+.mg-gh{fill:color-mix(in srgb,var(--ink) 45%,transparent)}
+.mg-gp{opacity:0;transition:opacity .4s var(--ease)}
 @keyframes mgArc{from{stroke-dasharray:0 100}}
 @keyframes mgIn{from{opacity:0;transform:scale(.2)}}
-@media (prefers-reduced-motion:reduce){.mg-arc,.mg-arcs,.mg-p{animation:none}}
+@media (prefers-reduced-motion:reduce){.mg-arc,.mg-arcs,.mg-p{animation:none}.mg-a,.mg-c,.mg-d{transition:none}}
 </style>
 <style id="base">
 /* base del navegador: preflight de Tailwind CSS 3.4.16 (licencia MIT), en el mismo orden en que lo aplicaba el CDN */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}
@@ -4126,80 +4152,108 @@ function grupo(t, key, items) {
 const tituloSec = t => `<h2 class="ix-sec">${t}</h2>`;
 
 
-/* ---------- mini gráficas de las tarjetas del resumen: anillos, diales y redes de puntos ---------- */
+/* ---------- mini gráficas de las tarjetas del resumen ---------- */
+// cada gráfica tiene su forma (mg-a), un rótulo breve (mg-c) y sus detalles (mg-d); en la computadora, al pasar el cursor,
+// la forma se desplaza, el rótulo se retira y los detalles se despliegan
 let MGN = 0;
+const MGW = 220, MGH = 130;
+const mgSvg = (a, c, d, mv) => `<svg class="mg" viewBox="0 0 ${MGW} ${MGH}"><g class="mg-a"${mv ? ` style="--mv:${mv}"` : ''}>${a}</g>${c ? `<g class="mg-c">${c}</g>` : ''}<g class="mg-d">${d}</g></svg>`;
+const mgTx = (x, y, t, cl = 'mg-dt', an = 'middle') => `<text class="${cl}" x="${x}" y="${y}" text-anchor="${an}">${t}</text>`;
+const mgFila = (x, y, l, v) => mgTx(x, y, l, 'mg-dl', 'start') + mgTx(x, y + 15, v, 'mg-dv', 'start');
+const mgK = v => (v >= 1000 ? nf(v / 1000, 1) + ' k' : nf(v, 0));
 const MG = {
-  // anillo de avance hacia la meta (lleno = meta cumplida)
-  anillo(p, t, sub = 'de la meta') {
-    const q = Math.max(0, Math.min(1, p || 0)) * 100;
-    return `<svg class="mg" viewBox="0 0 84 64"><circle class="mg-trk" cx="42" cy="32" r="25"/><circle class="mg-arc" cx="42" cy="32" r="25" pathLength="100" style="--p:${q.toFixed(1)}" transform="rotate(-90 42 32)"/>`
-      + `<text class="mg-t" x="42" y="31" text-anchor="middle">${t}</text><text class="mg-u" x="42" y="41" text-anchor="middle">${sub}</text></svg>`;
-  },
-  // medidor de media luna: marcas radiales hasta el valor y una marca larga en la meta
-  medidor(v, meta, f) {
-    const top = Math.max(meta * 2.5, v * 1.15) || 1, N = 25, cx = 42, cy = 50, k = x => Math.max(0, Math.min(1, x / top));
-    const kv = Math.round(k(v) * (N - 1)), km = Math.round(k(meta) * (N - 1));
-    let d = '';
-    for (let t = 0; t < N; t++) { const a = Math.PI + t / (N - 1) * Math.PI, c = Math.cos(a), sn = Math.sin(a), m = t === km, r1 = m ? 21 : 26, r2 = m ? 35 : 33, l = t <= kv;
-      d += `<line class="${m ? 'mg-mt' : l ? 'mg-ln mg-p' : 'mg-lo'}" x1="${(cx + r1 * c).toFixed(2)}" y1="${(cy + r1 * sn).toFixed(2)}" x2="${(cx + r2 * c).toFixed(2)}" y2="${(cy + r2 * sn).toFixed(2)}"${l && !m ? ` style="--d:${t * 26}ms"` : ''}/>`; }
-    return `<svg class="mg" viewBox="0 0 84 64">${d}<text class="mg-u" x="42" y="48" text-anchor="middle">meta</text><text class="mg-t mg-ts" x="42" y="60" text-anchor="middle">${f(meta)}</text></svg>`;
-  },
-  // batería por segmentos: cuánto falta para la meta
-  bateria(p, t) {
-    const N = 10, on = Math.round(Math.max(0, Math.min(1, p || 0)) * N);
-    let d = '';
-    for (let k = 0; k < N; k++) d += `<rect class="${k < on ? (k === on - 1 ? 'mg-hi' : 'mg-on') + ' mg-p' : 'mg-off'}" x="${13 + k * 5.4}" y="18" width="4" height="17" rx="1.4"${k < on ? ` style="--d:${k * 60}ms"` : ''}/>`;
-    return `<svg class="mg" viewBox="0 0 84 64"><rect class="mg-bt" x="9.5" y="14.5" width="61" height="25" rx="6"/><rect class="mg-bn" x="72" y="22" width="3.5" height="9" rx="1.5"/>${d}<text class="mg-t mg-ts" x="42" y="55" text-anchor="middle">${t}</text></svg>`;
-  },
-  // vueltas del inventario en el año: un círculo por vuelta; la última se llena en parte y las que faltan para la meta quedan punteadas
-  vueltas(v, meta) {
-    const tot = Math.min(12, Math.max(1, Math.ceil(Math.max(v, meta || 0)))), fil = tot > 6 ? 2 : 1, col = Math.ceil(tot / fil), r = 4.6, gx = 11.2, gy = 15, x0 = 42 - (col - 1) * gx / 2, y0 = fil > 1 ? 21 : 28;
-    let d = '';
-    for (let k = 0; k < tot; k++) { const x = x0 + (k % col) * gx, y = y0 + Math.floor(k / col) * gy, fr = Math.max(0, Math.min(1, v - k));
-      if (fr >= 1) d += `<circle class="mg-on mg-p" cx="${x}" cy="${y}" r="${r}" style="--d:${k * 70}ms"/>`;
-      else if (fr > 0) d += `<circle class="mg-lo2" cx="${x}" cy="${y}" r="${r}"/><circle class="mg-arcs" cx="${x}" cy="${y}" r="${r - 1}" pathLength="100" style="--p:${(fr * 100).toFixed(1)}" transform="rotate(-90 ${x} ${y})"/>`;
-      else d += `<circle class="mg-meta" cx="${x}" cy="${y}" r="${r - .6}"/>`; }
-    return `<svg class="mg" viewBox="0 0 84 64">${d}<text class="mg-u" x="42" y="${fil > 1 ? 58 : 50}" text-anchor="middle">meta ${nf(meta, 1)} al año</text></svg>`;
-  },
-  // prisma de puntos sobre el piso del local: su altura es la venta por m² del mes frente al mejor mes
-  prisma(p) {
-    const W = 22, DP = 22, Hh = 6 + 24 * Math.max(0, Math.min(1, p || 0)), P = (x, y, z) => [42 + (x - y) * .866, 56 - (x + y) * .5 - z];
-    let d = '', n = 0;
-    const arista = (a, b, cl, paso = 2.8) => { const A = P(...a), B = P(...b), L = Math.hypot(B[0] - A[0], B[1] - A[1]), m = Math.max(1, Math.round(L / paso));
-      for (let k = 0; k <= m; k++) { const x = A[0] + (B[0] - A[0]) * k / m, y = A[1] + (B[1] - A[1]) * k / m; d += `<circle class="${cl} mg-p" cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="${cl === 'mg-off' ? .9 : 1.15}" style="--d:${(n++) * 7}ms"/>`; } };
-    const F = [[0, 0], [W, 0], [W, DP], [0, DP]];
-    for (let k = 0; k < 4; k++) arista([...F[k], 0], [...F[(k + 1) % 4], 0], 'mg-off', 3.6);
-    [[0, 0], [W, 0], [0, DP]].forEach(q => arista([...q, 0], [...q, Hh], 'mg-on'));
-    for (let k = 0; k < 4; k++) arista([...F[k], Hh], [...F[(k + 1) % 4], Hh], 'mg-hi');
-    return `<svg class="mg" viewBox="0 0 84 64">${d}</svg>`;
-  },
   // columnas de puntos: un mes por columna; los meses elegidos en color y el último más intenso
-  columnas(vals, sel, ult) {
-    const n = vals.length, R = 7, mx = Math.max(...vals.map(v => v || 0)) || 1, dx = 76 / n, dy = 50 / (R - 1);
-    let d = '';
-    vals.forEach((v, j) => { const x = 4 + dx * (j + .5), on = v > 0 ? Math.max(1, Math.round(v / mx * R)) : 0, cl = j === ult ? 'mg-hi' : sel.has(j) ? 'mg-on' : 'mg-dim';
-      for (let k = 0; k < R; k++) { const y = 57 - k * dy, l = k < on;
-        d += `<circle class="${l ? cl + ' mg-p' : 'mg-off'}" cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="${l ? 1.9 : 1.5}"${l ? ` style="--d:${j * 45 + k * 28}ms"` : ''}/>`; } });
-    return `<svg class="mg" viewBox="0 0 84 64">${d}</svg>`;
+  columnas(vals, sel, ult, meses) {
+    const n = vals.length, R = 9, mx = Math.max(...vals.map(v => v || 0)) || 1, dx = 180 / n, dy = 82 / (R - 1), X = j => 20 + dx * (j + .5), alto = v => v > 0 ? Math.max(1, Math.round(v / mx * R)) : 0;
+    let a = '', d = '';
+    vals.forEach((v, j) => { const on = alto(v), cl = j === ult ? 'mg-hi' : sel.has(j) ? 'mg-on' : 'mg-dim';
+      for (let k = 0; k < R; k++) { const y = 98 - k * dy, l = k < on;
+        a += `<circle class="${l ? cl + ' mg-p' : 'mg-off'}" cx="${X(j).toFixed(1)}" cy="${y.toFixed(1)}" r="${l ? 3.7 : 2.6}"${l ? ` style="--d:${j * 45 + k * 28}ms"` : ''}/>`; }
+      d += mgTx(X(j).toFixed(1), 122, lbl(meses[j]).charAt(0), j === ult ? 'mg-dt mg-b' : 'mg-dt'); });
+    const yu = 98 - (alto(vals[ult]) - 1) * dy - 12;
+    d += `<g class="mg-tag"><rect x="${(X(ult) - 22).toFixed(1)}" y="${(yu - 13).toFixed(1)}" width="44" height="17" rx="8.5"/>${mgTx(X(ult).toFixed(1), (yu - .5).toFixed(1), '$ ' + mgK(vals[ult]), 'mg-tt')}</g>`;
+    return mgSvg(a, '', d, 'translateY(-7px)');
+  },
+  // anillo de avance hacia la meta (lleno = meta cumplida); al desplegarse se corre a la izquierda y muestra valor, meta y brecha
+  anillo(p, cen, filas) {
+    const q = Math.max(0, Math.min(1, p || 0)) * 100;
+    const a = `<circle class="mg-trk" cx="110" cy="62" r="46"/><circle class="mg-arc" cx="110" cy="62" r="46" pathLength="100" style="--p:${q.toFixed(1)}" transform="rotate(-90 110 62)"/>`
+      + mgTx(110, 66, cen, 'mg-t') + mgTx(110, 81, 'de la meta', 'mg-u');
+    return mgSvg(a, '', filas.map(([l, v], k) => mgFila(132, 30 + k * 34, l, v)).join(''), 'translate(-56px,0) scale(.9)');
+  },
+  // medidor de media luna: marcas hasta el valor y una marca larga en la meta
+  medidor(v, meta, f) {
+    const top = Math.max(meta * 2.5, v * 1.15) || 1, N = 31, cx = 110, cy = 106, k = x => Math.max(0, Math.min(1, x / top)), ang = t => Math.PI + t * Math.PI;
+    const kv = Math.round(k(v) * (N - 1)), km = Math.round(k(meta) * (N - 1));
+    let a = '';
+    for (let t = 0; t < N; t++) { const g = ang(t / (N - 1)), c = Math.cos(g), s = Math.sin(g), m = t === km, r1 = m ? 54 : 66, r2 = m ? 92 : 86, l = t <= kv;
+      a += `<line class="${m ? 'mg-mt' : l ? 'mg-ln mg-p' : 'mg-lo'}" x1="${(cx + r1 * c).toFixed(1)}" y1="${(cy + r1 * s).toFixed(1)}" x2="${(cx + r2 * c).toFixed(1)}" y2="${(cy + r2 * s).toFixed(1)}"${l && !m ? ` style="--d:${t * 24}ms"` : ''}/>`; }
+    const gv = ang(kv / (N - 1)), gm = ang(km / (N - 1));
+    a += `<circle class="mg-hi" cx="${(cx + 96 * Math.cos(gv)).toFixed(1)}" cy="${(cy + 96 * Math.sin(gv)).toFixed(1)}" r="4"/>`;
+    const c = mgTx(110, 92, 'meta', 'mg-u') + mgTx(110, 112, f(meta), 'mg-t mg-ts');
+    const d = mgTx(110, 96, f(v), 'mg-t') + mgTx(110, 112, 'gasto actual', 'mg-u')
+      + mgTx(20, 124, '0', 'mg-dt') + mgTx(200, 124, f(top), 'mg-dt')
+      + mgTx((cx + 104 * Math.cos(gm)).toFixed(1), (cy + 104 * Math.sin(gm) + 4).toFixed(1), 'meta ' + f(meta), 'mg-dt mg-b', Math.cos(gm) < -.2 ? 'end' : Math.cos(gm) > .2 ? 'start' : 'middle');
+    return mgSvg(a, c, d, 'translateY(-3px)');
   },
   // red de 100 puntos: cada punto es el 1 % de las ventas
-  red(pc) {
+  red(pc, extra) {
     const on = Math.max(0, Math.min(100, Math.round(pc)));
-    let d = '';
-    for (let k = 0; k < 100; k++) { const c = k % 10, f = 9 - Math.floor(k / 10), x = 15 + c * 6, y = 5 + f * 6, l = k < on;
-      d += `<circle class="${l ? 'mg-hi mg-p' : 'mg-off'}" cx="${x}" cy="${y}" r="${l ? 2.5 : 1.5}"${l ? ` style="--d:${k * 70}ms"` : ''}/>`; }
-    return `<svg class="mg" viewBox="0 0 84 64">${d}</svg>`;
+    let a = '';
+    for (let k = 0; k < 100; k++) { const c = k % 10, f = 9 - Math.floor(k / 10), x = 61 + c * 10.9, y = 16 + f * 10.9, l = k < on;
+      a += `<circle class="${l ? 'mg-hi mg-p' : 'mg-off'}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${l ? 4.4 : 2.7}"${l ? ` style="--d:${k * 70}ms"` : ''}/>`; }
+    const d = mgTx(128, 38, pct(pc), 'mg-t', 'start') + mgTx(128, 54, 'de las ventas', 'mg-u', 'start') + mgFila(128, 78, 'Por cada $ 100', '$ ' + nf(pc, 1)) + (extra ? mgFila(128, 108, extra[0], extra[1]) : '');
+    return mgSvg(a, '', d, 'translate(-52px,0) scale(.9)');
+  },
+  // vueltas del inventario en el año: un círculo por vuelta; la última se llena en parte y las que faltan para la meta quedan punteadas
+  vueltas(v, meta, dias) {
+    const tot = Math.min(12, Math.max(1, Math.ceil(Math.max(v, meta || 0)))), fil = tot > 6 ? 2 : 1, col = Math.ceil(tot / fil), r = 12.5, gx = 32, gy = 34, x0 = 110 - (col - 1) * gx / 2, y0 = fil > 1 ? 36 : 54;
+    let a = '', d = '';
+    for (let k = 0; k < tot; k++) { const x = x0 + (k % col) * gx, y = y0 + Math.floor(k / col) * gy, fr = Math.max(0, Math.min(1, v - k));
+      if (fr >= 1) a += `<circle class="mg-on mg-p" cx="${x}" cy="${y}" r="${r}" style="--d:${k * 70}ms"/>`;
+      else if (fr > 0) a += `<circle class="mg-lo2" cx="${x}" cy="${y}" r="${r}"/><circle class="mg-arcs" cx="${x}" cy="${y}" r="${r - 2.5}" pathLength="100" style="--p:${(fr * 100).toFixed(1)}" transform="rotate(-90 ${x} ${y})"/>`;
+      else a += `<circle class="mg-meta" cx="${x}" cy="${y}" r="${r - 1}"/>`;
+      d += mgTx(x, y + 4, fr >= 1 ? k + 1 : fr > 0 ? nf(fr, 1) : '', fr >= 1 ? 'mg-in' : 'mg-dt'); }
+    const yc = fil > 1 ? 118 : 96;
+    return mgSvg(a, mgTx(110, yc, `meta ${nf(meta, 1)} vueltas al año`, 'mg-u'), d + mgTx(110, yc, `una vuelta cada ${nf(dias, 0)} días`, 'mg-dt mg-b'), 'translateY(-2px)');
+  },
+  // batería por segmentos: cuánto se ha recorrido hacia la meta
+  bateria(p, v, meta, f) {
+    const N = 10, q = Math.max(0, Math.min(1, p || 0)), on = Math.round(q * N);
+    let a = `<rect class="mg-bt" x="38" y="34" width="136" height="52" rx="13"/><rect class="mg-bn" x="177" y="50" width="7" height="20" rx="3"/>`;
+    for (let k = 0; k < N; k++) a += `<rect class="${k < on ? (k === on - 1 ? 'mg-hi' : 'mg-on') + ' mg-p' : 'mg-off'}" x="${(46 + k * 12.4).toFixed(1)}" y="42" width="9.4" height="36" rx="3"${k < on ? ` style="--d:${k * 60}ms"` : ''}/>`;
+    const xv = 46 + on * 12.4 - 3;
+    const d = mgTx(38, 108, '0', 'mg-dt', 'start') + mgTx(174, 108, 'meta ' + f(meta), 'mg-dt', 'end')
+      + `<g class="mg-tag"><rect x="${(xv - 20).toFixed(1)}" y="8" width="40" height="17" rx="8.5"/>${mgTx(xv.toFixed(1), 20, f(v), 'mg-tt')}</g>`;
+    return mgSvg(a, mgTx(106, 112, pct(q * 100, 0) + ' de la meta', 'mg-t mg-ts'), d, 'translateY(-2px)');
+  },
+  // prisma de puntos sobre el piso del local: su altura es la venta por m² del periodo frente al mejor mes
+  prisma(p, v, mejor, m2) {
+    const W = 46, DP = 46, Hh = 10 + 46 * Math.max(0, Math.min(1, p || 0)), Hm = 56, P = (x, y, z) => [110 + (x - y) * .866, 120 - (x + y) * .5 - z];
+    let a = '', n = 0;
+    const arista = (A0, B0, cl, paso = 5.2, r = 1.9, extra = '') => { const A = P(...A0), B = P(...B0), L = Math.hypot(B[0] - A[0], B[1] - A[1]), m = Math.max(1, Math.round(L / paso)); let o = '';
+      for (let k = 0; k <= m; k++) { const x = A[0] + (B[0] - A[0]) * k / m, y = A[1] + (B[1] - A[1]) * k / m; o += `<circle class="${cl}${extra}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}"${extra ? '' : ` style="--d:${(n++) * 6}ms"`}/>`; } return o; };
+    const F = [[0, 0], [W, 0], [W, DP], [0, DP]];
+    for (let k = 0; k < 4; k++) a += arista([...F[k], 0], [...F[(k + 1) % 4], 0], 'mg-off mg-p', 6.5, 1.5);
+    [[0, 0], [W, 0], [0, DP]].forEach(q => { a += arista([...q, 0], [...q, Hh], 'mg-on mg-p'); });
+    for (let k = 0; k < 4; k++) a += arista([...F[k], Hh], [...F[(k + 1) % 4], Hh], 'mg-hi mg-p');
+    // techo del mejor mes: aparece al desplegar los detalles
+    let g = ''; for (let k = 0; k < 4; k++) g += arista([...F[k], Hm], [...F[(k + 1) % 4], Hm], 'mg-gh', 6, 1.3, ' ');
+    a += `<g class="mg-gp">${g}</g>`;
+    const d = mgFila(146, 28, 'Periodo', usd(v, 2) + '/m²') + mgFila(146, 64, 'Mejor mes', usd(mejor, 2) + '/m²') + mgFila(146, 100, 'Local', nf(m2, 2) + ' m²');
+    return mgSvg(a, '', d, 'translate(-48px,0) scale(.94)');
   },
   // personas: una figura por empleado; la última se llena según la fracción
   gente(nn) {
-    const tot = Math.max(1, Math.ceil(nn)), w = 16, g = 4, x0 = 42 - (tot * w + (tot - 1) * g) / 2;
-    let d = '';
+    const tot = Math.max(1, Math.ceil(nn)), w = 34, gp = 12, x0 = 110 - (tot * w + (tot - 1) * gp) / 2;
+    let a = '', d = '';
     for (let k = 0; k < tot; k++) {
-      const cx = x0 + k * (w + g) + w / 2, fig = `<circle cx="${cx}" cy="24" r="5.2"/><path d="M${cx - 8} 50V42a8 8 0 0 1 16 0v8z"/>`, fr = Math.max(0, Math.min(1, nn - k)), id = 'mgc' + (++MGN);
-      d += `<g class="mg-off">${fig}</g>`;
-      if (fr > 0) d += (fr < 1 ? `<clipPath id="${id}"><rect x="${cx - 8}" y="10" width="${(16 * fr).toFixed(2)}" height="44"/></clipPath>` : '') + `<g class="mg-on mg-p"${fr < 1 ? ` clip-path="url(#${id})"` : ''} style="--d:${k * 90}ms">${fig}</g>`;
+      const cx = x0 + k * (w + gp) + w / 2, fig = `<circle cx="${cx}" cy="38" r="11.5"/><path d="M${cx - 17} 100V74a17 17 0 0 1 34 0v26z"/>`, fr = Math.max(0, Math.min(1, nn - k)), id = 'mgc' + (++MGN);
+      a += `<g class="mg-off">${fig}</g>`;
+      if (fr > 0) a += (fr < 1 ? `<clipPath id="${id}"><rect x="${cx - 17}" y="20" width="${(34 * fr).toFixed(1)}" height="84"/></clipPath>` : '') + `<g class="mg-on mg-p"${fr < 1 ? ` clip-path="url(#${id})"` : ''} style="--d:${k * 90}ms">${fig}</g>`;
+      d += mgTx(cx, 122, fr >= 1 ? '1' : nf(fr, 2), 'mg-dt' + (fr < 1 ? ' mg-b' : ''));
     }
-    return `<svg class="mg" viewBox="0 0 84 64">${d}</svg>`;
+    return mgSvg(a, mgTx(110, 122, `${nf(nn, 2)} personas en promedio`, 'mg-u'), d, 'translateY(-6px)');
   }
 };
 // avance hacia la meta de un indicador con umbral: valor sobre meta, o meta sobre valor si menor es mejor
@@ -4213,12 +4267,13 @@ function secResumen(el) {
   const m2 = D.meses.map((k, j) => M.ventas[j] / D.superficie_m2), mx2 = Math.max(...m2.filter(v => v > 0)), v2 = calc(si).vmes / D.superficie_m2;
   const mt = id => V[id] && V[id].mt, pI1 = avance('I1'), pI14 = avance('I14');
   el.innerHTML = kx([
-    xi('I5', {l: 'Ventas totales', v: usd(r.V), u: '', s: `${usd(r.vmes)} al mes · crecimiento ${V.I5.v} al mes`, g: MG.columnas(ven, sel, ult)}),
-    xi('I1', {g: pI1 == null ? '' : MG.anillo(pI1, pct(Math.min(1, pI1) * 100, 0))}), xi('I2', {g: mt('I2') ? MG.medidor(mt('I2').v, mt('I2').L.meta, x => pct(x)) : ''}),
-    xi('I15', {l: 'Merma neta', v: usd(perd), u: '', s: `${pct(perd / r.V * 100)} de las ventas · frutas y hortalizas ${V.I15.v}`, g: MG.red(perd / r.V * 100)}),
-    xi('I13', {l: 'Rotación de inventario', v: nf(inv.dias, 0) + ' días', u: '', s: `${nf(inv.rot_anual, 1)} veces al año · conteos de abril y septiembre`, g: mt('I13') ? MG.vueltas(inv.rot_anual, mt('I13').L.meta) : ''}),
-    xi('I14', {l: 'GMROI', u: 'al año', g: pI14 == null ? '' : MG.bateria(pI14, pct(Math.min(1, pI14) * 100, 0) + ' de la meta')}),
-    xi('I17', {l: 'Ventas por m²', v: usd(r.vmes / D.superficie_m2, 2), u: 'al mes', s: `${nf(D.superficie_m2, 2)} m² de local`, g: MG.prisma(v2 / mx2)}),
+    xi('I5', {l: 'Ventas totales', v: usd(r.V), u: '', s: `${usd(r.vmes)} al mes · crecimiento ${V.I5.v} al mes`, g: MG.columnas(ven, sel, ult, D.meses)}),
+    xi('I1', {g: pI1 == null ? '' : MG.anillo(pI1, pct(Math.min(1, pI1) * 100, 0), [['Actual', pct(mt('I1').v)], ['Meta', pct(mt('I1').L.meta)], [mt('I1').v >= mt('I1').L.meta ? 'Sobre la meta' : 'Faltan', nf(Math.abs(mt('I1').L.meta - mt('I1').v), 1) + ' p. p.']])}),
+    xi('I2', {g: mt('I2') ? MG.medidor(mt('I2').v, mt('I2').L.meta, x => pct(x)) : ''}),
+    xi('I15', {l: 'Merma neta', v: usd(perd), u: '', s: `${pct(perd / r.V * 100)} de las ventas · frutas y hortalizas ${V.I15.v}`, g: MG.red(perd / r.V * 100, ['Frutas y hortalizas', V.I15.v])}),
+    xi('I13', {l: 'Rotación de inventario', v: nf(inv.dias, 0) + ' días', u: '', s: `${nf(inv.rot_anual, 1)} veces al año · conteos de abril y septiembre`, g: mt('I13') ? MG.vueltas(inv.rot_anual, mt('I13').L.meta, inv.dias) : ''}),
+    xi('I14', {l: 'GMROI', u: 'al año', g: pI14 == null ? '' : MG.bateria(pI14, mt('I14').v, mt('I14').L.meta, x => nf(x, 2))}),
+    xi('I17', {l: 'Ventas por m²', v: usd(r.vmes / D.superficie_m2, 2), u: 'al mes', s: `${nf(D.superficie_m2, 2)} m² de local`, g: MG.prisma(v2 / mx2, v2, mx2, D.superficie_m2)}),
     xi('I17', {l: 'Ventas por empleado', v: usd(r.vmes / D.empleados), u: 'al mes', s: `${nf(D.empleados, 2)} empleados en promedio`, g: MG.gente(D.empleados)})]);
 }
 
