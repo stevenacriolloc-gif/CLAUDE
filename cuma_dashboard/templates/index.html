@@ -1202,7 +1202,7 @@ button.kx-i:focus-visible,.kx-sb:focus-visible,.mini-b:focus-visible{outline:2px
 .drawer .ficha__d{top:16px}
 .drawer .ficha__g{grid-template-columns:minmax(0,1.08fr) minmax(0,1fr)}
 @container (max-width:860px){.drawer .ficha__g{grid-template-columns:minmax(0,1fr)}.drawer .ficha__d{position:static}}
-@media (max-width:640px){.kx-h{align-items:flex-start}.kx-l{white-space:normal;line-height:1.3;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;padding-top:1px}.kx-l i{display:none}}
+@media (max-width:640px){.kx-h{align-items:flex-start}.kx-l{white-space:normal;line-height:1.3;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;padding-top:1px}.kx-l i{display:none}}
 .mcsem-b i.ok{color:#10130a}
 .mi-n{display:inline-grid;place-items:center;width:14px;font-family:var(--font);font-size:10.5px;color:var(--muted);font-variant-numeric:tabular-nums}
 </style>
@@ -1217,6 +1217,7 @@ button.kx-i:focus-visible,.kx-sb:focus-visible,.mini-b:focus-visible{outline:2px
       <a class="brand" href="#" id="brand" aria-label="ProDesarrollo · volver al tablero principal"><span class="brand__word">ProDesarrollo</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 20a10 10 0 0 0 10-10 25.9 25.9 0 0 0-1.04-7.28 1 1 0 0 0-1.76-.33C15.83 5.5 13 5.5 9.8 6.1A7 7 0 0 0 11 20"/><path d="M2 21a5 5 0 0 1 2.91-4.54C7.61 15.21 8.35 15.24 11 13" opacity=".55"/></svg></a>
       <button type="button" class="tbtn" id="b-fechas" data-act="fechas" aria-haspopup="dialog" aria-expanded="false" aria-label="Fechas"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path d="M10 21.75h4c3.77 0 5.66 0 6.83-1.17C22 19.41 22 17.52 22 13.75v-2c0-3.77 0-5.66-1.17-6.83C19.66 3.75 17.77 3.75 14 3.75h-4c-3.77 0-5.66 0-6.83 1.17C2 6.09 2 7.98 2 11.75v2c0 3.77 0 5.66 1.17 6.83 1.17 1.17 3.06 1.17 6.83 1.17Z"/><path stroke-linejoin="round" d="M17 12.75h.01M12 12.75h.01M7 12.75h.01M17 16.77h.01M12 16.77h.01M7 16.77h.01"/><path d="M2.04 8.75h19.93M7 3.78V2.25m10 1.53V2.25" opacity=".5"/></g></svg><span class="tip" id="b-fechas-tip">Fechas</span></button>
       <button type="button" class="tbtn" id="b-sec" data-act="sec" aria-haspopup="dialog" aria-expanded="false" aria-label="Secciones: Resumen ejecutivo"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path d="M12 22c-4.71 0-7.07 0-8.54-1.46C2 19.07 2 16.71 2 12s0-7.07 1.46-8.54C4.93 2 7.29 2 12 2s7.07 0 8.54 1.46C22 4.93 22 7.29 22 12s0 7.07-1.46 8.54C19.07 22 16.71 22 12 22Z" opacity=".5"/><path d="M7 18V9m5 9V6m5 12v-5"/></g></svg><span class="tip" id="b-sec-tip">Resumen ejecutivo</span></button>
+      <button type="button" class="tbtn" id="b-mc" data-act="mc" aria-pressed="false" aria-label="Simulación Monte Carlo"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path d="M2.5 20.5h19" opacity=".5"/><path d="M8 20.5v-6m4 6V7.5m4 13v-6" opacity=".5"/><path stroke-linejoin="round" d="M2.5 18c3.5 0 4.6-11.5 9.5-11.5s6 11.5 9.5 11.5"/></g></svg><span class="tip" id="b-mc-tip">Simulación Monte Carlo</span></button>
     </nav>
     <div class="tbar" role="toolbar" aria-label="Herramientas">
       <button type="button" class="tbtn" id="theme" data-act="tema" aria-haspopup="dialog" aria-expanded="false" aria-label="Apariencia"><svg class="ico ico--moon" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M12 22a10 10 0 0 0 10-10c0-.46-.69-.54-.93-.14A6.5 6.5 0 0 1 9 8.5a6.5 6.5 0 0 1 3.14-5.57c.4-.24.32-.93-.14-.93A10 10 0 0 0 2 12a10 10 0 0 0 10 10Z" opacity=".5"/><path d="M8.68 21.44A10 10 0 0 1 12 2c.46 0 .54.69.14.93A6.5 6.5 0 0 0 10.14 12.18"/></g></svg><svg class="ico ico--sun" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><path d="M12 2v1m0 18v1m10-10h-1M3 12H2m17.07-7.07-.39.39M5.32 18.68l-.39.39m14.14 0-.39-.39M5.32 5.32l-.39-.39" opacity=".5"/></g></svg><span class="tip" id="themetip">Luz</span></button>
@@ -1697,7 +1698,11 @@ function problemas() {
 }
 /* ---------- secciones: menú superior, una página por tema y la ficha en un panel lateral ---------- */
 // botón de secciones: muestra la sección actual al pasar el cursor y despliega las siete
-function secNav() { $('b-sec-tip').textContent = SECN[S.sec]; $('b-sec').setAttribute('aria-label', 'Secciones: ' + SECN[S.sec]); }
+function secNav() {
+  const enMenu = SECS.some(([v]) => v === S.sec), n = enMenu ? SECN[S.sec] : 'Secciones';
+  $('b-sec-tip').textContent = n; $('b-sec').setAttribute('aria-label', enMenu ? 'Secciones: ' + n : n);
+  $('b-mc').setAttribute('aria-pressed', String(S.sec === 'mc'));
+}
 function openSec() {
   openPop($('b-sec'), `<div class="pop__head">Secciones</div>${SECS.map(([v, n], j) => `<button type="button" class="menu__item" role="menuitemradio" aria-checked="${v === S.sec}" data-v="${v}"><span class="mi-n">${j + 1}</span>${n}${v === S.sec ? CK : ''}</button>`).join('')}`,
     el => el.querySelectorAll('[data-v]').forEach(b => b.onclick = () => { closePop(true); goSec(b.dataset.v); }));
@@ -2921,11 +2926,11 @@ function mcPaint(root) {
   const fin = v => v != null && isFinite(v);
   root.querySelector('[data-a="reset"]').disabled = mcPorDefecto();
   root.querySelectorAll('[data-mc="hh"]').forEach(e => { e.textContent = H; });
-  root.querySelector('[data-mc="kp"]').innerHTML = kp([
-    ['Probabilidad de cubrir costos', pct(pp * 100, 1), `en ${H} meses · por mes ${pct(r.pMes * 100, 0)}`, pp >= .8 ? 'ok' : pp >= .5 ? 'warn' : 'bad'],
-    [`Resultado de ${H} meses`, usd(Rq[2]), `P5 a P95: ${kmil(Rq[0])} a ${kmil(Rq[4])} mil`],
-    ['Fondo de respaldo', usd(r.q.FON.p[4]), 'cubre el déficit en el 95\u00a0%'],
-    ['Ventas para cubrir costos', fin(pe50) ? usd(pe50) : 'no alcanzable', fin(pe50) ? `al mes · ${nf(pe50 / (r.q.VM.p[2] || 1), 1)} veces lo simulado` : 'el margen no cubre las comisiones']]);
+  root.querySelector('[data-mc="kp"]').innerHTML = kx([   // mismas tarjetas que las demás secciones
+    {l: 'Probabilidad de cubrir costos', v: pct(pp * 100, 1), s: `en ${H} meses · por mes ${pct(r.pMes * 100, 0)}`, st: pp >= .8 ? 'ok' : pp >= .5 ? 'warn' : 'bad'},
+    {l: `Resultado de ${H} meses`, v: usd(Rq[2]), s: `P5 a P95: ${kmil(Rq[0])} a ${kmil(Rq[4])} mil`},
+    {l: 'Fondo de respaldo', v: usd(r.q.FON.p[4]), s: 'cubre el déficit en el 95\u00a0%'},
+    {l: 'Ventas para cubrir costos', v: fin(pe50) ? usd(pe50) : 'no alcanzable', s: fin(pe50) ? `al mes · ${nf(pe50 / (r.q.VM.p[2] || 1), 1)} veces lo simulado` : 'el margen no cubre las comisiones'}]);
   // distribución del resultado del horizonte
   const o = r.q.R.o, lo = qtl(o, .005), hi = qtl(o, .995), nb = 28, w = (hi - lo) / nb || 1, cnt = new Array(nb).fill(0);
   for (let i = 0; i < o.length; i++) cnt[Math.min(nb - 1, Math.max(0, Math.floor((o[i] - lo) / w)))]++;
@@ -4004,7 +4009,8 @@ const tintaSobre = (a, b, p) => { const L = luz(a.map((x, i) => x * p + b[i] * (
 /* ---------- secciones del tablero: un menú y una página por tema ---------- */
 // Cada página sigue el mismo orden: arriba los indicadores con su semáforo, al centro una o dos gráficas y abajo las tablas, agrupadas en pestañas.
 const SECS = [['res', 'Resumen ejecutivo'], ['fin', 'Finanzas y rentabilidad'], ['ven', 'Ventas y clientes'], ['inv', 'Inventario y mermas'], ['abs', 'Abastecimiento y proveedores'], ['sec', 'Sector y escenarios'], ['dat', 'Gobernanza de datos']];
-const SECN = Object.fromEntries(SECS);
+const SECX = [['mc', 'Simulación Monte Carlo']];   // sección aparte, con su propio ícono en la barra superior
+const SECN = Object.fromEntries([...SECS, ...SECX]);
 S.sec = 'res';
 const STC = {ok: 'Meta', warn: 'Vigilar', bad: 'Acción'};
 const sinEt = s => String(s ?? '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
@@ -4153,11 +4159,12 @@ function secSector(el) {
     {l: 'Tamaño frente al gasto', v: nf(T.rho, 2), s: 'correlación de Spearman entre ventas y gasto', i: 'Las compañías más grandes gastan proporcionalmente menos: el tamaño explica parte de la ventaja de costos del sector.'}])
     + grid2(FG.f12(), FG.f13(310))
     + grid2(FG.f14a(300), FG.f14b(300))
-    + FIG(0, 'Umbrales y comparaciones', tb.box, {tools: tb.nav + '<button type="button" class="mini-b" id="sem-base">Base del semáforo</button>', i: semNota() + ' Toca una fila de los umbrales para abrir la ficha.'})
-    + tituloSec('Simulación Monte Carlo') + '<div class="dbody" id="sec-mc"></div>';
-  cardMC($('sec-mc'));
+    + FIG(0, 'Umbrales y comparaciones', tb.box, {tools: tb.nav + '<button type="button" class="mini-b" id="sem-base">Base del semáforo</button>', i: semNota() + ' Toca una fila de los umbrales para abrir la ficha.'});
   PEND.push(() => { const b = $('sem-base'); if (b) b.onclick = () => openSemaforo(b); });
 }
+
+/* ---------- Simulación Monte Carlo: sección aparte ---------- */
+function secMC(el) { el.innerHTML = '<div class="dbody" id="sec-mc"></div>'; cardMC($('sec-mc')); }
 
 /* ---------- 7. Gobernanza de datos ---------- */
 function secDatos(el) {
@@ -4185,7 +4192,7 @@ function secDatos(el) {
   }));
 }
 
-const SECB = {res: secResumen, fin: secFinanzas, ven: cardVentas, inv: cardInventario, abs: secAbastecimiento, sec: secSector, dat: secDatos};
+const SECB = {res: secResumen, fin: secFinanzas, ven: cardVentas, inv: cardInventario, abs: secAbastecimiento, sec: secSector, dat: secDatos, mc: secMC};
 // filtros de las secciones enlazadas que viajan en el enlace de la vista
 const FXS = {ven: {on: () => vxOn(), cod: () => vxCod(), de: x => { S.vx = vxDeCod(x); }}, inv: {on: () => ixOn(), cod: () => ixCod(), de: x => { S.ix = ixDeCod(x); }}};
 
@@ -4332,7 +4339,7 @@ const slug = t => t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').repla
 // meses seguidos como «2026-04~2026-09»; sueltos separados por comas
 const perCod = ks => { const out = []; let a = 0; ks.forEach((k, j) => { if (j === ks.length - 1 || ix(ks[j + 1]) !== ix(k) + 1) { out.push(a === j ? k : ks[a] + '~' + k); a = j + 1; } }); return out.join(','); };
 const perDes = s => s.split(',').flatMap(t => { const [a, b] = t.split('~'); return b ? D.meses.slice(ix(a), ix(b) + 1) : [a]; }).filter(k => D.meses.includes(k));
-const SEC_DE_GRUPO = {res: 'fin', sim: 'sec', ven: 'ven', inv: 'inv', abs: 'abs', sec: 'sec', dat: 'dat'};
+const SEC_DE_GRUPO = {res: 'fin', sim: 'mc', ven: 'ven', inv: 'inv', abs: 'abs', sec: 'sec', dat: 'dat'};
 function hashDe() {
   const q = [];
   if (S.mes !== 'acum') q.push('m=' + S.mes);
@@ -4351,7 +4358,7 @@ function leeHash() {
   const m = q.get('m'), p = q.get('p') && perDes(q.get('p'));
   if (m && D.meses.includes(m)) { S.mes = m; PER = D.meses.slice(Math.min(ix(m), idx0)); }
   else if (p && p.length) { if (p.length === 1) { S.mes = p[0]; PER = D.meses.slice(Math.min(ix(p[0]), idx0)); } else { S.mes = 'acum'; PER = p; } }
-  const sc = q.get('s'), sec = sc && SECS.find(([, n]) => slug(n) === sc);
+  const sc = q.get('s'), sec = sc && [...SECS, ...SECX].find(([, n]) => slug(n) === sc);
   if (sec) S.sec = sec[0];
   // enlaces anteriores: «d» nombraba una tarjeta de análisis y «v=fechas», la vista de fechas
   const d = q.get('d'); if (d != null && !sec) { const t = TARJETAS.find(t_ => slug(t_.t) === d || (t_.al || []).includes(d)); S.sec = t ? (t.b === cardFinanciamiento ? 'fin' : SEC_DE_GRUPO[t.g]) : 'res'; }
@@ -4446,7 +4453,7 @@ function setInicio(k) {
 $('brand').onclick = e => { e.preventDefault(); if (DRW.open) cierraFicha(); goSec('res'); };
 document.querySelector('.top').addEventListener('click', e => {
   const b = e.target.closest('[data-act]'); if (!b) return;
-  ({fechas: openMes, sec: openSec, tema: cycleTheme, buscar: openFinder, ajustes: openAjustes})[b.dataset.act]?.();
+  ({fechas: openMes, sec: openSec, mc: () => goSec('mc'), tema: cycleTheme, buscar: openFinder, ajustes: openAjustes})[b.dataset.act]?.();
 });
 addEventListener('keydown', e => {
   const typing = e.target.closest('input, textarea, select, [contenteditable="true"]');
