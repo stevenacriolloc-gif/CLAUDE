@@ -1156,6 +1156,58 @@ tr.done td.w{color:var(--muted);text-decoration:line-through}
 .ix-sec span{letter-spacing:.04em;text-transform:none;font-family:var(--font);font-size:11.5px}
 /* filas atenuadas: se apaga la barra y el texto conserva su contraste */
 .vx-r.dim{opacity:1}.vx-r.dim .trk{opacity:.4}.vx-r.dim .vx-n b,.vx-r.dim .vx-v,.vx-r.dim .vx-u{color:var(--ink)}
+/* ---------- secciones: menú de texto bajo la barra, página por tema y ficha lateral ---------- */
+.top{flex-wrap:wrap;row-gap:8px}
+.secnav{order:3;flex:1 1 100%;justify-content:safe center;gap:2px;margin:0 auto;padding:4px;border-radius:4px;background:var(--glass-flat);box-shadow:inset 0 0 0 1px var(--line);pointer-events:auto}
+.secnav button{padding:8px 15px;font-size:13px}
+@media (max-width:760px){.secnav{justify-content:flex-start;-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent)}.secnav button{padding:7px 12px;font-size:12.5px}}
+.secp{display:flex;flex-direction:column;gap:14px;min-width:0;container-type:inline-size}
+.secp .vx-f{top:var(--toph,64px)}
+/* tarjetas de indicador: número grande y semáforo a la vista */
+.kx{display:grid;grid-template-columns:repeat(var(--kc,4),minmax(0,1fr));gap:12px;min-width:0}
+@container (max-width:1040px){.kx{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}}
+@container (max-width:520px){.kx{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}}
+.kx-i{appearance:none;position:relative;display:flex;flex-direction:column;gap:6px;min-width:0;margin:0;text-align:left;font:inherit;color:inherit;padding:14px 16px 13px;border:1px solid var(--line);border-radius:4px;background:var(--card-bg);box-shadow:inset 0 3px 0 transparent;transition:transform .45s var(--spring),border-color .25s,background-color .25s}
+button.kx-i{cursor:pointer}
+button.kx-i:hover{border-color:color-mix(in srgb,var(--ink) 32%,var(--line))}
+button.kx-i:active{transform:scale(.985)}
+button.kx-i:focus-visible,.kx-sb:focus-visible,.mini-b:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.kx-i.ok{box-shadow:inset 0 3px 0 var(--sem-ok)}.kx-i.warn{box-shadow:inset 0 3px 0 var(--sem-warn)}.kx-i.bad{box-shadow:inset 0 3px 0 var(--sem-bad)}
+.kx-h{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0;min-height:22px}
+.kx-l{min-width:0;font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kx-l i{font-style:normal;font-family:var(--mono);font-size:10px;font-weight:500;color:var(--muted);margin-left:3px}
+.kx-h .inf{flex:none}
+.kx-st{flex:none;display:inline-flex;align-items:center;gap:5px;padding:2px 8px 2px 6px;border-radius:999px;font-size:11px;font-weight:600;line-height:18px;color:var(--ink-strong);background:color-mix(in srgb,var(--sx,var(--sem-na)) 16%,transparent);white-space:nowrap}
+.kx-st.ok{--sx:var(--sem-ok)}.kx-st.warn{--sx:var(--sem-warn)}.kx-st.bad{--sx:var(--sem-bad)}
+.kx-st .dot{margin:0}
+.kx-sb{appearance:none;border:0;margin:0 2px 0 0;font-family:inherit;cursor:pointer;transition:filter .2s}
+.kx-sb:hover{filter:brightness(.96)}
+.kx-v{font-size:clamp(22px,1.9vw,28px);font-weight:300;letter-spacing:-.025em;line-height:1.1;color:var(--ink-strong);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kx-v small{margin-left:5px;font-size:12px;font-weight:500;letter-spacing:0;color:var(--muted)}
+.kx-s{font-size:11.5px;line-height:1.35;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+@media (max-width:640px){.kx-i{padding:12px 12px 11px;gap:5px}.kx-v{font-size:20px}.kx-l{font-size:11.5px}.kx-st{padding:1px 6px 1px 5px;font-size:10.5px}}
+/* grupos con pestañas: una sola figura o tabla a la vista */
+.pane{min-width:0}.pane[hidden]{display:none!important}
+.pane>.fgs:first-child{margin-top:0}
+.sgr{display:flex;flex-direction:column;gap:10px;min-width:0}
+.sgr-h{display:flex;align-items:center;justify-content:space-between;gap:10px 16px;flex-wrap:wrap;margin-top:14px}
+.sgr-h h2,.secp>.ix-sec{margin:14px 2px 0;font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.sgr-h h2{margin:0}
+.sgr-h .gb.vw{max-width:100%}
+.mini-b{appearance:none;flex:none;margin:0 4px 0 2px;padding:4px 11px;border:1px solid var(--line);border-radius:999px;background:transparent;font:600 11.5px var(--font);color:var(--ink);cursor:pointer;white-space:nowrap;transition:background-color .2s}
+.mini-b:hover{background:var(--glass-flat)}
+/* ficha del indicador: panel que entra desde la derecha */
+.drawer{position:fixed;inset:0 0 0 auto;margin:0;width:min(1100px,100vw);max-width:100vw;height:100dvh;max-height:100dvh;padding:0;border:0;border-left:1px solid var(--line);background:var(--bg);color:var(--ink);overflow-y:auto;overscroll-behavior:contain;box-shadow:-28px 0 70px rgba(0,0,0,.14)}
+.drawer::backdrop{background:color-mix(in srgb,var(--ink-strong) 24%,transparent);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+.drawer .side{position:static;top:auto;max-height:none;overflow:visible;margin:0;padding:20px 26px 48px}
+.drawer__x{position:fixed;top:14px;right:16px;z-index:9;background:var(--card-bg);box-shadow:inset 0 0 0 1px var(--line)}
+.drawer .ficha__h{padding-right:48px}
+@media (max-width:760px){.drawer{width:100vw;border-left:0}.drawer .side{padding:14px 12px 40px}.drawer__x{top:10px;right:10px}}
+.drawer .ficha__d{top:16px}
+.drawer .ficha__g{grid-template-columns:minmax(0,1.08fr) minmax(0,1fr)}
+@container (max-width:860px){.drawer .ficha__g{grid-template-columns:minmax(0,1fr)}.drawer .ficha__d{position:static}}
+@media (max-width:640px){.kx-h{flex-wrap:wrap;row-gap:4px}.kx-l{white-space:normal;line-height:1.25}.kx-l i{display:none}}
+.mcsem-b i.ok{color:#10130a}
 </style>
 <style id="base">
 /* base del navegador: preflight de Tailwind CSS 3.4.16 (licencia MIT), en el mismo orden en que lo aplicaba el CDN */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}
@@ -1167,24 +1219,23 @@ tr.done td.w{color:var(--muted);text-decoration:line-through}
     <nav class="tbar" aria-label="Navegación">
       <a class="brand" href="#" id="brand" aria-label="ProDesarrollo · volver al tablero principal"><span class="brand__word">ProDesarrollo</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 20a10 10 0 0 0 10-10 25.9 25.9 0 0 0-1.04-7.28 1 1 0 0 0-1.76-.33C15.83 5.5 13 5.5 9.8 6.1A7 7 0 0 0 11 20"/><path d="M2 21a5 5 0 0 1 2.91-4.54C7.61 15.21 8.35 15.24 11 13" opacity=".55"/></svg></a>
       <button type="button" class="tbtn" id="b-fechas" data-act="fechas" aria-haspopup="dialog" aria-expanded="false" aria-label="Fechas"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path d="M10 21.75h4c3.77 0 5.66 0 6.83-1.17C22 19.41 22 17.52 22 13.75v-2c0-3.77 0-5.66-1.17-6.83C19.66 3.75 17.77 3.75 14 3.75h-4c-3.77 0-5.66 0-6.83 1.17C2 6.09 2 7.98 2 11.75v2c0 3.77 0 5.66 1.17 6.83 1.17 1.17 3.06 1.17 6.83 1.17Z"/><path stroke-linejoin="round" d="M17 12.75h.01M12 12.75h.01M7 12.75h.01M17 16.77h.01M12 16.77h.01M7 16.77h.01"/><path d="M2.04 8.75h19.93M7 3.78V2.25m10 1.53V2.25" opacity=".5"/></g></svg><span class="tip" id="b-fechas-tip">Fechas</span></button>
-      <button type="button" class="tbtn" id="b-ind" data-act="ind" aria-haspopup="dialog" aria-expanded="false" aria-label="Indicadores"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path d="M12 22c-4.71 0-7.07 0-8.54-1.46C2 19.07 2 16.71 2 12s0-7.07 1.46-8.54C4.93 2 7.29 2 12 2s7.07 0 8.54 1.46C22 4.93 22 7.29 22 12s0 7.07-1.46 8.54C19.07 22 16.71 22 12 22Z" opacity=".5"/><path d="M7 18V9m5 9V6m5 12v-5"/></g></svg><span class="tip" id="b-ind-tip">Indicadores</span></button>
-      <button type="button" class="tbtn" id="b-sem" data-act="sem" aria-haspopup="dialog" aria-expanded="false" aria-label="Semáforos"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path d="M22 12a10 10 0 1 1-10-10" opacity=".5"/><path d="M14.5 2.31a10 10 0 0 1 7.19 7.19"/></g></svg><span class="dot sm tbtn__dot" id="gdot"></span><span class="tip" id="b-sem-tip">Semáforos</span></button>
-          <button type="button" class="tbtn" id="b-datos" data-act="datos" aria-pressed="false" aria-label="Análisis de datos"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M4 7c0-1.66 3.58-3 8-3s8 1.34 8 3-3.58 3-8 3-8-1.34-8-3Z"/><path d="M4 12c0 1.66 3.58 3 8 3s8-1.34 8-3" opacity=".55"/><path d="M4 7v10c0 1.66 3.58 3 8 3s8-1.34 8-3V7" opacity=".55"/></g></svg><span class="tip" id="b-datos-tip">Análisis de datos</span></button>
     </nav>
     <div class="tbar" role="toolbar" aria-label="Herramientas">
       <button type="button" class="tbtn" id="theme" data-act="tema" aria-haspopup="dialog" aria-expanded="false" aria-label="Apariencia"><svg class="ico ico--moon" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M12 22a10 10 0 0 0 10-10c0-.46-.69-.54-.93-.14A6.5 6.5 0 0 1 9 8.5a6.5 6.5 0 0 1 3.14-5.57c.4-.24.32-.93-.14-.93A10 10 0 0 0 2 12a10 10 0 0 0 10 10Z" opacity=".5"/><path d="M8.68 21.44A10 10 0 0 1 12 2c.46 0 .54.69.14.93A6.5 6.5 0 0 0 10.14 12.18"/></g></svg><svg class="ico ico--sun" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><path d="M12 2v1m0 18v1m10-10h-1M3 12H2m17.07-7.07-.39.39M5.32 18.68l-.39.39m14.14 0-.39-.39M5.32 5.32l-.39-.39" opacity=".5"/></g></svg><span class="tip" id="themetip">Luz</span></button>
       <button type="button" class="tbtn" id="b-ajustes" data-act="ajustes" aria-haspopup="dialog" aria-expanded="false" aria-label="Ajustes"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 2c.93 0 1.4 0 1.77.15.49.21.88.59 1.08 1.08.09.23.13.49.14.87.02.56.31 1.07.79 1.35.48.28 1.08.27 1.57.01.33-.18.58-.28.82-.31.52-.07 1.06.07 1.48.4.31.24.54.64 1.01 1.45.47.81.7 1.21.75 1.6.07.53-.07 1.06-.39 1.48-.15.2-.36.36-.68.56-.47.3-.78.8-.78 1.36s.31 1.06.78 1.36c.32.2.53.36.68.56.32.42.46.95.39 1.48-.05.39-.28.79-.75 1.6-.47.81-.7 1.21-1.01 1.45-.42.33-.96.47-1.48.4-.24-.03-.49-.13-.82-.31-.5-.26-1.09-.27-1.57.01-.48.28-.77.79-.79 1.35-.01.38-.05.64-.14.87-.2.49-.59.87-1.08 1.08-.37.15-.84.15-1.77.15s-1.4 0-1.76-.15c-.49-.21-.88-.59-1.09-1.08-.09-.23-.13-.49-.14-.87-.02-.56-.31-1.07-.79-1.35-.48-.28-1.07-.27-1.57-.01-.33.18-.58.28-.82.31-.52.07-1.05-.07-1.48-.4-.31-.24-.54-.64-1.01-1.45-.47-.81-.7-1.21-.75-1.6-.07-.53.07-1.06.4-1.48.14-.2.35-.36.67-.56.47-.3.78-.8.78-1.36s-.31-1.06-.78-1.36c-.32-.2-.53-.36-.67-.56-.33-.42-.47-.95-.4-1.48.05-.39.28-.79.75-1.6.47-.81.7-1.21 1.01-1.45.43-.33.96-.47 1.48-.4.24.03.49.13.82.31.5.26 1.09.27 1.57-.01.48-.28.77-.79.79-1.35.01-.38.05-.64.14-.87.21-.49.6-.87 1.09-1.08C10.6 2 11.07 2 12 2Z" opacity=".5"/></g></svg><span class="tip" id="b-ajustes-tip">Ajustes</span></button>
     </div>
+    <nav class="gb secnav" id="secnav" aria-label="Secciones del tablero"></nav>
   </header>
 
   <main class="main" id="main">
-    <h1 class="sr-only">ProDesarrollo · Indicadores</h1>
-    <div class="stage" id="stage">
-      <section class="left" aria-label="Indicadores"><div class="card sema" id="sema"></div><div class="bento" id="bento"></div><div id="deck"></div></section>
-      <aside class="side" id="pin" aria-live="polite"></aside>
-    </div>
+    <h1 class="sr-only" id="sec-h">ProDesarrollo · Resumen ejecutivo</h1>
+    <div class="secp" id="secp"></div>
   </main>
 </div>
+<dialog class="drawer" id="drawer" aria-label="Ficha del indicador">
+  <button type="button" class="tbtn drawer__x" id="drawer-x" aria-label="Cerrar la ficha"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.6"/></svg></button>
+  <aside class="side" id="pin"></aside>
+</dialog>
 
 <dialog class="finder" id="finder" aria-label="Buscar indicador">
   <div class="finder__bar"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg><input id="finder-q" type="search" placeholder="Buscar entre los 23 indicadores…" autocomplete="off" aria-controls="finder-list"><kbd>Esc</kbd></div>
@@ -1498,7 +1549,6 @@ function compute() {
   const causa = r.pgo > r.mb ? ['I1', 'I2', 'I3', 'I7'].filter(id => V[id].st === 'bad') : [];
   R = {r, acum, last, causa};
   WORST = ['bad', 'warn', 'ok'].find(s => TABLERO.some(id => V[id].st === s)) || 'na';
-  $('gdot').className = 'dot sm tbtn__dot ' + WORST; $('b-sem-tip').textContent = 'Semáforos · ' + ST[WORST].toLowerCase() + (semInforme() ? '' : ' · base elegida'); $('gdot').title = 'Tablero: ' + ST[WORST].toLowerCase();
 }
 
 /* ---------- utilidades visuales ---------- */
@@ -1643,157 +1693,47 @@ function tileHTML(id, big) {
     ${k.tn ? `<div class="t-tn">${k.tn}</div>` : ''}<div class="t-s">${k.s}</div><div class="tags"><span class="tag ${i.e}">${ETAG[i.e]}</span><span class="tag none">${ST[k.st]}</span>${cc ? '<span class="tag cc">Causa común: gasto mayor que el margen</span>' : ''}</div>
     <div class="t-viz">${viz}</div>`;
 }
-function visibles() {
-  if (S.fam === 'X') return IND.map(i => i.id);   // en «Fechas» se ven las 23 tarjetas con su ventana
-  if (S.fam !== 'T') return IND.filter(i => i.f === S.fam).map(i => i.id);
-  return S.todos ? [...TABLERO, ...IND.map(i => i.id).filter(id => !TABLERO.includes(id))] : TABLERO;
-}
 /* semáforo del tablero, encima de la pila de tarjetas */
 function problemas() {
   const cc = R.causa.length > 1 ? R.causa : [], otros = TABLERO.filter(id => V[id].st === 'bad' && !cc.includes(id));
   return {cc, n: (cc.length ? 1 : 0) + otros.length, ind: TABLERO.filter(id => V[id].st === 'bad').length};
 }
-function renderSema() {
-  const c = st => TABLERO.filter(id => V[id].st === st).length, P = problemas(), seg = id => `<i style="--c:var(--sem-${V[id].st})" title="${id} · ${BY[id].c}: ${ST[V[id].st]}"></i>`;
-  $('sema').innerHTML = semaHTML();
+/* ---------- secciones: menú superior, una página por tema y la ficha en un panel lateral ---------- */
+function secNav() { menu($('secnav'), SECS, S.sec, goSec); }
+function renderSeccion() {
+  const el = $('secp');
+  $('sec-h').textContent = 'ProDesarrollo · ' + SECN[S.sec];
+  el.dataset.s = S.sec;
+  SECB[S.sec](el);
+  flush(el);
 }
-function semaHTML() {
-  const c = st => TABLERO.filter(id => V[id].st === st).length, P = problemas(), seg = id => `<i style="--c:var(--sem-${V[id].st})" title="${id} · ${BY[id].c}: ${ST[V[id].st]}"></i>`;
-  return `<h4 class="sema__t">Semáforo del tablero</h4>
-    <div class="seg">${P.cc.length ? `<span class="seg-g" style="flex:${P.cc.length}" title="Una sola causa">${P.cc.map(seg).join('')}</span>` : ''}${TABLERO.filter(id => !P.cc.includes(id)).map(seg).join('')}</div>
-    ${P.cc.length ? `<p class="sema__c"><b>${P.cc.join(', ').replace(/, (I\d+)$/, ' e $1')}</b> se encienden por una sola causa: el gasto (${pct(R.r.pgo)} de las ventas) supera al margen bruto (${pct(R.r.mb)}). Cuenta como un problema.</p>` : ''}
-    <div class="tl x4"><div><span>Dentro de la meta</span><b><span class="dot sm ok"></span>${c('ok')}</b></div><div><span>En vigilancia</span><b><span class="dot sm warn"></span>${c('warn')}</b></div>
-      <div><span>Problemas que requieren acción</span><b><span class="dot sm bad"></span>${P.n}</b>${P.ind !== P.n ? `<em>${P.ind} indicadores en rojo</em>` : ''}</div><div><span>Sin dato</span><b><span class="dot sm na"></span>${c('na')}</b></div></div>`;
+function goSec(k) {
+  if (!SECN[k]) k = 'res';
+  closePop(true);
+  if (k !== S.sec) { S.sec = k; syncHash(); press($('secnav'), k); swap($('secp'), renderSeccion); }
+  scrollTo({top: 0, behavior: reduce() ? 'auto' : 'smooth'});
 }
-function renderBento(anim = true) {
-  renderSema();
-  const grid = $('bento'), first = new Map();
-  if (anim && !reduce()) grid.querySelectorAll('[data-id]').forEach(el => first.set(el.dataset.id, el.getBoundingClientRect()));
-  const ids = visibles(), foco = !!S.sel && !S.datos, solo = !S.sel && !S.datos && S.fam !== 'X';
-  $('stage').classList.toggle('foco', foco); $('stage').classList.toggle('solo', solo);
-  let html = '', j = 0;
-  const chip = (id, cur) => `<button class="tile chip ${cur ? 'chip--cur' : ''}" data-st="${V[id].st}" data-id="${id}" aria-pressed="${cur}"><span class="dot ${V[id].st}"></span><span class="c-id">${id}</span><span class="c-n">${BY[id].c}</span><span class="c-v">${V[id].txt ? '—' : V[id].v + (V[id].uc ? ' ' + V[id].uc : '')}</span></button>`;
-  if (foco) {
-    const todos = IND.map(i => i.id), k0 = todos.indexOf(S.sel);
-    html = `<div class="marq"><div class="marq__t">${[...todos.slice(k0), ...todos.slice(0, k0)].map(id => chip(id, id === S.sel)).join('')}</div></div>`;
-  } else ids.forEach(id => {
-    html += foco
-      ? `<button class="tile chip ${first.has(id) ? '' : 'enter'}" style="--j:${j++}" data-st="${V[id].st}" data-id="${id}" aria-pressed="${S.sel === id}"><span class="dot sm ${V[id].st}"></span><span class="c-id">${id}</span><span class="c-n">${BY[id].c}</span><span class="c-v">${V[id].txt ? '—' : V[id].v + (V[id].uc ? ' ' + V[id].uc : '')}</span></button>`
-      : `<button class="tile ${solo && S.big === id ? 'big' : ''} ${first.has(id) ? '' : 'enter'}" style="--j:${j++}" data-st="${V[id].st}" data-id="${id}" aria-pressed="false">${tileHTML(id, solo && S.big === id)}</button>`;
-  });
-  if (!foco && !solo && (S.fam === 'T' || S.fam === 'O')) {
-    const big = !S.sel;
-    html += `<button class="tile hmt ${big ? 'wide' : ''} ${first.has('hm') ? '' : 'enter'}" style="--j:${j++}" data-id="hm" aria-label="Ventas por hora: abrir el mapa de calor">${miniHeat(big)}</button>`;
-  }
-  if (!foco && !solo && S.fam === 'T') {
-    const n = IND.length - TABLERO.length;
-    html += `<button class="tile more ${first.has('more') ? '' : 'enter'}" style="--j:${j}" data-id="more"><div class="t-id">${S.todos ? 'TABLERO' : 'SISTEMA'}</div><div class="t-v">${S.todos ? 'Ver menos' : '+' + n}</div><div class="t-n" style="color:var(--muted);font-weight:500">${S.todos ? 'Solo los 10 principales' : 'Ver los 23 indicadores'}</div></button>`;
-  }
-  grid.innerHTML = html;
-  layoutGrid();
-  grid.querySelectorAll('.tile').forEach(b => b.onclick = () => b.dataset.id === 'more' ? toggleTodos() : b.dataset.id === 'hm' ? openDatos(TARJETAS.findIndex(t => t.b === cardVentas)) : pick(S.sel === b.dataset.id ? null : b.dataset.id));
-  if (foco) grid.querySelectorAll('.tile.chip').forEach(b => b.onclick = () => pick(b.dataset.id === S.sel ? null : b.dataset.id));
-  if (solo) grid.querySelectorAll('.tile[data-id]').forEach(b => b.onpointerenter = e => {
-    if (e.pointerType !== 'mouse') return;
-    clearTimeout(HV.t);
-    HV.t = setTimeout(() => { if (b.matches(':hover') && performance.now() > HV.lock) expand(b.dataset.id); }, 180);
-  });
-  grid.onpointerenter = () => { HV.over = true; };
-  grid.onpointerleave = () => { HV.over = false; clearTimeout(HV.t); HV.last = performance.now(); };
-  flip(grid, first);
-}
-function flip(grid, first) {
-  if (!first.size) return;
-  grid.querySelectorAll('[data-id]').forEach(el => {          // FLIP: invertir la diferencia y reproducir
-    const f = first.get(el.dataset.id); if (!f) return;
-    const l = el.getBoundingClientRect(); if (!l.width) return;
-    const dx = f.left - l.left, dy = f.top - l.top, sx = f.width / l.width, sy = f.height / l.height;
-    if (Math.abs(dx) + Math.abs(dy) < 1 && Math.abs(sx - 1) + Math.abs(sy - 1) < .01) return;
-    el.animate([{transform: `translate(${dx}px,${dy}px) scale(${sx},${sy})`}, {transform: 'none'}], {duration: 620, easing: 'cubic-bezier(.32,.72,0,1)'});
-    if (Math.abs(sx - 1) + Math.abs(sy - 1) > .01) [...el.children].forEach(c => c.animate([{opacity: 0}, {opacity: 0, offset: .35}, {opacity: 1}], {duration: 620}));
-  });
-}
-/* cuadrícula que llena la pantalla: una tarjeta grande (2 × 2) y el resto se acomoda; las que sobran se ensanchan para no dejar huecos */
-const HV = {t: 0, lock: 0, over: false, last: 0};
-function layoutGrid() {
-  const g = $('bento'), tiles = [...g.querySelectorAll('.tile[data-id]')];
-  if (!$('stage').classList.contains('solo') || innerWidth < 760 || !tiles.length) {
-    g.style.gridTemplateColumns = g.style.gridTemplateRows = g.style.gridAutoFlow = '';
-    tiles.forEach(t => { t.style.gridColumn = t.style.gridRow = ''; });
-    return;
-  }
-  const gap = 12, W = g.clientWidth, n = tiles.length, cells = n + 3;
-  const avail = Math.max(320, innerHeight - (g.getBoundingClientRect().top + scrollY) - 24);
-  let best = null;
-  for (let C = 6; C >= 2; C--) {
-    if ((W - gap * (C - 1)) / C < 230) continue;
-    const R = Math.ceil(cells / C), h = (avail - gap * (R - 1)) / R;
-    // si no caben en una pantalla, se prefieren más columnas para que la página no se alargue
-    // alto mínimo de fila: cabe el nombre en dos líneas, la cifra, la barra de meta y una nota de tres líneas
-    const score = h < 178 ? 600 + (C * R - cells) * 8 - C * 30 : Math.abs(h - 210) + (C * R - cells) * 8;
-    if (!best || score < best.score) best = {C, R, h: Math.max(178, h), score};
-  }
-  if (!best) best = {C: 2, R: Math.ceil(cells / 2), h: 190};
-  const {C, R} = best, occ = Array.from({length: R}, () => Array(C).fill(false));
-  const put = (t, r, c, w, h) => { for (let y = r; y < r + h; y++) for (let x = c; x < c + w; x++) occ[y][x] = true; t.style.gridRow = `${r + 1} / span ${h}`; t.style.gridColumn = `${c + 1} / span ${w}`; t.dataset.r = r; t.dataset.c = c; };
-  const big = S.big && tiles.find(t => t.dataset.id === S.big);
-  if (big) {   // la grande queda donde estaba la pequeña, sin salirse de la rejilla
-    const r0 = Math.min(Math.max(0, +(big.dataset.r || 0)), R - 2), c0 = Math.min(Math.max(0, +(big.dataset.c || 0)), C - 2);
-    put(big, r0, c0, 2, 2);
-  }
-  const rest = tiles.filter(t => t !== big);
-  let free = C * R - (big ? 4 : 0), left = rest.length, k = 0;
-  for (let r = 0; r < R && k < rest.length; r++) for (let c = 0; c < C && k < rest.length; c++) {
-    if (occ[r][c]) continue;
-    const t = rest[k++];
-    if (free - 1 > left - 1 && c + 1 < C && !occ[r][c + 1]) { put(t, r, c, 2, 1); free -= 2; }
-    else if (free - 1 > left - 1 && r + 1 < R && !occ[r + 1][c]) { put(t, r, c, 1, 2); free -= 2; }
-    else { put(t, r, c, 1, 1); free -= 1; }
-    left--;
-  }
-  g.style.gridAutoFlow = 'row';
-  g.style.gridTemplateColumns = `repeat(${C}, minmax(0, 1fr))`;
-  g.style.gridTemplateRows = `repeat(${R}, ${Math.floor(best.h)}px)`;
-}
-function expand(id) {
-  const g = $('bento'); if (S.big === id || !$('stage').classList.contains('solo')) return;
-  const first = new Map(); g.querySelectorAll('[data-id]').forEach(el => first.set(el.dataset.id, el.getBoundingClientRect()));
-  const prev = S.big; S.big = id; HV.lock = performance.now() + 750;
-  [prev, id].forEach(x => { const el = x && g.querySelector(`[data-id="${x}"]`); if (!el) return; el.classList.toggle('big', x === id); el.classList.remove('enter'); el.innerHTML = tileHTML(x, x === id); });
-  layoutGrid(); if (!reduce()) flip(g, first);
-}
-// franja superior: la tarjeta elegida queda fija y las otras pasan una por una cada 2 segundos, en bucle sin reinicio
-setInterval(() => {
-  const t = document.querySelector('.marq__t');
-  if (!t || t.matches(':hover') || document.hidden || POP || t._busy) return;
-  const f = t.firstElementChild; if (!f) return;
-  const w = f.offsetWidth + 8;
-  const fin = () => { t.append(f); t.style.transform = ''; t._busy = false; };
-  if (reduce()) return fin();
-  t._busy = true;
-  t.animate([{transform: 'none'}, {transform: `translateX(${-w}px)`}], {duration: 700, easing: 'cubic-bezier(.65,0,.35,1)'}).onfinish = fin;
-}, 2000);
-// cada 5 segundos se agranda la siguiente tarjeta, salvo que el mouse esté sobre la cuadrícula
-setInterval(() => {
-  if (HV.over || document.hidden || POP || innerWidth < 760 || !$('stage').classList.contains('solo') || performance.now() - HV.last < 5000) return;
-  const ids = [...$('bento').querySelectorAll('.tile[data-id]')].map(t => t.dataset.id); if (!ids.length) return;
-  expand(ids[(ids.indexOf(S.big) + 1) % ids.length]);
-}, 5000);
-function toggleTodos() { S.todos = !S.todos; if (S.fam !== 'T') { S.fam = 'T'; syncNav(); } S.sel = null; renderHead(); renderBento(); swap($('pin'), renderPanel); }
+// tocar una tarjeta de indicador o el semáforo de una figura abre la ficha
+$('secp').addEventListener('click', e => { const b = e.target.closest('.kx-i[data-id], .kx-sb[data-id]'); if (b) pick(b.dataset.id); });
+const DRW = $('drawer');
 function pick(id) {
-  if (S.datos) closeDatos(false);
+  if (!id) return cierraFicha();
   S.sel = id;
-  if (id && !visibles().includes(id)) {
-    if (S.fam !== 'T' && BY[id].f !== S.fam) { S.fam = BY[id].f; syncNav(); renderHead(); }
-    if (!visibles().includes(id)) S.todos = true;
-  }
-  renderBento(); syncDock();
-  requestAnimationFrame(() => {
-    if (id) { const el = $('bento').querySelector(`[data-id="${id}"]`); el && $('bento').scrollTo({left: el.offsetLeft - $('bento').clientWidth / 2 + el.offsetWidth / 2, behavior: reduce() ? 'auto' : 'smooth'}); }
-    scrollTo({top: 0, behavior: reduce() ? 'auto' : 'smooth'});
-  });
-  swap($('pin'), renderPanel);
+  if (DRW.open) { swap($('pin'), renderPanel); DRW.scrollTo({top: 0, behavior: reduce() ? 'auto' : 'smooth'}); return; }
+  renderPanel(); DRW.showModal(); DRW.scrollTop = 0;
+  if (!reduce()) DRW.animate([{transform: 'translateX(56px)', opacity: 0}, {transform: 'none', opacity: 1}], {duration: 480, easing: 'cubic-bezier(.32,.72,0,1)'});
 }
+function cierraFicha() {
+  if (!DRW.open) { S.sel = null; syncHash(); return; }
+  if (reduce()) { DRW.close(); return; }
+  if (DRW._saliendo) return; DRW._saliendo = true;
+  DRW.animate([{transform: 'none', opacity: 1}, {transform: 'translateX(56px)', opacity: 0}], {duration: 240, easing: 'cubic-bezier(.55,.085,.68,.53)', fill: 'forwards'})
+    .onfinish = a => { DRW.close(); DRW.getAnimations().forEach(x => x.cancel()); DRW._saliendo = false; };
+}
+DRW.addEventListener('cancel', e => { e.preventDefault(); cierraFicha(); });
+DRW.addEventListener('close', () => { S.sel = null; closePop(true); syncHash(); $('pin').innerHTML = ''; gcCharts(); });
+DRW.addEventListener('click', e => { if (e.target === DRW) cierraFicha(); });   // clic en el fondo oscurecido
+$('drawer-x').onclick = cierraFicha;
 
 /* ---------- ficha ---------- */
 const charts = {};
@@ -2629,9 +2569,7 @@ function renderPanel() {
   syncHash();
   ['p1', 'p2', 'a1', 'a2'].forEach(kill);
   const pin = $('pin');
-  if (S.datos) return renderDatosPanel();
-  if (!S.sel && S.fam === 'X') return renderFechas();
-  if (!S.sel) { pin.innerHTML = ''; return; }   // inicio y apartados: solo la rejilla de tarjetas
+  if (!S.sel) { pin.innerHTML = ''; return; }   // sin indicador elegido, la ficha queda cerrada
   const i = BY[S.sel], k = V[S.sel], u = U[S.sel], pl = planDe(S.sel);
   const OPC = [
     ['res', 'Qué mide', `<p>${i.d}</p>`],
@@ -2797,16 +2735,6 @@ function drawDetail(id) {
 
 const ST_CORTO = {ok: 'En meta', warn: 'Vigilancia', bad: 'Acción'};
 /* ---------- pantalla «Fechas»: qué tramo cubre cada fuente y qué ventana usa cada indicador ---------- */
-function renderFechas() {
-  const srcN = ['Ventas', 'Compras', 'Transferencias', 'Apuntes contables', 'Ajustes de inventario', 'Ventas por hora'];
-  $('pin').innerHTML = `<div class="phead"><span class="kind">Datos y fechas</span><h2>Fechas y cobertura de las fuentes</h2></div>
-    ${FG.f1()}
-    ${FIG(0, 'Fuentes recibidas', dt({cols: [{k: 'fuente', l: 'Fuente', b: true, sub: 'contenido'}, {k: 'desde', l: 'Desde'}, {k: 'hasta', l: 'Hasta'}, {k: 'registros', l: 'Registros', t: 'num', bar: true}],
-      rows: (D.fuentes || []).map(f => ({...f, desde: f.desde ? fechaL(f.desde) : 'Foto actual', hasta: f.hasta ? fechaL(f.hasta) : '—'})), search: false, name: 'fuentes'}))}
-    ${FIG(0, 'Ventana de cada indicador', dt({cols: [{k: 'id', l: 'Indicador', b: true, sub: 'c'}, {k: 'w', l: 'Ventana'}, {k: 'src', l: 'Fuentes'}, {k: 'e', l: 'Dato', t: 'tag', tc: v => v === 'Calculado' ? 'full' : v === 'Sin datos' ? 'none' : 'part'}],
-      rows: IND.map(i => ({id: i.id, c: i.c, w: V[i.id].w || (i.e === 'none' ? '—' : perCorto().toLowerCase()), src: i.src.map((on, j) => on ? srcN[j] : '').filter(Boolean).join(', ') || '—', e: ETAG[i.e]})), filters: ['e'], top: 23, click: r => pick(r.id), name: 'ventanas'}))}`;
-  flush($('pin'));
-}
 
 /* ---------- datos: carpeta de análisis agrupada (lista a la izquierda, contenido a la derecha) ---------- */
 let HECHOS = new Set();
@@ -3091,44 +3019,6 @@ const TARJETAS = [
   {g: 'dat', t: 'Cobertura y datos que faltan', s: () => `${COB().completos + COB().parciales} de ${IND.length}`, b: cardCobertura},
   {g: 'sim', t: 'Simulación Monte Carlo', s: () => usd(mcRes().r.q.R.p[2]), b: cardMC}
 ];
-function deckList() {
-  const deck = $('deck');
-  deck.innerHTML = `<nav class="dk2" aria-label="Análisis de datos">${GRUPOS.map(([g, n]) => `<div class="dk2-g"><h2>${n}</h2>${TARJETAS.map((c, j) => c.g !== g ? '' : `<button type="button" class="dk2-i ${S.card === j ? 'cur' : ''}" data-i="${j}" aria-pressed="${S.card === j}"><span class="t">${c.t}</span><span class="s">${c.s()}</span></button>`).join('')}</div>`).join('')}</nav>`;
-  deck.querySelectorAll('.dk2-i').forEach(b => b.onclick = () => pickCard(+b.dataset.i));
-  const cur = deck.querySelector('.dk2-i.cur'); if (cur && cur.scrollIntoView && innerWidth < 980) cur.scrollIntoView({inline: 'center', block: 'nearest'});
-}
-// la columna izquierda se cierra sobre sí misma y se vuelve a abrir con el otro contenido
-function swapLeft(fn) {
-  const left = $('stage').querySelector('.left');
-  if (reduce()) { fn(); return; }
-  const a = left.animate([{clipPath: inset(left, 0, 60), transform: 'none', opacity: 1}, {clipPath: inset(left, .1), transform: 'translateY(-6px) scale(.97)', opacity: .4}],
-    {duration: 200, easing: 'cubic-bezier(.55,.085,.68,.53)', fill: 'forwards'});
-  a.onfinish = () => { fn(); a.cancel(); reveal(left); };
-}
-function openDatos(card = 0) {
-  S.datos = true; S.card = card == null ? 0 : card; syncDock(); syncNav();
-  swapLeft(() => { deckList(); $('stage').classList.remove('solo', 'foco'); $('stage').classList.add('dk'); });
-  renderHead(); swap($('pin'), renderPanel);
-}
-function closeDatos(redraw = true) {
-  S.datos = false; S.card = null; syncDock(); syncNav();
-  const back = () => { $('stage').classList.remove('dk'); $('deck').innerHTML = ''; renderBento(false); };
-  if (redraw) { swapLeft(back); renderHead(); swap($('pin'), renderPanel); } else back();
-}
-function pickCard(i) {
-  S.card = i;
-  $('deck').querySelectorAll('.dk2-i').forEach(b => { const on = +b.dataset.i === i; b.classList.toggle('cur', on); b.setAttribute('aria-pressed', on); });
-  swap($('pin'), renderPanel);
-  if (innerWidth < 980) $('pin').scrollIntoView({behavior: reduce() ? 'auto' : 'smooth', block: 'start'});
-}
-function renderDatosPanel() {
-  const pin = $('pin'), c = S.card == null ? null : TARJETAS[S.card];
-  const grp = c ? GRUPOS.find(g => g[0] === c.g)[1] : '';
-  pin.innerHTML = `<div class="phead ph2"><span class="kind">${grp}${c && c.f ? ` · Fig. ${c.f}` : ''}</span><h2>${c ? c.t : 'Elige un análisis'}</h2></div>${c ? '<div class="dbody"></div>' : ''}`;
-  if (c) c.b(pin.querySelector('.dbody'));
-  flush(pin);
-}
-
 /* ---------- tarjetas de análisis ---------- */
 // rótulo del pie: meses que suma la tabla (cambia con los filtros)
 const totMeses = R_ => { const ii = R_.map(r => r._i); if (!ii.length) return 'Total'; const a = Math.min(...ii), b = Math.max(...ii); return a === b ? `Total ${lbl(D.meses[a]).toLowerCase()}` : `Total ${lbl(D.meses[a]).toLowerCase()} – ${lbl(D.meses[b]).toLowerCase()}`; };
@@ -3259,18 +3149,16 @@ const vxFx = el => { if (el && !reduce()) el.animate([{opacity: .35}, {opacity: 
 
 function cardVentas(db) {
   const h = selHoras(), mp = selProd().mg;
+  const rt = panes('vx-r', [['m', 'Mes', '<div class="fgs" id="vx-tm"></div><div id="vx-m"></div>'], ['d', 'Día', '<div class="fgs" id="vx-td"></div><div id="vx-d"></div>'], ['b', 'Franja', '<div class="fgs" id="vx-tb"></div><div id="vx-b"></div>'], ['q', 'Clientes', '<div class="fgs" id="vx-tq"></div><div id="vx-q"></div>']]);
   db.innerHTML = `<div class="vx-f" id="vx-f" role="group" aria-label="Filtros del análisis"></div><div id="vx-k"></div>
     <div class="g2 vx-g1">${FIG(8, '<span id="vx-t8">Venta promedio por hora y día</span>', '<div class="hm vxh" id="hm" role="group" aria-label="Venta promedio por hora y día"></div><div class="hm-foot"><span class="hm-info" id="hm-info"></span><span class="hm-lg"><em>Menos</em><i></i><em>Más</em></span></div>',
         {tools: '<nav class="gb hm-mode" id="hm-mode" aria-label="Medida"></nav>', i: `Días de operación regular${h ? ' de ' + mesesL(h.meses) : ''}. Promedio de cada día de la semana en cada hora, con IVA; con una categoría o un producto elegido, ventas sin IVA de las facturas unidas a sus órdenes. Toca una celda, un día o una hora para filtrar; las celdas rayadas son horas en que la tienda está cerrada.`})}
       ${FIG(0, '<span id="vx-tp">Productos con más venta</span>', '<div id="vx-p"></div>', {i: 'Ventas sin IVA. Toca un producto para ver en qué días y horas se vende.'})}</div>
-    <div class="g2">${FIG(6, '<span id="vx-tm">Transacciones y ticket promedio (I11)</span>', '<div id="vx-m"></div>', {i: 'Barras: transacciones al mes. Línea: ticket promedio sin IVA. Toca un mes para enfocar el periodo en él; tócalo otra vez para volver.'})}
-      ${FIG(0, '<span id="vx-tc">Categorías</span>', '<div id="vx-c"></div>', {i: 'Peso de cada categoría en la venta de la selección, sin IVA. Toca una categoría para filtrar.'})}</div>
-    <div class="g2">${FIG(8, '<span id="vx-td">Venta promedio diaria · USD con IVA</span>', '<div id="vx-d"></div>', {i: 'Sábado y domingo en verde oscuro. Toca un día para filtrar.'})}
-      ${FIG(0, '<span id="vx-tb">Ventas por franja horaria</span>', '<div id="vx-b"></div>', {i: 'Toca una franja para filtrar.'})}</div>
-    ${FIG(0, '<span id="vx-tt">Detalle de productos</span>', '<div id="vx-tb2"></div>', {i: `Margen promedio por producto de ${selL()}: ${pct(mp)}. Toca una fila para elegir el producto.`})}
     <div class="g2">${FG.f7(280)}${FIG(0, 'Venta y margen de los 250 productos con más venta', '<div id="vx-s"></div>', {i: `Eje horizontal en escala logarítmica: venta de cada producto de ${selL()}. Con un filtro, se resaltan los productos que se venden en la selección.`})}</div>
+    <div class="g2">${FIG(0, '<span id="vx-tc">Categorías</span>', '<div id="vx-c"></div>', {i: 'Peso de cada categoría en la venta de la selección, sin IVA. Toca una categoría para filtrar.'})}
+      ${FIG(0, 'Ritmo de la venta', rt.box, {tools: rt.nav, i: 'Mes: transacciones y ticket promedio sin IVA (I11). Día: venta promedio diaria con IVA. Franja: participación de cada franja horaria. Clientes: transacciones, ticket y crecimiento de cada mes. Toca un mes para enfocar el periodo; un día o una franja, para filtrar.'})}</div>
     ${FIG(0, '<span id="vx-th">Peso de cada categoría en la venta de cada hora · %</span>', '<div id="vx-hc"></div>', {i: 'Cada columna es la venta de esa hora. Toca una categoría, una hora o una celda para filtrar.'})}
-    ${FIG(0, '<span id="vx-tq">Clientes por mes</span>', '<div id="vx-q"></div>', {i: 'Crecimiento: variación de las ventas frente al mes anterior. Toca un mes para enfocar el periodo en él.'})}`;
+    ${FIG(0, '<span id="vx-tt">Productos</span>', '<div id="vx-tb2"></div>', {tools: '<nav class="gb vw" id="vx-tbn" aria-label="Tabla"></nav>', i: `Margen promedio por producto de ${selL()}: ${pct(mp)}. Toca una fila para elegir el producto.`})}`;
   PEND.push(() => {
     if (!$('vx-f')) return;
     menu($('hm-mode'), [['v', 'Ventas'], ['t', 'Transacciones']], S.hm || 'v', v => { S.hm = v; vxHeat(VXR); });
@@ -3280,7 +3168,7 @@ function cardVentas(db) {
   });
 }
 // en pantallas angostas la fila de análisis también queda fija arriba: la barra de filtros se ubica debajo
-function vxAlto() { const f = $('vx-f') || $('ix-f'), L = $('stage').querySelector('.left'); if (f) f.style.setProperty('--dkh', (innerWidth <= 980 && L ? L.offsetHeight : 0) + 'px'); }
+function vxAlto() { const f = $('vx-f') || $('ix-f'); if (f) f.style.setProperty('--dkh', '0px'); }
 function vxPintar(primera) {
   if (!$('vx-f')) return;
   const sinH = vxOn() && !selHoras();   // meses sin ventas por hora: el filtro queda guardado, pero no hay con qué aplicarlo
@@ -3304,19 +3192,21 @@ function vxFiltros() {
 function vxKpi(R) {
   const el = $('vx-k'), f = S.vx;
   if (!R) {
-    const r = calc(SI()), need = r.pe ? r.pe / r.ticket : null, h = selHoras(), P = selProd(), pk = h ? picoMapa(h.mapa.v) : null;
-    el.innerHTML = kp([['Transacciones', nf(r.trans), 'al mes' + (need ? ' · el equilibrio exige ' + nf(need) : ''), V.I11.st], ['Ticket promedio', usd(r.ticket, 2), 'sin IVA'],
-      h ? ['Hora pico', `${DIAS[pk[0]]} ${h.mapa.horas[pk[1]]}:00`, usd(h.mapa.v[pk[0]][pk[1]]) + ' promedio · con IVA'] : ['Hora pico', '—', 'sin ventas por hora'],
-      ['Productos con venta', nf(P.nP), nf(P.abc[0]) + ' hacen el 80 % de la venta']]);
+    const r = calc(SI()), h = selHoras(), P = selProd(), w = h && h.semana;
+    el.innerHTML = kx([xi('I11', {l: 'Ticket promedio', v: usd(r.ticket, 2), u: '', st: null, s: 'sin IVA · gasto medio por compra'}),
+      xi('I11', {l: 'Transacciones', v: nf(r.N), u: '', s: `${nf(r.trans)} al mes · ${V.I11.tn || ''}`.replace(/ · $/, '')}),
+      {l: 'Venta promedio por día', v: w && w.sem_dia ? `${usd(w.sem_dia)}<small>/</small>${usd(w.fin_dia)}` : '—', s: w && w.sem_dia ? 'lunes a viernes / sábado y domingo · con IVA' : 'sin ventas por hora en los meses elegidos'},
+      xi('I5', {s: V.I5.nt || ''}),
+      xi('I12', {l: 'Pareto ABC', u: 'de la venta', s: `el 20 % de ${nf(P.nP)} productos · A ${nf(P.abc[0])} · B ${nf(P.abc[1])} · C ${nf(P.abc[2])}`})]);
     return;
   }
   const dias = diasDe(f.cel), lid = (() => { let b = -1; for (let p = 0; p < R.pV.length; p++) if (R.pV[p] > 0 && (b < 0 || R.pV[p] > R.pV[b])) b = p; return b; })();
   const totP = R.pV.reduce((a, b) => a + b, 0), quien = f.prod != null ? 'con el producto' : f.cat != null ? 'con la categoría' : '';
-  el.innerHTML = kp([['Ventas', usd(R.sV / 100), (R.tV ? pct(R.sV / R.tV * 100) + ' de la venta' : '') + ' · sin IVA'],
-    ['Transacciones', nf(R.sN), (dias ? nf(R.sN / dias, 1) + ' por día' : '') + (quien ? ' · facturas ' + quien : '')],
-    ['Ticket', R.sN ? usd(R.sV / 100 / R.sN, 2) : '—', quien ? 'gasto por factura ' + quien : 'sin IVA'],
-    f.prod != null ? ['Margen', R.sV ? pct((R.sV - R.sC) / R.sV * 100) : '—', 'del producto en la selección']
-      : ['Producto líder', lid >= 0 ? esc(DET.p.n[lid]) : '—', lid >= 0 && totP ? pct(R.pV[lid] / totP * 100) + ' de la selección' : '']]);
+  el.innerHTML = kx([{l: 'Ventas', v: usd(R.sV / 100), s: (R.tV ? pct(R.sV / R.tV * 100) + ' de la venta' : '') + ' · sin IVA'},
+    {l: 'Transacciones', v: nf(R.sN), s: (dias ? nf(R.sN / dias, 1) + ' por día' : '') + (quien ? ' · facturas ' + quien : '')},
+    {l: 'Ticket', v: R.sN ? usd(R.sV / 100 / R.sN, 2) : '—', s: quien ? 'gasto por factura ' + quien : 'sin IVA'},
+    f.prod != null ? {l: 'Margen', v: R.sV ? pct((R.sV - R.sC) / R.sV * 100) : '—', s: 'del producto en la selección'}
+      : {l: 'Producto líder', v: lid >= 0 ? esc(DET.p.n[lid]) : '—', s: lid >= 0 && totP ? pct(R.pV[lid] / totP * 100) + ' de la selección' : ''}]);
 }
 
 // mapa de calor enlazado: botones con foco itinerante (flechas) y valores que cambian en su sitio, con transición
@@ -3340,13 +3230,14 @@ function vxHeat(R) {
     html += '<span class="rl">Día</span>' + DIAS.map((_, d) => `<span class="tt tc" data-td="${d}"></span>`).join('') + '<span></span>';
     el.innerHTML = html; el.dataset.k = key; vxHeatEv(el);
   }
-  let foco = null;
+  let foco = null; const cA = rgbDe(css('--accent')), cB = rgbDe(css('--card-bg'));
   el.querySelectorAll('.c').forEach(b => {
     const d = +b.dataset.d, j = +b.dataset.j, v = M_[d][j], cerr = base[d][j] == null, a = v == null ? 0 : v / max, sel = msk ? !!msk[d * NH + j] : false;
     b.classList.toggle('off', cerr); b.disabled = cerr; b.classList.toggle('hi', a > .55); b.classList.toggle('pk', !cerr && d === pk[0] && j === pk[1]);
     b.classList.toggle('sel', sel && f.cel.t === 'c'); b.classList.toggle('dim', !!msk && !sel);   // aro solo en una celda; con un día, una hora o una franja basta atenuar el resto
     b.style.background = cerr ? '' : `color-mix(in srgb,var(--accent) ${Math.round(8 + a * 92)}%,transparent)`;
     b.textContent = !cerr && a > .12 && !(msk && !sel) ? num(v) : '';   // las celdas atenuadas no llevan cifra
+    b.style.color = cerr ? '' : tintaSobre(cA, cB, (8 + a * 92) / 100);
     b.setAttribute('aria-pressed', String(sel && f.cel.t === 'c'));
     b.setAttribute('aria-label', `${cap(DIAS_L[d])}, ${H.horas[j]}:00: ${cerr ? 'cerrado' : fmt(v || 0)}`);
     b.tabIndex = -1; if (!cerr && (sel && !foco || !foco && d === pk[0] && j === pk[1])) foco = b;
@@ -3484,16 +3375,19 @@ function vxTabla(R) {
   const tag = {k: 'nivel', l: 'Nivel', t: 'tag', tc: v => v === 'Bajo el costo' ? 'none' : v === 'Sobre el promedio' ? 'full' : 'part'};
   if (!R) {
     const P = selProd(); mp = P.mg;
-    rows = P.idx.slice(0, 600).map(p => ({...pRow(P, p), _p: p})).map(r => ({...r, nivel: nivel(r)}));
+    rows = P.idx.map(p => ({...pRow(P, p), _p: p})).map(r => ({...r, nivel: nivel(r)}));
     cols = [{k: 'p', l: 'Producto', sub: 'cat'}, {k: 'v', l: 'Ventas', t: 'usd', bar: true}, {k: 'mg', l: 'Margen USD', t: 'usd'}, {k: 'mgp', l: 'Margen %', t: 'pct', heat: 1}, tag, {k: 'q', l: 'Unidades', t: 'num'}, {k: 'n', l: 'Facturas', t: 'num'}];
   } else {
     const ids = []; let V_ = 0, C_ = 0; for (let p = 0; p < R.pV.length; p++) if (R.pV[p] > 0) { ids.push(p); V_ += R.pV[p]; C_ += R.pC[p]; }
     ids.sort((a, b) => R.pV[b] - R.pV[a]); mp = V_ ? (V_ - C_) / V_ * 100 : null;
-    rows = ids.slice(0, 600).map(p => { const v = R.pV[p] / 100, mg = (R.pV[p] - R.pC[p]) / 100; return {p: DET.p.n[p] || '—', cat: DET.cats[DET.p.c[p]], v, sh: V_ ? R.pV[p] / V_ * 100 : 0, mg, mgp: v ? mg / v * 100 : null, n: R.pN[p], _p: p}; }).map(r => ({...r, nivel: nivel(r)}));
+    rows = ids.map(p => { const v = R.pV[p] / 100, mg = (R.pV[p] - R.pC[p]) / 100; return {p: DET.p.n[p] || '—', cat: DET.cats[DET.p.c[p]], v, sh: V_ ? R.pV[p] / V_ * 100 : 0, mg, mgp: v ? mg / v * 100 : null, n: R.pN[p], _p: p}; }).map(r => ({...r, nivel: nivel(r)}));
     cols = [{k: 'p', l: 'Producto', sub: 'cat'}, {k: 'v', l: 'Ventas', t: 'usd', bar: true}, {k: 'sh', l: '% de la selección', t: 'pct', heat: 1}, {k: 'mg', l: 'Margen USD', t: 'usd'}, {k: 'mgp', l: 'Margen %', t: 'pct'}, tag, {k: 'n', l: 'Facturas', t: 'num'}];
   }
-  $('vx-tt').textContent = 'Detalle de productos' + (R && (f.cel || f.cat != null) ? ' · ' + [f.cel ? celTxt(f.cel) : '', f.cat != null ? DET.cats[f.cat] : ''].filter(Boolean).join(' · ') : '');
-  el.innerHTML = dt({cols, rows, filters: R ? ['nivel', 'cat'] : ['nivel', 'cat', 'c'], top: 15, unit: 'productos', name: 'productos', mark: r => r._p === f.prod, click: r => vxSet('prod', r._p)});
+  const tab = S.vw['vx-tb'] || 'v', nNeg = rows.filter(r => r.mg < 0).length, nav = $('vx-tbn');
+  if (nav) menu(nav, [['v', 'Más venta'], ['m', 'Más margen'], ['n', `Margen negativo · ${nf(nNeg)}`]], tab, v => { S.vw['vx-tb'] = v; vxTabla(VXR); });
+  const vista = tab === 'm' ? [...rows].sort((a_, b_) => b_.mg - a_.mg) : tab === 'n' ? rows.filter(r => r.mg < 0).sort((a_, b_) => a_.mg - b_.mg) : rows;
+  $('vx-tt').textContent = (tab === 'm' ? 'Productos con más margen' : tab === 'n' ? 'Productos vendidos bajo su costo' : 'Productos con más venta') + (R && (f.cel || f.cat != null) ? ' · ' + [f.cel ? celTxt(f.cel) : '', f.cat != null ? DET.cats[f.cat] : ''].filter(Boolean).join(' · ') : ' · ' + selL());
+  el.innerHTML = dt({cols, rows: vista.slice(0, 600), filters: R ? ['nivel', 'cat'] : ['nivel', 'cat', 'c'], top: 15, unit: 'productos', name: tab === 'n' ? 'productos_margen_negativo' : tab === 'm' ? 'productos_margen' : 'productos', mark: r => r._p === f.prod, click: r => vxSet('prod', r._p)});
   flush(el);
 }
 
@@ -3519,6 +3413,7 @@ function vxDisp(R) {
 
 // categoría × hora: con un día elegido, solo ese día; tocar una categoría, una hora o una celda filtra
 function vxHC(R) {
+  const cA_ = rgbDe(css('--accent')), cB_ = rgbDe(css('--card-bg'));
   const el = $('vx-hc'); if (!el) return;
   const f = S.vx; let HC;
   if (R && R.dia != null) {
@@ -3533,7 +3428,7 @@ function vxHC(R) {
     const ci = HC.ci[i], rowOn = onC === ci;
     g += `<button type="button" class="rl${rowOn ? ' on' : ''}" data-c="${ci}" aria-pressed="${rowOn}" title="${esc(c)}">${esc(c)}</button>` + HC.pct[i].map((v, j) => {
       const dim = (onC != null && !rowOn) || (onJ != null && onJ !== j);
-      return v == null ? `<span class="c off${dim ? ' dim' : ''}"></span>` : `<button type="button" class="c ${v / mx > .55 ? 'hi' : ''}${dim ? ' dim' : ''}" data-c="${ci}" data-j="${j}" style="background:color-mix(in srgb,var(--accent) ${Math.round(6 + v / mx * 90)}%,transparent)" aria-label="${esc(c)} a las ${HC.horas[j]}:00: ${pct(v)} de la venta de esa hora" title="${esc(c)} · ${HC.horas[j]}:00: ${pct(v)} de la venta de esa hora">${v / mx > .25 && !dim ? nf(v, 0) : ''}</button>`;
+      return v == null ? `<span class="c off${dim ? ' dim' : ''}"></span>` : `<button type="button" class="c ${v / mx > .55 ? 'hi' : ''}${dim ? ' dim' : ''}" data-c="${ci}" data-j="${j}" style="background:color-mix(in srgb,var(--accent) ${Math.round(6 + v / mx * 90)}%,transparent);color:${tintaSobre(cA_, cB_, (6 + v / mx * 90) / 100)}" aria-label="${esc(c)} a las ${HC.horas[j]}:00: ${pct(v)} de la venta de esa hora" title="${esc(c)} · ${HC.horas[j]}:00: ${pct(v)} de la venta de esa hora">${v / mx > .25 && !dim ? nf(v, 0) : ''}</button>`;
     }).join('');
   });
   el.innerHTML = `<div class="hm hm2 vxm" style="--nc:${HC.horas.length}">${g}</div>`;
@@ -3679,25 +3574,23 @@ function ixFalla(e) { if (e) console.error(e); ixAviso('No se pudo cargar el det
 const ixCarga = () => '<div class="empty-st">Cargando el detalle de inventario…</div>';
 
 function cardInventario(db) {
-  const inv = D.inventario;
+  const tb = panes('ix-t', [['pc', 'Pérdida por categoría', '<div class="fgs" id="ix-tc"></div><div id="ix-c"></div>'], ['pp', 'Pérdida por producto', '<div class="fgs" id="ix-tp"></div><div id="ix-p"></div>'],
+    ['rr', 'Rotación rápida', '<div class="fgs" id="ix-trr"></div><div id="ix-rr"></div>'], ['rl', 'Rotación lenta', '<div class="fgs" id="ix-trl"></div><div id="ix-rl"></div>']]);
   db.innerHTML = `<div class="vx-f" id="ix-f" role="group" aria-label="Filtros del análisis"></div><div id="ix-k"></div>
-    <div class="g2">${FIG(9, '<span id="ix-te">Entradas y costo de lo vendido por mes · USD</span>', '<div id="ix-e"></div>', {i: 'Barras: entradas al costo. Línea: costo de lo vendido. En enero parte de las transferencias se registró sin costo; el costo imputado las valora con el precio de compra. Toca un mes para enfocar el periodo en él; tócalo otra vez para volver.'})}
+    <div class="g2">${FIG(0, '<span id="ix-ts">Inventario en cada conteo, por área · USD</span>', '<div id="ix-s"></div>', {i: 'Valor al costo de los tres conteos físicos de la tienda. Toca un área para filtrar el resto del análisis; tócala otra vez para quitar el filtro.'})}
       ${FIG(11, '<span id="ix-tm">Diferencias de conteo por mes · USD</span>', '<div id="ix-m"></div>', {i: 'La merma no se registra a diario: aparece de golpe en el mes del conteo. Los sobrantes por existencia negativa corrigen ventas registradas con otro código. Toca un mes para enfocar el periodo en él.'})}</div>
-    <div class="g2">${FIG(0, '<span id="ix-ta">Inventario contado al 30 de septiembre, por área</span>', '<div id="ix-a"></div>', {i: 'Valor al costo del conteo del 30 de septiembre. Ajuste: sobrantes menos faltantes del periodo, sobre las ventas del área. Toca un área para filtrar.'})}
-      ${gcol(FIG(11, '<span id="ix-tt">Pérdida neta por tipo de producto</span>', '<div id="ix-t"></div>', {cls: 'mid', i: 'Perecibles: frutas, hortalizas, carnes, pollos, pescados, embutidos, huevos, granos y elaborados. Toca un tipo para filtrar.'}),
-        FIG(0, '<span id="ix-tf">Resultado de cada conteo · USD</span>', '<div id="ix-fc"></div>', {i: 'Hacia abajo: pérdida neta de la fecha; hacia arriba: sobrante neto. Toca una fecha para enfocar el periodo en su mes.'}))}</div>
-    <div class="g2">${FIG(10, '<span id="ix-to">Origen de la mercadería vendida</span>', '<div id="ix-o"></div>', {i: 'Ventas sin IVA según cómo ingresó cada producto en todo el periodo de datos. La venta sin entrada es sobre todo granel que se fracciona con otro código. Toca un origen para filtrar.'})}
-      ${FIG(10, '<span id="ix-tom">Origen de lo vendido, mes a mes · %</span>', '<div id="ix-om"></div>', {i: 'Toca una parte de la barra para filtrar ese origen.'})}</div>
-    ${FIG(0, '<span id="ix-tc">Categorías</span>', '<div id="ix-c"></div>', {i: 'Pérdida neta = faltantes − sobrantes, al costo. Días de inventario: promedio de los conteos del 30 de abril y del 30 de septiembre sobre el costo de lo vendido de mayo a septiembre, llevado a un año. Toca una categoría para filtrar.'})}
-    ${FIG(0, '<span id="ix-tp">Productos</span>', '<div id="ix-p"></div>', {i: 'Valores negativos de pérdida: sobrante neto, que suele corregir una existencia negativa. Toca un producto para filtrar.'})}
-    ${FIG(18, '<span id="ix-tx">Huevos: existencia según archivos y huevos vendidos en cubetas · unidades</span>', '<div id="ix-x"></div>', {i: 'Sin un producto elegido: los huevos, que entran por unidad y salen en cubetas de 30 y 15; el sistema descarga las unidades con una lista de materiales que los archivos no registran. Con un producto elegido: su existencia día a día según los archivos (entradas, ventas y ajustes), la que registraba el sistema en cada conteo y la contada. Muestra los meses del periodo; el mes elegido va sombreado.'})}
-    <div class="g2">${FIG(9, '<span id="ix-tq">Cuadre de inventario al 30 de septiembre</span>', '<div id="ix-q"></div>', {i: 'Compras y transferencias, más los ajustes de conteo y menos el costo de lo vendido, dejan el inventario según los archivos; el conteo del 30 de septiembre encontró otro valor. Es un saldo acumulado desde la apertura: no cambia con los meses elegidos.'})}
-      ${secRows(['I13', 'I14'], 'Rotación de inventario y margen sobre inventario de ' + frB() + '; GMROI de cada compañía = margen bruto × rotación / (1 − margen bruto). ProDesarrollo: ' + nf(inv.rot_anual, 1) + ' veces, ' + nf(inv.dias, 0) + ' días.')}</div>
-    <h3 class="ix-sec">Rastreo de la diferencia <span>· toda la tienda</span></h3>
-    ${grid2(FG.r2(290), FG.rc(290))}${FG.r1(290)}${FG.r3(240)}${FG.r5()}
-    ${FIG(0, 'Productos con mayor diferencia entre conteo y archivos', dt({cols: [{k: 'p', l: 'Producto', sub: 'cat'}, {k: 'mec', l: 'Mecanismo', t: 'tag'}, {k: 'arch', l: 'Según archivos', t: 'num', d: 1}, {k: 'cont', l: 'Contado', t: 'num', d: 1}, {k: 'gap', l: 'Diferencia', t: 'num', d: 1}, {k: 'vgap', l: 'USD', t: 'usd', d: 2, bar: true}],
+    <div class="g2">${gcol(FIG(11, '<span id="ix-tt">Pérdida neta por tipo de producto</span>', '<div id="ix-t"></div>', {cls: 'mid', i: 'Perecibles: frutas, hortalizas, carnes, pollos, pescados, embutidos, huevos, granos y elaborados. Toca un tipo para filtrar.'}),
+        FIG(0, '<span id="ix-tf">Resultado de cada conteo · USD</span>', '<div id="ix-fc"></div>', {i: 'Hacia abajo: pérdida neta de la fecha; hacia arriba: sobrante neto. Toca una fecha para enfocar el periodo en su mes.'}))}
+      ${FIG(9, '<span id="ix-te">Entradas y costo de lo vendido por mes · USD</span>', '<div id="ix-e"></div>', {i: 'Barras: entradas al costo. Línea: costo de lo vendido. En enero parte de las transferencias se registró sin costo; el costo imputado las valora con el precio de compra. Toca un mes para enfocar el periodo en él; tócalo otra vez para volver.'})}</div>
+    ${FIG(0, 'Pérdidas y rotación', tb.box, {tools: tb.nav, i: 'Pérdida neta = faltantes − sobrantes, al costo; un valor negativo es un sobrante neto, que suele corregir una existencia negativa. Días de inventario: promedio de los conteos del 30 de abril y del 30 de septiembre sobre el costo de lo vendido de mayo a septiembre, llevado a un año. Toca una fila para filtrar.'})}
+    ${grupo('Rastreo de la diferencia', 'ix-r', [
+      ['q', 'Cuadre', FIG(9, '<span id="ix-tq">Cuadre de inventario al 30 de septiembre</span>', '<div id="ix-q"></div>', {i: 'Compras y transferencias, más los ajustes de conteo y menos el costo de lo vendido, dejan el inventario según los archivos; el conteo del 30 de septiembre encontró otro valor. Es un saldo acumulado desde la apertura: no cambia con los meses elegidos.'})],
+      ['p', 'Puente', FG.r2(290)], ['c', 'Composición', FG.rc(290)], ['m', 'Movimientos', FG.r1(290)], ['f', 'Fechas de conteo', FG.r3(260)],
+      ['x', 'Existencia de un producto', FIG(18, '<span id="ix-tx">Huevos: existencia según archivos y huevos vendidos en cubetas · unidades</span>', '<div id="ix-x"></div>', {i: 'Sin un producto elegido: los huevos, que entran por unidad y salen en cubetas de 30 y 15; el sistema descarga las unidades con una lista de materiales que los archivos no registran. Con un producto elegido: su existencia día a día según los archivos (entradas, ventas y ajustes), la que registraba el sistema en cada conteo y la contada. Muestra los meses del periodo; el mes elegido va sombreado.'})],
+      ['k', 'Kits', FG.r5()],
+      ['t', 'Productos con mayor diferencia', FIG(0, 'Productos con mayor diferencia entre conteo y archivos', dt({cols: [{k: 'p', l: 'Producto', sub: 'cat'}, {k: 'mec', l: 'Mecanismo', t: 'tag'}, {k: 'arch', l: 'Según archivos', t: 'num', d: 1}, {k: 'cont', l: 'Contado', t: 'num', d: 1}, {k: 'gap', l: 'Diferencia', t: 'num', d: 1}, {k: 'vgap', l: 'USD', t: 'usd', d: 2, bar: true}],
       rows: D.fig.r_top.map(r => ({...r, _p: DET.p.n.indexOf(r.p)})), filters: ['mec'], top: 15, unit: 'productos', name: 'rastreo_productos', mark: r => r._p >= 0 && r._p === S.ix.prod, click: r => { if (r._p >= 0) ixSet('prod', r._p); }}),
-      {i: 'Unidades al 30 de septiembre. Positivo: se contó más de lo que dejan los archivos. Toca un producto para filtrar el resto del análisis.'})}`;
+      {i: 'Unidades al 30 de septiembre. Positivo: se contó más de lo que dejan los archivos. Toca un producto para filtrar el resto del análisis.'})]])}`;
   PEND.push(() => {
     if (!$('ix-f')) return;
     vxAlto(); addEventListener('resize', vxAlto);
@@ -3708,14 +3601,14 @@ function cardInventario(db) {
 function ixPintar(primera) {
   if (!$('ix-f')) return;
   const R = IV ? ixCalc() : null;
-  ixFiltros(); ixKpi(R); ixMesE(R); ixMesM(R); ixAreas(R); ixTipo(R); ixFechas(R); ixOrig(R); ixOrigMes(R); ixCats(R); ixProds(R); ixExist(); ixCuadre(R);
-  if (!primera) ['ix-k', 'ix-a', 'ix-t', 'ix-o', 'ix-c', 'ix-p'].forEach(id => vxFx($(id)));
+  ixFiltros(); ixKpi(R); ixStock(R); ixMesE(R); ixMesM(R); ixTipo(R); ixFechas(R); ixCats(R); ixProds(R); ixRotT(R); ixExist(); ixCuadre(R);
+  if (!primera) ['ix-k', 'ix-t', 'ix-c', 'ix-p', 'ix-rr', 'ix-rl'].forEach(id => vxFx($(id)));
 }
 
 function ixFiltros() {
   const el = $('ix-f'), f = S.ix, ch = IXK.filter(k => f[k] != null).map(k => [k, ixChip(k, f[k])]);
   el.innerHTML = `<span class="vx-fl">${ch.length ? 'Filtros' : 'Sin filtros'}</span>${ch.map(([k, t]) => `<button type="button" class="vx-ch" data-k="${k}" aria-label="Quitar el filtro ${esc(t)}">${esc(t)}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17"/></svg></button>`).join('')}
-    ${ch.length > 1 ? '<button type="button" class="vx-cl">Quitar todo</button>' : ''}<span class="vx-av" id="ix-av" role="status">${ch.length ? '' : 'Toca un área, un tipo, un origen, una categoría o un producto'}</span>`;
+    ${ch.length > 1 ? '<button type="button" class="vx-cl">Quitar todo</button>' : ''}<span class="vx-av" id="ix-av" role="status">${ch.length ? '' : 'Toca un área, un tipo, una categoría o un producto'}</span>`;
   el.querySelectorAll('.vx-ch').forEach(b => b.onclick = () => ixSet(b.dataset.k, S.ix[b.dataset.k]));
   const cl = el.querySelector('.vx-cl'); if (cl) cl.onclick = ixLimpia;
 }
@@ -3723,18 +3616,50 @@ function ixFiltros() {
 const ixRot = (cv5, k4, k9) => { const pr = (k4 + k9) / 2; return pr > 0 && cv5 > 0 ? cv5 * 12 / 5 / pr : null; };
 function ixKpi(R) {
   const el = $('ix-k'); if (!el) return;
-  const F = D.fig.f9, ii = SI(), inv = D.inventario;
+  const inv = D.inventario, r = calc(SI());
   if (!R || !ixOn()) {
-    const cn = sumI(F.cn, ii), tr = sumI(F.tcor, ii), ent = cn + tr, perd = -selMerma().neto;
-    el.innerHTML = kp([['Entradas', usd(ent), `compras ${usd(cn)} · transferencias ${usd(tr)}`], ['Pérdida neta', usd(perd), (ent ? pct(perd / ent * 100) + ' de las entradas · ' : '') + 'al costo', perd > 0 ? 'bad' : null],
-      ['Inventario contado', usd(F.cont), '30 sep · según archivos ' + usd(F.fin)], ['Rotación (I13)', nf(inv.rot_anual, 1) + ' veces', nf(inv.dias, 0) + ' días · mediana del sector ' + nf(qv('I13', 'me'), 1) + ' veces', V.I13.st]]);
+    const perd = -selMerma().neto, sv = D.rot_sinventa || {n: 0, usd: 0};
+    el.innerHTML = kx([{l: 'Inventario promedio', v: usd(inv.promedio), s: 'conteos del 30 de abril y del 30 de septiembre'},
+      xi('I13', {l: 'Rotación anual', v: nf(inv.rot_anual, 2), u: 'veces', s: `mediana del sector ${nf(qv('I13', 'me'), 1)} veces`}),
+      xi('I13', {l: 'Días de inventario', v: nf(365 / inv.rot_anual, 1), u: 'días', s: `mediana del sector ${nf(qv('I13d', 'me'), 1)} días`}),
+      {l: 'Con existencia y sin venta', v: nf(sv.n), u: 'productos', s: `${usd(sv.usd)} inmovilizados · sin venta de mayo a septiembre`},
+      xi('I15', {l: 'Merma neta', v: usd(perd), u: '', s: `${pct(perd / r.V * 100)} de las ventas · frutas y hortalizas ${V.I15.v}`})]);
     return;
   }
-  const T = R.T, ent = (T.ec + T.et) / 100, perd = (T.fa - T.so) / 100, rot = ixRot(T.cv5, T.k[1], T.k[2]), fin = (T.ecA + T.etA + T.aj - T.cvA) / 100;
-  el.innerHTML = kp([['Entradas', usd(ent), `compras ${usd(T.ec / 100)} · transferencias ${usd(T.et / 100)}`],
-    ['Pérdida neta', usd(perd), ent > 100 ? pct(perd / ent * 100) + ' de sus entradas · al costo' : 'al costo', perd > 0 ? 'bad' : null],
-    ['Inventario contado', usd(T.k[2] / 100), '30 sep · según archivos ' + usd(fin)],
-    ['Rotación', rot ? nf(rot, 1) + ' veces' : '—', rot ? nf(365 / rot, 0) + ' días de inventario · may – sep' : T.k[1] + T.k[2] > 0 ? 'sin venta de mayo a septiembre' : 'sin existencia contada']]);
+  const T = R.T, perd = (T.fa - T.so) / 100, rot = ixRot(T.cv5, T.k[1], T.k[2]), pr = (T.k[1] + T.k[2]) / 200, ven = T.v / 100;
+  el.innerHTML = kx([{l: 'Inventario promedio', v: usd(pr), s: '30 sep ' + usd(T.k[2] / 100) + ' · según archivos ' + usd((T.ecA + T.etA + T.aj - T.cvA) / 100)},
+    {l: 'Rotación anual', v: rot ? nf(rot, 2) : '—', u: rot ? 'veces' : '', s: rot ? 'costo vendido de mayo a septiembre' : T.k[1] + T.k[2] > 0 ? 'sin venta de mayo a septiembre' : 'sin existencia contada'},
+    {l: 'Días de inventario', v: rot ? nf(365 / rot, 1) : '—', u: rot ? 'días' : '', s: 'promedio de los conteos'},
+    {l: 'Con existencia y sin venta', v: nf(T.sv), u: 'productos', s: usd(T.svU / 100) + ' inmovilizados'},
+    {l: 'Merma neta', v: usd(perd), s: (ven > 1 ? pct(perd / ven * 100) + ' de sus ventas · ' : '') + 'entradas ' + usd((T.ec + T.et) / 100)}]);
+}
+// existencias de cada área en los tres conteos; tocar un área filtra
+function ixStock(R) {
+  const el = $('ix-s'); if (!el) return;
+  const f = S.ix, filt = !!R && IXK.some(k => k !== 'area' && f[k] != null), k = K(), cols = [k.pa, k.li, k.ol], C = D.inventario.conteos;
+  const val = (a, w) => filt ? R.Ar[a].k[w] / 100 : D.inventario.areas[a - 1].v[w];
+  const data = [0, 1, 2].map(w => [1, 2, 3, 4].map(a => val(a, w))), bg = w => [1, 2, 3, 4].map(a => f.area != null && f.area !== a ? cols[w] + '59' : cols[w]);
+  $('ix-ts').textContent = 'Inventario en cada conteo, por área · ' + (filt ? ixTxt('area') + ' · ' : '') + 'USD';
+  const ch = IXC.s;
+  if (ch && ch.canvas && ch.canvas.isConnected) { ch.data.datasets.forEach((d, w) => { d.data = data[w]; d.backgroundColor = bg(w); }); ch.update(); return; }
+  el.innerHTML = cv(280, id => { IXC.s = mk(id, {type: 'bar', data: {labels: [1, 2, 3, 4].map(a => wrap(AREA_N(a), 18)), datasets: [0, 1, 2].map(w => ({label: C[w], data: data[w], backgroundColor: bg(w), borderRadius: 4, borderSkipped: false, maxBarThickness: 26, fmt: v => usd(v)}))},
+    options: {...opt({yf: v => nf(v), xs: 10, skip: false}), animation: {duration: 450, easing: 'easeOutQuart'},
+      onClick: (e, els) => { if (els.length) ixSet('area', els[0].index + 1); }, onHover: (e, els) => { e.native.target.style.cursor = els.length ? 'pointer' : 'default'; },
+      scales: {x: {...axX, ticks: {maxRotation: 0, autoSkip: false}}, y: {...axY(v => nf(v)), beginAtZero: true}}}}); });
+  flush(el);
+}
+// rotación rápida y lenta de la selección (existencia promedio de al menos USD 10)
+function ixRotT(R) {
+  const er = $('ix-rr'), el_ = $('ix-rl'); if (!er || !el_) return;
+  if (!R) { er.innerHTML = el_.innerHTML = ixCarga(); return; }
+  const f = S.ix, filt = IXK.some(k => k !== 'prod' && f[k] != null), sel = filt ? ixTxt('prod') : 'toda la tienda';
+  const rows = R.Pr.filter(x => (x.k4 + x.k9) / 2 >= 1000).map(x => { const rot = ixRot(x.cv5, x.k4, x.k9); return {p: DET.p.n[x.p] || '—', cat: DET.cats[DET.p.c[x.p]], inv: (x.k4 + x.k9) / 200, rot, dias: rot ? 365 / rot : null, nv: rot ? 'Con venta' : 'Sin venta', _p: x.p}; });
+  const cols = [{k: 'p', l: 'Producto', sub: 'cat'}, {k: 'inv', l: 'Inventario promedio', t: 'usd', d: 2, bar: true}, {k: 'rot', l: 'Rotación al año', t: 'num', d: 1}, {k: 'dias', l: 'Días', t: 'num', heat: -1}];
+  const rap = rows.filter(r => r.rot).sort((a, b) => a.dias - b.dias), len = rows.filter(r => !r.rot || r.dias > 300).sort((a, b) => (b.dias ?? 1e9) - (a.dias ?? 1e9) || b.inv - a.inv);
+  $('ix-trr').textContent = 'Rotación rápida · ' + sel; $('ix-trl').textContent = `Rotación lenta: más de 300 días o sin venta · ${sel} · ${nf(len.length)} productos, ${usd(len.reduce((a, r) => a + r.inv, 0))}`;
+  er.innerHTML = dt({cols, rows: rap.slice(0, 300), top: 15, unit: 'productos', name: 'rotacion_rapida', mark: r => r._p === f.prod, click: r => ixSet('prod', r._p)});
+  el_.innerHTML = dt({cols: [...cols, {k: 'nv', l: 'Venta', t: 'tag', tc: v => v === 'Sin venta' ? 'none' : 'part'}], rows: len.slice(0, 300), filters: ['nv'], top: 15, unit: 'productos', name: 'rotacion_lenta', mark: r => r._p === f.prod, click: r => ixSet('prod', r._p)});
+  flush(er); flush(el_);
 }
 
 // meses: entradas (barras) y costo de lo vendido (línea); tocar un mes enfoca el periodo
@@ -4028,7 +3953,7 @@ function cardUmbrales(db) {
   const ids = ['I1', 'I2', 'I3', 'I4', 'I5', 'I6', 'I7', 'I11', 'I13', 'I14', 'I20'];
   db.innerHTML = kp([['Dentro de la meta', ids.filter(id => V[id].st === 'ok').length, null, 'ok'], ['En vigilancia', ids.filter(id => V[id].st === 'warn').length, null, 'warn'], ['Requieren acción', ids.filter(id => V[id].st === 'bad').length, null, 'bad']])
     + FIG(0, 'Umbrales del semáforo', dt({cols: [{k: 'id', l: 'Indicador', b: true, sub: 'c'}, {k: 'v', l: 'Valor', t: 'tag', tc: () => 'val'}, {k: 'st', l: 'Estado', t: 'st'}, {k: 'm', l: 'Meta', t: 'tag', tc: () => 'u-ok'}, {k: 'w', l: 'Vigilancia', t: 'tag', tc: () => 'u-warn'}, {k: 'a', l: 'Acción', t: 'tag', tc: () => 'u-bad'}, {k: 'base', l: 'Base', t: 'tag'}],
-      rows: ids.map(id => { const [m, w, a_] = umb(id); return {id, c: BY[id].c, v: V[id].v, st: V[id].st, m, w, a: a_, base: U[id].cat}; }), search: false, filters: ['base'], top: 11, click: r => { closeDatos(false); pick(r.id); }, name: 'umbrales'}),
+      rows: ids.map(id => { const [m, w, a_] = umb(id); return {id, c: BY[id].c, v: V[id].v, st: V[id].st, m, w, a: a_, base: U[id].cat}; }), search: false, filters: ['base'], top: 11, click: r => pick(r.id), name: 'umbrales'}),
       {i: semNota() + ' I13 se lee también en días: ' + umb('I13d').join(' · ') + '. Toca una fila para abrir la ficha; la base se cambia en el menú del semáforo.'});
 }
 function cardFuentes(db) {
@@ -4041,7 +3966,7 @@ function cardCobertura(db) {
   const cb = COB(), PR = {a: 'Alta', m: 'Media', b: 'Baja'}, est = {full: 'Calculado', part: 'Alcance limitado', none: 'Sin datos'};
   db.innerHTML = kp([['Calculados', cb.completos, null, 'ok'], ['Alcance limitado', cb.parciales, null, 'warn'], ['Sin datos', cb.sin_datos], ['Datos recibidos', `${HECHOS.size} de ${D.faltan.length}`]])
     + FIG(0, 'Indicadores por familia', dt({cols: [{k: 'id', l: 'Indicador', b: true, sub: 'c'}, {k: 'fam', l: 'Familia', t: 'tag'}, {k: 'e', l: 'Dato', t: 'tag', tc: v => v === 'Calculado' ? 'full' : v === 'Sin datos' ? 'none' : 'part'}, {k: 'st', l: 'Semáforo', t: 'st', alt: 'alt'}],
-      rows: IND.map(i => ({id: i.id, c: i.c, fam: FAM_L[i.f], e: est[i.e], st: V[i.id].st, alt: i.e === 'none' ? 'Sin datos' : 'Tendencia'})), filters: ['fam', 'e'], top: 23, click: r => { closeDatos(false); pick(r.id); }, name: 'cobertura'}))
+      rows: IND.map(i => ({id: i.id, c: i.c, fam: FAM_L[i.f], e: est[i.e], st: V[i.id].st, alt: i.e === 'none' ? 'Sin datos' : 'Tendencia'})), filters: ['fam', 'e'], top: 23, click: r => pick(r.id), name: 'cobertura'}))
     + FIG(0, 'Datos que faltan', `<div class="faltan">${D.faltan.map((f, i) => `<label class="fl-i ${HECHOS.has(i) ? 'done' : ''}"><input type="checkbox" data-i="${i}" ${HECHOS.has(i) ? 'checked' : ''}><span class="fl-t"><b>${f[0]}</b><small>${f[1]} · ${f[3]}</small></span><span class="prio ${f[2]}">${PR[f[2]]}</span></label>`).join('')}</div>`, {i: 'Marca cada dato cuando llegue; la marca se guarda en este navegador.'});
   PEND.push(() => db.querySelectorAll('.fl-i input').forEach(b => b.onchange = () => {
     const i = +b.dataset.i; b.checked ? HECHOS.add(i) : HECHOS.delete(i);
@@ -4068,22 +3993,205 @@ function miniHeat(grande) {
     <div class="mh ${grande ? 'big' : ''}">${head}${g}</div>`;
 }
 
+// color de texto con más contraste sobre una mezcla de dos colores (el acento sobre el fondo de la tarjeta)
+const rgbDe = (() => { const cx = document.createElement('canvas').getContext('2d'); return t => { cx.fillStyle = '#000'; cx.fillStyle = t; const v = cx.fillStyle; if (v[0] === '#') return [1, 3, 5].map(i => parseInt(v.slice(i, i + 2), 16)); const m = v.match(/[\d.]+/g); return m && +m[3] === 0 ? [255, 255, 255] : m ? m.slice(0, 3).map(Number) : [255, 255, 255]; }; })();
+const luz = c => { const f = x => { x /= 255; return x <= .03928 ? x / 12.92 : ((x + .055) / 1.055) ** 2.4; }; return .2126 * f(c[0]) + .7152 * f(c[1]) + .0722 * f(c[2]); };
+const tintaSobre = (a, b, p) => { const L = luz(a.map((x, i) => x * p + b[i] * (1 - p))); return 1.05 / (L + .05) >= (L + .05) / .05 ? '#fff' : '#000'; };
+
+/* ---------- secciones del tablero: un menú y una página por tema ---------- */
+// Cada página sigue el mismo orden: arriba los indicadores con su semáforo, al centro una o dos gráficas y abajo las tablas, agrupadas en pestañas.
+const SECS = [['res', 'Resumen ejecutivo'], ['fin', 'Finanzas y rentabilidad'], ['ven', 'Ventas y clientes'], ['inv', 'Inventario y mermas'], ['abs', 'Abastecimiento y proveedores'], ['sec', 'Sector y escenarios'], ['dat', 'Gobernanza de datos']];
+const SECN = Object.fromEntries(SECS);
+S.sec = 'res';
+const STC = {ok: 'Meta', warn: 'Vigilar', bad: 'Acción'};
+const sinEt = s => String(s ?? '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+// tarjeta: el número grande con su semáforo a la vista; la de un indicador abre la ficha
+const xi = (id, o = {}) => ({id, l: BY[id].c, v: V[id].v, u: V[id].txt ? '' : V[id].uc || '', s: V[id].tn || V[id].nt || '', st: V[id].st, ...o});
+const pill = st => st && STC[st] ? `<span class="kx-st ${st}" title="${ST[st]}"><i class="dot sm ${st}"></i>${STC[st]}</span>` : st === 'na' ? `<span class="kx-st na" title="${ST.na}">Sin umbral</span>` : '';
+function kx(items) {
+  const xs = items.filter(Boolean), n = xs.length, kc = n === 8 || n === 7 ? 4 : n === 6 ? 3 : n;
+  return `<div class="kx" style="--kc:${kc}">${xs.map(x => {
+    const cab = `<span class="kx-h"><span class="kx-l">${x.l}${x.id ? ` <i>${x.id}</i>` : ''}</span>${pill(x.st)}${!x.id && x.i ? info(x.i) : ''}</span>`;
+    const cuerpo = `${cab}<b class="kx-v num">${x.v}${x.u ? `<small>${x.u}</small>` : ''}</b>${x.s ? `<span class="kx-s">${x.s}</span>` : ''}`;
+    return x.id
+      ? `<button type="button" class="kx-i${x.st && STC[x.st] ? ' ' + x.st : ''}" data-id="${x.id}" aria-label="${esc(sinEt(x.l))} (${x.id}): ${esc(sinEt(x.v))}${x.st && STC[x.st] ? '. ' + ST[x.st] : ''}. Abrir la ficha">${cuerpo}</button>`
+      : `<div class="kx-i${x.st && STC[x.st] ? ' ' + x.st : ''}">${cuerpo}</div>`;
+  }).join('')}</div>`;
+}
+// semáforo de un indicador dentro del encabezado de una figura: también abre su ficha
+const semB = id => `<button type="button" class="kx-st kx-sb ${V[id].st}" data-id="${id}" title="${ST[V[id].st]}" aria-label="${id} ${BY[id].c}: ${ST[V[id].st]}. Abrir la ficha"><i class="dot sm ${V[id].st}"></i>${id} · ${STC[V[id].st] || 'Tendencia'}</button>`;
+
+// pestañas que solo muestran u ocultan: todas quedan en la página (las gráficas enlazadas las actualizan aunque no se vean)
+function panes(key, items) {
+  const id = 'pn' + (++CVN), cur = items.some(x => x[0] === S.vw[key]) ? S.vw[key] : items[0][0];
+  PEND.push(() => {
+    const nav = $(id); if (!nav) return;
+    const show = v => { S.vw[key] = v; document.querySelectorAll(`[data-pn="${id}"]`).forEach(p => { const on = p.dataset.v === v; p.hidden = !on; if (on && !reduce()) p.animate([{opacity: 0, transform: 'translateY(6px)'}, {opacity: 1, transform: 'none'}], {duration: 320, easing: 'cubic-bezier(.32,.72,0,1)'}); }); };
+    menu(nav, items.map(x => [x[0], x[1]]), cur, show);
+  });
+  return {nav: `<nav class="gb vw" id="${id}" aria-label="${esc('Pestañas: ' + items.map(x => sinEt(x[1])).join(', '))}"></nav>`, box: items.map(x => `<div class="pane" data-pn="${id}" data-v="${x[0]}"${x[0] === cur ? '' : ' hidden'}>${x[2]}</div>`).join('')};
+}
+// grupo de figuras con su propio selector: una sola a la vista
+function grupo(t, key, items) {
+  const p = panes(key, items);
+  return `<section class="sgr"><header class="sgr-h"><h2>${t}</h2>${p.nav}</header>${p.box}</section>`;
+}
+const tituloSec = t => `<h2 class="ix-sec">${t}</h2>`;
+
+/* ---------- 1. Resumen ejecutivo ---------- */
+function secResumen(el) {
+  const r = calc(SI()), perd = -selMerma().neto, inv = D.inventario;
+  el.innerHTML = kx([
+    xi('I5', {l: 'Ventas totales', v: usd(r.V), u: '', s: `${usd(r.vmes)} al mes · crecimiento ${V.I5.v} al mes`}),
+    xi('I1'), xi('I2'),
+    xi('I15', {l: 'Merma neta', v: usd(perd), u: '', s: `${pct(perd / r.V * 100)} de las ventas · frutas y hortalizas ${V.I15.v}`}),
+    xi('I13', {l: 'Rotación de inventario', v: nf(inv.dias, 0) + ' días', u: '', s: `${nf(inv.rot_anual, 1)} veces al año · conteos de abril y septiembre`}),
+    xi('I14', {l: 'GMROI', u: 'al año'}),
+    xi('I17', {l: 'Ventas por m²', v: usd(r.vmes / D.superficie_m2, 2), u: 'al mes', s: `${nf(D.superficie_m2, 2)} m² de local`}),
+    xi('I17', {l: 'Ventas por empleado', v: usd(r.vmes / D.empleados), u: 'al mes', s: `${nf(D.empleados, 2)} empleados en promedio`})])
+    + FIG(0, 'Ventas, costo de ventas y gasto operativo por mes · USD', cv(320, id => { const k = K(), col = c => PER.map(q => dimA(c, ix(q))), ref = j => ix(PER[j]) < idx0;
+        mk(id, {data: {labels: LBP(), datasets: [
+          {type: 'line', label: 'Costo de ventas', data: SER(M.costo_ventas), borderColor: k.dk, backgroundColor: k.dk, borderWidth: 2, pointRadius: ptR(3.5), pointBackgroundColor: k.sf, pointBorderColor: k.dk, pointBorderWidth: 1.6, tension: .3, order: 0,
+            segment: {borderDash: c => ref(c.p0DataIndex) || ref(c.p1DataIndex) ? [4, 4] : undefined}, fmt: v => usd(v)},
+          {type: 'line', label: 'Gasto operativo', data: SER(M.gastos), borderColor: k.mu, backgroundColor: k.mu, borderWidth: 2, borderDash: [6, 4], pointRadius: ptR(3.5), pointBackgroundColor: k.sf, pointBorderColor: k.mu, pointBorderWidth: 1.6, tension: .3, order: 0, fmt: v => usd(v)},
+          {type: 'bar', label: 'Ventas', data: SER(M.ventas), backgroundColor: col(k.li), borderRadius: 4, borderSkipped: false, maxBarThickness: 44, order: 1, fmt: v => usd(v)}]},
+        options: {...opt({yf: v => nf(v)}), onClick: (e, els) => { if (els.length) mesFoco(PER[els[0].index]); }, onHover: (e, els) => { e.native.target.style.cursor = els.length ? 'pointer' : 'default'; },
+          scales: {x: {...axX, ticks: {maxRotation: 0}}, y: {...axY(v => nf(v)), beginAtZero: true}}}}); }),
+      {i: `Barras: ventas. Líneas: costo de ventas y gasto operativo. El costo de las transferencias es real desde ${lblL(D.inicio_costo_real)} de 2026; antes es referencial (tramo punteado). Toca un mes para enfocar el periodo en él.`});
+}
+
+/* ---------- 2. Finanzas y rentabilidad ---------- */
+function secFinanzas(el) {
+  const ii = SI(), r = calc(ii), res = r.V - r.CV - r.GO, gv = selGasto(), pre = ii.some(i => i < idx0), ini = lblL(D.inicio_costo_real) + ' de ' + D.inicio_costo_real.slice(0, 4);
+  // estado de resultados, gasto por rubro e indicadores de cada mes
+  const rowsR = mesRows(i => { const c = calc([i]); return {v: M.ventas[i], cv: M.costo_ventas[i], mb: c.mb, go: M.gastos[i], pgo: c.pgo, res: M.ventas[i] - M.costo_ventas[i] - M.gastos[i] + (M.otros ? M.otros[i] : 0), oss: c.oss, real: i >= idx0 ? 'Real' : 'Referencial'}; });
+  const sumF = k => R_ => R_.reduce((a, x) => a + x[k], 0);
+  const rowsG = D.fig.gastos_mes.map(x => { const v = sumI(x.v, ii); return {n: x.n, v, pg: 0, pv: v / r.V * 100, pm: v / r.n, sp: PER.map(k => x.v[ix(k)])}; }).filter(x => Math.abs(x.v) > 1);
+  const totG = rowsG.reduce((a, x) => a + x.v, 0); rowsG.forEach(x => { x.pg = x.v / totG * 100; });
+  const rowsI = mesRows(i => { const c = calc([i]); return {mb: c.mb, pgo: c.pgo, mo: c.mo, oss: c.oss, mc: c.mc}; });
+  const tb = panes('fin-t', [
+    ['r', 'Estado de resultados', dt({cols: [{k: 'mes', l: 'Mes', b: true}, {k: 'v', l: 'Ventas', t: 'usd', bar: true}, {k: 'cv', l: 'Costo', t: 'usd'}, {k: 'mb', l: 'Margen bruto', t: 'pct', heat: 1}, {k: 'go', l: 'Gastos', t: 'usd'}, {k: 'pgo', l: 'Gasto / ventas', t: 'pct', heat: -1}, {k: 'res', l: 'Resultado', t: 'usd', bar: true}, {k: 'oss', l: 'Autosuf.', t: 'pct', heat: 1}, {k: 'real', l: 'Costo', t: 'tag', tc: v => v === 'Real' ? 'full' : 'none'}],
+      rows: rowsR, search: false, filters: ['real'], top: 12, mark: markSel, footL: totMeses, foot: {v: sumF('v'), cv: sumF('cv'), mb: R_ => (sumF('v')(R_) - sumF('cv')(R_)) / sumF('v')(R_) * 100, go: sumF('go'), pgo: R_ => sumF('go')(R_) / sumF('v')(R_) * 100, res: sumF('res'), oss: R_ => sumF('v')(R_) / (sumF('cv')(R_) + sumF('go')(R_)) * 100}, name: 'estado_resultados'})],
+    ['g', 'Gasto por rubro', dt({cols: [{k: 'n', l: 'Rubro', b: true}, {k: 'v', l: 'USD', t: 'usd', bar: true}, {k: 'pg', l: '% del gasto', t: 'pct', heat: 1}, {k: 'pv', l: '% de las ventas', t: 'pct', d: 2}, {k: 'pm', l: 'Al mes', t: 'usd'}, {k: 'sp', l: 'Por mes', t: 'spark'}],
+      rows: rowsG, search: false, foot: {v: 'sum', pg: 'sum', pv: 'sum', pm: 'sum'}, name: 'gasto_rubros'})],
+    ['i', 'Indicadores mensuales', dt({cols: [{k: 'mes', l: 'Mes', b: true}, {k: 'mb', l: 'Margen bruto', t: 'pct', heat: 1}, {k: 'pgo', l: 'Gasto / ventas', t: 'pct', heat: -1}, {k: 'mo', l: 'Margen operativo', t: 'pct', bar: true}, {k: 'oss', l: 'Autosuficiencia', t: 'pct', heat: 1}, {k: 'mc', l: 'Margen de contribución', t: 'pct'}],
+      rows: rowsI, search: false, mark: markSel, name: 'indicadores_mensuales'})]]);
+  // financiamiento: plazos de pago frente al sector y capital de trabajo
+  const F = D.financiamiento, K_ = selCap(), rowsC = K_.rows, dS = qv0('I13d', 'me');
+  const tf = panes('fin-f', [
+    ['p', 'Plazos del sector', dt({cols: [{k: 'lab', l: 'Indicador', b: true}, {k: 'q1', l: 'Cuartil 1', t: 'num', d: 1}, {k: 'me', l: 'Mediana', t: 'num', d: 1}, {k: 'q3', l: 'Cuartil 3', t: 'num', d: 1}, {k: 'loc', l: 'Locales', t: 'num', d: 1}], rows: D.sector.ref, search: false, name: 'plazos_sector'})],
+    ['c', 'Capital de trabajo', dt({cols: [{k: 'lab', l: 'Referencia', b: true}, {k: 'pmp', l: 'Plazo', t: 'num', u: ' d'}, {k: 'cap', l: 'Capital USD', t: 'usd', bar: true}, {k: 'meses', l: 'Meses de venta', t: 'num', d: 1}], rows: rowsC, search: false, mark: r_ => r_ === rowsC[1], name: 'capital_trabajo'})]]);
+  el.innerHTML = kx([
+    {l: 'Ingresos', v: usd(r.V), s: `${usd(r.vmes)} al mes · ${selL()}`},
+    {l: 'Costo de ventas', v: usd(r.CV), s: pre ? `referencial antes de ${ini}` : `costo real desde ${ini}`, i: `El costo de las transferencias del centro de acopio es real desde ${ini}; antes se valora con el precio de compra y es referencial. Margen bruto: ${pct(r.mb)}.`},
+    xi('I3', {l: 'Resultado operativo', v: usd(res), u: '', s: `margen operativo ${V.I3.v} · ${usd(res / r.n)} al mes`}),
+    xi('I6'), xi('I7')])
+    + grid2(FG.f6a(), FIG(0, 'Peso de los gastos sobre las ventas · ' + selL(), par([['Personal (socio y ocasional)', gv.personal, qv('I4', 'me')], ['Energía y mantenimiento', gv.ocup, PROF['Gasto de ocupación'].me * 100], ['Gasto total', r.pgo, qv('I2', 'me')]], 35)
+        + `<div class="fgs">Rubros sin referencia del sector</div>` + hb([['Energía eléctrica', gv.energia, pct(gv.energia)], ['Comisiones y servicios bancarios', gv.comisiones, pct(gv.comisiones)]], 35),
+      {tools: semB('I4') + semB('I2'), i: `Gasto de cada rubro sobre las ventas de ${selL()}, frente a la mediana ${deB()} donde existe el dato.`}))
+    + FIG(0, 'Detalle financiero', tb.box, {tools: tb.nav, i: 'El resultado incluye otros ingresos y gastos financieros. El costo de las transferencias es real desde abril de 2026; antes es referencial.'})
+    + tituloSec('Financiamiento y capital de trabajo')
+    + kx([{l: 'Plazo del convenio', v: '30 días', s: 'pago al productor'}, {l: 'Plazo medio de pago del sector', v: nf(F.pmp_med, 0) + ' días', s: 'compañías locales: ' + nf(F.pmp_loc, 0) + ' días'}, {l: 'Días de inventario', v: nf(F.dias_inv, 0) + ' días', s: 'mediana del sector ' + nf(dS, 1) + ' días'}, {l: 'Capital de trabajo adicional', v: usd(rowsC[1].cap), s: 'frente a la mediana · ' + selL()}])
+    + grid2(FIG(0, 'Quién financia el inventario · días', cv(200, id => { const k = K(); mk(id, {type: 'bar', data: {labels: ['ProDesarrollo, pago a 30 días', 'Mediana del sector'], datasets: [
+        {label: 'Días de inventario', data: [F.dias_inv, dS], backgroundColor: k.gr, borderRadius: 4, borderSkipped: false, maxBarThickness: 20, fmt: v => nf(v, 0) + ' días', vlab: v => nf(v, 0)},
+        {label: 'Días de pago al proveedor', data: [30, F.pmp_med], backgroundColor: k.li, borderRadius: 4, borderSkipped: false, maxBarThickness: 20, fmt: v => nf(v, 0) + ' días', vlab: v => nf(v, 0)}]},
+        options: {...opt({hz: true, mode: 'nearest', pr: 30}), scales: {x: {...axY(v => v + ' d'), beginAtZero: true, suggestedMax: 90}, y: {...axX, ticks: {font: {size: 11}}}}}}); }),
+        {i: `En la tienda la mercadería permanece ${nf(F.dias_inv, 0)} días y se pagaría a los 30: la operación financia ${nf(F.dias_inv - 30, 0)} días. En el sector el proveedor cobra a los ${nf(F.pmp_med, 0)} días y financia el inventario.`}),
+      FIG(0, 'Plazos medios de pago frente al cuartil 1 y la mediana del sector', tf.box, {tools: tf.nav, i: `Capital de trabajo: costo de ventas diario de ${selL()} (${usd(K_.cd, 2)}) × (plazo del sector − 30 días). Valor máximo: incluye la mercadería del centro de acopio.`}));
+}
+
+/* ---------- 5. Abastecimiento y proveedores ---------- */
+function secAbastecimiento(el) {
+  const P = selProv(), O = selOrigen(), sinE = O[3] || {pct: 0, n: 0, usd: 0}, tc = P.rows.filter(x => x.r).slice(0, 5).map(x => x.r), pm = provMes([0, ...tc]), nm = [P.rows.find(x => x.r === 0) ? 'Centro de acopio' : null, ...tc.map(r_ => DET.pr.n[r_])];
+  const tb = panes('abs-t', [
+    ['p', 'Proveedores', dt({cols: [{k: 'p', l: 'Proveedor', b: true}, {k: 'tipo', l: 'Tipo', t: 'tag', tc: v => v === 'Centro de acopio' ? 'full' : v === 'Agroecológico' ? 'agro' : ''}, {k: 'usd', l: 'USD', t: 'usd', bar: true}, {k: 'pct', l: '% entradas', t: 'pct', d: 2}, {k: 'fact', l: 'Facturas', t: 'num'}, {k: 'prod', l: 'Productos', t: 'num'}, {k: 'meses', l: 'Meses', t: 'num', heat: 1}],
+      rows: P.rows.filter(x => Math.abs(x.usd) > .5), filters: ['tipo'], top: 20, unit: 'proveedores', foot: {usd: 'sum', pct: 'sum', fact: 'sum'}, name: 'proveedores'})],
+    ['a', 'Productores agroecológicos', P.agro.lista.length ? dt({cols: [{k: 'p', l: 'Productora o productor', b: true}, {k: 'usd', l: 'USD', t: 'usd', bar: true}, {k: 'pct', l: '% entradas', t: 'pct', d: 2}, {k: 'meses', l: 'Meses', t: 'num', heat: 1}, {k: 'prod', l: 'Productos', t: 'num'}],
+      rows: P.agro.lista.map(x => ({...x, pct: P.tot ? x.usd / P.tot * 100 : 0})), search: false, foot: {usd: 'sum', pct: 'sum'}, name: 'productores_agroecologicos'}) : '<div class="empty-st">Sin entregas de productores agroecológicos en los meses elegidos.</div>']]);
+  el.innerHTML = kx([
+    xi('I20', {l: 'Concentración (HHI)', s: `sin el centro de acopio: ${nf(P.hhi_sin_acopio)}`}),
+    xi('I18', {s: `agroecológicos ${pct(P.desint_min)} · personas naturales ${pct(P.desint_max)}`}),
+    xi('I21', {l: 'Recurrencia de proveedores'}),
+    {l: 'Venta sin entrada', v: pct(sinE.pct), s: `${nf(sinE.n)} productos · ${usd(sinE.usd)} sin IVA`, st: 'warn', i: 'Productos que se venden sin compra ni transferencia registrada: sobre todo granel que se fracciona con otro código. Es una alerta del registro, no un indicador.'},
+    {l: 'Cinco principales proveedores', v: pct(P.top5), s: `de las entradas · ${nf(P.n)} proveedores`}])
+    + grid2(FG.f10a(), FIG(0, 'Entradas por tipo de proveedor · ' + selL(), hb(P.tipo.map((t, k) => [t.t, t.pct, `${pct(t.pct)} · ${usd(t.usd)}`, k ? null : 'var(--accent)']), 45)
+        + `<div class="fgs">Productoras y productores agroecológicos: ${pct(P.agro.pct)} de las entradas · ${nf(P.agro.lista.length)} en la lista</div>`, {tools: semB('I18'), i: 'Compras netas y transferencias del centro de acopio, al costo.'}))
+    + grupo('Evolución mensual', 'abs-g', [
+      ['o', 'Origen de lo vendido', FG.f10b(270)],
+      ['p', 'Entradas por proveedor', FIG(0, 'Entradas por mes y proveedor · USD', cv(300, id => { const col = PALS(); mk(id, {type: 'bar', data: {labels: LBP(), datasets: [...nm.map((n, i) => n ? {label: n, data: SER(pm.out[i]).map(v => Math.max(0, v || 0)), backgroundColor: PER.map(q => dimA(col[i], ix(q))), borderRadius: R4(false, i === 0), borderSkipped: false, maxBarThickness: 34, stack: 's', fmt: v => usd(v)} : null).filter(Boolean),
+          {label: 'Resto', data: SER(pm.rest).map(v => Math.max(0, v || 0)), backgroundColor: PER.map(q => dimA(css('--chart-2'), ix(q))), borderRadius: R4(true, false), borderSkipped: false, maxBarThickness: 34, stack: 's', fmt: v => usd(v)}]},
+          options: {...opt({yf: v => nf(v)}), scales: {x: {...axX, stacked: true}, y: {...axY(v => nf(v)), stacked: true, beginAtZero: true}}}}); }))],
+      ['h', 'Concentración (HHI)', FIG(0, 'Concentración de compras por mes (HHI)', cv(260, id => { const k = K(); mk(id, {type: 'line', data: {labels: LBP(), datasets: [{label: 'HHI', data: SER(D.hhi_mes), borderColor: k.ac, backgroundColor: k.ac + '1f', fill: true, tension: .35, borderWidth: 2.2, pointRadius: ptR(3.5), pointBackgroundColor: k.sf, pointBorderWidth: 1.8, fmt: v => nf(v)}]},
+          options: opt({legend: false, yf: v => nf(v), hl: {lines: [{v: 1500, c: k.mu, t: '1.500 · moderada', left: true, under: true}, {v: 2500, c: k.dk, dash: [2, 3], t: '2.500 · alta', left: true}]}})}); }), {tools: semB('I20'), i: 'Diciembre no tiene transferencias registradas.'})]])
+    + FIG(0, 'Proveedores · ' + selL(), tb.box, {tools: tb.nav, i: `Entradas al costo de ${selL()}: compras netas y transferencias del centro de acopio como un solo proveedor.`});
+}
+
+/* ---------- 6. Sector y escenarios ---------- */
+const UMB = ['I1', 'I2', 'I3', 'I4', 'I5', 'I6', 'I7', 'I11', 'I13', 'I14', 'I20'];
+function secSector(el) {
+  const c = selCasc(), n = st => UMB.filter(id => V[id].st === st).length, T = D.fig.tam, pd = pdTam(), Va = calc(SI()).V * 12 / selN(), vs = SB ? SB.ventas[SM.an] || [] : [];
+  const E = SB ? SB.cos.map((co, j) => ({c: co, grp: SB.loc[j] ? 'Local' : 'Nacional', v: vs[j] == null ? null : vs[j] / 1e6, j})).filter(e => e.v != null && enGrupo(e.j)) : D.sector.emp;
+  const Es = selEsc().map(([nn, e]) => ({n: nn, I1: e.I1 * 100, I2: e.I2 * 100, I3: e.I3 * 100, I6: e.I6 * 100, res: e.res}));
+  const tb = panes('sec-t', [
+    ['u', 'Umbrales del semáforo', dt({cols: [{k: 'id', l: 'Indicador', b: true, sub: 'c'}, {k: 'v', l: 'Valor', t: 'tag', tc: () => 'val'}, {k: 'st', l: 'Estado', t: 'st'}, {k: 'm', l: 'Meta', t: 'tag', tc: () => 'u-ok'}, {k: 'w', l: 'Vigilancia', t: 'tag', tc: () => 'u-warn'}, {k: 'a', l: 'Acción', t: 'tag', tc: () => 'u-bad'}, {k: 'base', l: 'Base', t: 'tag'}],
+      rows: UMB.map(id => { const [m, w, a_] = umb(id); return {id, c: BY[id].c, v: V[id].v, st: V[id].st, m, w, a: a_, base: U[id].cat}; }), search: false, filters: ['base'], top: 11, click: r_ => pick(r_.id), name: 'umbrales'})],
+    ['e', 'Escenarios', dt({cols: [{k: 'n', l: 'Escenario', b: true}, {k: 'I1', l: 'Margen', t: 'pct'}, {k: 'I2', l: 'Gasto', t: 'pct'}, {k: 'I3', l: 'Margen op.', t: 'pct', heat: 1}, {k: 'I6', l: 'Autosuf.', t: 'pct'}, {k: 'res', l: 'Resultado al mes', t: 'usd', bar: true}],
+      rows: Es, search: false, mark: r_ => r_.n === 'Situación actual', name: 'escenarios'})],
+    ['c', 'Compañías de referencia', dt({cols: [{k: 'c', l: 'Compañía', b: true}, {k: 'grp', l: 'Grupo', t: 'tag', tc: v => v === 'Local' ? 'full' : 'none'}, {k: 'v', l: 'Millones de USD', t: 'num', d: 1, bar: true}, {k: 'x', l: 'Veces ProDesarrollo', t: 'num'}],
+      rows: E.map(e => ({c: e.c, grp: e.grp, v: e.v, x: e.v * 1e6 / Va})), search: false, filters: ['grp'], name: 'companias_sector'})],
+    ['t', 'Tamaño, margen y gasto', dt({cols: [{k: 'c', l: 'Compañía', b: true}, {k: 'g_', l: 'Grupo', t: 'tag', tc: v => v === 'Local' ? 'full' : v === 'ProDesarrollo' ? 'pd' : 'none'}, {k: 'v', l: 'Ventas (millones)', t: 'num', d: 1, bar: true}, {k: 'mb', l: 'Margen bruto', t: 'pct', heat: 1}, {k: 'g', l: 'Gasto', t: 'pct', heat: -1}, {k: 'd', l: 'Margen − gasto', t: 'pp', d: 1}],
+      rows: [...T.T.map(t_ => ({c: t_.c, g_: t_.loc ? 'Local' : 'Nacional', v: t_.v / 1e6, mb: t_.mb * 100, g: t_.g * 100, d: (t_.mb - t_.g) * 100})), {c: 'ProDesarrollo', g_: 'ProDesarrollo', v: pd.v / 1e6, mb: pd.mb * 100, g: pd.g * 100, d: (pd.mb - pd.g) * 100}],
+      search: false, filters: ['g_'], sort: ['d', 'desc'], mark: r_ => r_.c === 'ProDesarrollo', name: 'tamano_gasto'})]]);
+  el.innerHTML = kx([
+    {l: 'Dentro de la meta', v: n('ok'), s: `de ${UMB.length} indicadores con umbral`, st: 'ok'},
+    {l: 'En vigilancia', v: n('warn'), s: `de ${UMB.length} indicadores con umbral`, st: 'warn'},
+    {l: 'Requieren acción', v: n('bad'), s: `de ${UMB.length} indicadores con umbral`, st: 'bad'},
+    {l: 'Brecha de margen operativo', v: nf((c.ref - c.pd) * 100, 1) + ' puntos', s: `compañía local típica ${pct(c.ref * 100)} · ProDesarrollo ${pct(c.pd * 100)}`},
+    {l: 'Tamaño frente al gasto', v: nf(T.rho, 2), s: 'correlación de Spearman entre ventas y gasto', i: 'Las compañías más grandes gastan proporcionalmente menos: el tamaño explica parte de la ventaja de costos del sector.'}])
+    + grid2(FG.f12(), FG.f13(310))
+    + grid2(FG.f14a(300), FG.f14b(300))
+    + FIG(0, 'Umbrales y comparaciones', tb.box, {tools: tb.nav + '<button type="button" class="mini-b" id="sem-base">Base del semáforo</button>', i: semNota() + ' Toca una fila de los umbrales para abrir la ficha.'})
+    + tituloSec('Simulación Monte Carlo') + '<div class="dbody" id="sec-mc"></div>';
+  cardMC($('sec-mc'));
+  PEND.push(() => { const b = $('sem-base'); if (b) b.onclick = () => openSemaforo(b); });
+}
+
+/* ---------- 7. Gobernanza de datos ---------- */
+function secDatos(el) {
+  const cb = COB(), PR = {a: 'Alta', m: 'Media', b: 'Baja'}, est = {full: 'Calculado', part: 'Alcance limitado', none: 'Sin datos'}, srcN = ['Ventas', 'Compras', 'Transferencias', 'Apuntes contables', 'Ajustes de inventario', 'Ventas por hora'];
+  const tb = panes('dat-t', [
+    ['e', 'Estado de los indicadores', dt({cols: [{k: 'id', l: 'Indicador', b: true, sub: 'c'}, {k: 'fam', l: 'Familia', t: 'tag'}, {k: 'e', l: 'Dato', t: 'tag', tc: v => v === 'Calculado' ? 'full' : v === 'Sin datos' ? 'none' : 'part'}, {k: 'st', l: 'Semáforo', t: 'st', alt: 'alt'}],
+      rows: IND.map(i => ({id: i.id, c: i.c, fam: FAM_L[i.f], e: est[i.e], st: V[i.id].st, alt: i.e === 'none' ? 'Sin datos' : 'Tendencia'})), filters: ['fam', 'e'], top: 23, click: r_ => pick(r_.id), name: 'estado_indicadores'})],
+    ['f', 'Fuentes y vigencia', dt({cols: [{k: 'fuente', l: 'Fuente', b: true, sub: 'contenido'}, {k: 'desde', l: 'Desde'}, {k: 'hasta', l: 'Hasta'}, {k: 'registros', l: 'Registros', t: 'num', bar: true}],
+      rows: (D.fuentes || []).map(f => ({...f, desde: f.desde ? fechaL(f.desde) : 'Foto actual', hasta: f.hasta ? fechaL(f.hasta) : '—'})), search: false, name: 'fuentes'})],
+    ['v', 'Ventana de cada indicador', dt({cols: [{k: 'id', l: 'Indicador', b: true, sub: 'c'}, {k: 'w', l: 'Ventana'}, {k: 'src', l: 'Fuentes'}, {k: 'e', l: 'Dato', t: 'tag', tc: v => v === 'Calculado' ? 'full' : v === 'Sin datos' ? 'none' : 'part'}],
+      rows: IND.map(i => ({id: i.id, c: i.c, w: V[i.id].w || (i.e === 'none' ? '—' : perCorto().toLowerCase()), src: i.src.map((on, j) => on ? srcN[j] : '').filter(Boolean).join(', ') || '—', e: ETAG[i.e]})), filters: ['e'], top: 23, click: r_ => pick(r_.id), name: 'ventanas'})],
+    ['d', 'Datos que faltan', `<div class="faltan">${D.faltan.map((f, i) => `<label class="fl-i ${HECHOS.has(i) ? 'done' : ''}"><input type="checkbox" data-i="${i}" ${HECHOS.has(i) ? 'checked' : ''}><span class="fl-t"><b>${f[0]}</b><small>${f[1]} · ${f[3]}</small></span><span class="prio ${f[2]}">${PR[f[2]]}</span></label>`).join('')}</div>`]]);
+  el.innerHTML = kx([
+    {l: 'Indicadores calculados', v: cb.completos, s: `de ${IND.length}`},
+    {l: 'Alcance limitado', v: cb.parciales, s: `de ${IND.length}`},
+    {l: 'Sin datos', v: cb.sin_datos, s: `datos recibidos: ${HECHOS.size} de ${D.faltan.length}`},
+    {l: 'Fuentes', v: (D.fuentes || []).length, s: nf((D.fuentes || [])[0]?.registros || 0) + ' registros de venta'},
+    {l: 'Corte común', v: fechaL(D.corte || '2026-09-30'), s: 'costo real desde ' + fechaL(D.inicio_costo_real + '-01')}])
+    + grupo('Fuentes de datos', 'dat-g', [['c', 'Cobertura en el tiempo', FG.f1()], ['m', 'Mapa de la base de datos', FG.f2()]])
+    + FIG(0, 'Indicadores, fuentes y datos que faltan', tb.box, {tools: tb.nav, i: 'Toca un indicador para abrir su ficha. En «Datos que faltan», marca cada dato cuando llegue; la marca se guarda en este navegador.'});
+  PEND.push(() => el.querySelectorAll('.fl-i input').forEach(b => b.onchange = () => {
+    const i = +b.dataset.i; b.checked ? HECHOS.add(i) : HECHOS.delete(i);
+    try { localStorage.setItem(HKEY, JSON.stringify([...HECHOS])); } catch (e) {}
+    b.closest('.fl-i').classList.toggle('done', b.checked);
+  }));
+}
+
+const SECB = {res: secResumen, fin: secFinanzas, ven: cardVentas, inv: cardInventario, abs: secAbastecimiento, sec: secSector, dat: secDatos};
+// filtros de las secciones enlazadas que viajan en el enlace de la vista
+const FXS = {ven: {on: () => vxOn(), cod: () => vxCod(), de: x => { S.vx = vxDeCod(x); }}, inv: {on: () => ixOn(), cod: () => ixCod(), de: x => { S.ix = ixDeCod(x); }}};
 
 /* ---------- barra superior: estado de los íconos y textos de ayuda ---------- */
-const famNombre = () => S.datos || S.fam === 'X' ? 'Datos' : S.fam === 'T' ? (S.todos ? 'Los 23 indicadores' : 'Tablero principal') : FAM_L[S.fam];
 const perEtiq = () => { const ys = [...new Set(PER.map(k => k.slice(0, 4)))]; return S.mes === 'acum' ? `${perCorto()}${ys.length === 1 ? ' ' + ys[0] : ''}` : `${cap(lblL(S.mes))} ${S.mes.slice(0, 4)}`; };
 function renderHead() {
   const per = perEtiq();
   $('b-fechas-tip').textContent = 'Fechas · ' + per; $('b-fechas').setAttribute('aria-label', 'Fechas: ' + per);
-  $('b-ind-tip').textContent = 'Indicadores · ' + (S.datos || S.fam === 'X' ? 'elegir apartado' : famNombre());
-  syncNav();
 }
-function syncNav() {
-  const datos = S.datos || S.fam === 'X';
-  $('b-ind').setAttribute('aria-pressed', 'false');
-  $('b-datos') && $('b-datos').setAttribute('aria-pressed', String(!!S.datos));
-}
-const syncDock = syncNav;
 
 /* ---------- menús emergentes de vidrio: se abren con un recorte que baja y un pequeño rebote ---------- */
 let POP = null;
@@ -4101,7 +4209,7 @@ function openPop(btn, html, mount, cls) {
   el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', (btn.getAttribute('aria-label') || '').split(':')[0] || 'Opciones');
   el.querySelectorAll('[role^="menuitem"]').forEach(x => { x.removeAttribute('role'); if (x.getAttribute('aria-checked') === 'true') x.setAttribute('aria-current', 'true'); x.removeAttribute('aria-checked'); });
   if (!el.querySelector('button, a[href], input, select, textarea')) el.tabIndex = 0;   // un panel solo de texto también se alcanza con el teclado
-  document.body.append(el);
+  (btn.closest('dialog') || document.body).append(el);
   const b = btn.getBoundingClientRect(), w = el.offsetWidth;
   const h = el.offsetHeight;   // si no cabe debajo del botón, se abre hacia arriba
   el.style.top = (b.bottom + 10 + h > innerHeight - 12 ? Math.max(12, b.top - 10 - h) : b.bottom + 10) + 'px';
@@ -4148,7 +4256,7 @@ const SEMUI = [
   ['hhi', 'Concentración de compras (I20) · escala de EE. UU.', () => [['2010', '2010 · 1.500 / 2.500'], ['1992', '1992 · 1.000 / 1.800']]]
 ];
 const semAplicar = () => { semReglas(); profBase(); };
-function openSemaforo() {
+function openSemaforo(btn = $('b-ajustes')) {
   const c = st => TABLERO.filter(id => V[id].st === st).length, L = {bad: 'Acción', warn: 'Vigilancia', ok: 'En meta', na: 'Sin dato'};
   const MN = {me: 'mediana', prom: 'promedio', mejor: 'cuartil más favorable'}, AN = {peor: 'cuartil menos favorable', me: 'mediana', min: 'valor menos favorable'};
   const nota = () => `${semInforme() ? 'Base del informe' : 'Base elegida'}: ${SM.meta === SM.acc ? MN[SM.meta] + ', sin franja de vigilancia,' : MN[SM.meta] + ' y ' + AN[SM.acc]} de las ${NUM[nGrupo()] || nGrupo()} ${GR[SM.gr].l}, estados de ${SM.an}.${semInforme() ? '' : ' Se guarda en este navegador.'}`;
@@ -4157,7 +4265,7 @@ function openSemaforo() {
     ${SEMUI.map(([k, l, it]) => it ? `<div class="sx-r"><span class="sx-l" id="sx-${k}">${l}</span><nav class="gb sx-g" data-k="${k}" aria-labelledby="sx-${k}">${segs(k)}</nav></div>` : `<div class="pop__sub">${k}</div>`).join('')}
     <p class="pop__note" data-nota>${nota()}</p>
     <div class="sx-act"><button type="button" class="menu__item" data-sx="tabla">Tabla de umbrales</button><button type="button" class="menu__item" data-sx="reset" title="Volver a la base del informe" ${semInforme() ? 'disabled' : ''}>Restablecer</button></div>`;
-  openPop($('b-sem'), html, el => {
+  openPop(btn, html, el => {
     const navs = [...el.querySelectorAll('.sx-g')];
     const pinta = () => {
       el.querySelectorAll('.sem-c__o').forEach(o => { const n = String(c(o.dataset.st)); if (o.textContent !== n) { o.textContent = n; if (!reduce()) o.animate([{transform: 'scale(1)'}, {transform: 'scale(1.22)'}, {transform: 'scale(1)'}], {duration: 460, easing: 'cubic-bezier(.34,1.56,.64,1)'}); } o.setAttribute('aria-label', `${L[o.dataset.st]}: ${n}`); });
@@ -4167,43 +4275,25 @@ function openSemaforo() {
     };
     const cambia = (k, v) => { if (SM[k] === v) return; SM[k] = v; semGuardar(); semAplicar(); refresh(); pinta(); };
     navs.forEach(n => { n.querySelectorAll('button').forEach(b => b.onclick = () => cambia(n.dataset.k, b.dataset.v)); requestAnimationFrame(() => slide(n, true)); });
-    el.querySelector('[data-sx="tabla"]').onclick = () => { closePop(true); const j = TARJETAS.findIndex(t => t.b === cardUmbrales); if (S.datos) pickCard(j); else openDatos(j); };
+    el.querySelector('[data-sx="tabla"]').onclick = () => { closePop(true); S.vw['sec-t'] = 'u'; if (S.sec === 'sec') { renderSeccion(); } else goSec('sec'); };
     el.querySelector('[data-sx="reset"]').onclick = () => { if (semInforme()) return; Object.assign(SM, SEM0); semGuardar(); semAplicar(); refresh(); pinta(); };
   }, 'pop--semc pop--semx');
 }
 
-const FAMS = [['T', 'Tablero principal', () => TABLERO.length], ['C', 'Contables'], ['F', 'Financieros'], ['O', 'Operativos y comerciales'], ['A', 'Abastecimiento y valor público']];
-function setFam(v, todos = false) {
-  closePop(true);
-  if (S.datos) closeDatos(false);
-  S.fam = v; S.sel = null; S.todos = todos;
-  renderHead(); renderBento(); syncNav(); swap($('pin'), renderPanel);
-  scrollTo({top: 0, behavior: reduce() ? 'auto' : 'smooth'});
-}
-function openInd() {
-  const on = (v, t = false) => !S.datos && S.fam === v && S.todos === t;
-  const n = f => IND.filter(i => i.f === f).length;
-  const it = (v, l, sub, t = false) => `<button type="button" class="menu__item" role="menuitemradio" aria-checked="${on(v, t)}" data-v="${v}" data-t="${t}">${l}<small>${sub}</small>${on(v, t) ? CK : ''}</button>`;
-  openPop($('b-ind'), `<div class="pop__head">Indicadores</div>
-    <button type="button" class="menu__item" role="menuitem" data-buscar><svg class="mi-ico" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2.25"><circle cx="11" cy="11" r="7.5" opacity=".55"/><path d="m17 17 4 4"/></g></svg>Buscar indicador${matchMedia('(pointer: coarse)').matches ? '' : '<small><kbd>/</kbd></small>'}</button><hr>
-    ${it('T', 'Principal', TABLERO.length)}${it('T', 'Total', IND.length, true)}<hr>
-    ${FAMS.slice(1).map(([f, l]) => it(f, l, n(f))).join('')}<hr><div class="pop__sub">Análisis de datos</div>
-    ${GRUPOS.map(([g, nm]) => `<button type="button" class="menu__item" role="menuitem" data-card="${TARJETAS.findIndex(c => c.g === g)}">${nm}<small>${TARJETAS.filter(c => c.g === g).length}</small></button>`).join('')}`,
-    el => { el.querySelector('[data-buscar]').onclick = () => { openFinder(); $('finder').addEventListener('close', () => { const a = document.activeElement; if (a === document.body || $('finder').contains(a)) $('b-ind').focus({preventScroll: true}); }, {once: true}); };
-      el.querySelectorAll('[data-v]').forEach(b => b.onclick = () => setFam(b.dataset.v, b.dataset.t === 'true')); el.querySelectorAll('[data-card]').forEach(b => b.onclick = () => { closePop(true); if (S.datos) pickCard(+b.dataset.card); else openDatos(+b.dataset.card); }); });
-}
 function openAjustes() {
-  const t = TEMAS.find(x => x.id === theme);
+  const t = TEMAS.find(x => x.id === theme), fino = !matchMedia('(pointer: coarse)').matches;
   openPop($('b-ajustes'), `<div class="pop__head">Ajustes</div>
-    <div class="pop__sub">Apariencia</div>
+    <button type="button" class="menu__item" role="menuitem" data-a="buscar"><svg class="mi-ico" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2.25"><circle cx="11" cy="11" r="7.5" opacity=".55"/><path d="m17 17 4 4"/></g></svg>Buscar indicador${fino ? '<small><kbd>/</kbd></small>' : ''}</button>
+    <button type="button" class="menu__item" role="menuitem" data-a="sem">Base del semáforo<small>${semInforme() ? 'la del informe' : 'elegida'}</small></button>
+    <hr><div class="pop__sub">Apariencia</div>
     <button type="button" class="menu__item" role="menuitem" data-a="tema"><span class="tema__sw" aria-hidden="true">${t.sw.map(c => `<i style="background:${c}"></i>`).join('')}</span>${t.n}<small>Cambiar</small></button>
     <hr><div class="pop__sub">Compartir</div>
     <button type="button" class="menu__item" role="menuitem" data-a="informe">Informe del mes<small>${lblL(D.meses[mesFin()])}</small></button>
-    <button type="button" class="menu__item" role="menuitem" data-a="enlace">Enlace de esta vista<small>${navigator.share && matchMedia('(pointer: coarse)').matches ? 'compartir' : 'copiar'}</small></button>
-    <hr><button type="button" class="menu__item" role="menuitem" data-x="1">Fuentes y fechas de corte<small>corte ${fechaL(D.corte || '2026-09-30')}</small></button>
-    <hr><div class="pop__sub">Atajos de teclado</div>
-    <div class="keys"><kbd>/</kbd><span>Buscar indicador</span><kbd>Esc</kbd><span>Cerrar el menú o la ficha</span></div>`,
-    el => { el.querySelector('[data-a="tema"]').onclick = () => { closePop(true); cycleTheme(); }; el.querySelector('[data-x]').onclick = () => setFam('X');
+    <button type="button" class="menu__item" role="menuitem" data-a="enlace">Enlace de esta vista<small>${navigator.share && !fino ? 'compartir' : 'copiar'}</small></button>
+    ${fino ? '<hr><div class="pop__sub">Atajos de teclado</div><div class="keys"><kbd>/</kbd><span>Buscar indicador</span><kbd>Esc</kbd><span>Cerrar el menú o la ficha</span></div>' : ''}`,
+    el => { el.querySelector('[data-a="buscar"]').onclick = () => { openFinder(); $('finder').addEventListener('close', () => { const a = document.activeElement; if (a === document.body || $('finder').contains(a)) $('b-ajustes').focus({preventScroll: true}); }, {once: true}); };
+      el.querySelector('[data-a="sem"]').onclick = () => { closePop(true); openSemaforo($('b-ajustes')); };
+      el.querySelector('[data-a="tema"]').onclick = () => { closePop(true); cycleTheme(); };
       el.querySelector('[data-a="informe"]').onclick = () => { closePop(true); abrirInforme(); }; el.querySelector('[data-a="enlace"]').onclick = () => { closePop(true); compartir(); }; });
 }
 
@@ -4222,7 +4312,7 @@ function finderList() {
   $('finder-list').querySelectorAll('.finder__opt').forEach(o => { o.onclick = () => finderGo(+o.dataset.k); o.onmousemove = () => { if (FSEL !== +o.dataset.k) { FSEL = +o.dataset.k; mark(); } }; });
 }
 function mark() { $('finder-list').querySelectorAll('.finder__opt').forEach(o => { const on = +o.dataset.k === FSEL; o.setAttribute('aria-selected', on); if (on) o.scrollIntoView({block: 'nearest'}); }); }
-function finderGo(k) { const i = FI[k]; if (!i) return; $('finder').close(); if (S.datos) closeDatos(false); pick(i.id); }
+function finderGo(k) { const i = FI[k]; if (!i) return; $('finder').close(); pick(i.id); }
 function openFinder() {
   closePop(true); $('finder-q').value = ''; FSEL = 0; finderList(); $('finder').showModal(); $('finder-q').focus();
   if (!reduce()) $('finder').animate([{transform: 'scale(.94) translateY(-10px)', opacity: 0}, {transform: 'none', opacity: 1}], {duration: 380, easing: 'cubic-bezier(.34,1.4,.64,1)'});
@@ -4239,12 +4329,14 @@ const slug = t => t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').repla
 // meses seguidos como «2026-04~2026-09»; sueltos separados por comas
 const perCod = ks => { const out = []; let a = 0; ks.forEach((k, j) => { if (j === ks.length - 1 || ix(ks[j + 1]) !== ix(k) + 1) { out.push(a === j ? k : ks[a] + '~' + k); a = j + 1; } }); return out.join(','); };
 const perDes = s => s.split(',').flatMap(t => { const [a, b] = t.split('~'); return b ? D.meses.slice(ix(a), ix(b) + 1) : [a]; }).filter(k => D.meses.includes(k));
+const SEC_DE_GRUPO = {res: 'fin', sim: 'sec', ven: 'ven', inv: 'inv', abs: 'abs', sec: 'sec', dat: 'dat'};
 function hashDe() {
   const q = [];
   if (S.mes !== 'acum') q.push('m=' + S.mes);
   else if (PER.join() !== D.meses.slice(idx0).join()) q.push('p=' + perCod(PER));
-  if (S.fam === 'X') q.push('v=fechas'); else if (S.fam !== 'T') q.push('v=' + S.fam); else if (S.todos) q.push('v=todos');
-  if (S.datos) { q.push('d=' + (S.card == null ? '' : slug(TARJETAS[S.card].t))); const fx = S.card != null && TARJETAS[S.card].fx; if (fx && fx.on()) q.push('x=' + fx.cod()); } else if (S.sel) q.push('i=' + S.sel);
+  if (S.sec !== 'res') q.push('s=' + slug(SECN[S.sec]));
+  const fx = FXS[S.sec]; if (fx && fx.on()) q.push('x=' + fx.cod());
+  if (S.sel) q.push('i=' + S.sel);
   if (!semInforme()) q.push('b=' + Object.keys(SEM0).map(k => SM[k]).join('.'));
   return q.length ? '#' + q.join('&') : '';
 }
@@ -4256,10 +4348,13 @@ function leeHash() {
   const m = q.get('m'), p = q.get('p') && perDes(q.get('p'));
   if (m && D.meses.includes(m)) { S.mes = m; PER = D.meses.slice(Math.min(ix(m), idx0)); }
   else if (p && p.length) { if (p.length === 1) { S.mes = p[0]; PER = D.meses.slice(Math.min(ix(p[0]), idx0)); } else { S.mes = 'acum'; PER = p; } }
-  const v = q.get('v'); if (v === 'fechas') S.fam = 'X'; else if (v === 'todos') S.todos = true; else if (v && FAM_L[v]) S.fam = v;
-  const i = q.get('i'); if (i && BY[i]) { S.sel = i; if (!visibles().includes(i)) { if (S.fam !== 'T' && BY[i].f !== S.fam) S.fam = BY[i].f; if (!visibles().includes(i)) S.todos = true; } }
-  const d = q.get('d'); if (d != null) { const j = TARJETAS.findIndex(t => slug(t.t) === d || (t.al || []).includes(d)); S.datos = true; S.card = j < 0 ? 0 : j; }
-  const fx = S.datos && S.card != null && TARJETAS[S.card].fx; if (q.get('x') && fx) fx.de(q.get('x'));
+  const sc = q.get('s'), sec = sc && SECS.find(([, n]) => slug(n) === sc);
+  if (sec) S.sec = sec[0];
+  // enlaces anteriores: «d» nombraba una tarjeta de análisis y «v=fechas», la vista de fechas
+  const d = q.get('d'); if (d != null && !sec) { const t = TARJETAS.find(t_ => slug(t_.t) === d || (t_.al || []).includes(d)); S.sec = t ? (t.b === cardFinanciamiento ? 'fin' : SEC_DE_GRUPO[t.g]) : 'res'; }
+  if (q.get('v') === 'fechas' && !sec) S.sec = 'dat';
+  const fx = FXS[S.sec]; if (q.get('x') && fx) fx.de(q.get('x'));
+  const i = q.get('i'); if (i && BY[i]) S.sel = i;
 }
 addEventListener('hashchange', () => { if (location.hash !== hashDe()) location.reload(); });
 // aviso breve en la parte baja de la pantalla
@@ -4270,7 +4365,7 @@ function aviso(t) {
 // compartir la vista: hoja de compartir en el teléfono; en la computadora, el enlace se copia (solo nombre de la vista y periodo, sin cifras)
 async function compartir() {
   syncHash();
-  const url = location.href, vista = S.datos && S.card != null ? TARJETAS[S.card].t : S.sel ? BY[S.sel].n : S.fam === 'X' ? 'Fechas y cobertura' : 'Tablero';
+  const url = location.href, vista = S.sel ? BY[S.sel].n : SECN[S.sec];
   if (navigator.share && matchMedia('(pointer: coarse)').matches) { try { await navigator.share({title: document.title, text: `${vista} · ${perEtiq()}`, url}); return; } catch (e) { if (e && e.name === 'AbortError') return; } }
   try { await navigator.clipboard.writeText(url); aviso('Enlace copiado'); } catch (e) { aviso('No se pudo copiar: el enlace está en la barra de direcciones'); }
 }
@@ -4335,9 +4430,8 @@ function abrirInforme() {
 
 /* ---------- periodo ---------- */
 function refresh() {
-  compute(); renderHead(); renderBento(false);
-  if (S.datos) deckList();
-  swap($('pin'), renderPanel);
+  compute(); renderHead(); syncHash(); swap($('secp'), renderSeccion);
+  if (S.sel && DRW.open) renderPanel();
 }
 function setInicio(k) {
   PER = D.meses.slice(ix(k));
@@ -4346,25 +4440,17 @@ function setInicio(k) {
 }
 
 /* ---------- arranque y eventos ---------- */
-$('brand').onclick = e => { e.preventDefault(); goResumen(); };
-function goResumen() {
-  closePop(true);
-  if (S.datos) closeDatos(false);
-  const famChange = S.fam !== 'T' || S.todos; S.fam = 'T'; S.todos = false; syncNav();
-  S.sel = null; renderHead(); renderBento(); syncDock(); swap($('pin'), renderPanel);
-  scrollTo({top: 0, behavior: reduce() ? 'auto' : 'smooth'});
-}
+$('brand').onclick = e => { e.preventDefault(); if (DRW.open) cierraFicha(); goSec('res'); };
 document.querySelector('.top').addEventListener('click', e => {
   const b = e.target.closest('[data-act]'); if (!b) return;
-  ({fechas: openMes, ind: openInd, sem: openSemaforo, tema: cycleTheme, buscar: openFinder, ajustes: openAjustes, datos: () => S.datos ? closeDatos() : openDatos(null)})[b.dataset.act]?.();
+  ({fechas: openMes, tema: cycleTheme, buscar: openFinder, ajustes: openAjustes})[b.dataset.act]?.();
 });
 addEventListener('keydown', e => {
   const typing = e.target.closest('input, textarea, select, [contenteditable="true"]');
   if (e.key === 'Escape') {
     if ($('finder').open) return;
-    if (POP) { const b = POP.btn; closePop(); b.focus(); return; }
-    if (S.datos) { if (S.card != null) pickCard(null); else closeDatos(); }
-    else if (S.sel) pick(null);
+    // con un menú abierto, Esc cierra solo el menú (también si está dentro de la ficha)
+    if (POP) { e.preventDefault(); const b = POP.btn; closePop(); b.focus(); return; }
   } else if (!typing && !e.metaKey && !e.ctrlKey && !e.altKey && (e.key === '/')) { e.preventDefault(); openFinder(); }
   else if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); openFinder(); }
 });
@@ -4385,7 +4471,7 @@ const TEMAS = [
 let theme = 'oliva';
 try { const g = localStorage.getItem('pd-tema'); theme = TEMAS.some(t => t.id === g) ? g : theme; } catch (e) {}
 const applyTheme = () => { document.documentElement.dataset.theme = theme; $('themetip').textContent = 'Tema: ' + TEMAS.find(t => t.id === theme).n; };
-const repaint = () => { applyTheme(); defaults(); compute(); renderHead(); renderBento(false); if (S.datos) deckList(); renderPanel(); };
+const repaint = () => { applyTheme(); defaults(); compute(); renderHead(); renderSeccion(); if (S.sel && DRW.open) renderPanel(); };
 function setTheme(id) { theme = id; try { localStorage.setItem('pd-tema', theme); } catch (e) {} repaint(); }
 function cycleTheme() {
   openPop($('theme'), `<div class="pop__head">Apariencia <small>${TEMAS.length} temas</small></div><div class="temas" role="radiogroup" aria-label="Tema de color">${TEMAS.map(t => `<button type="button" class="tema" role="radio" data-t="${t.id}" aria-checked="${t.id === theme}"><span class="tema__sw">${t.sw.map(c => `<i style="background:${c}"></i>`).join('')}</span><span><b>${t.n}</b><small>${t.d}</small></span>${t.id === theme ? '<em>ACTIVO</em>' : ''}</button>`).join('')}</div>`,
@@ -4393,18 +4479,17 @@ function cycleTheme() {
 }
 
 const topH = () => document.documentElement.style.setProperty('--toph', document.querySelector('.top').offsetHeight + 'px');
-addEventListener('resize', () => { topH(); layoutGrid(); });
+addEventListener('resize', topH);
 leeHash();
-applyTheme(); defaults(); compute(); renderHead(); renderBento(false);
-if (S.datos) { deckList(); $('stage').classList.add('dk'); }
-renderPanel(); topH();
+applyTheme(); defaults(); compute(); renderHead(); secNav(); renderSeccion(); topH();
+if (S.sel) { const id = S.sel; S.sel = null; pick(id); } else syncHash();   // los enlaces anteriores quedan con la forma nueva
 
 /* entrada de la página: la barra cae con rebote, los íconos aparecen y las tarjetas se abren */
 if (!reduce()) {
   [...document.querySelectorAll('.top>*')].forEach((c, i) => c.animate([{transform: 'translateY(-70px)'}, {transform: 'none'}],
     {duration: 900, delay: 20 + i * 70, easing: 'cubic-bezier(.34,1.45,.64,1)', fill: 'backwards'}));
   document.querySelectorAll('.top .tbtn, .top .brand').forEach((b, i) => b.animate([{opacity: 0, transform: 'scale(.6)'}, {opacity: 1, transform: 'none'}], {duration: 600, delay: 260 + i * 40, easing: 'cubic-bezier(.34,1.45,.64,1)', fill: 'backwards'}));
-  [...$('pin').children].forEach((k, i) => reveal(k, 160 + Math.min(i, 8) * 60));
+  [...$('secp').children].forEach((k, i) => reveal(k, 160 + Math.min(i, 8) * 60));
 }
 })();
 </script>
