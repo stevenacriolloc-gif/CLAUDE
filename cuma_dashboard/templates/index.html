@@ -1205,6 +1205,38 @@ button.kx-i:focus-visible,.kx-sb:focus-visible,.mini-b:focus-visible{outline:2px
 @media (max-width:640px){.kx-h{align-items:flex-start}.kx-l{white-space:normal;line-height:1.3;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;padding-top:1px}.kx-l i{display:none}}
 .mcsem-b i.ok{color:#10130a}
 .mi-n{display:inline-grid;place-items:center;width:14px;font-family:var(--font);font-size:10.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+/* mapa del tablero: red de indicadores, secciones y análisis */
+.mapa-w{overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin;margin:0 -4px;padding:0 4px}
+.mapa{display:block;width:100%;min-width:1080px;height:auto;font-family:var(--font);-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+.mapa text{font-size:11.5px;fill:var(--ink);transition:fill .3s var(--ease)}
+.mapa .mp-h text{font-size:12px;font-weight:600;fill:var(--muted)}
+.mapa .mp-f text{font-size:10.5px;font-weight:600;fill:var(--muted)}
+.mp-e path{fill:none;stroke:var(--line);stroke-width:1;opacity:.75;transition:stroke .4s var(--ease),stroke-width .4s var(--ease),opacity .4s var(--ease)}
+.mapa.foco .mp-e path{opacity:.12}
+.mapa.foco .mp-e path.on{opacity:1;stroke:var(--accent);stroke-width:1.6}
+.mp-p circle{fill:var(--c2);filter:drop-shadow(0 0 2px var(--c2))}
+.mn{cursor:pointer;outline:none;transition:opacity .4s var(--ease)}
+.mn .mh{fill:transparent;stroke:none;transition:fill .3s var(--ease)}
+.mn .mo{transform-box:fill-box;transform-origin:center;transition:transform .45s var(--spring)}
+.mi .mo{fill:var(--sem-na)}.mi.ok .mo{fill:var(--sem-ok)}.mi.warn .mo{fill:var(--sem-warn)}.mi.bad .mo{fill:var(--sem-bad)}
+.mi.sd .mo{fill:var(--card-bg);stroke:var(--muted);stroke-width:1.2;stroke-dasharray:2 2}
+.ms .mo{fill:var(--accent)}
+.ms .mg{fill:var(--accent);opacity:.12;transform-box:fill-box;transform-origin:center}
+.ms.hit .mg{animation:mpHit .9s var(--expo)}
+@keyframes mpHit{0%{opacity:.4;transform:scale(.7)}100%{opacity:.12;transform:none}}
+.ms text{font-size:12px;font-weight:600;fill:var(--ink-strong);paint-order:stroke;stroke:var(--card-bg);stroke-width:5px;stroke-linejoin:round}
+.ma .mo{fill:var(--card-bg);stroke:var(--c2);stroke-width:1.8}
+.mapa.foco .mn:not(.on){opacity:.26}
+.mapa.foco .mn.on .mo{transform:scale(1.3)}
+.mn:hover .mh,.mn:focus-visible .mh{fill:var(--glass-flat)}
+.mn:focus-visible .mo{stroke:var(--ink-strong);stroke-width:1.5}
+.mapa-i{min-height:36px;margin:10px 0 0;font-size:12px;line-height:1.5;color:var(--muted)}
+.mapa-i b{font-weight:600;color:var(--ink-strong)}
+.sleg i.mp-sd{background:none!important;border:1.2px dashed var(--muted);box-sizing:border-box}
+.sleg i.mp-an{background:none!important;border:1.6px solid var(--c2);box-sizing:border-box}
+.mp-dest{animation:mpDest 1.9s var(--ease)}
+@keyframes mpDest{0%,35%{box-shadow:0 0 0 2px var(--accent)}100%{box-shadow:0 0 0 2px transparent}}
+@media (prefers-reduced-motion:reduce){.mp-e path,.mn,.mn .mo{transition:none}.ms.hit .mg,.mp-dest{animation:none}}
 </style>
 <style id="base">
 /* base del navegador: preflight de Tailwind CSS 3.4.16 (licencia MIT), en el mismo orden en que lo aplicaba el CDN */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}
@@ -4066,7 +4098,8 @@ function secResumen(el) {
           {type: 'bar', label: 'Ventas', data: SER(M.ventas), backgroundColor: col(k.li), borderRadius: 4, borderSkipped: false, maxBarThickness: 44, order: 1, fmt: v => usd(v)}]},
         options: {...opt({yf: v => nf(v)}), onClick: (e, els) => { if (els.length) mesFoco(PER[els[0].index]); }, onHover: (e, els) => { e.native.target.style.cursor = els.length ? 'pointer' : 'default'; },
           scales: {x: {...axX, ticks: {maxRotation: 0}}, y: {...axY(v => nf(v)), beginAtZero: true}}}}); }),
-      {i: `Barras: ventas. Líneas: costo de ventas y gasto operativo. El costo de las transferencias es real desde ${lblL(D.inicio_costo_real)} de 2026; antes es referencial (tramo punteado). Toca un mes para enfocar el periodo en él.`});
+      {i: `Barras: ventas. Líneas: costo de ventas y gasto operativo. El costo de las transferencias es real desde ${lblL(D.inicio_costo_real)} de 2026; antes es referencial (tramo punteado). Toca un mes para enfocar el periodo en él.`})
+    + figMapa();
 }
 
 /* ---------- 2. Finanzas y rentabilidad ---------- */
@@ -4165,6 +4198,155 @@ function secSector(el) {
 
 /* ---------- Simulación Monte Carlo: sección aparte ---------- */
 function secMC(el) { el.innerHTML = '<div class="dbody" id="sec-mc"></div>'; cardMC($('sec-mc')); }
+
+/* ---------- mapa del tablero: red de indicadores, secciones y análisis de datos ---------- */
+// por sección: indicadores que muestra (tarjetas, figuras y tablas) y sus análisis [nombre, comienzo del título o #id con que se ubica, pestaña que abre]
+const MAPA = {
+  res: {ind: ['I5', 'I1', 'I2', 'I15', 'I13', 'I14', 'I17'], an: [['Ventas, costo y gasto por mes', 'Ventas, costo de ventas y gasto']]},
+  fin: {ind: ['I1', 'I2', 'I3', 'I4', 'I6', 'I7'], an: [['Estructura del gasto operativo', 'Estructura del gasto operativo'], ['Peso de los gastos sobre las ventas', 'Peso de los gastos'], ['Detalle financiero', 'Detalle financiero'], ['Financiamiento y capital de trabajo', 'Financiamiento y capital']]},
+  ven: {ind: ['I5', 'I11', 'I12'], an: [['Venta por hora y día', 'Venta promedio por hora'], ['Productos con más venta', 'Productos con más venta'], ['Curva de Pareto', 'Curva de Pareto'], ['Venta y margen por producto', 'Venta y margen'], ['Categorías', '#vx-tc'], ['Ritmo de la venta', 'Ritmo de la venta'], ['Categorías en cada hora', 'Peso de cada categoría'], ['Tabla de productos', '#vx-tt']]},
+  inv: {ind: ['I13', 'I15'], an: [['Inventario por área', 'Inventario en cada conteo'], ['Diferencias de conteo por mes', 'Diferencias de conteo'], ['Pérdida por tipo de producto', 'Pérdida neta por tipo'], ['Resultado de cada conteo', 'Resultado de cada conteo'], ['Entradas y costo de lo vendido', 'Entradas y costo'], ['Pérdidas y rotación', 'Pérdidas y rotación'], ['Rastreo de la diferencia', 'Rastreo de la diferencia']]},
+  abs: {ind: ['I18', 'I20', 'I21'], an: [['Origen de la mercadería', 'Origen de la mercadería'], ['Entradas por tipo de proveedor', 'Entradas por tipo'], ['Evolución mensual', 'Evolución mensual'], ['Proveedores', 'Proveedores ·']]},
+  sec: {ind: UMB, an: [['Posición frente al sector', 'Posición de ProDesarrollo'], ['Brecha de margen operativo', 'Del margen operativo'], ['Tamaño frente al gasto', 'Tamaño frente al gasto'], ['Margen bruto frente al gasto', 'Margen bruto frente al gasto'], ['Umbrales y comparaciones', 'Umbrales y comparaciones']]},
+  dat: {ind: IND.map(i => i.id), an: [['Cobertura de las fuentes', 'Fuentes de datos', ['dat-g', 'c']], ['Mapa de la base de datos', 'Fuentes de datos', ['dat-g', 'm']], ['Indicadores, fuentes y datos que faltan', 'Indicadores, fuentes']]},
+  mc: {ind: ['I1', 'I2', 'I3', 'I4', 'I5', 'I6', 'I7', 'I11'], an: [['Ajustes de la simulación', 'Ajustes de la simulación'], ['Resultado de los próximos meses', 'Resultado de los próximos'], ['Resultado acumulado mes a mes', 'Resultado acumulado'], ['Probabilidad del semáforo', 'Probabilidad de cada estado'], ['Qué mueve el resultado', 'Qué mueve el resultado'], ['Escenarios frente a la simulación', 'Escenarios tradicionales'], ['Indicadores simulados', 'Indicadores simulados'], ['Supuestos de la simulación', 'Supuestos de la simulación']]}
+};
+const MP = {xi: 300, xs: 600, xa: 900, top: 52, paso: 16, hueco: 14};
+function mapaSVG() {
+  // análisis agrupados por sección; cada sección queda a la altura del centro de sus análisis
+  const secs = [...SECS, ...SECX].map(([k, n]) => ({k, n, ind: MAPA[k].ind}));
+  const A = []; let y = MP.top;
+  secs.forEach((s, j) => { if (j) y += MP.hueco; const y0 = y; MAPA[s.k].an.forEach(([n], h) => { A.push({k: `a:${s.k}:${h}`, n, s: s.k, y}); y += MP.paso; }); s.y = (y0 + y - MP.paso) / 2; });
+  const yF = y - MP.paso;
+  // indicadores por familia, repartidos en el mismo alto
+  const fams = ['C', 'F', 'O', 'A'].map(f => ({f, ids: IND.filter(i => i.f === f)})), U = IND.length + 1.4 * (fams.length - 1), st = (yF - MP.top) / U;
+  const I = [], Fh = []; let u = 0;
+  fams.forEach((F, j) => { if (j) u += 1.4; Fh.push({n: FAM_L[F.f], y: MP.top + u * st}); F.ids.forEach(i => { u += 1; I.push({k: 'i:' + i.id, i, y: MP.top + u * st}); }); });
+  const P = {}; I.forEach(x => { P[x.k] = [MP.xi, x.y]; }); secs.forEach(s => { P['s:' + s.k] = [MP.xs, s.y]; }); A.forEach(a => { P[a.k] = [MP.xa, a.y]; });
+  const E = []; secs.forEach(s => { s.ind.forEach(id => E.push(['i:' + id, 's:' + s.k, 6, 10])); A.filter(a => a.s === s.k).forEach(a => E.push(['s:' + s.k, a.k, 10, 5])); });
+  const curva = ([a, b, ra, rb]) => { const [x1, y1] = P[a], [x2, y2] = P[b], X1 = x1 + ra, X2 = x2 - rb, d = (X2 - X1) * .5; return `M${X1} ${y1.toFixed(1)}C${X1 + d} ${y1.toFixed(1)} ${X2 - d} ${y2.toFixed(1)} ${X2} ${y2.toFixed(1)}`; };
+  const f1 = v => v.toFixed(1), H = Math.ceil(yF + 34), tw = s => s.length * 6.3 + 22;
+  const nI = I.map(({k, i, y}) => { const v = V[i.id] || {}, sd = i.e === 'none', st = STC[v.st] ? v.st : '', t = `${i.id} · ${i.c}`;
+    return `<g class="mn mi${st ? ' ' + st : ''}${sd ? ' sd' : ''}" data-n="${k}" data-id="${i.id}" data-y="${f1(y)}" role="button" tabindex="-1" aria-label="${esc(`${i.id} ${i.c}: ${sinEt(v.v)}${st ? '. ' + ST[st] : ''}. Abrir la ficha`)}" transform="translate(${MP.xi} ${f1(y)})"><rect class="mh" x="${f1(-tw(t))}" y="-9" width="${f1(tw(t) + 12)}" height="18" rx="4"/><circle class="mo" r="5.5"/><text x="-13" dy=".34em" text-anchor="end">${esc(t)}</text></g>`; }).join('');
+  const nS = secs.map(s => { const na = MAPA[s.k].an.length, w = s.n.length * 7 + 20;
+    return `<g class="mn ms" data-n="s:${s.k}" data-k="${s.k}" data-y="${f1(s.y)}" role="button" tabindex="-1" aria-label="${esc(`${s.n}: ${s.ind.length} indicadores y ${na} análisis. Ir a la sección`)}" transform="translate(${MP.xs} ${f1(s.y)})"><rect class="mh" x="${f1(-w / 2)}" y="-14" width="${f1(w)}" height="48" rx="6"/><circle class="mg" r="16"/><circle class="mo" r="9"/><text y="28" text-anchor="middle">${esc(s.n)}</text></g>`; }).join('');
+  const nA = A.map(a => `<g class="mn ma" data-n="${a.k}" data-k="${a.s}" data-y="${f1(a.y)}" role="button" tabindex="-1" aria-label="${esc(`${a.n}, en ${SECN[a.s]}. Ir al análisis`)}" transform="translate(${MP.xa} ${f1(a.y)})"><rect class="mh" x="-10" y="-8" width="${f1(tw(a.n) + 4)}" height="16" rx="4"/><circle class="mo" r="4.5"/><text x="12" dy=".34em">${esc(a.n)}</text></g>`).join('');
+  const svg = `<div class="mapa-w"><svg class="mapa" viewBox="0 0 1200 ${H}" role="group" aria-label="Mapa del tablero: ${IND.length} indicadores, ${secs.length} secciones y ${A.length} análisis de datos">
+    <g class="mp-h" aria-hidden="true"><text x="${MP.xi + 6}" y="20" text-anchor="end">Indicadores</text><text x="${MP.xs}" y="20" text-anchor="middle">Secciones</text><text x="${MP.xa - 6}" y="20">Análisis de datos</text></g>
+    <g class="mp-f" aria-hidden="true">${Fh.map(f => `<text x="${MP.xi - 13}" y="${f1(f.y)}" dy=".34em" text-anchor="end">${esc(f.n)}</text>`).join('')}</g>
+    <g class="mp-e" aria-hidden="true">${E.map(e => `<path data-a="${e[0]}" data-b="${e[1]}" d="${curva(e)}"/>`).join('')}</g>
+    <g class="mp-p" aria-hidden="true"></g>
+    <g class="mp-n">${nI}${nS}${nA}</g></svg></div>`;
+  return {svg, n: {i: I.length, s: secs.length, a: A.length}};
+}
+// lleva al análisis: abre su sección (y su pestaña), lo ubica y lo resalta un momento
+function mapaIr(k, q, vw) {
+  if (vw) S.vw[vw[0]] = vw[1];
+  const halla = () => { const t = h => sinEt(h.textContent), hs = [...document.querySelectorAll('#secp .fg>figcaption>b, #secp .sgr-h>h2, #secp h2.ix-sec')].filter(h => h.offsetParent !== null);
+    if (q[0] === '#') { const e = document.querySelector('#secp ' + q); return e && e.offsetParent !== null ? e : null; }
+    return hs.find(h => t(h).startsWith(q)); };
+  const ir = (n = 0) => {
+    const h = S.sec === k && !$('secp').getAnimations({subtree: true}).some(a => a.playState === 'running' && a.effect && a.effect.getComputedTiming().duration === 200) && halla();
+    if (!h) { if (n < 60) setTimeout(() => ir(n + 1), 60); return; }
+    const box = h.closest('.sgr, .fg') || h, tb = document.querySelector('.top'), fx = document.querySelector('#secp .vx-f');
+    const off = (tb ? tb.offsetHeight : 64) + (fx ? fx.offsetHeight + 8 : 0) + 14;
+    scrollTo({top: Math.max(0, box.getBoundingClientRect().top + scrollY - off), behavior: reduce() ? 'auto' : 'smooth'});
+    box.classList.remove('mp-dest'); void box.offsetWidth; box.classList.add('mp-dest'); setTimeout(() => box.classList.remove('mp-dest'), 2000);
+  };
+  if (k !== S.sec) goSec(k);
+  ir();
+}
+function mapaBind(root) {
+  const svg = root.querySelector('svg.mapa'); if (!svg || svg.dataset.on) return; svg.dataset.on = 1;
+  const inf = root.querySelector('.mapa-i'), N = [...svg.querySelectorAll('.mn')], E = [...svg.querySelectorAll('.mp-e path')], capa = svg.querySelector('.mp-p');
+  const de = {}, ad = {}; N.forEach(n => { de[n.dataset.n] = n; }); E.forEach(p => { (ad[p.dataset.a] ||= []).push(p); (ad[p.dataset.b] ||= []).push(p); });
+  const base = inf.innerHTML, otro = (p, k) => p.dataset.a === k ? p.dataset.b : p.dataset.a, col = n => n.classList.contains('mi') ? 0 : n.classList.contains('ms') ? 1 : 2;
+  let sel = null, tipo = 'mouse', vis = false, vivos = 0, tq = 0, tp = 0;
+  const ez = t => t < .5 ? 4 * t ** 3 : 1 - (-2 * t + 2) ** 3 / 2;
+  // señal: un punto que recorre la conexión de izquierda a derecha y enciende la sección al llegar
+  function pulso(p, luego) {
+    if (vivos > 18 || !svg.isConnected) return; vivos++;
+    const L = p.getTotalLength(), c = document.createElementNS('http://www.w3.org/2000/svg', 'circle'), t0 = performance.now(), dur = 650 + L * .9;
+    c.setAttribute('r', '2.6'); capa.append(c);
+    const paso = t => { const u = Math.min(1, (t - t0) / dur), pt = p.getPointAtLength(ez(u) * L);
+      c.setAttribute('cx', pt.x.toFixed(1)); c.setAttribute('cy', pt.y.toFixed(1)); c.style.opacity = u < .12 ? u / .12 : u > .88 ? (1 - u) / .12 : 1;
+      if (u < 1) { requestAnimationFrame(paso); return; }
+      c.remove(); vivos--; const b = de[p.dataset.b];
+      if (b && b.classList.contains('ms')) { b.classList.remove('hit'); void b.getBoundingClientRect(); b.classList.add('hit'); }
+      if (luego) luego(); };
+    requestAnimationFrame(paso);
+  }
+  function vecinos(k) {
+    let ps = [...(ad[k] || [])];
+    if (k.startsWith('a:')) { const s = otro(ps[0], k); ps = ps.concat((ad[s] || []).filter(p => otro(p, s).startsWith('i:'))); }
+    const ks = new Set([k]); ps.forEach(p => { ks.add(p.dataset.a); ks.add(p.dataset.b); });
+    return {ps, ks};
+  }
+  function texto(n, ks) {
+    const k = n.dataset.n;
+    if (k.startsWith('i:')) { const id = n.dataset.id, v = V[id] || {}, ss = [...ks].filter(x => x.startsWith('s:')).map(x => SECN[x.slice(2)]);
+      return `<b>${id} · ${esc(BY[id].c)}</b> · ${esc(sinEt(v.v))}${STC[v.st] ? ' · ' + STC[v.st] : ''} · ${ss.length === 1 ? 'una sección' : nf(ss.length) + ' secciones'}: ${ss.join(', ')}. Toca para abrir la ficha.`; }
+    if (k.startsWith('s:')) { const s = n.dataset.k; return `<b>${SECN[s]}</b> · ${nf(MAPA[s].ind.length)} indicadores · ${nf(MAPA[s].an.length)} análisis. Toca para ir a la sección.`; }
+    const [, s, h] = k.split(':'); return `<b>${esc(MAPA[s].an[+h][0])}</b> · ${SECN[s]}. Toca para ir al análisis.`;
+  }
+  function foco(n) {
+    clearTimeout(tq);
+    if (!n) { if (!sel) return; sel = null; svg.classList.remove('foco'); N.forEach(x => x.classList.remove('on')); E.forEach(p => p.classList.remove('on')); inf.innerHTML = base; return; }
+    const k = n.dataset.n; if (k === sel) return; sel = k;
+    const {ps, ks} = vecinos(k);
+    svg.classList.add('foco'); N.forEach(x => x.classList.toggle('on', ks.has(x.dataset.n))); E.forEach(p => p.classList.toggle('on', ps.includes(p)));
+    inf.innerHTML = texto(n, ks);
+    if (!reduce()) ps.slice(0, 16).forEach((p, j) => setTimeout(() => { if (sel === k) pulso(p); }, j * 60));
+  }
+  function abrir(n) {
+    const k = n.dataset.n, dl = $('fgdlg');
+    if (dl && dl.open && !k.startsWith('i:')) dl.close();
+    if (k.startsWith('i:')) pick(n.dataset.id);
+    else if (k.startsWith('s:')) goSec(n.dataset.k);
+    else { const [, s, h] = k.split(':'), a = MAPA[s].an[+h]; mapaIr(s, a[1], a[2]); }
+  }
+  svg.addEventListener('pointerdown', e => { tipo = e.pointerType; tp = performance.now(); });
+  svg.addEventListener('pointerover', e => { if (e.pointerType !== 'mouse') return; const n = e.target.closest('.mn'); if (n) foco(n); else { clearTimeout(tq); tq = setTimeout(() => { if (!svg.contains(document.activeElement)) foco(null); }, 160); } });
+  svg.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse' && !svg.contains(document.activeElement)) foco(null); });
+  // con el dedo, el primer toque muestra las conexiones y el segundo abre
+  svg.addEventListener('click', e => { const n = e.target.closest('.mn'); if (!n) { foco(null); return; } if (tipo !== 'mouse' && sel !== n.dataset.n) { foco(n); return; } abrir(n); });
+  // teclado: una sola parada de tabulación; flechas para recorrer columnas y filas
+  N[0].tabIndex = 0;
+  // en pantallas angostas el mapa se desliza de lado: empieza centrado en las secciones
+  const wr = svg.parentElement; if (wr.scrollWidth > wr.clientWidth) wr.scrollLeft = (wr.scrollWidth - wr.clientWidth) / 2;
+  const yDe = n => +n.dataset.y;
+  svg.addEventListener('keydown', e => {
+    const n = e.target.closest && e.target.closest('.mn'); if (!n) return;
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrir(n); return; }
+    if (e.key === 'Escape') { if (sel) { e.stopPropagation(); foco(null); } return; }
+    const c = col(n), C = N.filter(x => col(x) === c), i = C.indexOf(n); let t = null;
+    if (e.key === 'ArrowDown') t = C[Math.min(i + 1, C.length - 1)];
+    else if (e.key === 'ArrowUp') t = C[Math.max(i - 1, 0)];
+    else if (e.key === 'Home') t = C[0];
+    else if (e.key === 'End') t = C[C.length - 1];
+    else if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { const c2 = c + (e.key === 'ArrowRight' ? 1 : -1); if (c2 < 0 || c2 > 2) return; t = N.filter(x => col(x) === c2).reduce((b, x) => Math.abs(yDe(x) - yDe(n)) < Math.abs(yDe(b) - yDe(n)) ? x : b); }
+    if (t) { e.preventDefault(); N.forEach(x => { x.tabIndex = -1; }); t.tabIndex = 0; t.focus(); }
+  });
+  svg.addEventListener('focusin', e => { const n = e.target.closest('.mn'); if (n && performance.now() - tp > 600) foco(n); });   // el foco por toque lo maneja el clic
+  svg.addEventListener('focusout', e => { if (!svg.contains(e.relatedTarget)) foco(null); });
+  // actividad de fondo: señales que viajan de un indicador a su sección y de ahí a un análisis
+  if (reduce()) return;
+  const io = new IntersectionObserver(es => { vis = es[0].isIntersecting; }); io.observe(svg);
+  const IS = E.filter(p => p.dataset.a.startsWith('i:'));
+  const tick = setInterval(() => {
+    if (!svg.isConnected) { clearInterval(tick); io.disconnect(); return; }
+    if (!vis || document.hidden || sel) return;
+    const p = IS[Math.random() * IS.length | 0], s = p.dataset.b, sa = (ad[s] || []).filter(q => q.dataset.a === s);
+    pulso(p, () => { if (sa.length && !sel) pulso(sa[Math.random() * sa.length | 0]); });
+  }, 480);
+}
+function figMapa() {
+  const m = mapaSVG();
+  PEND.push(() => mapaBind(document));
+  return FIG(0, 'Mapa del tablero', m.svg + `<p class="mapa-i" aria-live="polite"><b>${nf(m.n.i)} indicadores</b>, ${nf(m.n.s)} secciones y ${nf(m.n.a)} análisis de datos. Pasa el cursor o toca un punto para ver sus conexiones.</p>`
+    + leg([['var(--sem-ok)', 'Meta'], ['var(--sem-warn)', 'Vigilar'], ['var(--sem-bad)', 'Acción'], ['var(--sem-na)', 'Sin semáforo'], ['transparent', 'Sin datos', 'mp-sd'], ['var(--accent)', 'Sección'], ['transparent', 'Análisis de datos', 'mp-an']]),
+    {i: 'Cada línea une un indicador con una sección donde aparece (tarjetas, figuras o tablas) y cada sección con sus análisis de datos. Toca un indicador para abrir su ficha; una sección o un análisis, para ir a él.'});
+}
 
 /* ---------- 7. Gobernanza de datos ---------- */
 function secDatos(el) {
