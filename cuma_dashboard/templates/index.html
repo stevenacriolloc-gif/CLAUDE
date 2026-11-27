@@ -4223,7 +4223,8 @@ const NM_CAT = {C: 'Contables', F: 'Financieros', O: 'Operativos', A: 'Abastecim
 const NM_SEC = {res: 'Resumen', fin: 'Finanzas', ven: 'Ventas', inv: 'Inventario', abs: 'Abastecimiento', sec: 'Sector', mc: 'Monte Carlo', mapa: 'Gobernanza'};
 // un color por rama (fuente de datos); las señales mezclan los colores de las ramas que atraviesan
 // un color intenso por nivel: todos los puntos de una capa iguales
-const NM_NIVEL = {claro: {f: '#007AFF', c: '#AF52DE', i: '#FF9500', a: '#34C759', s: '#00B8B0'}, oscuro: {f: '#0A84FF', c: '#BF5AF2', i: '#FF9F0A', a: '#30D158', s: '#40E0D8'}};
+// fuentes verde claro, categorías (la clasificación) gris, indicadores verde amarillento, análisis rojo oscuro y secciones rojo claro intenso
+const NM_NIVEL = {claro: {f: '#6FCF5F', c: '#8E8E93', i: '#A3A21F', a: '#8E1B1B', s: '#FF3B30'}, oscuro: {f: '#8EE07F', c: '#A6A6AB', i: '#C9C83A', a: '#C0392B', s: '#FF5E54'}};
 const NM_RAMA = {claro: ['#6E8B23', '#C29A22', '#3F7F6A', '#9AAE3A', '#7D7466', '#55707F'], oscuro: ['#A3C24A', '#E0B640', '#5FB39A', '#C9DB6A', '#B3A898', '#8FB0C2']};
 // análisis de datos: sección, título con que se ubica (o #id), pestaña que abre e indicadores que calcula o muestra
 const NM_AN = [
@@ -4329,7 +4330,7 @@ function nmMontar() {
   const R = nmRed(), lz = raiz.querySelector('.nm-lz'), cv = lz.querySelector('canvas'), ctx = cv.getContext('2d'), pn = raiz.querySelector('.nm-p'), pc = pn.querySelector('.nm-pc'), sr = raiz.querySelector('.nm-sr');
   const nav = raiz.querySelector('.nm-capas'), chips = raiz.querySelector('.nm-it'), RM = reduce(), tmp = document.createElement('canvas').getContext('2d');
   let W = 0, H = 0, dpr = 1, yaw = 0, pitch = 0, tYaw = 0, tPitch = 0, drag = false, moved = false, lx = 0, ly = 0;
-  let hover = null, sel = null, foco = null, capa = 'i', C = {}, vis = true, raf = 0, pr = 0, tPr = 0, ex = 1, tEx = 1, parts = [], ramas = [];
+  let hover = null, sel = null, foco = null, capa = 'i', capaTocada = false, C = {}, vis = true, raf = 0, pr = 0, tPr = 0, ex = 1, tEx = 1, parts = [], ramas = [];
   // colores del tema y de las ramas
   const rgb = c => { tmp.fillStyle = '#000'; tmp.fillStyle = c || '#888'; const v = tmp.fillStyle; if (v[0] === '#') { const x = parseInt(v.slice(1), 16); return [x >> 16, (x >> 8) & 255, x & 255]; } const m = v.match(/[\d.]+/g) || [136, 136, 136]; return m.slice(0, 3).map(Number); };
   const col = (c, a) => { const [r, g, b] = Array.isArray(c) ? c : C[c] || rgb(c); return `rgba(${r | 0},${g | 0},${b | 0},${a})`; };
@@ -4423,10 +4424,17 @@ function nmMontar() {
     ctx.save(); ctx.globalCompositeOperation = 'destination-out'; ctx.fillStyle = '#000';
     orden.forEach(n => { const on = n === sel || n === hover || n === foco, tx = etiqueta(n, on, nb.has(n)); if (!tx) return; const r = radio(n) * n.p.s; ctx.font = (on ? '600 ' : '500 ') + fs + 'px ' + F; const w = ctx.measureText(tx).width; pil(tx0(n.p.x, w) - w / 2 - 5, n.p.y + r + 5, w + 10, fs + 6); });
     ctx.restore();
+    // respiración: el punto elegido (y, más suave, sus vecinos o la capa elegida en el menú) late con un halo que se expande
+    const T = performance.now(), aire = (n, lit) => RM ? 0 : n === sel ? 1 : sel && lit ? .55 : !sel && capaTocada && capa === n.t ? .55 : 0;
     orden.forEach(n => {
-      const p = n.p, r = radio(n) * p.s, on = n === sel || n === hover || n === foco, lit = nb.has(n), deCapa = !sel && !angosto() && capa === n.t, bc = base(n), apagado = sel && !lit && !on;
+      const p = n.p, on = n === sel || n === hover || n === foco, lit = nb.has(n), deCapa = !sel && !angosto() && capa === n.t, bc = base(n), apagado = sel && !lit && !on, am = aire(n, lit);
+      let r = radio(n) * p.s;
       ctx.globalAlpha = (apagado ? .35 : 1) * (n.t === 'i' ? Math.min(1, ex * 1.4) : 1);
-      if (n === sel) { ctx.fillStyle = col(bc, .16); ctx.beginPath(); ctx.arc(p.x, p.y, r + 9, 0, 6.283); ctx.fill(); }
+      if (am) {
+        const ph = ((T + (n === sel ? 0 : (n.u + 1) * 500)) % 3400) / 3400, op = ph < .18 ? .45 * ph / .18 : ph < .55 ? .45 * (1 - (ph - .18) / .37) : 0, ez = 1 - (1 - Math.min(1, ph / .55)) ** 3;
+        ctx.fillStyle = col(bc, op * am); ctx.beginPath(); ctx.arc(p.x, p.y, r * (1 + 1.7 * ez) + 2, 0, 6.283); ctx.fill();
+        r *= ph < .3 ? 1 + .14 * am * ph / .3 : ph < .65 ? 1 + .14 * am - .18 * am * (ph - .3) / .35 : 1 - .04 * am + .04 * am * (ph - .65) / .35;
+      } else if (n === sel) { ctx.fillStyle = col(bc, .16); ctx.beginPath(); ctx.arc(p.x, p.y, r + 9, 0, 6.283); ctx.fill(); }
       if (on || (lit && sel) || deCapa) { ctx.lineWidth = 1.2; ctx.strokeStyle = col(on ? '--ink-strong' : AC, on ? .8 : deCapa ? .35 : .6); ctx.beginPath(); ctx.arc(p.x, p.y, r + 4, 0, 6.283); ctx.stroke(); }
       ctx.fillStyle = `rgb(${C.bg})`; ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, 6.283); ctx.fill();
       ctx.fillStyle = col(bc, .16); ctx.beginPath(); ctx.arc(p.x, p.y, r + 3.5, 0, 6.283); ctx.fill();
@@ -4454,7 +4462,7 @@ function nmMontar() {
     else if (go === 'se') goSec(n.s);
     else mapaIr('mapa', 'Indicadores, fuentes', ['dat-t', go === 'fu' ? 'f' : 'e']);
   }
-  menu(nav, NM_CAPAS.map(([c, l, s_]) => [c, lz.getBoundingClientRect().width < 640 ? s_ : l]), 'i', c => { capa = c; sel = null; chipsDe(c); ficha(null); arranca(); });
+  menu(nav, NM_CAPAS.map(([c, l, s_]) => [c, lz.getBoundingClientRect().width < 640 ? s_ : l]), 'i', c => { capa = c; capaTocada = true; sel = null; chipsDe(c); ficha(null); arranca(); });
   chipsDe('i');
   chips.addEventListener('click', e => { const b = e.target.closest('button[data-k]'); if (b) elegir(R.by[b.dataset.k]); });
   pn.addEventListener('click', e => { if (e.target.closest('.nm-x')) { elegir(null); lz.focus({preventScroll: true}); return; } const b = e.target.closest('button[data-k]'); if (b) { elegir(R.by[b.dataset.k]); return; } const g = e.target.closest('.nm-go'); if (g) accion(g.dataset.go); });
