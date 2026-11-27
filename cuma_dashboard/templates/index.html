@@ -1445,6 +1445,12 @@ button.kx-i:focus-visible,.kx-sb:focus-visible,.mini-b:focus-visible{outline:2px
 .vx-ad.on{opacity:1;transform-box:fill-box;transform-origin:center;animation:mgIn .5s var(--spring) both;animation-delay:var(--d,0ms)}
 .vx-ad.on.sel{fill:var(--accent)}
 @media (prefers-reduced-motion:reduce){.an-d.on,.vx-ad.on{animation:none}}
+/* filtros: solo las etiquetas redondas de lo elegido, sin franja; sin filtros no ocupa lugar */
+.vx-f{position:static;display:none;min-height:0;padding:0;border:0;background:none;-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:none}
+.vx-f:has(.vx-ch),.vx-f:has(.vx-av:not(:empty)){display:flex}
+/* productos: buscador arriba y la lista se desplaza dentro de la tarjeta */
+.vx-pq{flex:none;max-width:none;margin:0 0 8px}
+.fz-col>.fg:not(.xl)>.fgb>#vx-p{flex:1 1 0;min-height:0;overflow:auto;scrollbar-width:thin;margin:0}
 </style>
 <style id="base">
 /* base del navegador: preflight de Tailwind CSS 3.4.16 (licencia MIT), en el mismo orden en que lo aplicaba el CDN */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}
@@ -3432,8 +3438,8 @@ function vxFiltros() {
   if (f.cel) ch.push(['cel', celTxt(f.cel)]);
   if (f.cat != null) ch.push(['cat', DET.cats[f.cat]]);
   if (f.prod != null) ch.push(['prod', DET.p.n[f.prod]]);
-  el.innerHTML = `<span class="vx-fl">${ch.length ? 'Filtros' : 'Sin filtros'}</span>${ch.map(([k, t]) => `<button type="button" class="vx-ch" data-k="${k}" aria-label="Quitar el filtro ${esc(t)}">${esc(t)}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17"/></svg></button>`).join('')}
-    ${ch.length > 1 ? '<button type="button" class="vx-cl">Quitar todo</button>' : ''}<span class="vx-av" id="vx-av" role="status">${ch.length ? '' : 'Toca el mapa, un día, una franja, una categoría o un producto'}</span>`;
+  el.innerHTML = `${ch.map(([k, t]) => `<button type="button" class="vx-ch" data-k="${k}" aria-label="Quitar el filtro ${esc(t)}">${esc(t)}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17"/></svg></button>`).join('')}
+    ${ch.length > 1 ? '<button type="button" class="vx-cl">Quitar todo</button>' : ''}<span class="vx-av" id="vx-av" role="status"></span>`;
   el.querySelectorAll('.vx-ch').forEach(b => b.onclick = () => vxSet(b.dataset.k, S.vx[b.dataset.k]));
   const cl = el.querySelector('.vx-cl'); if (cl) cl.onclick = vxLimpia;
 }
@@ -3523,7 +3529,7 @@ function vxLista(el, filas, on, attr, vacio, compacto) {
   if (!filas.length) { el.innerHTML = `<div class="empty-st">${vacio}</div>`; return; }
   // el peso de cada fila en un anillo pequeño: la vuelta completa es el total de la selección
   const aro = (x, k) => { const N = 14, p = clamp(x.sh || 0, 0, 100), on = p > 0 ? Math.max(1, Math.round(p / 100 * N)) : 0, sel = x.id === on_;
-    let s = ''; for (let i = 0; i < N; i++) { const t = (-90 + i * 360 / N) * Math.PI / 180, l = i < on; s += `<circle class="vx-ad${l ? ' on' : ''}${l && sel ? ' sel' : ''}" cx="${(12 + 9 * Math.cos(t)).toFixed(1)}" cy="${(12 + 9 * Math.sin(t)).toFixed(1)}" r="${l ? 2.2 : 1.35}"${l ? ` style="--d:${k * 40 + i * 25}ms"` : ''}/>`; }
+    let s = ''; for (let i = 0; i < N; i++) { const t = (-90 + i * 360 / N) * Math.PI / 180, l = i < on; s += `<circle class="vx-ad${l ? ' on' : ''}${l && sel ? ' sel' : ''}" cx="${(12 + 9 * Math.cos(t)).toFixed(1)}" cy="${(12 + 9 * Math.sin(t)).toFixed(1)}" r="${l ? 2.2 : 1.35}"${l ? ` style="--d:${Math.min(k, 10) * 40 + i * 25}ms"` : ''}/>`; }
     return `<svg class="vx-an" viewBox="0 0 24 24" aria-hidden="true">${s}</svg>`; }, on_ = on;
   el.innerHTML = `<div class="vx-l">${filas.map((x, k) => `<button type="button" class="vx-r vx-ra${compacto ? ' vx-rc' : ''}${x.id === on ? ' on' : on != null ? ' dim' : ''}" data-${attr}="${x.id}" aria-pressed="${x.id === on}">${aro(x, k)}${compacto
     ? `<span class="vx-n"><b>${esc(x.n)}</b></span><span class="vx-u">${usd(x.v)}</span><span class="vx-pc">${pct(x.sh)}</span>`
@@ -3534,10 +3540,12 @@ function vxProd(R) {
   const f = S.vx; let ids, val, tot;
   if (!R) { const P = selProd(); ids = P.idx; val = p => P.V[p]; tot = P.Vt; }
   else { ids = []; for (let p = 0; p < R.pV.length; p++) if (R.pV[p] > 0) ids.push(p); ids.sort((a, b) => R.pV[b] - R.pV[a]); val = p => R.pV[p]; tot = ids.reduce((a, p) => a + R.pV[p], 0); }
-  const top = ids.slice(0, 8); if (f.prod != null && !top.includes(f.prod) && val(f.prod) > 0) top.push(f.prod);
+  // con el buscador se encuentra cualquier producto; sin búsqueda, los primeros 60 de la selección (la lista se desplaza dentro de la tarjeta)
+  const qq = norm(S.vxq || ''), lista = qq ? ids.filter(p => norm(DET.p.n[p]).includes(qq)) : ids, top = lista.slice(0, qq ? 200 : 60);
+  if (!qq && f.prod != null && !top.includes(f.prod) && val(f.prod) > 0) top.push(f.prod);
   $('vx-tp').textContent = 'Productos con más venta' + (R && (f.cel || f.cat != null) ? ' · ' + [f.cel ? celTxt(f.cel) : '', f.cat != null ? DET.cats[f.cat] : ''].filter(Boolean).join(' · ') : '');
-  vxLista(el, top.map(p => ({id: p, n: DET.p.n[p], s: DET.cats[DET.p.c[p]], v: val(p) / 100, sh: tot ? val(p) / tot * 100 : 0})), f.prod, 'p', 'Sin ventas con este filtro.');
-  if (ids.length) el.insertAdjacentHTML('beforeend', `<p class="vx-nota">${nf(ids.length)} productos con venta${R ? ' en la selección' : ' en ' + selL()}.</p>`);
+  vxLista(el, top.map(p => ({id: p, n: DET.p.n[p], s: DET.cats[DET.p.c[p]], v: val(p) / 100, sh: tot ? val(p) / tot * 100 : 0})), f.prod, 'p', qq ? 'Ningún producto coincide con la búsqueda.' : 'Sin ventas con este filtro.');
+  if (ids.length) el.insertAdjacentHTML('beforeend', `<p class="vx-nota">${qq ? `${nf(lista.length)} de ` : ''}${nf(ids.length)} productos con venta${R ? ' en la selección' : ' en ' + selL()}${!qq && ids.length > top.length ? ` · se muestran los ${nf(Math.min(60, ids.length))} primeros; busca para ver el resto` : ''}.</p>`);
   el.querySelectorAll('[data-p]').forEach(b => b.onclick = () => vxSet('prod', +b.dataset.p));
 }
 function vxCat(R) {
@@ -3853,8 +3861,8 @@ function ixPintar(primera) {
 
 function ixFiltros() {
   const el = $('ix-f'), f = S.ix, ch = IXK.filter(k => f[k] != null).map(k => [k, ixChip(k, f[k])]);
-  el.innerHTML = `<span class="vx-fl">${ch.length ? 'Filtros' : 'Sin filtros'}</span>${ch.map(([k, t]) => `<button type="button" class="vx-ch" data-k="${k}" aria-label="Quitar el filtro ${esc(t)}">${esc(t)}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17"/></svg></button>`).join('')}
-    ${ch.length > 1 ? '<button type="button" class="vx-cl">Quitar todo</button>' : ''}<span class="vx-av" id="ix-av" role="status">${ch.length ? '' : 'Toca un área, un tipo, una categoría o un producto'}</span>`;
+  el.innerHTML = `${ch.map(([k, t]) => `<button type="button" class="vx-ch" data-k="${k}" aria-label="Quitar el filtro ${esc(t)}">${esc(t)}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17"/></svg></button>`).join('')}
+    ${ch.length > 1 ? '<button type="button" class="vx-cl">Quitar todo</button>' : ''}<span class="vx-av" id="ix-av" role="status"></span>`;
   el.querySelectorAll('.vx-ch').forEach(b => b.onclick = () => ixSet(b.dataset.k, S.ix[b.dataset.k]));
   const cl = el.querySelector('.vx-cl'); if (cl) cl.onclick = ixLimpia;
 }
@@ -4741,7 +4749,7 @@ const VXF = {
   p7: () => FG.f7(280),
   s: () => FIG(0, 'Venta y margen de los 250 productos con más venta', '<div id="vx-s"></div>', {i: `Eje horizontal en escala logarítmica: venta de cada producto de ${selL()}. Con un filtro, se resaltan los productos que se venden en la selección.`}),
   t: () => FIG(0, '<span id="vx-tt">Productos</span>', '<nav class="gb vw vx-tbn" id="vx-tbn" aria-label="Tabla"></nav><div id="vx-tb2"></div>', {i: `Margen promedio por producto de ${selL()}: ${pct(selProd().mg)}. Toca una fila para elegir el producto.`}),
-  p: () => FIG(0, '<span id="vx-tp">Productos con más venta</span>', '<div id="vx-p"></div>', {i: 'Ventas sin IVA. Toca un producto para ver en qué días y horas se vende.'}),
+  p: () => FIG(0, '<span id="vx-tp">Productos con más venta</span>', `<label class="dt-q vx-pq"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg><input type="search" id="vx-pq" placeholder="Buscar producto" aria-label="Buscar producto" value="${esc(S.vxq || '')}"></label><div id="vx-p"></div>`, {i: 'Ventas sin IVA. Busca un producto o toca uno para ver en qué días y horas se vende.'}),
   hc: () => FIG(0, '<span id="vx-th">Peso de cada categoría en la venta de cada hora · %</span>', '<div id="vx-hc"></div>', {i: 'Cada columna es la venta de esa hora. Toca una categoría, una hora o una celda para filtrar.'}),
   c: () => FIG(0, '<span id="vx-tc">Categorías</span>', '<div id="vx-c"></div>', {i: 'Peso de cada categoría en la venta de la selección, sin IVA. Toca una categoría para filtrar.'})
 };
@@ -4817,7 +4825,7 @@ const VN = {
       cat: {i: [['h', 'Por hora', VXF.hc]], d: [['c', 'Categorías', VXF.c]]}
     },
     tira: () => '<dl class="fz-ind" id="vx-k" hidden></dl>',
-    pinta: () => { const n = $('hm-mode'); if (n && !n.querySelector('button')) menu(n, [['v', 'Ventas'], ['t', 'Transacciones']], S.hm || 'v', v => { S.hm = v; vxHeat(VXR); }); vxPintar(true); },
+    pinta: () => { const n = $('hm-mode'), q = $('vx-pq'); if (n && !n.querySelector('button')) menu(n, [['v', 'Ventas'], ['t', 'Transacciones']], S.hm || 'v', v => { S.hm = v; vxHeat(VXR); }); if (q) q.oninput = () => { S.vxq = q.value; vxProd(VXR); }; vxPintar(true); },
     listo: () => { vnAlto(); if (vxOn() || !VH) cargaVH().then(() => { if (vxOn()) vxPintar(); }).catch(() => { if (vxOn()) vxFalla(); }); }
   },
   inv: {
