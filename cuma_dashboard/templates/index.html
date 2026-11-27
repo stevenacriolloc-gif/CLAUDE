@@ -1168,7 +1168,6 @@ button.kx-i{cursor:pointer}
 button.kx-i:hover{border-color:color-mix(in srgb,var(--ink) 32%,var(--line))}
 button.kx-i:active{transform:scale(.985)}
 button.kx-i:focus-visible,.kx-sb:focus-visible,.mini-b:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.kx-i.ok{box-shadow:inset 0 3px 0 var(--sem-ok)}.kx-i.warn{box-shadow:inset 0 3px 0 var(--sem-warn)}.kx-i.bad{box-shadow:inset 0 3px 0 var(--sem-bad)}
 .kx-h{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0;min-height:22px}
 .kx-l{min-width:0;font-size:12px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .kx-l i{font-style:normal;font-family:var(--mono);font-size:10px;font-weight:500;color:var(--muted);margin-left:3px}
@@ -1754,7 +1753,7 @@ S.vw = S.vw || {};
 const info = t => t ? `<button type="button" class="inf" aria-label="Nota: ${esc(t)}" data-tip="${esc(t)}"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16.5v-5"/><circle cx="12" cy="8" r=".7"/></svg></button>` : '';
 const kp = items => `<div class="kp">${items.filter(Boolean).map(([l, v, s, st]) => `<div class="kp-i${st ? ' ' + st : ''}"><span>${l}</span><b class="num">${v}</b>${s ? `<em>${s}</em>` : ''}</div>`).join('')}</div>`;
 function FIG(n, t, body, o = {}) {
-  return `<figure class="fg${o.cls ? ' ' + o.cls : ''}"><figcaption>${n ? `<span class="fgn">Fig. ${n}</span>` : ''}<b>${t}</b><span class="fgr">${o.tools || ''}${info(o.i)}<button type="button" class="fgx" aria-label="Ampliar la figura">${ICO_EXP}</button></span></figcaption><div class="fgb">${body}</div>${o.leg || ''}</figure>`;
+  return `<figure class="fg${o.cls ? ' ' + o.cls : ''}"><figcaption><b>${t}</b><span class="fgr">${o.tools || ''}${info(o.i)}<button type="button" class="fgx" aria-label="Ampliar la figura">${ICO_EXP}</button></span></figcaption><div class="fgb">${body}</div>${o.leg || ''}</figure>`;
 }
 const grid2 = (...xs) => `<div class="g2">${xs.filter(Boolean).join('')}</div>`;
 const gcol = (...xs) => `<div class="gcol">${xs.filter(Boolean).join('')}</div>`;
@@ -4009,7 +4008,7 @@ const STC = {ok: 'Meta', warn: 'Vigilar', bad: 'Acción'};
 const sinEt = s => String(s ?? '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
 // tarjeta: el número grande con su semáforo a la vista; la de un indicador abre la ficha
 const xi = (id, o = {}) => ({id, l: BY[id].c, v: V[id].v, u: V[id].txt ? '' : V[id].uc || '', s: V[id].tn || V[id].nt || '', st: V[id].st, ...o});
-const pill = st => st && STC[st] ? `<span class="kx-st ${st}" title="${ST[st]}"><i class="dot sm ${st}"></i>${STC[st]}</span>` : st === 'na' ? `<span class="kx-st na" title="${ST.na}">Sin umbral</span>` : '';
+const pill = st => st && STC[st] ? `<span class="kx-st ${st}" title="${ST[st]}"><i class="dot sm ${st}"></i>${STC[st]}</span>` : '';   // sin umbral: sin etiqueta
 function kx(items) {
   const xs = items.filter(Boolean), n = xs.length, kc = n === 8 || n === 7 ? 4 : n === 6 ? 3 : n;
   return `<div class="kx" style="--kc:${kc}">${xs.map(x => {
@@ -4021,7 +4020,7 @@ function kx(items) {
   }).join('')}</div>`;
 }
 // semáforo de un indicador dentro del encabezado de una figura: también abre su ficha
-const semB = id => `<button type="button" class="kx-st kx-sb ${V[id].st}" data-id="${id}" title="${ST[V[id].st]}" aria-label="${id} ${BY[id].c}: ${ST[V[id].st]}. Abrir la ficha"><i class="dot sm ${V[id].st}"></i>${id} · ${STC[V[id].st] || 'Tendencia'}</button>`;
+const semB = id => !STC[V[id].st] ? '' : `<button type="button" class="kx-st kx-sb ${V[id].st}" data-id="${id}" title="${ST[V[id].st]}" aria-label="${id} ${BY[id].c}: ${ST[V[id].st]}. Abrir la ficha"><i class="dot sm ${V[id].st}"></i>${id} · ${STC[V[id].st]}</button>`;
 
 // pestañas que solo muestran u ocultan: todas quedan en la página (las gráficas enlazadas las actualizan aunque no se vean)
 function panes(key, items) {
@@ -4114,7 +4113,7 @@ function secAbastecimiento(el) {
     xi('I20', {l: 'Concentración (HHI)', s: `sin el centro de acopio: ${nf(P.hhi_sin_acopio)}`}),
     xi('I18', {s: `agroecológicos ${pct(P.desint_min)} · personas naturales ${pct(P.desint_max)}`}),
     xi('I21', {l: 'Recurrencia de proveedores'}),
-    {l: 'Venta sin entrada', v: pct(sinE.pct), s: `${nf(sinE.n)} productos · ${usd(sinE.usd)} sin IVA`, st: 'warn', i: 'Productos que se venden sin compra ni transferencia registrada: sobre todo granel que se fracciona con otro código. Es una alerta del registro, no un indicador.'},
+    {l: 'Venta sin entrada', v: pct(sinE.pct), s: `${nf(sinE.n)} productos · ${usd(sinE.usd)} sin IVA`, i: 'Productos que se venden sin compra ni transferencia registrada: sobre todo granel que se fracciona con otro código. Es una alerta del registro, no un indicador.'},
     {l: 'Cinco principales proveedores', v: pct(P.top5), s: `de las entradas · ${nf(P.n)} proveedores`}])
     + grid2(FG.f10a(), FIG(0, 'Entradas por tipo de proveedor · ' + selL(), hb(P.tipo.map((t, k) => [t.t, t.pct, `${pct(t.pct)} · ${usd(t.usd)}`, k ? null : 'var(--accent)']), 45)
         + `<div class="fgs">Productoras y productores agroecológicos: ${pct(P.agro.pct)} de las entradas · ${nf(P.agro.lista.length)} en la lista</div>`, {tools: semB('I18'), i: 'Compras netas y transferencias del centro de acopio, al costo.'}))
