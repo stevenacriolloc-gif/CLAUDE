@@ -25,6 +25,8 @@ SNAPSHOT = os.path.join(BASE, "datos_publicados", "indicadores.json")
 PLANTILLA = os.path.join(BASE, "templates", "index.html")
 VENTAS_HORA = os.path.join(BASE, "datos_publicados", "ventas_hora.json")   # venta por día, hora y producto: se pide aparte
 INVENTARIO = os.path.join(BASE, "datos_publicados", "inventario.json")     # entradas, conteos y merma por producto: se pide aparte
+EXISTENCIA = os.path.join(BASE, "datos_publicados", "existencia.json")   # existencia de cada producto día a día: se pide producto por producto
+_existencia = {}
 INICIO, FIN = '<script type="application/json" id="cuma-data">', "</script>"
 # Lo que se recalcula desde los Excel; el resto (inventario, horas, supuestos del informe) viene de la instantánea.
 RECALCULADAS = ("actualizado", "meses", "mensual", "pareto")
@@ -108,6 +110,17 @@ def ventas_hora():
 def inventario():
     """Entradas, conteos y merma por producto. Va aparte, como la venta por hora, y pide la misma clave que el tablero."""
     return send_file(INVENTARIO, mimetype="application/json", conditional=True, max_age=0)
+
+
+@app.get("/api/existencia/<int:p>")
+def existencia(p):
+    """Existencia de un producto día a día (según los archivos, el sistema y los conteos). Se lee una vez y se entrega por producto."""
+    with _lock:
+        if not _existencia:
+            with open(EXISTENCIA, encoding="utf-8") as fh:
+                _existencia.update(json.load(fh))
+    x = _existencia["p"].get(str(p), {})
+    return jsonify({"base": _existencia["base"], "fin": _existencia["fin"], "e": x.get("e", []), "c": x.get("c", [])})
 
 
 @app.get("/salud")
