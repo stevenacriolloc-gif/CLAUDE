@@ -1205,33 +1205,34 @@ button.kx-i:focus-visible,.kx-sb:focus-visible,.mini-b:focus-visible{outline:2px
 @media (max-width:640px){.kx-h{align-items:flex-start}.kx-l{white-space:normal;line-height:1.3;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;padding-top:1px}.kx-l i{display:none}}
 .mcsem-b i.ok{color:#10130a}
 .mi-n{display:inline-grid;place-items:center;width:14px;font-family:var(--font);font-size:10.5px;color:var(--muted);font-variant-numeric:tabular-nums}
-/* mapa del tablero: red en capas; la ficha flota sobre el mapa */
-.nm{display:flex;flex-direction:column;gap:6px;min-width:0;container:nm/inline-size}
-.nm-cv{position:relative;min-width:0}
-.nm-lz{position:relative;height:clamp(520px,66vh,700px);border-radius:10px;outline:none;touch-action:pan-y;cursor:grab}
+/* mapa del tablero: red en capas con el menú de capas arriba y los datos a la derecha */
+.nm{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;min-width:0}
+@container (min-width:1100px){.nm{grid-template-columns:minmax(0,1fr) 320px}}
+.nm-m{display:flex;flex-direction:column;gap:6px;min-width:0}
+.nm-capas{align-self:center}
+@media (max-width:640px){.gb.vw.nm-capas{gap:0;padding:3px}.gb.vw.nm-capas button{padding:5px 7px;font-size:11px}}
+.nm-lz{position:relative;height:clamp(540px,68vh,720px);border-radius:10px;outline:none;touch-action:pan-y;cursor:grab}
 @media (max-width:640px){.nm-lz{height:560px}}
 .nm-lz:focus-visible{box-shadow:0 0 0 2px var(--accent)}
 .nm-lz canvas{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none}
 .nm-lz.drag{cursor:grabbing}
-.nm-exp[aria-pressed="true"]{background:var(--glass-flat);border-color:var(--ink-strong);color:var(--ink-strong)}
-.nm-ch button{appearance:none;display:inline-flex;align-items:center;gap:6px;margin:0;padding:4px 9px;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--ink);font:500 11.5px var(--font);cursor:pointer;transition:background-color .3s var(--ease),border-color .3s var(--ease),color .3s var(--ease)}
-.nm-ch button:hover{border-color:var(--ink-strong);color:var(--ink-strong)}
+.nm-it{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;min-height:34px}
+.nm-it button,.nm-ch button{appearance:none;display:inline-flex;align-items:center;gap:6px;margin:0;padding:5px 11px;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--ink);font:500 12px var(--font);cursor:pointer;transition:background-color .3s var(--ease),border-color .3s var(--ease),color .3s var(--ease)}
+.nm-it button:hover,.nm-ch button:hover{border-color:var(--ink-strong);color:var(--ink-strong)}
+.nm-it button[aria-pressed="true"]{background:var(--glass-flat);border-color:var(--ink-strong);color:var(--ink-strong);font-weight:600}
 .nm-d{flex:none;width:8px;height:8px;border-radius:50%;background:var(--sem-na)}
 .nm-d.f{background:var(--rc,var(--c4))}.nm-d.c{background:var(--c3)}.nm-d.a{background:var(--c2)}.nm-d.s{background:var(--accent)}
 .nm-d.ok{background:var(--sem-ok)}.nm-d.warn{background:var(--sem-warn)}.nm-d.bad{background:var(--sem-bad)}.nm-d.na{background:var(--sem-na)}
 .nm-d.sd{background:none;border:1.2px dashed var(--muted);box-sizing:border-box}
-/* ficha del elemento: tarjeta de vidrio que entra desde la derecha */
-.nm-p{position:absolute;top:8px;right:8px;bottom:8px;width:min(300px,46%);overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;padding:16px 16px 18px;border:1px solid var(--line);border-radius:14px;
-  background:color-mix(in srgb,var(--card-bg) 84%,transparent);-webkit-backdrop-filter:blur(18px) saturate(140%);backdrop-filter:blur(18px) saturate(140%);box-shadow:0 18px 40px -24px var(--glass-shadow,rgba(0,0,0,.3));
-  opacity:0;visibility:hidden;transform:translateX(18px) scale(.98);transform-origin:100% 50%;transition:opacity .3s var(--ease),transform .55s var(--spring),visibility 0s .55s}
-.nm-p.on{opacity:1;visibility:visible;transform:none;transition:opacity .3s var(--ease),transform .55s var(--spring),visibility 0s}
-@container nm (max-width:640px){.nm-p{position:relative;inset:auto;width:auto;margin-top:8px;display:none;transform:none}.nm-p.on{display:block}}
-.nm-x{appearance:none;position:absolute;top:8px;right:8px;display:grid;place-items:center;width:28px;height:28px;margin:0;padding:0;border:0;border-radius:50%;background:var(--glass-flat);color:var(--ink-strong);cursor:pointer;transition:background-color .3s var(--ease)}
-.nm-x:hover{background:var(--line)}
-.nm-x svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+/* datos a la derecha: resumen del mapa o ficha del elemento */
+.nm-p{position:relative;min-width:0;padding:4px 2px 4px 18px;border-left:1px solid var(--line)}
+@container (max-width:1099px){.nm-p{padding:16px 2px 0;border-left:0;border-top:1px solid var(--line)}}
 .nm-pc{display:flex;flex-direction:column;gap:10px;min-width:0;transition:opacity .16s ease,transform .16s ease}
 .nm-pc.out{opacity:0;transform:translateY(6px)}
-.nm-h{display:flex;flex-direction:column;gap:4px;padding:0 30px 10px 0;border-bottom:1px solid var(--line)}
+.nm-h{position:relative;display:flex;flex-direction:column;gap:4px;padding:0 34px 10px 0;border-bottom:1px solid var(--line)}
+.nm-x{appearance:none;position:absolute;top:-2px;right:0;display:grid;place-items:center;width:28px;height:28px;margin:0;padding:0;border:0;border-radius:50%;background:var(--glass-flat);color:var(--ink-strong);cursor:pointer;transition:background-color .3s var(--ease)}
+.nm-x:hover{background:var(--line)}
+.nm-x svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
 .nm-k{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--muted)}
 .nm-h h2{margin:0;font-size:16px;font-weight:600;line-height:1.25;color:var(--ink-strong);text-wrap:balance}
 .nm-v{display:flex;align-items:center;justify-content:space-between;gap:10px}
@@ -1242,10 +1243,11 @@ button.kx-i:focus-visible,.kx-sb:focus-visible,.mini-b:focus-visible{outline:2px
 .nm-fl{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
 .nm-fl h3{margin:0 0 6px;font-size:12px;font-weight:600;color:var(--muted)}
 .nm-ch{display:flex;flex-wrap:wrap;gap:5px}
+.nm-ch button{padding:4px 9px;font-size:11.5px}
 .nm-0{margin:0;color:var(--muted);font-size:12px}
 .nm-go{appearance:none;align-self:flex-start;margin-top:4px;padding:8px 16px;border:0;border-radius:999px;background:var(--ink-strong);color:var(--surface);font:600 12.5px var(--font);cursor:pointer;transition:opacity .3s var(--ease)}
 .nm-go:hover{opacity:.85}
-.nm-ch button:focus-visible,.nm-go:focus-visible,.nm-x:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.nm-it button:focus-visible,.nm-ch button:focus-visible,.nm-go:focus-visible,.nm-x:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .sleg i.mp-sd{background:none!important;border:1.2px dashed var(--muted);box-sizing:border-box}
 .mp-dest{animation:mpDest 1.9s var(--ease)}
 @keyframes mpDest{0%,35%{box-shadow:0 0 0 2px var(--accent)}100%{box-shadow:0 0 0 2px transparent}}
@@ -1263,7 +1265,7 @@ button.kx-i:focus-visible,.kx-sb:focus-visible,.mini-b:focus-visible{outline:2px
       <button type="button" class="tbtn" id="b-fechas" data-act="fechas" aria-haspopup="dialog" aria-expanded="false" aria-label="Fechas"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path d="M10 21.75h4c3.77 0 5.66 0 6.83-1.17C22 19.41 22 17.52 22 13.75v-2c0-3.77 0-5.66-1.17-6.83C19.66 3.75 17.77 3.75 14 3.75h-4c-3.77 0-5.66 0-6.83 1.17C2 6.09 2 7.98 2 11.75v2c0 3.77 0 5.66 1.17 6.83 1.17 1.17 3.06 1.17 6.83 1.17Z"/><path stroke-linejoin="round" d="M17 12.75h.01M12 12.75h.01M7 12.75h.01M17 16.77h.01M12 16.77h.01M7 16.77h.01"/><path d="M2.04 8.75h19.93M7 3.78V2.25m10 1.53V2.25" opacity=".5"/></g></svg><span class="tip" id="b-fechas-tip">Fechas</span></button>
       <button type="button" class="tbtn" id="b-sec" data-act="sec" aria-haspopup="dialog" aria-expanded="false" aria-label="Secciones: Resumen ejecutivo"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path d="M12 22c-4.71 0-7.07 0-8.54-1.46C2 19.07 2 16.71 2 12s0-7.07 1.46-8.54C4.93 2 7.29 2 12 2s7.07 0 8.54 1.46C22 4.93 22 7.29 22 12s0 7.07-1.46 8.54C19.07 22 16.71 22 12 22Z" opacity=".5"/><path d="M7 18V9m5 9V6m5 12v-5"/></g></svg><span class="tip" id="b-sec-tip">Resumen ejecutivo</span></button>
       <button type="button" class="tbtn" id="b-mc" data-act="mc" aria-label="Simulación Monte Carlo"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path d="M12 22c-4.71 0-7.07 0-8.54-1.46C2 19.07 2 16.71 2 12s0-7.07 1.46-8.54C4.93 2 7.29 2 12 2s7.07 0 8.54 1.46C22 4.93 22 7.29 22 12s0 7.07-1.46 8.54C19.07 22 16.71 22 12 22Z" opacity=".5"/><path stroke-linejoin="round" d="M6 16.5c2.4 0 3.1-9 6-9s3.6 9 6 9"/></g></svg><span class="tip" id="b-mc-tip">Simulación Monte Carlo</span></button>
-      <button type="button" class="tbtn" id="b-mapa" data-act="mapa" aria-label="Mapa del tablero"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path d="M12 22c-4.71 0-7.07 0-8.54-1.46C2 19.07 2 16.71 2 12s0-7.07 1.46-8.54C4.93 2 7.29 2 12 2s7.07 0 8.54 1.46C22 4.93 22 7.29 22 12s0 7.07-1.46 8.54C19.07 22 16.71 22 12 22Z" opacity=".5"/><circle cx="8" cy="8.5" r="1.7"/><circle cx="16" cy="8.5" r="1.7"/><circle cx="12" cy="15.5" r="1.7"/><path d="M9.7 8.5h4.6M8.9 10l2.2 3.9M15.1 10l-2.2 3.9"/></g></svg><span class="tip" id="b-mapa-tip">Mapa del tablero</span></button>
+      <button type="button" class="tbtn" id="b-mapa" data-act="mapa" aria-label="Mapa y gobernanza de datos"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path d="M12 22c-4.71 0-7.07 0-8.54-1.46C2 19.07 2 16.71 2 12s0-7.07 1.46-8.54C4.93 2 7.29 2 12 2s7.07 0 8.54 1.46C22 4.93 22 7.29 22 12s0 7.07-1.46 8.54C19.07 22 16.71 22 12 22Z" opacity=".5"/><circle cx="8" cy="8.5" r="1.7"/><circle cx="16" cy="8.5" r="1.7"/><circle cx="12" cy="15.5" r="1.7"/><path d="M9.7 8.5h4.6M8.9 10l2.2 3.9M15.1 10l-2.2 3.9"/></g></svg><span class="tip" id="b-mapa-tip">Mapa y gobernanza de datos</span></button>
     </nav>
     <div class="tbar" role="toolbar" aria-label="Herramientas">
       <button type="button" class="tbtn" id="theme" data-act="tema" aria-haspopup="dialog" aria-expanded="false" aria-label="Apariencia"><svg class="ico ico--moon" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M12 22a10 10 0 0 0 10-10c0-.46-.69-.54-.93-.14A6.5 6.5 0 0 1 9 8.5a6.5 6.5 0 0 1 3.14-5.57c.4-.24.32-.93-.14-.93A10 10 0 0 0 2 12a10 10 0 0 0 10 10Z" opacity=".5"/><path d="M8.68 21.44A10 10 0 0 1 12 2c.46 0 .54.69.14.93A6.5 6.5 0 0 0 10.14 12.18"/></g></svg><svg class="ico ico--sun" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><path d="M12 2v1m0 18v1m10-10h-1M3 12H2m17.07-7.07-.39.39M5.32 18.68l-.39.39m14.14 0-.39-.39M5.32 5.32l-.39-.39" opacity=".5"/></g></svg><span class="tip" id="themetip">Luz</span></button>
@@ -4054,8 +4056,8 @@ const tintaSobre = (a, b, p) => { const L = luz(a.map((x, i) => x * p + b[i] * (
 
 /* ---------- secciones del tablero: un menú y una página por tema ---------- */
 // Cada página sigue el mismo orden: arriba los indicadores con su semáforo, al centro una o dos gráficas y abajo las tablas, agrupadas en pestañas.
-const SECS = [['res', 'Resumen ejecutivo'], ['fin', 'Finanzas y rentabilidad'], ['ven', 'Ventas y clientes'], ['inv', 'Inventario y mermas'], ['abs', 'Abastecimiento y proveedores'], ['sec', 'Sector y escenarios'], ['dat', 'Gobernanza de datos']];
-const SECX = [['mc', 'Simulación Monte Carlo'], ['mapa', 'Mapa del tablero']];   // sección aparte, con su propio ícono en la barra superior
+const SECS = [['res', 'Resumen ejecutivo'], ['fin', 'Finanzas y rentabilidad'], ['ven', 'Ventas y clientes'], ['inv', 'Inventario y mermas'], ['abs', 'Abastecimiento y proveedores'], ['sec', 'Sector y escenarios']];
+const SECX = [['mc', 'Simulación Monte Carlo'], ['mapa', 'Mapa y gobernanza de datos']];   // sección aparte, con su propio ícono en la barra superior
 const SECN = Object.fromEntries([...SECS, ...SECX]);
 S.sec = 'res';
 const STC = {ok: 'Meta', warn: 'Vigilar', bad: 'Acción'};
@@ -4218,7 +4220,7 @@ function secMC(el) { el.innerHTML = '<div class="dbody" id="sec-mc"></div>'; car
 // capas: fuentes de datos → categorías → (indicadores, al expandir) → análisis de datos → secciones
 const NM_FU = [['Ventas', 'Ventas', 'Ventas (punto de venta)'], ['Compras', 'Compras', 'Compras'], ['Transferencias', 'Transf.', 'Transferencias'], ['Apuntes contables', 'Apuntes', 'Apuntes contables'], ['Ajustes de inventario', 'Ajustes', 'Conteos de inventario'], ['Ventas por hora', 'Por hora', 'Ventas por hora']];
 const NM_CAT = {C: 'Contables', F: 'Financieros', O: 'Operativos', A: 'Abastecimiento'};
-const NM_SEC = {res: 'Resumen', fin: 'Finanzas', ven: 'Ventas', inv: 'Inventario', abs: 'Abastecimiento', sec: 'Sector', dat: 'Gobernanza', mc: 'Monte Carlo'};
+const NM_SEC = {res: 'Resumen', fin: 'Finanzas', ven: 'Ventas', inv: 'Inventario', abs: 'Abastecimiento', sec: 'Sector', mc: 'Monte Carlo', mapa: 'Gobernanza'};
 // un color por rama (fuente de datos); las señales mezclan los colores de las ramas que atraviesan
 const NM_RAMA = {claro: ['#6E8B23', '#C29A22', '#3F7F6A', '#9AAE3A', '#7D7466', '#55707F'], oscuro: ['#A3C24A', '#E0B640', '#5FB39A', '#C9DB6A', '#B3A898', '#8FB0C2']};
 // análisis de datos: sección, título con que se ubica (o #id), pestaña que abre e indicadores que calcula o muestra
@@ -4237,10 +4239,11 @@ const NM_AN = [
   {n: 'Origen de la mercadería', s: 'abs', q: 'Origen de la mercadería', ind: ['I18']},
   {n: 'Frente al sector', s: 'sec', q: 'Posición de ProDesarrollo', ind: ['I1', 'I2', 'I3', 'I4', 'I6', 'I13']},
   {n: 'Umbrales y escenarios', s: 'sec', q: 'Umbrales y comparaciones', ind: UMB},
-  {n: 'Cobertura de datos', s: 'dat', q: 'Indicadores, fuentes', ind: IND.map(i => i.id)},
+  {n: 'Cobertura de datos', s: 'mapa', q: 'Indicadores, fuentes', ind: IND.map(i => i.id)},
   {n: 'Simulación Monte Carlo', s: 'mc', q: 'Ajustes de la simulación', ind: ['I1', 'I2', 'I3', 'I4', 'I5', 'I6', 'I7', 'I11']}
 ];
 const NM_CAPA = {f: 'Fuentes de datos', c: 'Categorías', i: 'Indicadores', a: 'Análisis de datos', s: 'Secciones'};
+const NM_CAPAS = [['f', 'Fuentes de datos', 'Fuentes'], ['c', 'Categorías', 'Categorías'], ['i', 'Indicadores', 'Indicadores'], ['a', 'Análisis de datos', 'Análisis'], ['s', 'Secciones', 'Secciones']];
 // posición vertical de cada capa: [indicadores recogidos, indicadores a la vista]
 const NM_L = {f: [-1, -1], c: [-1 / 3, -.5], i: [-1 / 3, 0], a: [1 / 3, .5], s: [1, 1]};
 function nmRed() {
@@ -4274,11 +4277,17 @@ function nmRed() {
   return {N, by, E0, E1};
 }
 function nmEstado(n) { if (n.t !== 'i') return ''; const v = V[n.id] || {}; return n.i.e === 'none' ? 'sd' : STC[v.st] ? v.st : 'na'; }
-function nmFicha(n) {
-  if (!n) return '';
+function nmFicha(n, R) {
   const nom = m => m.t === 's' ? SECN[m.s] : m.n;
   const ch = arr => arr.length ? `<div class="nm-ch">${arr.map(m => `<button type="button" data-k="${m.k}"><i class="nm-d ${m.t} ${nmEstado(m)}"${m.t === 'f' ? ` style="--rc:var(--rama-${m.j})"` : ''}></i>${esc(nom(m))}</button>`).join('')}</div>` : '<p class="nm-0">—</p>';
   const fila = (l, v) => `<div class="nm-r"><span>${l}</span><b>${v}</b></div>`;
+  if (!n) {
+    const calc = IND.filter(i => i.e !== 'none').length, cu = st => IND.filter(i => i.e !== 'none' && V[i.id] && V[i.id].st === st).length;
+    return `<div class="nm-h"><span class="nm-k">Mapa del tablero</span><h2>${NM_FU.length} fuentes, ${IND.length} indicadores y ${NM_AN.length} análisis</h2></div>
+      <p class="nm-tx">${calc} de ${IND.length} indicadores se calculan con los datos disponibles: ${cu('bad')} requieren acción, ${cu('warn')} están en vigilancia y ${cu('ok')} cumplen la meta. Cada señal recorre el camino del dato, de la fuente a la sección donde se lee.</p>
+      ${NM_CAPAS.map(([t, l]) => fila(l, nf(R.N.filter(m => m.t === t).length))).join('')}
+      <div class="nm-fl"><div><h3>Color de cada rama</h3>${ch(R.N.filter(m => m.t === 'f'))}</div></div>`;
+  }
   const flujo = (a1, a2) => `<div class="nm-fl"><div><h3>Recibe de</h3>${ch(a1)}</div><div><h3>Entrega a</h3>${ch(a2)}</div></div>`;
   const kind = {f: 'Fuente de datos', c: 'Categoría', i: 'Indicador · ' + (n.i ? FAM_L[n.i.f] : ''), a: 'Análisis de datos · ' + (n.a ? SECN[n.a.s] : ''), s: 'Sección'}[n.t];
   let cuerpo = '', go = [];
@@ -4292,7 +4301,7 @@ function nmFicha(n) {
   else if (n.t === 'a') { cuerpo = fila('Sección', SECN[n.a.s]) + fila('Indicadores', nf(n.ent.size)) + flujo([...n.ent], [...n.sal]); go = ['Ir al análisis', 'an']; }
   else { const ii = new Set(); n.ent.forEach(a => a.ent.forEach(i => ii.add(i))); cuerpo = fila('Análisis', nf(n.ent.size)) + fila('Indicadores que reúne', nf(ii.size)) + flujo([...n.ent], []); go = ['Ir a la sección', 'se']; }
   const punto = `<i class="nm-d ${n.t} ${nmEstado(n)}"${n.t === 'f' ? ` style="--rc:var(--rama-${n.j})"` : ''}></i>`;
-  return `<div class="nm-h"><span class="nm-k">${punto}${kind}</span><h2>${esc(nom(n))}</h2></div>${cuerpo}<button type="button" class="nm-go" data-go="${go[1]}">${go[0]}</button>`;
+  return `<div class="nm-h"><span class="nm-k">${punto}${kind}</span><h2>${esc(nom(n))}</h2><button type="button" class="nm-x" aria-label="Volver al resumen del mapa"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17"/></svg></button></div>${cuerpo}<button type="button" class="nm-go" data-go="${go[1]}">${go[0]}</button>`;
 }
 // lleva al análisis: abre su sección (y su pestaña), lo ubica y lo resalta un momento
 function mapaIr(k, q, vw) {
@@ -4310,15 +4319,15 @@ function mapaIr(k, q, vw) {
     box.classList.remove('mp-dest'); void box.offsetWidth; box.classList.add('mp-dest'); setTimeout(() => box.classList.remove('mp-dest'), 2000);
   };
   if (k !== S.sec) goSec(k);
-  else if (vw) { renderSeccion(); }
+  else if (vw) { const pn = document.querySelector(`#secp .pane[data-v="${vw[1]}"]`), nav = pn && pn.closest('.sgr, .fg')?.querySelector('nav.gb.vw'), b = nav && nav.querySelector(`button[data-v="${vw[1]}"]`); if (b && b.getAttribute('aria-pressed') !== 'true') b.click(); }
   ir();
 }
 function nmMontar() {
   const raiz = $('nm'); if (!raiz || raiz.dataset.on) return; raiz.dataset.on = 1;
   const R = nmRed(), lz = raiz.querySelector('.nm-lz'), cv = lz.querySelector('canvas'), ctx = cv.getContext('2d'), pn = raiz.querySelector('.nm-p'), pc = pn.querySelector('.nm-pc'), sr = raiz.querySelector('.nm-sr');
-  const bx = document.querySelector('.fg-mapa .nm-exp'), RM = reduce(), tmp = document.createElement('canvas').getContext('2d');
+  const nav = raiz.querySelector('.nm-capas'), chips = raiz.querySelector('.nm-it'), RM = reduce(), tmp = document.createElement('canvas').getContext('2d');
   let W = 0, H = 0, dpr = 1, yaw = 0, pitch = 0, tYaw = 0, tPitch = 0, drag = false, moved = false, lx = 0, ly = 0;
-  let hover = null, sel = null, foco = null, C = {}, vis = true, raf = 0, pr = 0, tPr = 0, ex = 0, tEx = 0, parts = [], ramas = [];
+  let hover = null, sel = null, foco = null, capa = 'i', C = {}, vis = true, raf = 0, pr = 0, tPr = 0, ex = 1, tEx = 1, parts = [], ramas = [];
   // colores del tema y de las ramas
   const rgb = c => { tmp.fillStyle = '#000'; tmp.fillStyle = c || '#888'; const v = tmp.fillStyle; if (v[0] === '#') { const x = parseInt(v.slice(1), 16); return [x >> 16, (x >> 8) & 255, x & 255]; } const m = v.match(/[\d.]+/g) || [136, 136, 136]; return m.slice(0, 3).map(Number); };
   const col = (c, a) => { const [r, g, b] = Array.isArray(c) ? c : C[c] || rgb(c); return `rgba(${r | 0},${g | 0},${b | 0},${a})`; };
@@ -4338,7 +4347,7 @@ function nmMontar() {
     void by;
   }
   const base = n => n.t === 'i' ? {ok: '--sem-ok', warn: '--sem-warn', bad: '--sem-bad', na: '--sem-na', sd: '--muted'}[nmEstado(n)] : n.t === 'f' ? ramas[n.j] : {c: '--c3', a: '--c2', s: '--accent'}[n.t];
-  const angosto = () => W < 640, ew = () => W - pr, regla = () => ew() >= 1000, cabe = {i: 600, a: 720, s: 620};
+  const angosto = () => W < 640, ew = () => W - pr, regla = () => ew() >= 940, cabe = {i: 600, a: 720, s: 620};
   const radio = n => ({f: 7.5, c: 8.5, i: 5.5, a: 6, s: 8.5})[n.t] * (angosto() && (n.t === 'i' || n.t === 'a') ? .78 : 1);
   function medir() { const r = lz.getBoundingClientRect(); dpr = window.devicePixelRatio || 1; W = r.width; H = r.height; cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); leeCss(); }
   const visible = n => n.t !== 'i' || ex > .02;
@@ -4386,7 +4395,7 @@ function nmMontar() {
       ctx.save(); ctx.lineWidth = 1; ctx.strokeStyle = col('--muted', .3); ctx.beginPath(); ctx.moveTo(rx + .5, ys[0] - 18); ctx.lineTo(rx + .5, ys[4] + 18); ctx.stroke();
       ctx.strokeStyle = col('--muted', .5); ctx.beginPath(); ys.forEach((y, i) => { if (i === 2 && ex < .05) return; ctx.moveTo(rx - 12, Math.round(y) + .5); ctx.lineTo(rx + .5, Math.round(y) + .5); }); ctx.stroke(); ctx.restore();
       ctx.font = '600 12px ' + F; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
-      capas.forEach((t, j) => { ctx.fillStyle = col('--muted', t === 'i' ? ex : 1); if (t !== 'i' || ex > .05) ctx.fillText(NM_CAPA[t], 6, ys[j]); });
+      capas.forEach((t, j) => { ctx.fillStyle = capa === t ? col('--ink-strong', 1) : col('--muted', t === 'i' ? ex : 1); if (t !== 'i' || ex > .05) ctx.fillText(NM_CAPA[t], 6, ys[j]); });
     }
     // conexiones: las de cada modo se funden al expandir o recoger los indicadores
     ctx.lineCap = 'round'; ctx.lineWidth = 1;
@@ -4400,9 +4409,9 @@ function nmMontar() {
       parts = parts.filter(p => { p.t += p.v; if (p.t < 1) return true; const b = p.e[1], oe = b.oe[modo()]; if (!oe.length) return false;
         const e = oe[Math.random() * oe.length | 0]; p.e = e; p.t = 0; p.c0 = p.c1; p.c1 = mezcla(p.c0, e[1]['m' + modo()], .5); return true; });
       parts.forEach(p => { const a = p.e[0].p, b = p.e[1].p; if (!a || !b) return; const k = (p.e[0].t === 'i' || p.e[1].t === 'i') ? ex : (aristas().includes(p.e) ? 1 : 1 - ex); if (k < .05) return;
-        const c = mezcla(p.c0, p.c1, p.t * p.t * (3 - 2 * p.t)), q = bez(a, b, p.t), q2 = bez(a, b, Math.max(0, p.t - .04)), on = act.has(p.e), r0 = on ? 3.2 : 2.7;
+        const c = mezcla(p.c0, p.c1, p.t * p.t * (3 - 2 * p.t)), q = bez(a, b, p.t), q2 = bez(a, b, Math.max(0, p.t - .04)), on = act.has(p.e), r0 = on ? 2.8 : 2.3;
         ctx.fillStyle = col(c, .25 * k); ctx.beginPath(); ctx.arc(q2.x, q2.y, r0 * .7, 0, 6.283); ctx.fill();
-        ctx.fillStyle = col(c, .2 * k); ctx.beginPath(); ctx.arc(q.x, q.y, r0 + 3.2, 0, 6.283); ctx.fill();
+        ctx.fillStyle = col(c, .18 * k); ctx.beginPath(); ctx.arc(q.x, q.y, r0 + 2.6, 0, 6.283); ctx.fill();
         ctx.fillStyle = col(c, .95 * k); ctx.beginPath(); ctx.arc(q.x, q.y, r0, 0, 6.283); ctx.fill(); });
     }
     const orden = R.N.filter(visible).sort((a, b) => b.p.z - a.p.z), fs = angosto() ? 10.5 : 11;
@@ -4412,10 +4421,10 @@ function nmMontar() {
     orden.forEach(n => { const on = n === sel || n === hover || n === foco, tx = etiqueta(n, on, nb.has(n)); if (!tx) return; const r = radio(n) * n.p.s; ctx.font = (on ? '600 ' : '500 ') + fs + 'px ' + F; const w = ctx.measureText(tx).width; pil(tx0(n.p.x, w) - w / 2 - 5, n.p.y + r + 5, w + 10, fs + 6); });
     ctx.restore();
     orden.forEach(n => {
-      const p = n.p, r = radio(n) * p.s, on = n === sel || n === hover || n === foco, lit = nb.has(n), bc = base(n), apagado = sel && !lit && !on;
+      const p = n.p, r = radio(n) * p.s, on = n === sel || n === hover || n === foco, lit = nb.has(n), deCapa = !sel && !angosto() && capa === n.t, bc = base(n), apagado = sel && !lit && !on;
       ctx.globalAlpha = (apagado ? .35 : 1) * (n.t === 'i' ? Math.min(1, ex * 1.4) : 1);
       if (n === sel) { ctx.fillStyle = col(bc, .16); ctx.beginPath(); ctx.arc(p.x, p.y, r + 9, 0, 6.283); ctx.fill(); }
-      if (on || (lit && sel)) { ctx.lineWidth = 1.2; ctx.strokeStyle = col(on ? '--ink-strong' : AC, on ? .8 : .6); ctx.beginPath(); ctx.arc(p.x, p.y, r + 4, 0, 6.283); ctx.stroke(); }
+      if (on || (lit && sel) || deCapa) { ctx.lineWidth = 1.2; ctx.strokeStyle = col(on ? '--ink-strong' : AC, on ? .8 : deCapa ? .35 : .6); ctx.beginPath(); ctx.arc(p.x, p.y, r + 4, 0, 6.283); ctx.stroke(); }
       ctx.fillStyle = `rgb(${C.bg})`; ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, 6.283); ctx.fill();
       if (nmEstado(n) === 'sd') { ctx.setLineDash([2, 2]); ctx.lineWidth = 1.2; ctx.strokeStyle = col('--muted', .9); ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, 6.283); ctx.stroke(); ctx.setLineDash([]); }
       else { ctx.fillStyle = col(bc, .26); ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, 6.283); ctx.fill(); ctx.fillStyle = col(bc, 1); ctx.beginPath(); ctx.arc(p.x, p.y, r * (n.t === 'i' ? .62 : n.t === 'f' ? .55 : .42), 0, 6.283); ctx.fill(); }
@@ -4427,27 +4436,23 @@ function nmMontar() {
   }
   const arranca = () => { if (!raf && vis && cv.isConnected) raf = requestAnimationFrame(frame); };
   function cerca(e) { const r = lz.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top; let best = null, bd = 1e9; R.N.filter(visible).forEach(n => { if (!n.p) return; const d = Math.hypot(n.p.x - x, n.p.y - y); if (d < bd && d < 18) { bd = d; best = n; } }); return best; }
-  // indicadores: recogidos dentro de sus categorías o a la vista
-  function expande(v) { tEx = v ? 1 : 0; if (bx) { bx.setAttribute('aria-pressed', String(!!v)); bx.textContent = v ? 'Ocultar indicadores' : 'Ver indicadores'; } if (!v && sel && sel.t === 'i') elegir(null); arranca(); }
-  if (bx) bx.onclick = () => expande(!tEx);
-  // la ficha flota sobre el mapa y el mapa se corre a la izquierda para dejarle sitio; en el teléfono va debajo
+  // datos a la derecha: el resumen del mapa o la ficha del elemento elegido, con un fundido corto
   let tf = 0;
-  function ficha(n) {
-    clearTimeout(tf);
-    if (!n) { pn.classList.remove('on'); tPr = 0; arranca(); return; }
-    const abierta = pn.classList.contains('on'), fija = getComputedStyle(pn).position === 'static';
-    pn.classList.add('on'); tPr = fija ? 0 : pn.offsetWidth + 18;
-    if (!abierta || RM) { pc.innerHTML = nmFicha(n); pc.classList.remove('out'); arranca(); return; }
-    pc.classList.add('out'); tf = setTimeout(() => { pc.innerHTML = nmFicha(n); pc.classList.remove('out'); }, 160); arranca();
-  }
-  function elegir(n) { if (n && n.t === 'i' && !tEx) expande(true); sel = n; ficha(n); arranca(); }
+  function ficha(n) { clearTimeout(tf); if (RM) { pc.innerHTML = nmFicha(n, R); return; } pc.classList.add('out'); tf = setTimeout(() => { pc.innerHTML = nmFicha(n, R); pc.classList.remove('out'); }, 160); }
+  function chipsDe(t) { const g = R.N.filter(n => n.t === t);
+    chips.innerHTML = g.map(n => `<button type="button" data-k="${n.k}" aria-pressed="${n === sel}"><i class="nm-d ${n.t} ${nmEstado(n)}"${n.t === 'f' ? ` style="--rc:var(--rama-${n.j})"` : ''}></i>${esc(n.t === 'i' ? n.id : n.t === 's' ? SECN[n.s] : n.n)}</button>`).join('');
+    chips.setAttribute('aria-label', 'Elementos: ' + NM_CAPA[t]); }
+  function elegir(n) { sel = n; if (n && n.t !== capa) { capa = n.t; press(nav, capa); chipsDe(capa); } chips.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', !!n && b.dataset.k === n.k)); ficha(n); arranca(); }
   function accion(go) {
     const n = sel; if (!n) return; const dl = $('fgdlg'); if (dl && dl.open && go !== 'fi') dl.close();
     if (go === 'fi') pick(n.id);
     else if (go === 'an') mapaIr(n.a.s, n.a.q, n.a.vw);
     else if (go === 'se') goSec(n.s);
-    else mapaIr('dat', 'Indicadores, fuentes', ['dat-t', go === 'fu' ? 'f' : 'e']);
+    else mapaIr('mapa', 'Indicadores, fuentes', ['dat-t', go === 'fu' ? 'f' : 'e']);
   }
+  menu(nav, NM_CAPAS.map(([c, l, s_]) => [c, lz.getBoundingClientRect().width < 640 ? s_ : l]), 'i', c => { capa = c; sel = null; chipsDe(c); ficha(null); arranca(); });
+  chipsDe('i');
+  chips.addEventListener('click', e => { const b = e.target.closest('button[data-k]'); if (b) elegir(R.by[b.dataset.k]); });
   pn.addEventListener('click', e => { if (e.target.closest('.nm-x')) { elegir(null); lz.focus({preventScroll: true}); return; } const b = e.target.closest('button[data-k]'); if (b) { elegir(R.by[b.dataset.k]); return; } const g = e.target.closest('.nm-go'); if (g) accion(g.dataset.go); });
   pn.addEventListener('keydown', e => { if (e.key === 'Escape' && sel) { e.stopPropagation(); elegir(null); lz.focus({preventScroll: true}); } });
   // ratón y dedo: arrastrar gira el mapa; tocar un punto abre su ficha
@@ -4460,7 +4465,7 @@ function nmMontar() {
   lz.addEventListener('pointercancel', () => { drag = false; lz.classList.remove('drag'); });
   lz.addEventListener('pointerleave', () => { hover = null; drag = false; lz.classList.remove('drag'); arranca(); });
   // teclado: flechas para recorrer el mapa, Enter para abrir la ficha, Esc para cerrarla
-  const capasV = () => ['f', 'c', 'i', 'a', 's'].filter(t => t !== 'i' || tEx);
+  const capasV = () => ['f', 'c', 'i', 'a', 's'];
   const ordenX = t => R.N.filter(n => n.t === t).sort((a, b) => (a.p ? a.p.x : a.u) - (b.p ? b.p.x : b.u));
   const anuncia = n => { sr.textContent = n ? `${NM_CAPA[n.t]}: ${n.t === 's' ? SECN[n.s] : n.n}. Enter para ver su ficha.` : ''; };
   lz.addEventListener('keydown', e => {
@@ -4484,24 +4489,22 @@ function nmMontar() {
   document.addEventListener('visibilitychange', vc);
   const mo = new MutationObserver(() => { if (!cv.isConnected) { mo.disconnect(); return; } leeCss(); arranca(); });
   mo.observe(document.documentElement, {attributes: true, attributeFilter: ['data-theme', 'class', 'style']});
-  medir(); arranca();
+  medir(); pc.innerHTML = nmFicha(null, R); arranca();
 }
 function figMapa() {
   PEND.push(nmMontar);
-  const calc = IND.filter(i => i.e !== 'none').length, cu = st => IND.filter(i => i.e !== 'none' && V[i.id] && V[i.id].st === st).length, ns = [...SECS, ...SECX].filter(([s]) => NM_SEC[s]).length;
-  const nota = `${NM_FU.length} fuentes de datos, 4 categorías, ${IND.length} indicadores, ${NM_AN.length} análisis de datos y ${ns} secciones. ${calc} de ${IND.length} indicadores se calculan con los datos disponibles: ${cu('bad')} requieren acción, ${cu('warn')} están en vigilancia y ${cu('ok')} cumplen la meta. Cada línea sigue el camino del dato, de la fuente a la sección donde se lee. Cada fuente tiene su color y las señales mezclan los colores de las ramas que atraviesan. «Ver indicadores» abre la capa de los 23 indicadores. Arrastra para girar el mapa; toca un punto o usa las flechas del teclado para ver su ficha.`;
-  return FIG(0, 'Mapa del tablero', `<div class="nm" id="nm"><div class="nm-cv">
+  const ns = [...SECS, ...SECX].filter(([s]) => NM_SEC[s]).length;
+  return FIG(0, 'Mapa del tablero', `<div class="nm" id="nm"><div class="nm-m"><nav class="gb vw nm-capas" aria-label="Capas del mapa"></nav>
       <div class="nm-lz" tabindex="0" role="group" aria-label="Mapa del tablero: ${NM_FU.length} fuentes de datos, 4 categorías, ${IND.length} indicadores, ${NM_AN.length} análisis de datos y ${ns} secciones. Usa las flechas para recorrerlo y Enter para ver la ficha de cada elemento."><canvas aria-hidden="true"></canvas></div>
-      <aside class="nm-p" aria-live="polite"><button type="button" class="nm-x" aria-label="Cerrar la ficha"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17"/></svg></button><div class="nm-pc"></div></aside></div>
+      <div class="nm-it" role="group"></div></div>
+      <aside class="nm-p" aria-live="polite"><div class="nm-pc"></div></aside>
       <p class="sr-only nm-sr" aria-live="polite"></p></div>`
     + leg([['var(--c3)', 'Categoría'], ['var(--sem-ok)', 'Meta'], ['var(--sem-warn)', 'Vigilar'], ['var(--sem-bad)', 'Acción'], ['var(--sem-na)', 'Sin semáforo'], ['transparent', 'Sin datos', 'mp-sd'], ['var(--c2)', 'Análisis'], ['var(--accent)', 'Sección']]),
-    {i: nota, cls: 'fg-mapa', tools: '<button type="button" class="mini-b nm-exp" aria-pressed="false">Ver indicadores</button>'});
+    {i: 'Cada línea sigue el camino del dato: la fuente que alimenta cada indicador, su categoría, los análisis que lo calculan o muestran y la sección donde están. Cada fuente tiene su color y las señales mezclan los colores de las ramas que atraviesan. Arrastra para girar el mapa; toca un punto, elige una capa o usa las flechas del teclado para ver su ficha.', cls: 'fg-mapa'});
 }
-/* ---------- Mapa del tablero: sección aparte, con su propio ícono ---------- */
-function secMapa(el) { el.innerHTML = figMapa(); }
 
-/* ---------- 7. Gobernanza de datos ---------- */
-function secDatos(el) {
+/* ---------- Mapa y gobernanza de datos: sección aparte, con su propio ícono ---------- */
+function secMapa(el) {
   const cb = COB(), PR = {a: 'Alta', m: 'Media', b: 'Baja'}, est = {full: 'Calculado', part: 'Alcance limitado', none: 'Sin datos'}, srcN = ['Ventas', 'Compras', 'Transferencias', 'Apuntes contables', 'Ajustes de inventario', 'Ventas por hora'];
   const tb = panes('dat-t', [
     ['e', 'Estado de los indicadores', dt({cols: [{k: 'id', l: 'Indicador', b: true, sub: 'c'}, {k: 'fam', l: 'Familia', t: 'tag'}, {k: 'e', l: 'Dato', t: 'tag', tc: v => v === 'Calculado' ? 'full' : v === 'Sin datos' ? 'none' : 'part'}, {k: 'st', l: 'Semáforo', t: 'st', alt: 'alt'}],
@@ -4517,6 +4520,7 @@ function secDatos(el) {
     {l: 'Sin datos', v: cb.sin_datos, s: `datos recibidos: ${HECHOS.size} de ${D.faltan.length}`},
     {l: 'Fuentes', v: (D.fuentes || []).length, s: nf((D.fuentes || [])[0]?.registros || 0) + ' registros de venta'},
     {l: 'Corte común', v: fechaL(D.corte || '2026-09-30'), s: 'costo real desde ' + fechaL(D.inicio_costo_real + '-01')}])
+    + figMapa()
     + grupo('Fuentes de datos', 'dat-g', [['c', 'Cobertura en el tiempo', FG.f1()], ['m', 'Mapa de la base de datos', FG.f2()]])
     + FIG(0, 'Indicadores, fuentes y datos que faltan', tb.box, {tools: tb.nav, i: 'Toca un indicador para abrir su ficha. En «Datos que faltan», marca cada dato cuando llegue; la marca se guarda en este navegador.'});
   PEND.push(() => el.querySelectorAll('.fl-i input').forEach(b => b.onchange = () => {
@@ -4526,7 +4530,7 @@ function secDatos(el) {
   }));
 }
 
-const SECB = {res: secResumen, fin: secFinanzas, ven: cardVentas, inv: cardInventario, abs: secAbastecimiento, sec: secSector, dat: secDatos, mc: secMC, mapa: secMapa};
+const SECB = {res: secResumen, fin: secFinanzas, ven: cardVentas, inv: cardInventario, abs: secAbastecimiento, sec: secSector, mc: secMC, mapa: secMapa};
 // filtros de las secciones enlazadas que viajan en el enlace de la vista
 const FXS = {ven: {on: () => vxOn(), cod: () => vxCod(), de: x => { S.vx = vxDeCod(x); }}, inv: {on: () => ixOn(), cod: () => ixCod(), de: x => { S.ix = ixDeCod(x); }}};
 
@@ -4673,7 +4677,7 @@ const slug = t => t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').repla
 // meses seguidos como «2026-04~2026-09»; sueltos separados por comas
 const perCod = ks => { const out = []; let a = 0; ks.forEach((k, j) => { if (j === ks.length - 1 || ix(ks[j + 1]) !== ix(k) + 1) { out.push(a === j ? k : ks[a] + '~' + k); a = j + 1; } }); return out.join(','); };
 const perDes = s => s.split(',').flatMap(t => { const [a, b] = t.split('~'); return b ? D.meses.slice(ix(a), ix(b) + 1) : [a]; }).filter(k => D.meses.includes(k));
-const SEC_DE_GRUPO = {res: 'fin', sim: 'mc', ven: 'ven', inv: 'inv', abs: 'abs', sec: 'sec', dat: 'dat'};
+const SEC_DE_GRUPO = {res: 'fin', sim: 'mc', ven: 'ven', inv: 'inv', abs: 'abs', sec: 'sec', dat: 'mapa'};
 function hashDe() {
   const q = [];
   if (S.mes !== 'acum') q.push('m=' + S.mes);
@@ -4692,11 +4696,13 @@ function leeHash() {
   const m = q.get('m'), p = q.get('p') && perDes(q.get('p'));
   if (m && D.meses.includes(m)) { S.mes = m; PER = D.meses.slice(Math.min(ix(m), idx0)); }
   else if (p && p.length) { if (p.length === 1) { S.mes = p[0]; PER = D.meses.slice(Math.min(ix(p[0]), idx0)); } else { S.mes = 'acum'; PER = p; } }
-  const sc = q.get('s'), sec = sc && [...SECS, ...SECX].find(([, n]) => slug(n) === sc);
+  // enlaces anteriores: la gobernanza de datos y el mapa ahora comparten sección
+  const ALIAS = {'gobernanza-de-datos': 'mapa', 'mapa-del-tablero': 'mapa'};
+  const sc = q.get('s'), sec = sc && ([...SECS, ...SECX].find(([, n]) => slug(n) === sc) || (ALIAS[sc] && [ALIAS[sc]]));
   if (sec) S.sec = sec[0];
   // enlaces anteriores: «d» nombraba una tarjeta de análisis y «v=fechas», la vista de fechas
   const d = q.get('d'); if (d != null && !sec) { const t = TARJETAS.find(t_ => slug(t_.t) === d || (t_.al || []).includes(d)); S.sec = t ? (t.b === cardFinanciamiento ? 'fin' : SEC_DE_GRUPO[t.g]) : 'res'; }
-  if (q.get('v') === 'fechas' && !sec) S.sec = 'dat';
+  if (q.get('v') === 'fechas' && !sec) S.sec = 'mapa';
   const fx = FXS[S.sec]; if (q.get('x') && fx) fx.de(q.get('x'));
   const i = q.get('i'); if (i && BY[i]) S.sel = i;
 }
