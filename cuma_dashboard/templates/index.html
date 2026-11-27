@@ -1342,7 +1342,7 @@ button.kx-i:focus-visible,.kx-sb:focus-visible,.mini-b:focus-visible{outline:2px
 @media (max-width:640px){.fz-k .kx-i{height:124px}.fz-k .kx-h{min-height:31px;align-items:flex-start}}
 /* contenedores: los dos del mismo alto; la gráfica, los indicadores y la tabla ocupan el mismo espacio */
 .fz-col{display:flex;flex-direction:column;gap:14px;min-width:0}
-.fz-col>.fg:not(.xl){height:420px}
+.fz-col>.fg:not(.xl){height:525px}
 .fz-col>.fg:not(.xl)>.fgb{flex:1 1 0;min-height:0;display:flex;flex-direction:column;overflow:auto;scrollbar-width:thin}
 .fz-col>.fg:not(.xl)>.fgb>:first-child{margin-top:auto}
 .fz-col>.fg:not(.xl)>.fgb>:last-child{margin-bottom:auto}
@@ -1359,14 +1359,14 @@ button.kx-i:focus-visible,.kx-sb:focus-visible,.mini-b:focus-visible{outline:2px
 .fz-col .fgb>.kp .kp-i>span{font-size:12px}
 .fz-col .fgb>.kp .kp-i>b{font-size:clamp(24px,2.3vw,32px)}
 .fz-col .fgb>.kp .kp-i>em{font-size:11.5px;white-space:normal}
-@media (max-width:640px){.fz-col>.fg:not(.xl){height:400px}.fz-col .fgb>.kp .kp-i{padding:14px}}
+@media (max-width:640px){.fz-col>.fg:not(.xl){height:500px}.fz-col .fgb>.kp .kp-i{padding:14px}}
 .fz-pr{cursor:pointer}
 .fz-pr:hover,.fz-pr.on{background:var(--glass-flat)}
 .fz-pr:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 .fz-col>.fg{container-type:inline-size}
 /* anillos concéntricos (Actividad de iOS): anillos a la izquierda, cifra y leyenda a la derecha */
-.an{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);align-items:center;gap:22px;min-width:0}
-.an-s{display:block;width:100%;max-width:290px;aspect-ratio:1;justify-self:center;overflow:visible}
+.an{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);align-items:center;gap:22px;min-width:0}
+.an-s{display:block;width:100%;max-width:362px;aspect-ratio:1;justify-self:center;overflow:visible}
 .an-t{fill:none;stroke-opacity:.16;transition:opacity .35s var(--ease)}
 .an-a{fill:none;stroke-linecap:round;stroke-dasharray:var(--p) 100;animation:anIn 1.4s var(--spring) both;animation-delay:calc(var(--k)*110ms);transition:opacity .35s var(--ease);cursor:default}
 @keyframes anIn{from{stroke-dasharray:0 100}}
@@ -1382,8 +1382,21 @@ button.kx-i:focus-visible,.kx-sb:focus-visible,.mini-b:focus-visible{outline:2px
 .an-r small{grid-column:2/-1;font-size:11px;line-height:1.3;color:var(--muted)}
 .an .dim{opacity:.22}
 .fg.xl .an-s{max-width:440px}
-@container (max-width:470px){.an{grid-template-columns:112px minmax(0,1fr);gap:14px}.an-l{gap:8px}.an-h b{font-size:24px}.an-r{padding:4px 6px}.an-h{padding:0 6px}.an-r span{font-size:12px}}
+@container (max-width:470px){.an{grid-template-columns:136px minmax(0,1fr);gap:14px}.an-l{gap:8px}.an-h b{font-size:24px}.an-r{padding:4px 6px}.an-h{padding:0 6px}.an-r span{font-size:12px}}
 @media (prefers-reduced-motion:reduce){.an-a{animation:none}}
+/* indicadores al pie de la tarjeta de la derecha: franja con divisiones finas, sin cajas */
+.fz-ind{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));flex:none;margin:18px 0 0;padding:16px 0 2px;border-top:1px solid var(--line)}
+.fz-col>.fg:not(.xl)>.fgb>.fz-ind{margin:18px 0 0}
+.fz-col>.fg:not(.xl)>.fgb>:first-child:not(.fz-ind){margin-bottom:auto}
+.fz-in{display:flex;flex-direction:column;gap:5px;min-width:0;padding:0 16px;border-left:1px solid var(--line)}
+.fz-in:first-child{border-left:0;padding-left:0}
+.fz-in:last-child{padding-right:0}
+.fz-in dt{display:flex;align-items:center;gap:6px;min-width:0;font-size:11.5px;font-weight:500;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fz-in dt .dot{flex:none;margin:0}
+.fz-in dd{display:flex;flex-direction:column;gap:3px;min-width:0;margin:0}
+.fz-in b{font-size:clamp(20px,1.75vw,25px);font-weight:300;letter-spacing:-.025em;line-height:1.1;color:var(--ink-strong);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fz-in small{font-size:11px;line-height:1.3;color:var(--muted)}
+@container (max-width:470px){.fz-ind{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:14px}.fz-in{padding:0 12px}.fz-in:nth-child(odd){border-left:0;padding-left:0}.fz-in:nth-child(even){padding-right:0}}
 @media (prefers-reduced-motion:reduce){.fz-k,.fz-det .kx-i{transition:none;animation:none}}
 
 </style>
@@ -4434,20 +4447,19 @@ function fzPeso() {
       {n: 'Comisiones y servicios bancarios', f: gv.comisiones / 100, t: pct(gv.comisiones), c: 'var(--chart-2)'}], [pct(r.pgo), 'de las ventas se va en gasto operativo']),
     {i: `Gasto de cada rubro sobre las ventas de ${selL()}; cada anillo completo son las ventas.`});
 }
-// indicadores de cada sección
+// indicadores de cada sección: van al pie de la tarjeta de la derecha, en una franja con divisiones finas (la cifra que ya destaca la gráfica no se repite)
 function fzInd(s) {
   const ii = SI(), r = calc(ii), res = r.V - r.CV - r.GO + sumI(M.otros || [], ii);
   if (s === 'mb') { const F = D.fig, sv = sumI(F.f3_ventas, ii), sc = sumI(F.f3_costo, ii), mw = (sv - sc) / sv * 100;
-    return FIG(0, 'Margen por producto y contable · ' + selL(), kp([['Margen por producto', pct(mw), 'costo de cada venta'], ['Margen contable', pct(r.mb), 'incluye pérdidas', V.I1.st],
-      ['Diferencia', nf(+mw.toFixed(1) - +r.mb.toFixed(1), 1) + ' p. p.', 'pérdidas y valoración'], ['Costo de entradas reales', pct(selF3o().slice(0, 3).reduce((a, x) => a + x.pct, 0)), 'de las líneas']])); }
+    return [['Margen por producto', pct(mw), 'costo de cada venta'], ['Margen contable', pct(r.mb), 'incluye pérdidas', V.I1.st], ['Diferencia', nf(+mw.toFixed(1) - +r.mb.toFixed(1), 1) + ' p. p.', 'pérdidas y valoración']]; }
   if (s === 'mo') { const gv = selGasto();
-    return FIG(0, 'Indicadores del gasto · ' + selL(), kp([['Gasto operativo', usd(r.GO), `${usd(r.GO / r.n)} al mes`], ['Sobre las ventas', pct(r.pgo), 'gasto operativo / ventas', V.I2.st],
-      ['Personal sobre ventas', pct(gv.personal), 'socio y ocasional', V.I4.st], ['Energía sobre ventas', pct(gv.energia), `${usd(gv.en)} en el periodo`]])); }
-  if (s === 'oss') return FIG(0, 'Resultado del periodo · ' + selL(), kp([['Ventas', usd(r.V), `${usd(r.vmes)} al mes`], ['Margen bruto', pct(r.mb), `${usd(r.V - r.CV)} de margen`, V.I1.st],
-    ['Gasto / ventas', pct(r.pgo), `${usd(r.GO)} de gasto`, V.I2.st], ['Resultado', usd(res), usd(res / r.n) + ' al mes · con otros ingresos', res < 0 ? 'bad' : 'ok']]));
-  return FIG(0, 'Equilibrio y ventas · ' + selL(), kp([['Autosuficiencia', pct(r.oss), 'ingresos / costos totales', V.I6.st], ['Punto de equilibrio', r.pe ? usd(r.pe) : '—', 'al mes', V.I7.st],
-    ['Ventas', usd(r.vmes), 'al mes'], ['Veces la venta actual', r.pe ? nf(r.pe / r.vmes, 1) : '—', 'para el equilibrio']]));
+    return [['Sobre las ventas', pct(r.pgo), `${usd(r.GO / r.n)} de gasto al mes`, V.I2.st], ['Personal sobre ventas', pct(gv.personal), 'socio y ocasional', V.I4.st], ['Energía sobre ventas', pct(gv.energia), `${usd(gv.en)} en el periodo`]]; }
+  if (s === 'oss') return [['Ventas', usd(r.V), `${usd(r.vmes)} al mes`], ['Margen bruto', pct(r.mb), `${usd(r.V - r.CV)} de margen`, V.I1.st], ['Gasto / ventas', pct(r.pgo), `${usd(r.GO)} de gasto`, V.I2.st], ['Resultado', usd(res), usd(res / r.n) + ' al mes · con otros ingresos']];
+  return [['Autosuficiencia', pct(r.oss), 'ingresos / costos totales', V.I6.st], ['Punto de equilibrio', r.pe ? usd(r.pe) : '—', 'al mes', V.I7.st], ['Ventas', usd(r.vmes), 'al mes'], ['Veces la venta actual', r.pe ? nf(r.pe / r.vmes, 1) : '—', 'para el equilibrio']];
 }
+// franja de indicadores: rótulo con el punto del semáforo, cifra y nota; sin cajas
+const fzTira = s => { const L = fzInd(s);
+  return `<dl class="fz-ind" style="--n:${L.length}">${L.map(([l, v, d, st]) => `<div class="fz-in"><dt>${st && STC[st] && !SIX ? `<i class="dot sm ${st}" aria-hidden="true"></i><span class="sr-only">${ST[st]}: </span>` : ''}${l}</dt><dd><b class="num">${v}</b>${d ? `<small>${d}</small>` : ''}</dd></div>`).join('')}</dl>`; };
 // tabla de cada sección
 const FZT_ = {
   mb: () => FIG(0, 'Margen por categoría · ' + selL(), dt({cols: [{k: 'cat', l: 'Categoría', b: true}, {k: 'v', l: 'Ventas', t: 'usd', bar: true}, {k: 'mg', l: 'Margen USD', t: 'usd'}, {k: 'mgp', l: 'Margen %', t: 'pct', heat: 1}, {k: 'n', l: 'Productos', t: 'num'}],
@@ -4467,10 +4479,10 @@ const FZT_ = {
 };
 // contenedor izquierdo: vistas de cada sección (la primera es la evolución); contenedor derecho: composición
 const FZV = {
-  mb: [['e', 'Evolución', () => FG.f3b(FZH)], ['i', 'Indicadores', () => fzInd('mb')], ['t', 'Tabla', FZT_.mb]],
-  mo: [['e', 'Evolución', () => fzGastoMes(S.fz.c, FZH)], ['p', 'Peso', fzPeso], ['i', 'Indicadores', () => fzInd('mo')], ['t', 'Tabla', FZT_.mo]],
-  oss: [['e', 'Evolución', () => fzOss(FZH)], ['i', 'Indicadores', () => fzInd('oss')], ['t', 'Tabla', FZT_.oss]],
-  pe: [['e', 'Evolución', () => figMensual(FZH)], ['i', 'Indicadores', () => fzInd('pe')], ['t', 'Tabla', FZT_.pe]]
+  mb: [['e', 'Evolución', () => FG.f3b(FZH)], ['t', 'Tabla', FZT_.mb]],
+  mo: [['e', 'Evolución', () => fzGastoMes(S.fz.c, FZH)], ['p', 'Peso', fzPeso], ['t', 'Tabla', FZT_.mo]],
+  oss: [['e', 'Evolución', () => fzOss(FZH)], ['t', 'Tabla', FZT_.oss]],
+  pe: [['e', 'Evolución', () => figMensual(FZH)], ['t', 'Tabla', FZT_.pe]]
 };
 const FZC = {mb: fzCosto, mo: fzEstructura, oss: () => FG.f4(FZH), pe: () => FG.f5a(FZH)};
 const fzS = () => S.fz.k || 'mb';
@@ -4532,7 +4544,7 @@ function fzIzq(anim) { const d = $('fz-izq'); if (!d) return; const pinta = () =
 // la composición se calcula con el mes elegido en la evolución
 function fzDerHTML() {
   SIX = S.fz.m != null ? [S.fz.m] : null;
-  try { return FZC[fzS()](); } finally { SIX = null; }
+  try { return FZC[fzS()]().replace(/<\/div>(<\/figure>)$/, fzTira(fzS()) + '</div>$1'); } finally { SIX = null; }
 }
 function fzDer() { const d = $('fz-der'); if (!d) return; d.innerHTML = fzDerHTML(); flush(d); fzVincula(); }
 const fzTenue = c => typeof c !== 'string' ? c : /^#[0-9a-f]{6}$/i.test(c) ? c + '40' : /^#[0-9a-f]{8}$/i.test(c) ? c.slice(0, 7) + '30' : c;
