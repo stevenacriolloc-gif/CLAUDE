@@ -1433,6 +1433,10 @@ button.kx-i:focus-visible,.kx-sb:focus-visible,.mini-b:focus-visible{outline:2px
 .an-bt{appearance:none;width:100%;border:0;background:transparent;font:inherit;color:inherit;text-align:left;cursor:pointer}
 .an-bt:hover,.an-bt.on{background:var(--glass-flat)}
 .an-bt:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+/* resumen: todas las mini gráficas en puntos */
+.mg-mk{fill:var(--ink-strong)}
+.mg-w1{fill:var(--c1)}.mg-w2{fill:var(--c2)}.mg-w3{fill:var(--c3)}.mg-w4{fill:var(--c4)}.mg-w5{fill:var(--c5)}
+.mg-ink{fill:var(--ink-strong)}
 </style>
 <style id="base">
 /* base del navegador: preflight de Tailwind CSS 3.4.16 (licencia MIT), en el mismo orden en que lo aplicaba el CDN */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}
@@ -4293,26 +4297,29 @@ const MG = {
     d += `<g class="mg-tag"><rect x="${(X(ult) - 22).toFixed(1)}" y="${(yu - 13).toFixed(1)}" width="44" height="17" rx="8.5"/>${mgTx(X(ult).toFixed(1), (yu - .5).toFixed(1), '$ ' + mgK(vals[ult]), 'mg-tt')}</g>`;
     return mgSvg(a, '', d, 'translateY(-7px)');
   },
-  // anillo de avance hacia la meta (lleno = meta cumplida); al desplegarse se corre a la izquierda y muestra valor, meta y brecha
+  // anillo de puntos: avance hacia la meta (todos encendidos = meta cumplida); al desplegarse se corre a la izquierda y muestra valor, meta y brecha
   anillo(p, cen, filas) {
-    const q = Math.max(0, Math.min(1, p || 0)) * 100;
-    const a = `<circle class="mg-trk" cx="110" cy="62" r="46"/><circle class="mg-arc" cx="110" cy="62" r="46" pathLength="100" style="--p:${q.toFixed(1)}" transform="rotate(-90 110 62)"/>`
-      + mgTx(110, 66, cen, 'mg-t') + mgTx(110, 81, 'de la meta', 'mg-u');
+    const N = 40, on = Math.round(Math.max(0, Math.min(1, p || 0)) * N);
+    let a = '';
+    for (let k = 0; k < N; k++) { const g = (-90 + k * 360 / N) * Math.PI / 180, l = k < on;
+      a += `<circle class="${l ? (k === on - 1 ? 'mg-hi' : 'mg-on') + ' mg-p' : 'mg-off'}" cx="${(110 + 46 * Math.cos(g)).toFixed(1)}" cy="${(62 + 46 * Math.sin(g)).toFixed(1)}" r="${l ? 3.5 : 2.5}"${l ? ` style="--d:${k * 28}ms"` : ''}/>`; }
+    a += mgTx(110, 66, cen, 'mg-t') + mgTx(110, 81, 'de la meta', 'mg-u');
     return mgSvg(a, '', filas.map(([l, v], k) => mgFila(132, 30 + k * 34, l, v)).join(''), 'translate(-56px,0) scale(.9)');
   },
-  // medidor de media luna: marcas hasta el valor y una marca larga en la meta
+  // medidor de media luna en puntos: encendidos hasta el valor y un punto oscuro en la meta
   medidor(v, meta, f) {
-    const top = Math.max(meta * 2.5, v * 1.15) || 1, N = 31, cx = 110, cy = 106, k = x => Math.max(0, Math.min(1, x / top)), ang = t => Math.PI + t * Math.PI;
+    const top = Math.max(meta * 2.5, v * 1.15) || 1, N = 25, cx = 110, cy = 106, k = x => Math.max(0, Math.min(1, x / top)), ang = t => Math.PI + t * Math.PI;
     const kv = Math.round(k(v) * (N - 1)), km = Math.round(k(meta) * (N - 1));
     let a = '';
-    for (let t = 0; t < N; t++) { const g = ang(t / (N - 1)), c = Math.cos(g), s = Math.sin(g), m = t === km, r1 = m ? 54 : 66, r2 = m ? 92 : 86, l = t <= kv;
-      a += `<line class="${m ? 'mg-mt' : l ? 'mg-ln mg-p' : 'mg-lo'}" x1="${(cx + r1 * c).toFixed(1)}" y1="${(cy + r1 * s).toFixed(1)}" x2="${(cx + r2 * c).toFixed(1)}" y2="${(cy + r2 * s).toFixed(1)}"${l && !m ? ` style="--d:${t * 24}ms"` : ''}/>`; }
+    for (let t = 0; t < N; t++) { const g = ang(t / (N - 1)), m = t === km, l = t <= kv;
+      for (const [rr, f0] of [[66, 0], [78, 1], [90, 2]]) { const x = (cx + rr * Math.cos(g)).toFixed(1), y = (cy + rr * Math.sin(g)).toFixed(1);
+        a += m ? `<circle class="mg-mk" cx="${x}" cy="${y}" r="3.6"/>` : `<circle class="${l ? 'mg-on mg-p' : 'mg-off'}" cx="${x}" cy="${y}" r="${l ? 3.1 : 2.2}"${l ? ` style="--d:${t * 26 + f0 * 40}ms"` : ''}/>`; } }
     const gv = ang(kv / (N - 1)), gm = ang(km / (N - 1));
-    a += `<circle class="mg-hi" cx="${(cx + 96 * Math.cos(gv)).toFixed(1)}" cy="${(cy + 96 * Math.sin(gv)).toFixed(1)}" r="4"/>`;
+    a += `<circle class="mg-hi" cx="${(cx + 102 * Math.cos(gv)).toFixed(1)}" cy="${(cy + 102 * Math.sin(gv)).toFixed(1)}" r="4.2"/>`;
     const c = mgTx(110, 92, 'meta', 'mg-u') + mgTx(110, 112, f(meta), 'mg-t mg-ts');
     const d = mgTx(110, 96, f(v), 'mg-t') + mgTx(110, 112, 'gasto actual', 'mg-u')
       + mgTx(20, 124, '0', 'mg-dt') + mgTx(200, 124, f(top), 'mg-dt')
-      + mgTx((cx + 104 * Math.cos(gm)).toFixed(1), (cy + 104 * Math.sin(gm) + 4).toFixed(1), 'meta ' + f(meta), 'mg-dt mg-b', Math.cos(gm) < -.2 ? 'end' : Math.cos(gm) > .2 ? 'start' : 'middle');
+      + mgTx((cx + 108 * Math.cos(gm)).toFixed(1), (cy + 108 * Math.sin(gm) + 4).toFixed(1), 'meta ' + f(meta), 'mg-dt mg-b', Math.cos(gm) < -.2 ? 'end' : Math.cos(gm) > .2 ? 'start' : 'middle');
     return mgSvg(a, c, d, 'translateY(-3px)');
   },
   // red de 100 puntos: cada punto es el 1 % de las ventas
@@ -4324,67 +4331,72 @@ const MG = {
     const d = mgTx(128, 38, pct(pc), 'mg-t', 'start') + mgTx(128, 54, 'de las ventas', 'mg-u', 'start') + mgFila(128, 78, 'Por cada $ 100', '$ ' + nf(pc, 1)) + (extra ? mgFila(128, 108, extra[0], extra[1]) : '');
     return mgSvg(a, '', d, 'translate(-52px,0) scale(.9)');
   },
-  // vueltas del inventario en el año: un círculo por vuelta; la última se llena en parte y las que faltan para la meta quedan punteadas
+  // vueltas del inventario en el año: un aro de puntos por vuelta; la última se enciende en parte y las que faltan para la meta quedan tenues
   vueltas(v, meta, dias) {
-    const tot = Math.min(12, Math.max(1, Math.ceil(Math.max(v, meta || 0)))), fil = tot > 6 ? 2 : 1, col = Math.ceil(tot / fil), r = 12.5, gx = 32, gy = 34, x0 = 110 - (col - 1) * gx / 2, y0 = fil > 1 ? 36 : 54;
+    const tot = Math.min(12, Math.max(1, Math.ceil(Math.max(v, meta || 0)))), fil = tot > 6 ? 2 : 1, col = Math.ceil(tot / fil), r = 12, gx = 32, gy = 34, x0 = 110 - (col - 1) * gx / 2, y0 = fil > 1 ? 36 : 54, P = 12;
     let a = '', d = '';
-    for (let k = 0; k < tot; k++) { const x = x0 + (k % col) * gx, y = y0 + Math.floor(k / col) * gy, fr = Math.max(0, Math.min(1, v - k));
-      if (fr >= 1) a += `<circle class="mg-on mg-p" cx="${x}" cy="${y}" r="${r}" style="--d:${k * 70}ms"/>`;
-      else if (fr > 0) a += `<circle class="mg-lo2" cx="${x}" cy="${y}" r="${r}"/><circle class="mg-arcs" cx="${x}" cy="${y}" r="${r - 2.5}" pathLength="100" style="--p:${(fr * 100).toFixed(1)}" transform="rotate(-90 ${x} ${y})"/>`;
-      else a += `<circle class="mg-meta" cx="${x}" cy="${y}" r="${r - 1}"/>`;
-      d += mgTx(x, y + 4, fr >= 1 ? k + 1 : fr > 0 ? nf(fr, 1) : '', fr >= 1 ? 'mg-in' : 'mg-dt'); }
+    for (let k = 0; k < tot; k++) { const x = x0 + (k % col) * gx, y = y0 + Math.floor(k / col) * gy, fr = Math.max(0, Math.min(1, v - k)), on = Math.round(fr * P);
+      for (let q = 0; q < P; q++) { const g = (-90 + q * 360 / P) * Math.PI / 180, l = q < on;
+        a += `<circle class="${l ? (fr >= 1 ? 'mg-on' : 'mg-hi') + ' mg-p' : fr > 0 ? 'mg-off' : 'mg-dim'}" cx="${(x + r * Math.cos(g)).toFixed(1)}" cy="${(y + r * Math.sin(g)).toFixed(1)}" r="${l ? 2.7 : 2}"${l ? ` style="--d:${k * 90 + q * 18}ms"` : ''}/>`; }
+      d += mgTx(x, y + 4, fr >= 1 ? k + 1 : fr > 0 ? nf(fr, 1) : '', fr > 0 ? 'mg-dt mg-b' : 'mg-dt'); }
     const yc = fil > 1 ? 118 : 96;
     return mgSvg(a, mgTx(110, yc, `meta ${nf(meta, 1)} vueltas al año`, 'mg-u'), d + mgTx(110, yc, `una vuelta cada ${nf(dias, 0)} días`, 'mg-dt mg-b'), 'translateY(-2px)');
   },
-  // batería por segmentos: cuánto se ha recorrido hacia la meta
+  // batería de puntos: el contorno y la carga, en puntos; cuánto se ha recorrido hacia la meta
   bateria(p, v, meta, f) {
-    const N = 10, q = Math.max(0, Math.min(1, p || 0)), on = Math.round(q * N);
-    let a = `<rect class="mg-bt" x="38" y="34" width="136" height="52" rx="13"/><rect class="mg-bn" x="177" y="50" width="7" height="20" rx="3"/>`;
-    for (let k = 0; k < N; k++) a += `<rect class="${k < on ? (k === on - 1 ? 'mg-hi' : 'mg-on') + ' mg-p' : 'mg-off'}" x="${(46 + k * 12.4).toFixed(1)}" y="42" width="9.4" height="36" rx="3"${k < on ? ` style="--d:${k * 60}ms"` : ''}/>`;
-    const xv = 46 + on * 12.4 - 3;
+    const N = 10, q = Math.max(0, Math.min(1, p || 0)), on = Math.round(q * N), X0 = 38, Y0 = 34, W = 136, H = 52;
+    let a = '';
+    // contorno punteado y el borne
+    for (let t = 0; t <= 20; t++) { const x = (X0 + W * t / 20).toFixed(1); a += `<circle class="mg-off" cx="${x}" cy="${Y0}" r="1.8"/><circle class="mg-off" cx="${x}" cy="${Y0 + H}" r="1.8"/>`; }
+    for (let t = 1; t < 8; t++) { const y = (Y0 + H * t / 8).toFixed(1); a += `<circle class="mg-off" cx="${X0}" cy="${y}" r="1.8"/><circle class="mg-off" cx="${X0 + W}" cy="${y}" r="1.8"/>`; }
+    [52, 60, 68].forEach(y => { a += `<circle class="mg-off" cx="181" cy="${y}" r="2.4"/>`; });
+    for (let k = 0; k < N; k++) for (let r_ = 0; r_ < 3; r_++) { const l = k < on, x = (X0 + 12 + k * 12.4).toFixed(1), y = (Y0 + 14 + r_ * 12).toFixed(1);
+      a += `<circle class="${l ? (k === on - 1 ? 'mg-hi' : 'mg-on') + ' mg-p' : 'mg-off'}" cx="${x}" cy="${y}" r="${l ? 3.9 : 2.4}"${l ? ` style="--d:${k * 60 + r_ * 30}ms"` : ''}/>`; }
+    const xv = X0 + 12 + Math.max(0, on - 1) * 12.4;
     const d = mgTx(38, 108, '0', 'mg-dt', 'start') + mgTx(174, 108, 'meta ' + f(meta), 'mg-dt', 'end')
       + `<g class="mg-tag"><rect x="${(xv - 20).toFixed(1)}" y="8" width="40" height="17" rx="8.5"/>${mgTx(xv.toFixed(1), 20, f(v), 'mg-tt')}</g>`;
     return mgSvg(a, mgTx(106, 112, pct(q * 100, 0) + ' de la meta', 'mg-t mg-ts'), d, 'translateY(-2px)');
   },
-  // prisma de puntos sobre el piso del local: su altura es la venta por m² del periodo frente al mejor mes
-  prisma(p, v, mejor, m2) {
-    const W = 46, DP = 46, Hh = 10 + 46 * Math.max(0, Math.min(1, p || 0)), Hm = 56, P = (x, y, z) => [110 + (x - y) * .866, 120 - (x + y) * .5 - z];
-    let a = '', n = 0;
-    const arista = (A0, B0, cl, paso = 5.2, r = 1.9, extra = '') => { const A = P(...A0), B = P(...B0), L = Math.hypot(B[0] - A[0], B[1] - A[1]), m = Math.max(1, Math.round(L / paso)); let o = '';
-      for (let k = 0; k <= m; k++) { const x = A[0] + (B[0] - A[0]) * k / m, y = A[1] + (B[1] - A[1]) * k / m; o += `<circle class="${cl}${extra}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}"${extra ? '' : ` style="--d:${(n++) * 6}ms"`}/>`; } return o; };
-    const F = [[0, 0], [W, 0], [W, DP], [0, DP]];
-    for (let k = 0; k < 4; k++) a += arista([...F[k], 0], [...F[(k + 1) % 4], 0], 'mg-off mg-p', 6.5, 1.5);
-    [[0, 0], [W, 0], [0, DP]].forEach(q => { a += arista([...q, 0], [...q, Hh], 'mg-on mg-p'); });
-    for (let k = 0; k < 4; k++) a += arista([...F[k], Hh], [...F[(k + 1) % 4], Hh], 'mg-hi mg-p');
-    // techo del mejor mes: aparece al desplegar los detalles
-    let g = ''; for (let k = 0; k < 4; k++) g += arista([...F[k], Hm], [...F[(k + 1) % 4], Hm], 'mg-gh', 6, 1.3, ' ');
-    a += `<g class="mg-gp">${g}</g>`;
-    const d = mgFila(146, 28, 'Periodo', usd(v, 2) + '/m²') + mgFila(146, 64, 'Mejor mes', usd(mejor, 2) + '/m²') + mgFila(146, 100, 'Local', nf(m2, 2) + ' m²');
-    return mgSvg(a, '', d, 'translate(-48px,0) scale(.94)');
+  // columnas de puntos por franja horaria: su peso en la venta; la franja con más venta, más intensa. Al desplegarse, el producto más vendido de cada franja
+  franjas(fr, top, pk) {
+    const R = 9, mx = Math.max(...fr.map(x => x.pv || 0)) || 1, dx = 21, X = j => 68 + dx * j, dy = 76 / (R - 1);
+    let a = '';
+    fr.forEach((x, j) => { const on = x.pv > 0 ? Math.max(1, Math.round(x.pv / mx * R)) : 0, cl = j === pk ? 'mg-hi' : 'mg-on';
+      for (let k = 0; k < R; k++) { const l = k < on; a += `<circle class="${l ? cl + ' mg-p' : 'mg-off'}" cx="${X(j)}" cy="${(92 - k * dy).toFixed(1)}" r="${l ? 3.7 : 2.6}"${l ? ` style="--d:${j * 60 + k * 30}ms"` : ''}/>`; }
+      a += mgTx(X(j), 112, FRJ[j][0], j === pk ? 'mg-dt mg-b' : 'mg-dt'); });
+    return mgSvg(a, '', mgFranjasD(top), 'translate(-60px,0) scale(.8)').replace('<g class="mg-d">', '<g class="mg-d" id="mg-frd">');
   },
-  // personas: una figura por empleado; la última se llena según la fracción
-  gente(nn) {
-    const tot = Math.max(1, Math.ceil(nn)), w = 34, gp = 12, x0 = 110 - (tot * w + (tot - 1) * gp) / 2;
-    let a = '', d = '';
-    for (let k = 0; k < tot; k++) {
-      const cx = x0 + k * (w + gp) + w / 2, fig = `<circle cx="${cx}" cy="38" r="11.5"/><path d="M${cx - 17} 100V74a17 17 0 0 1 34 0v26z"/>`, fr = Math.max(0, Math.min(1, nn - k)), id = 'mgc' + (++MGN);
-      a += `<g class="mg-off">${fig}</g>`;
-      if (fr > 0) a += (fr < 1 ? `<clipPath id="${id}"><rect x="${cx - 17}" y="20" width="${(34 * fr).toFixed(1)}" height="84"/></clipPath>` : '') + `<g class="mg-on mg-p"${fr < 1 ? ` clip-path="url(#${id})"` : ''} style="--d:${k * 90}ms">${fig}</g>`;
-      d += mgTx(cx, 122, fr >= 1 ? '1' : nf(fr, 2), 'mg-dt' + (fr < 1 ? ' mg-b' : ''));
-    }
-    return mgSvg(a, mgTx(110, 122, `${nf(nn, 2)} personas en promedio`, 'mg-u'), d, 'translateY(-6px)');
+  // los proveedores principales en una red de 100 puntos: cada punto es el 1 % de las entradas, en el color de su proveedor
+  proveedores(top) {
+    const cuenta = top.map(x => Math.round(x.pct)); let a = '', k = 0, d = '';
+    cuenta.forEach((n, j) => { for (let q = 0; q < n && k < 100; q++, k++) { const c = k % 10, f = 9 - Math.floor(k / 10);
+      a += `<circle class="mg-w${j + 1} mg-p" cx="${(61 + c * 10.9).toFixed(1)}" cy="${(16 + f * 10.9).toFixed(1)}" r="4.3" style="--d:${k * 22}ms"/>`; } });
+    for (; k < 100; k++) { const c = k % 10, f = 9 - Math.floor(k / 10); a += `<circle class="mg-off" cx="${(61 + c * 10.9).toFixed(1)}" cy="${(16 + f * 10.9).toFixed(1)}" r="2.7"/>`; }
+    top.forEach((x, j) => { const y = 22 + j * 21; d += `<circle class="mg-w${j + 1}" cx="104" cy="${y - 3.5}" r="3.6"/>` + mgTx(111, y, esc(corto(x.p, 13)), 'mg-dl mg-ink', 'start') + mgTx(216, y, pct(x.pct, 0), 'mg-dt mg-b', 'end'); });
+    return mgSvg(a, '', d, 'translate(-60px,0) scale(.8)');
   }
 };
+const corto = (s, n) => { s = String(s || ''); return s.length > n ? s.slice(0, n - 1).trimEnd() + '…' : s; };
+// detalle de la gráfica de franjas: el producto más vendido de cada una (cuando ya llegó el detalle por hora)
+const mgFranjasD = top => top ? top.map((x, j) => { const y = 22 + j * 21; return mgTx(100, y, `${FRJ[j][0]}:00`, 'mg-dl', 'start') + mgTx(136, y, esc(corto(x.p || '—', 14)), 'mg-dl mg-ink', 'start'); }).join('') : mgTx(158, 66, 'Cargando el detalle por hora…', 'mg-u');
+// producto más vendido en cada franja horaria de los meses elegidos (ventas sin IVA de las facturas unidas a sus órdenes)
+function topFranjas() {
+  const X = VH, NM = X.NM, NH = X.NH, H = DET.h.horas, enM = new Uint8Array(NM); dSel().forEach(i => { enM[i] = 1; });
+  const FJ = H.map(h => FRJ.findIndex(([a, b]) => h >= a && h < b)), P = FRJ.map(() => new Map());
+  for (let k = 0; k < X.n; k++) { const c = X.CM[k], m = c % NM; if (!enM[m]) continue; const b = FJ[((c / NM) | 0) % NH]; if (b < 0) continue; const p = X.P[k]; P[b].set(p, (P[b].get(p) || 0) + X.V[k]); }
+  return P.map(mp => { let bp = -1, bv = 0; mp.forEach((v, p) => { if (v > bv) { bv = v; bp = p; } }); return {p: bp >= 0 ? DET.p.n[bp] : null, v: bv / 100}; });
+}
 // avance hacia la meta de un indicador con umbral: valor sobre meta, o meta sobre valor si menor es mejor
 const avance = id => { const m = V[id] && V[id].mt; if (!m || !m.L || !m.L.meta || !isFinite(m.v)) return null; return m.s > 0 ? m.v / m.L.meta : m.v > 0 ? m.L.meta / m.v : 1; };
 
 /* ---------- 1. Resumen ejecutivo ---------- */
 function secResumen(el) {
   const r = calc(SI()), perd = -selMerma().neto, inv = D.inventario;
-  // cada tarjeta lleva su mini gráfica: los meses elegidos en color, el último más intenso
+  // cada tarjeta lleva su mini gráfica de puntos: los meses elegidos en color, el último más intenso
   const si = SI(), sel = new Set(si), ult = Math.max(...si), ven = D.meses.map((k, j) => M.ventas[j]);
-  const m2 = D.meses.map((k, j) => M.ventas[j] / D.superficie_m2), mx2 = Math.max(...m2.filter(v => v > 0)), v2 = calc(si).vmes / D.superficie_m2;
   const mt = id => V[id] && V[id].mt, pI1 = avance('I1'), pI14 = avance('I14');
+  const h = selHoras(), fr = h ? h.franjas : null, pk = fr ? fr.reduce((b, x, j) => x.pv > fr[b].pv ? j : b, 0) : -1, T = VH && fr ? topFranjas() : null;
+  const P = selProv(), tp = P.rows.slice(0, 5);
   el.innerHTML = kx([
     xi('I5', {l: 'Ventas totales', v: usd(r.V), u: '', s: `${usd(r.vmes)} al mes · crecimiento ${V.I5.v} al mes`, g: MG.columnas(ven, sel, ult, D.meses)}),
     xi('I1', {g: pI1 == null ? '' : MG.anillo(pI1, pct(Math.min(1, pI1) * 100, 0), [['Actual', pct(mt('I1').v)], ['Meta', pct(mt('I1').L.meta)], [mt('I1').v >= mt('I1').L.meta ? 'Sobre la meta' : 'Faltan', nf(Math.abs(mt('I1').L.meta - mt('I1').v), 1) + ' p. p.']])}),
@@ -4392,8 +4404,10 @@ function secResumen(el) {
     xi('I15', {l: 'Merma neta', v: usd(perd), u: '', s: `${pct(perd / r.V * 100)} de las ventas · frutas y hortalizas ${V.I15.v}`, g: MG.red(perd / r.V * 100, ['Frutas y hortalizas', V.I15.v])}),
     xi('I13', {l: 'Rotación de inventario', v: nf(inv.dias, 0) + ' días', u: '', s: `${nf(inv.rot_anual, 1)} veces al año · conteos de abril y septiembre`, g: mt('I13') ? MG.vueltas(inv.rot_anual, mt('I13').L.meta, inv.dias) : ''}),
     xi('I14', {l: 'GMROI', u: 'al año', g: pI14 == null ? '' : MG.bateria(pI14, mt('I14').v, mt('I14').L.meta, x => nf(x, 2))}),
-    xi('I17', {l: 'Ventas por m²', v: usd(r.vmes / D.superficie_m2, 2), u: 'al mes', s: `${nf(D.superficie_m2, 2)} m² de local`, g: MG.prisma(v2 / mx2, v2, mx2, D.superficie_m2)}),
-    xi('I17', {l: 'Ventas por empleado', v: usd(r.vmes / D.empleados), u: 'al mes', s: `${nf(D.empleados, 2)} empleados en promedio`, g: MG.gente(D.empleados)})]);
+    {l: 'Top de productos por franja horaria', v: `<span id="kx-frv">${fr ? T ? esc(T[pk].p || '—') : '…' : '—'}</span>`, s: fr ? `el más vendido de ${FRJ[pk][2]}, la franja con más venta (${pct(fr[pk].pv)})` : 'sin ventas por hora en los meses elegidos', g: fr ? MG.franjas(fr, T, pk) : ''},
+    {l: 'Top de proveedores', v: pct(P.top5), u: 'de las entradas', s: `cinco principales de ${nf(P.n)} proveedores`, g: tp.length ? MG.proveedores(tp) : ''}]);
+  // el producto más vendido de cada franja necesita el detalle por hora: se completa cuando llega
+  if (fr && !T) cargaVH().then(() => { const d = $('mg-frd'), v = $('kx-frv'); if (!d || S.sec !== 'res') return; const t = topFranjas(); d.innerHTML = mgFranjasD(t); if (v) v.textContent = t[pk].p || '—'; }).catch(() => { const d = $('mg-frd'); if (d) d.innerHTML = mgTx(166, 66, 'Sin detalle por hora', 'mg-u'); });
 }
 
 /* ---------- 2. Finanzas y rentabilidad ---------- */
@@ -4879,7 +4893,7 @@ const NM_NIVEL = {claro: {f: '#6FCF5F', c: '#8E8E93', i: '#A3A21F', a: '#8E1B1B'
 const NM_RAMA = {claro: ['#6E8B23', '#C29A22', '#3F7F6A', '#9AAE3A', '#7D7466', '#55707F'], oscuro: ['#A3C24A', '#E0B640', '#5FB39A', '#C9DB6A', '#B3A898', '#8FB0C2']};
 // análisis de datos: sección, título con que se ubica (o #id), pestaña que abre e indicadores que calcula o muestra
 const NM_AN = [
-  {n: 'Indicadores clave', s: 'res', ind: ['I5', 'I1', 'I2', 'I15', 'I13', 'I14', 'I17']},
+  {n: 'Indicadores clave', s: 'res', ind: ['I5', 'I1', 'I2', 'I15', 'I13', 'I14', 'I20']},
   {n: 'Evolución mensual', s: 'fin', q: 'Margen bruto mensual', ind: ['I5', 'I1', 'I2']},
   {n: 'Estado de resultados', s: 'fin', q: 'De dónde sale el costo', ind: ['I1', 'I2', 'I3', 'I6', 'I7']},
   {n: 'Estructura del gasto', s: 'fin', q: '#fz-k', ind: ['I4', 'I2']},
