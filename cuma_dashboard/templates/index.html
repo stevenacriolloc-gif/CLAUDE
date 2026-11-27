@@ -4099,7 +4099,12 @@ function secResumen(el) {
     xi('I14', {l: 'GMROI', u: 'al año'}),
     xi('I17', {l: 'Ventas por m²', v: usd(r.vmes / D.superficie_m2, 2), u: 'al mes', s: `${nf(D.superficie_m2, 2)} m² de local`}),
     xi('I17', {l: 'Ventas por empleado', v: usd(r.vmes / D.empleados), u: 'al mes', s: `${nf(D.empleados, 2)} empleados en promedio`})])
-    + FIG(0, 'Ventas, costo de ventas y gasto operativo por mes · USD', cv(320, id => { const k = K(), col = c => PER.map(q => dimA(c, ix(q))), ref = j => ix(PER[j]) < idx0;
+    + figMapa();
+}
+
+/* ---------- 2. Finanzas y rentabilidad ---------- */
+// ventas, costo de ventas y gasto operativo de cada mes
+const figMensual = () => FIG(0, 'Ventas, costo de ventas y gasto operativo por mes · USD', cv(320, id => { const k = K(), col = c => PER.map(q => dimA(c, ix(q))), ref = j => ix(PER[j]) < idx0;
         mk(id, {data: {labels: LBP(), datasets: [
           {type: 'line', label: 'Costo de ventas', data: SER(M.costo_ventas), borderColor: k.dk, backgroundColor: k.dk, borderWidth: 2, pointRadius: ptR(3.5), pointBackgroundColor: k.sf, pointBorderColor: k.dk, pointBorderWidth: 1.6, tension: .3, order: 0,
             segment: {borderDash: c => ref(c.p0DataIndex) || ref(c.p1DataIndex) ? [4, 4] : undefined}, fmt: v => usd(v)},
@@ -4107,11 +4112,7 @@ function secResumen(el) {
           {type: 'bar', label: 'Ventas', data: SER(M.ventas), backgroundColor: col(k.li), borderRadius: 4, borderSkipped: false, maxBarThickness: 44, order: 1, fmt: v => usd(v)}]},
         options: {...opt({yf: v => nf(v)}), onClick: (e, els) => { if (els.length) mesFoco(PER[els[0].index]); }, onHover: (e, els) => { e.native.target.style.cursor = els.length ? 'pointer' : 'default'; },
           scales: {x: {...axX, ticks: {maxRotation: 0}}, y: {...axY(v => nf(v)), beginAtZero: true}}}}); }),
-      {i: `Barras: ventas. Líneas: costo de ventas y gasto operativo. El costo de las transferencias es real desde ${lblL(D.inicio_costo_real)} de 2026; antes es referencial (tramo punteado). Toca un mes para enfocar el periodo en él.`})
-    + figMapa();
-}
-
-/* ---------- 2. Finanzas y rentabilidad ---------- */
+      {i: `Barras: ventas. Líneas: costo de ventas y gasto operativo. El costo de las transferencias es real desde ${lblL(D.inicio_costo_real)} de 2026; antes es referencial (tramo punteado). Toca un mes para enfocar el periodo en él.`});
 function secFinanzas(el) {
   const ii = SI(), r = calc(ii), res = r.V - r.CV - r.GO, gv = selGasto(), pre = ii.some(i => i < idx0), ini = lblL(D.inicio_costo_real) + ' de ' + D.inicio_costo_real.slice(0, 4);
   // estado de resultados, gasto por rubro e indicadores de cada mes
@@ -4137,6 +4138,7 @@ function secFinanzas(el) {
     {l: 'Costo de ventas', v: usd(r.CV), s: pre ? `referencial antes de ${ini}` : `costo real desde ${ini}`, i: `El costo de las transferencias del centro de acopio es real desde ${ini}; antes se valora con el precio de compra y es referencial. Margen bruto: ${pct(r.mb)}.`},
     xi('I3', {l: 'Resultado operativo', v: usd(res), u: '', s: `margen operativo ${V.I3.v} · ${usd(res / r.n)} al mes`}),
     xi('I6'), xi('I7')])
+    + figMensual()
     + grid2(FG.f6a(), FIG(0, 'Peso de los gastos sobre las ventas · ' + selL(), par([['Personal (socio y ocasional)', gv.personal, qv('I4', 'me')], ['Energía y mantenimiento', gv.ocup, PROF['Gasto de ocupación'].me * 100], ['Gasto total', r.pgo, qv('I2', 'me')]], 35)
         + `<div class="fgs">Rubros sin referencia del sector</div>` + hb([['Energía eléctrica', gv.energia, pct(gv.energia)], ['Comisiones y servicios bancarios', gv.comisiones, pct(gv.comisiones)]], 35),
       {tools: semB('I4') + semB('I2'), i: `Gasto de cada rubro sobre las ventas de ${selL()}, frente a la mediana ${deB()} donde existe el dato.`}))
@@ -4216,7 +4218,7 @@ const NM_SEC = {res: 'Resumen', fin: 'Finanzas', ven: 'Ventas', inv: 'Inventario
 // análisis de datos: sección, título con que se ubica (o #id), pestaña que abre e indicadores que calcula o muestra
 const NM_AN = [
   {n: 'Indicadores clave', s: 'res', ind: ['I5', 'I1', 'I2', 'I15', 'I13', 'I14', 'I17']},
-  {n: 'Evolución mensual', s: 'res', q: 'Ventas, costo de ventas y gasto', ind: ['I5', 'I1', 'I2']},
+  {n: 'Evolución mensual', s: 'fin', q: 'Ventas, costo de ventas y gasto', ind: ['I5', 'I1', 'I2']},
   {n: 'Estado de resultados', s: 'fin', q: 'Detalle financiero', vw: ['fin-t', 'r'], ind: ['I1', 'I2', 'I3', 'I6', 'I7']},
   {n: 'Estructura del gasto', s: 'fin', q: 'Estructura del gasto operativo', ind: ['I4', 'I2']},
   {n: 'Financiamiento', s: 'fin', q: 'Financiamiento y capital', ind: ['I9', 'I13']},
