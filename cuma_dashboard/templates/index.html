@@ -1157,10 +1157,6 @@ tr.done td.w{color:var(--muted);text-decoration:line-through}
 /* filas atenuadas: se apaga la barra y el texto conserva su contraste */
 .vx-r.dim{opacity:1}.vx-r.dim .trk{opacity:.4}.vx-r.dim .vx-n b,.vx-r.dim .vx-v,.vx-r.dim .vx-u{color:var(--ink)}
 /* ---------- secciones: menú de texto bajo la barra, página por tema y ficha lateral ---------- */
-.top{flex-wrap:wrap;row-gap:8px}
-.secnav{order:3;flex:1 1 100%;justify-content:safe center;gap:2px;margin:0 auto;padding:4px;border-radius:4px;background:var(--glass-flat);box-shadow:inset 0 0 0 1px var(--line);pointer-events:auto}
-.secnav button{padding:8px 15px;font-size:13px}
-@media (max-width:760px){.secnav{justify-content:flex-start;-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent)}.secnav button{padding:7px 12px;font-size:12.5px}}
 .secp{display:flex;flex-direction:column;gap:14px;min-width:0;container-type:inline-size}
 .secp .vx-f{top:var(--toph,64px)}
 /* tarjetas de indicador: número grande y semáforo a la vista */
@@ -1208,6 +1204,7 @@ button.kx-i:focus-visible,.kx-sb:focus-visible,.mini-b:focus-visible{outline:2px
 @container (max-width:860px){.drawer .ficha__g{grid-template-columns:minmax(0,1fr)}.drawer .ficha__d{position:static}}
 @media (max-width:640px){.kx-h{flex-wrap:wrap;row-gap:4px}.kx-l{white-space:normal;line-height:1.25}.kx-l i{display:none}}
 .mcsem-b i.ok{color:#10130a}
+.mi-n{display:inline-grid;place-items:center;width:14px;font-family:var(--mono);font-size:10.5px;color:var(--muted)}
 </style>
 <style id="base">
 /* base del navegador: preflight de Tailwind CSS 3.4.16 (licencia MIT), en el mismo orden en que lo aplicaba el CDN */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}
@@ -1219,12 +1216,12 @@ button.kx-i:focus-visible,.kx-sb:focus-visible,.mini-b:focus-visible{outline:2px
     <nav class="tbar" aria-label="Navegación">
       <a class="brand" href="#" id="brand" aria-label="ProDesarrollo · volver al tablero principal"><span class="brand__word">ProDesarrollo</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 20a10 10 0 0 0 10-10 25.9 25.9 0 0 0-1.04-7.28 1 1 0 0 0-1.76-.33C15.83 5.5 13 5.5 9.8 6.1A7 7 0 0 0 11 20"/><path d="M2 21a5 5 0 0 1 2.91-4.54C7.61 15.21 8.35 15.24 11 13" opacity=".55"/></svg></a>
       <button type="button" class="tbtn" id="b-fechas" data-act="fechas" aria-haspopup="dialog" aria-expanded="false" aria-label="Fechas"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path d="M10 21.75h4c3.77 0 5.66 0 6.83-1.17C22 19.41 22 17.52 22 13.75v-2c0-3.77 0-5.66-1.17-6.83C19.66 3.75 17.77 3.75 14 3.75h-4c-3.77 0-5.66 0-6.83 1.17C2 6.09 2 7.98 2 11.75v2c0 3.77 0 5.66 1.17 6.83 1.17 1.17 3.06 1.17 6.83 1.17Z"/><path stroke-linejoin="round" d="M17 12.75h.01M12 12.75h.01M7 12.75h.01M17 16.77h.01M12 16.77h.01M7 16.77h.01"/><path d="M2.04 8.75h19.93M7 3.78V2.25m10 1.53V2.25" opacity=".5"/></g></svg><span class="tip" id="b-fechas-tip">Fechas</span></button>
+      <button type="button" class="tbtn" id="b-sec" data-act="sec" aria-haspopup="dialog" aria-expanded="false" aria-label="Secciones: Resumen ejecutivo"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path d="M12 22c-4.71 0-7.07 0-8.54-1.46C2 19.07 2 16.71 2 12s0-7.07 1.46-8.54C4.93 2 7.29 2 12 2s7.07 0 8.54 1.46C22 4.93 22 7.29 22 12s0 7.07-1.46 8.54C19.07 22 16.71 22 12 22Z" opacity=".5"/><path d="M7 18V9m5 9V6m5 12v-5"/></g></svg><span class="tip" id="b-sec-tip">Resumen ejecutivo</span></button>
     </nav>
     <div class="tbar" role="toolbar" aria-label="Herramientas">
       <button type="button" class="tbtn" id="theme" data-act="tema" aria-haspopup="dialog" aria-expanded="false" aria-label="Apariencia"><svg class="ico ico--moon" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M12 22a10 10 0 0 0 10-10c0-.46-.69-.54-.93-.14A6.5 6.5 0 0 1 9 8.5a6.5 6.5 0 0 1 3.14-5.57c.4-.24.32-.93-.14-.93A10 10 0 0 0 2 12a10 10 0 0 0 10 10Z" opacity=".5"/><path d="M8.68 21.44A10 10 0 0 1 12 2c.46 0 .54.69.14.93A6.5 6.5 0 0 0 10.14 12.18"/></g></svg><svg class="ico ico--sun" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><path d="M12 2v1m0 18v1m10-10h-1M3 12H2m17.07-7.07-.39.39M5.32 18.68l-.39.39m14.14 0-.39-.39M5.32 5.32l-.39-.39" opacity=".5"/></g></svg><span class="tip" id="themetip">Luz</span></button>
       <button type="button" class="tbtn" id="b-ajustes" data-act="ajustes" aria-haspopup="dialog" aria-expanded="false" aria-label="Ajustes"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 2c.93 0 1.4 0 1.77.15.49.21.88.59 1.08 1.08.09.23.13.49.14.87.02.56.31 1.07.79 1.35.48.28 1.08.27 1.57.01.33-.18.58-.28.82-.31.52-.07 1.06.07 1.48.4.31.24.54.64 1.01 1.45.47.81.7 1.21.75 1.6.07.53-.07 1.06-.39 1.48-.15.2-.36.36-.68.56-.47.3-.78.8-.78 1.36s.31 1.06.78 1.36c.32.2.53.36.68.56.32.42.46.95.39 1.48-.05.39-.28.79-.75 1.6-.47.81-.7 1.21-1.01 1.45-.42.33-.96.47-1.48.4-.24-.03-.49-.13-.82-.31-.5-.26-1.09-.27-1.57.01-.48.28-.77.79-.79 1.35-.01.38-.05.64-.14.87-.2.49-.59.87-1.08 1.08-.37.15-.84.15-1.77.15s-1.4 0-1.76-.15c-.49-.21-.88-.59-1.09-1.08-.09-.23-.13-.49-.14-.87-.02-.56-.31-1.07-.79-1.35-.48-.28-1.07-.27-1.57-.01-.33.18-.58.28-.82.31-.52.07-1.05-.07-1.48-.4-.31-.24-.54-.64-1.01-1.45-.47-.81-.7-1.21-.75-1.6-.07-.53.07-1.06.4-1.48.14-.2.35-.36.67-.56.47-.3.78-.8.78-1.36s-.31-1.06-.78-1.36c-.32-.2-.53-.36-.67-.56-.33-.42-.47-.95-.4-1.48.05-.39.28-.79.75-1.6.47-.81.7-1.21 1.01-1.45.43-.33.96-.47 1.48-.4.24.03.49.13.82.31.5.26 1.09.27 1.57-.01.48-.28.77-.79.79-1.35.01-.38.05-.64.14-.87.21-.49.6-.87 1.09-1.08C10.6 2 11.07 2 12 2Z" opacity=".5"/></g></svg><span class="tip" id="b-ajustes-tip">Ajustes</span></button>
     </div>
-    <nav class="gb secnav" id="secnav" aria-label="Secciones del tablero"></nav>
   </header>
 
   <main class="main" id="main">
@@ -1699,7 +1696,12 @@ function problemas() {
   return {cc, n: (cc.length ? 1 : 0) + otros.length, ind: TABLERO.filter(id => V[id].st === 'bad').length};
 }
 /* ---------- secciones: menú superior, una página por tema y la ficha en un panel lateral ---------- */
-function secNav() { menu($('secnav'), SECS, S.sec, goSec); }
+// botón de secciones: muestra la sección actual al pasar el cursor y despliega las siete
+function secNav() { $('b-sec-tip').textContent = SECN[S.sec]; $('b-sec').setAttribute('aria-label', 'Secciones: ' + SECN[S.sec]); }
+function openSec() {
+  openPop($('b-sec'), `<div class="pop__head">Secciones</div>${SECS.map(([v, n], j) => `<button type="button" class="menu__item" role="menuitemradio" aria-checked="${v === S.sec}" data-v="${v}"><span class="mi-n">${j + 1}</span>${n}${v === S.sec ? CK : ''}</button>`).join('')}`,
+    el => el.querySelectorAll('[data-v]').forEach(b => b.onclick = () => { closePop(true); goSec(b.dataset.v); }));
+}
 function renderSeccion() {
   const el = $('secp');
   $('sec-h').textContent = 'ProDesarrollo · ' + SECN[S.sec];
@@ -1710,7 +1712,7 @@ function renderSeccion() {
 function goSec(k) {
   if (!SECN[k]) k = 'res';
   closePop(true);
-  if (k !== S.sec) { S.sec = k; syncHash(); press($('secnav'), k); swap($('secp'), renderSeccion); }
+  if (k !== S.sec) { S.sec = k; syncHash(); secNav(); swap($('secp'), renderSeccion); }
   scrollTo({top: 0, behavior: reduce() ? 'auto' : 'smooth'});
 }
 // tocar una tarjeta de indicador o el semáforo de una figura abre la ficha
@@ -4443,7 +4445,7 @@ function setInicio(k) {
 $('brand').onclick = e => { e.preventDefault(); if (DRW.open) cierraFicha(); goSec('res'); };
 document.querySelector('.top').addEventListener('click', e => {
   const b = e.target.closest('[data-act]'); if (!b) return;
-  ({fechas: openMes, tema: cycleTheme, buscar: openFinder, ajustes: openAjustes})[b.dataset.act]?.();
+  ({fechas: openMes, sec: openSec, tema: cycleTheme, buscar: openFinder, ajustes: openAjustes})[b.dataset.act]?.();
 });
 addEventListener('keydown', e => {
   const typing = e.target.closest('input, textarea, select, [contenteditable="true"]');
