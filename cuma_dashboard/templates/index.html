@@ -4316,8 +4316,8 @@ function nmMontar() {
   const raiz = $('nm'); if (!raiz || raiz.dataset.on) return; raiz.dataset.on = 1;
   const R = nmRed(), cv = raiz.querySelector('canvas'), ctx = cv.getContext('2d'), pn = raiz.querySelector('.nm-p'), chips = raiz.querySelector('.nm-it'), nav = raiz.querySelector('.nm-capas');
   const RM = reduce(), tmp = document.createElement('canvas').getContext('2d');
-  let W = 0, H = 0, dpr = 1, yaw = 0, pitch = 0, tYaw = 0, tPitch = 0, drag = false, moved = false, lx = 0, ly = 0, t0 = 0, sway = RM ? 0 : 1;
-  let hover = null, sel = null, capa = null, parts = [], C = {}, tick = 0, vis = true, raf = 0, pr = 0, tPr = 0;
+  let W = 0, H = 0, dpr = 1, yaw = 0, pitch = 0, tYaw = 0, tPitch = 0, drag = false, moved = false, lx = 0, ly = 0;
+  let hover = null, sel = null, capa = null, C = {}, vis = true, raf = 0, pr = 0, tPr = 0;
   const pc = pn.querySelector('.nm-pc');
   // colores del tema, también cuando el tema cambia
   const rgb = c => { tmp.fillStyle = '#000'; tmp.fillStyle = c || '#888'; const v = tmp.fillStyle; if (v[0] === '#') { const x = parseInt(v.slice(1), 16); return [x >> 16, (x >> 8) & 255, x & 255]; } const m = v.match(/[\d.]+/g) || [136, 136, 136]; return m.slice(0, 3).map(Number); };
@@ -4330,20 +4330,13 @@ function nmMontar() {
   const angosto = () => W < 640, ew = () => W - pr, regla = () => ew() >= 1000;
   const cabe = {i: 600, a: 720, s: 620};   // ancho desde el que caben los nombres de cada capa
   function proj(n) {
-    const a = angosto() && n.uA != null ? n.uA : n.u, b = n.l + (n.dl || 0), z = n.z, y = yaw + Math.sin(t0 * .0004) * .22 * sway, p = pitch;
+    const a = angosto() && n.uA != null ? n.uA : n.u, b = n.l + (n.dl || 0), z = n.z, y = yaw, p = pitch;
     const x1 = a * Math.cos(y) - z * Math.sin(y), z1 = a * Math.sin(y) + z * Math.cos(y), y2 = b * Math.cos(p) - z1 * Math.sin(p), z2 = b * Math.sin(p) + z1 * Math.cos(p), s = 3 / (3 + z2);
     const ml = regla() ? 150 : angosto() ? 26 : 34, mr = (regla() ? 70 : angosto() ? 26 : 34) + pr, my = angosto() ? 40 : 46, cx = (ml + W - mr) / 2, hw = (W - ml - mr) / 2;
     return {x: cx + x1 * s * hw * .92, y: H / 2 - 8 + y2 * s * (H / 2 - my) * .92, s, z: z2};
   }
-  const cpt = (a, b) => { const dy = b.y - a.y; return [a.x, a.y + dy * .45, b.x, b.y - dy * .45]; };
-  const bez = (a, b, t) => { const c = cpt(a, b), u = 1 - t, k0 = u * u * u, k1 = 3 * u * u * t, k2 = 3 * u * t * t, k3 = t * t * t; return {x: k0 * a.x + k1 * c[0] + k2 * c[2] + k3 * b.x, y: k0 * a.y + k1 * c[1] + k2 * c[3] + k3 * b.y}; };
-  const curva = (a, b) => { const c = cpt(a, b); ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.bezierCurveTo(c[0], c[1], c[2], c[3], b.x, b.y); ctx.stroke(); };
+  const linea = (a, b) => { ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); };
   const pil = (x, y, w, h) => { ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(x, y, w, h, h / 2); else ctx.rect(x, y, w, h); ctx.fill(); };
-  function nace() {
-    if (sel && Math.random() < .6) { const ae = R.E.filter(e => e[0] === sel || e[1] === sel); if (ae.length) { parts.push({e: ae[Math.random() * ae.length | 0], t: 0, v: .006 + Math.random() * .005, fin: true}); return; } }
-    const src = R.N.filter(n => n.layer < 2 && n.oe.length), n = src[Math.random() * src.length | 0];
-    parts.push({e: n.oe[Math.random() * n.oe.length | 0], t: 0, v: .005 + Math.random() * .005});
-  }
   // qué se ilumina: el elemento elegido y sus vecinos, o toda la capa elegida
   function luces() { const nb = new Set(), act = new Set(); if (sel) { nb.add(sel); R.E.forEach(e => { if (e[0] === sel || e[1] === sel) { act.add(e); nb.add(e[0]); nb.add(e[1]); } }); } return {nb, act}; }
   function etiqueta(n, on, lit) {
@@ -4353,12 +4346,14 @@ function nmMontar() {
     if (ang) return '';
     return ew() >= cabe[t] || (lit && sel) ? n.c : '';
   }
-  function frame(ts) {
+  function frame() {
     raf = 0;
     if (!cv.isConnected) return;
     if (!vis || document.hidden) return;
-    t0 = ts || 0; yaw += (tYaw - yaw) * .08; pitch += (tPitch - pitch) * .08; pr = RM ? tPr : pr + (tPr - pr) * .12;
-    if (++tick % 45 === 0) leeCss();
+    // quieto: solo se redibuja cuando algo cambia (girar con el dedo, elegir, abrir la ficha)
+    yaw += (tYaw - yaw) * .2; pitch += (tPitch - pitch) * .2; pr = RM ? tPr : pr + (tPr - pr) * .18;
+    const sigue = Math.abs(tYaw - yaw) > 1e-4 || Math.abs(tPitch - pitch) > 1e-4 || Math.abs(tPr - pr) > .3;
+    if (!sigue) { yaw = tYaw; pitch = tPitch; pr = tPr; }
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
     R.N.forEach(n => { n.p = proj(n); });
     const {nb, act} = luces(), AC = '--accent';
@@ -4374,16 +4369,8 @@ function nmMontar() {
     }
     // conexiones
     ctx.lineCap = 'round'; ctx.lineWidth = 1; ctx.strokeStyle = col('--muted', sel ? .08 : .15);
-    R.E.forEach(e => { if (!act.has(e)) curva(e[0].p, e[1].p); });
-    ctx.lineWidth = 1.3; ctx.strokeStyle = col(AC, .75); act.forEach(e => curva(e[0].p, e[1].p));
-    // señales
-    if (!RM) {
-      if (parts.length < 70 && Math.random() < .3) nace();
-      parts = parts.filter(p => { p.t += p.v; if (p.t >= 1) { const b = p.e[1]; if (!p.fin && b.oe.length) { p.e = b.oe[Math.random() * b.oe.length | 0]; p.t = 0; return true; } return false; } return true; });
-      parts.forEach(p => { const on = act.has(p.e), a = p.e[0].p, b = p.e[1].p, q = bez(a, b, p.t), q2 = bez(a, b, Math.max(0, p.t - .035)), c = on ? '--c2' : '--muted', k = on ? 1.3 : 1;
-        ctx.fillStyle = col(c, .28); ctx.beginPath(); ctx.arc(q2.x, q2.y, 1.6 * k, 0, 6.283); ctx.fill();
-        ctx.fillStyle = col(c, on ? .95 : .75); ctx.beginPath(); ctx.arc(q.x, q.y, 2.2 * k, 0, 6.283); ctx.fill(); });
-    }
+    R.E.forEach(e => { if (!act.has(e)) linea(e[0].p, e[1].p); });
+    ctx.lineWidth = 1.3; ctx.strokeStyle = col(AC, .75); act.forEach(e => linea(e[0].p, e[1].p));
     const orden = R.N.slice().sort((a, b) => b.p.z - a.p.z), fs = angosto() ? 10.5 : 11, F = css('--font');
     // borra las líneas que pasan detrás de cada rótulo
     ctx.save(); ctx.globalCompositeOperation = 'destination-out'; ctx.fillStyle = '#000'; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
@@ -4393,7 +4380,7 @@ function nmMontar() {
     orden.forEach(n => {
       const p = n.p, r = radio(n) * p.s, on = n === sel || n === hover, lit = nb.has(n), deCapa = !sel && !angosto() && capa && NM_CAPAS[n.layer][0] === capa, bc = base(n), apagado = sel && !lit && !on;
       ctx.globalAlpha = apagado ? .35 : 1;
-      if (n === sel) { ctx.fillStyle = col(bc, .16); ctx.beginPath(); ctx.arc(p.x, p.y, r + 9 + (RM ? 0 : Math.sin(t0 * .004) * 1.4), 0, 6.283); ctx.fill(); }
+      if (n === sel) { ctx.fillStyle = col(bc, .16); ctx.beginPath(); ctx.arc(p.x, p.y, r + 9, 0, 6.283); ctx.fill(); }
       if (on || (lit && sel) || deCapa) { ctx.lineWidth = 1.2; ctx.strokeStyle = col(on ? '--ink-strong' : AC, on ? .8 : deCapa ? .35 : .6); ctx.beginPath(); ctx.arc(p.x, p.y, r + 4, 0, 6.283); ctx.stroke(); }
       ctx.fillStyle = `rgb(${C.bg})`; ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, 6.283); ctx.fill();
       if (nmEstado(n) === 'sd') { ctx.setLineDash([2, 2]); ctx.lineWidth = 1.2; ctx.strokeStyle = col('--muted', .9); ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, 6.283); ctx.stroke(); ctx.setLineDash([]); }
@@ -4402,7 +4389,7 @@ function nmMontar() {
       if (tx) { ctx.font = (on ? '600 ' : '500 ') + fs + 'px ' + F; ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillStyle = on || lit ? col('--ink-strong', 1) : col('--ink', .85); ctx.fillText(tx, tx0(p.x, ctx.measureText(tx).width), p.y + r + 8); }
       ctx.globalAlpha = 1;
     });
-    raf = requestAnimationFrame(frame);
+    if (sigue) raf = requestAnimationFrame(frame);
   }
   const arranca = () => { if (!raf && vis && cv.isConnected) raf = requestAnimationFrame(frame); };
   function cerca(e) { const r = cv.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top; let best = null, bd = 1e9; R.N.forEach(n => { if (!n.p) return; const d = Math.hypot(n.p.x - x, n.p.y - y); if (d < bd && d < 18) { bd = d; best = n; } }); return best; }
@@ -4445,6 +4432,8 @@ function nmMontar() {
   const ro = new ResizeObserver(() => { if (!cv.isConnected) { ro.disconnect(); io.disconnect(); return; } medir(); arranca(); }); ro.observe(cv);
   const vc = () => { if (!cv.isConnected) { document.removeEventListener('visibilitychange', vc); io.disconnect(); ro.disconnect(); return; } arranca(); };
   document.addEventListener('visibilitychange', vc);
+  const mo = new MutationObserver(() => { if (!cv.isConnected) { mo.disconnect(); return; } leeCss(); arranca(); });
+  mo.observe(document.documentElement, {attributes: true, attributeFilter: ['data-theme', 'class', 'style']});
   medir(); arranca();
 }
 function figMapa() {
