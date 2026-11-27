@@ -1420,6 +1420,19 @@ button.kx-i:focus-visible,.kx-sb:focus-visible,.mini-b:focus-visible{outline:2px
 /* botones de las vistas: junto al título; en el teléfono, en su propia fila a lo ancho de la tarjeta */
 .fg>figcaption>.gb.vw{flex:none;max-width:100%}
 @media (max-width:640px){.fg>figcaption>.gb.vw{order:3;flex:1 1 100%}.fg>figcaption>.gb.vw button{flex:1 1 auto;padding:5px 6px}}
+/* listas de productos y categorías: el peso de cada fila en un anillo pequeño, sin barras largas */
+.vx-r.vx-ra{grid-template-columns:22px minmax(0,1fr) auto;row-gap:0}
+.vx-r.vx-ra.vx-rc{grid-template-columns:22px minmax(0,1fr) 5.4em 3.8em}
+.vx-an{display:block;width:22px;height:22px;overflow:visible}
+.vx-an-t{fill:none;stroke:var(--chart);stroke-opacity:.18;stroke-width:4}
+.vx-an-a{fill:none;stroke:var(--chart);stroke-width:4;stroke-linecap:round;stroke-dasharray:var(--p) 100;animation:anIn 1.1s var(--spring) both;animation-delay:calc(var(--k)*50ms)}
+.vx-an-a.on{stroke:var(--accent)}
+.vx-r.dim .vx-an{opacity:.4}
+@media (prefers-reduced-motion:reduce){.vx-an-a{animation:none}}
+/* anillos con filas que filtran */
+.an-bt{appearance:none;width:100%;border:0;background:transparent;font:inherit;color:inherit;text-align:left;cursor:pointer}
+.an-bt:hover,.an-bt.on{background:var(--glass-flat)}
+.an-bt:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 </style>
 <style id="base">
 /* base del navegador: preflight de Tailwind CSS 3.4.16 (licencia MIT), en el mismo orden en que lo aplicaba el CDN */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}
@@ -2559,17 +2572,17 @@ const FG = {
   },
   // Fig. 10 · origen de la mercadería vendida
   f10a() {
-    const cols = ['var(--c1)', 'var(--chart-2)', 'var(--c2)', 'var(--c4)'];
-    return FIG(10, 'Origen de la mercadería vendida', hb(selOrigen().map((o, k) => [o.origen, o.pct, `${pct(o.pct)} · ${nf(o.n)} productos`, cols[k]]), 60),
-      {cls: 'mid', i: `Ventas de ${selL()} según cómo ingresó cada producto en todo el periodo de datos. La venta sin entrada es sobre todo granel que se fracciona con otro código.`});
+    const cols = ['var(--c1)', 'var(--chart-2)', 'var(--c2)', 'var(--c4)'], O = selOrigen(), con = O.slice(0, 3).reduce((a, o) => a + o.pct, 0);
+    return FIG(10, 'Origen de la mercadería vendida', anillos(O.map((o, k) => ({n: o.origen, f: o.pct / 100, t: pct(o.pct), d: nf(o.n) + ' productos', c: cols[k]})), [pct(con), 'de lo vendido tiene una entrada registrada']),
+      {cls: 'mid', i: `Ventas de ${selL()} según cómo ingresó cada producto en todo el periodo de datos; cada anillo completo es el total vendido. La venta sin entrada es sobre todo granel que se fracciona con otro código.`});
   },
   f10b(h = 250) {
     const OM = D.origen_mes, on = Object.keys(OM);
     return FIG(10, 'Origen de lo vendido, mes a mes · %', cv(h, id => { const k = K(), col = [k.ol, k.gr, k.li, k.al];
-      mk(id, {type: 'bar', data: {labels: LBP(), datasets: on.map((n, i) => ({label: n, data: SER(OM[n]), backgroundColor: PER.map(q => dimA(col[i], ix(q))), borderRadius: R4(i === on.length - 1, i === 0), borderSkipped: false, maxBarThickness: 34, stack: 's', fmt: v => pct(v)}))},
-        options: {...opt(), scales: {x: {...axX, stacked: true}, y: {...axY(v => v + '\u00a0%'), stacked: true, max: 100, beginAtZero: true}}}}); }));
+      mk(id, {type: 'line', data: {labels: LBP(), datasets: on.map((n, i) => ({label: n, data: SER(OM[n]), borderColor: col[i], backgroundColor: hexA(col[i], .34), fill: i ? '-1' : 'origin', stack: 's', borderWidth: 2, tension: .35,
+          pointRadius: ptR(3), pointBackgroundColor: PER.map(q => dimA(col[i], ix(q))), pointBorderColor: k.sf, pointBorderWidth: 1.2, fmt: v => pct(v)}))},
+        options: {...opt(), scales: {x: {...axX, ticks: {maxRotation: 0}}, y: {...axY(v => v + ' %'), stacked: true, max: 100, beginAtZero: true}}}}); }));
   },
-  // Fig. 11 · diferencias de conteo y pérdida neta
   f11a(h = 260) {
     const MM = D.merma_mes;
     return FIG(11, 'Diferencias de conteo por mes · USD', cv(h, id => { const k = K(); mk(id, {type: 'bar', data: {labels: LBP(), datasets: [
@@ -2645,13 +2658,13 @@ const FG = {
   // Anexo C · rastreo de la diferencia de inventario
   r1(h = 280) {
     const R_ = D.fig.r_mes, L = D.meses.map(lbl), pt = a => D.meses.map((_, j) => { const q = R_.idx.indexOf(j); return q < 0 ? null : a[q]; });
-    return FIG(15, 'Movimientos valorados por mes y existencia en cada conteo · USD', cv(h, id => { const k = K(); mk(id, {data: {labels: L, datasets: [
-        {type: 'line', label: 'Inventario según archivos', data: R_.inv, borderColor: k.ol, backgroundColor: k.ol, borderWidth: 2.2, pointRadius: 3.5, pointBackgroundColor: k.ol, tension: .25, order: 0, fmt: v => usd(v)},
-        {type: 'line', label: 'Existencia según el sistema', data: pt(R_.sis), showLine: false, pointRadius: 7, pointBackgroundColor: k.dk, pointBorderColor: k.sf, pointBorderWidth: 1.5, order: 0, fmt: v => usd(v)},
-        {type: 'line', label: 'Existencia contada', data: pt(R_.cont), showLine: false, pointStyle: 'rect', pointRadius: 6.5, pointBackgroundColor: k.sf, pointBorderColor: k.dk, pointBorderWidth: 1.8, order: 0, fmt: v => usd(v)},
-        {type: 'bar', label: 'Entradas', data: R_.ent, backgroundColor: k.li, borderRadius: 4, borderSkipped: false, maxBarThickness: 22, order: 1, fmt: v => usd(v)},
-        {type: 'bar', label: 'Costo de lo vendido', data: R_.sal, backgroundColor: k.gr, borderRadius: 4, borderSkipped: false, maxBarThickness: 22, order: 1, fmt: v => usd(v)}]},
-      options: opt({yf: v => nf(v)})}); }),
+    return FIG(15, 'Movimientos valorados por mes y existencia en cada conteo · USD', cv(h, id => { const k = K(); mk(id, {type: 'line', data: {labels: L, datasets: [
+        {label: 'Inventario según archivos', data: R_.inv, borderColor: k.ol, backgroundColor: k.ol, borderWidth: 2.4, pointRadius: 3.5, pointBackgroundColor: k.ol, tension: .25, order: 0, fmt: v => usd(v)},
+        {label: 'Existencia según el sistema', data: pt(R_.sis), showLine: false, pointRadius: 7, pointBackgroundColor: k.dk, pointBorderColor: k.sf, pointBorderWidth: 1.5, order: 0, fmt: v => usd(v)},
+        {label: 'Existencia contada', data: pt(R_.cont), showLine: false, pointStyle: 'rect', pointRadius: 6.5, pointBackgroundColor: k.sf, pointBorderColor: k.dk, pointBorderWidth: 1.8, order: 0, fmt: v => usd(v)},
+        {label: 'Entradas', data: R_.ent, borderColor: k.li, backgroundColor: sombra(k.li, .36), fill: 'origin', borderWidth: 2, tension: .35, pointRadius: 2.5, pointBackgroundColor: k.li, order: 1, fmt: v => usd(v)},
+        {label: 'Costo de lo vendido', data: R_.sal, borderColor: k.gr, backgroundColor: sombra(k.gr, .4), fill: 'origin', borderWidth: 2, tension: .35, pointRadius: 2.5, pointBackgroundColor: k.gr, order: 1, fmt: v => usd(v)}]},
+      options: {...opt({yf: v => nf(v)}), plugins: {...opt().plugins, legend: {...opt().plugins.legend, labels: {...opt().plugins.legend.labels, sort: (x, y) => x.datasetIndex - y.datasetIndex}}}}}); }),
       {i: 'Conteos completos: 9 de enero, 30 de abril y 30 de septiembre. La distancia entre el punto negro y el cuadrado es la diferencia entre sistema y conteo.'});
   },
   r2(h = 270) {
@@ -2665,19 +2678,20 @@ const FG = {
   },
   r3(h = 250) {
     const C = D.fig.r_conteos, fl = s => { const [y, m, d] = s.split('-'); return `${+d} ${MES[+m - 1].toLowerCase()}`; };
-    return FIG(17, 'Diferencia entre sistema y archivos en cada fecha de conteo · USD', cv(h, id => { const k = K(); mk(id, {type: 'bar', data: {labels: C.map(c => fl(c.d)), datasets: [
-        {label: 'Diferencia', data: C.map(c => c.dif), backgroundColor: C.map(c => c.lin > 1000 ? k.ol : k.li), borderRadius: 3, borderSkipped: false, maxBarThickness: 16, fmt: v => usd(v), tipL: j => `${nf(C[j].lin)} líneas`, vlab: (v, j) => C[j].lin > 1000 ? (v > 0 ? '+' : '−') + nf(Math.abs(v)) : ''}]},
-      options: opt({legend: false, yf: v => nf(v), xs: 9})}); }),
-      {i: 'Barras oscuras: conteos completos (más de mil líneas). Positivo: el sistema registraba más mercadería que los archivos.'});
+    return FIG(17, 'Diferencia entre sistema y archivos en cada fecha de conteo · USD', cv(h, id => { const k = K(); mk(id, {type: 'line', data: {labels: C.map(c => fl(c.d)), datasets: [
+        {label: 'Diferencia', data: C.map(c => c.dif), borderColor: k.mu, borderWidth: 1.6, tension: .25, fill: {value: 0, above: hexA(k.ol, .26), below: hexA(k.al, .26)}, backgroundColor: k.mu,
+          pointRadius: C.map(c => c.lin > 1000 ? 6 : 3), pointBackgroundColor: C.map(c => c.lin > 1000 ? k.ol : k.li), pointBorderColor: k.sf, pointBorderWidth: 1.2,
+          fmt: v => usd(v), tipL: j => `${nf(C[j].lin)} líneas`, vlab: (v, j) => C[j].lin > 1000 ? (v > 0 ? '+' : '−') + nf(Math.abs(v)) : ''}]},
+      options: opt({legend: false, yf: v => nf(v), xs: 9, hl: {lines: [{v: 0, c: css('--line'), dash: [1, 0], w: 1}]}})}); }),
+      {i: 'Puntos grandes y oscuros: conteos completos (más de mil líneas). Positivo: el sistema registraba más mercadería que los archivos.'});
   },
   r5() {
     return FIG(19, 'Kits y reempaques: el insumo y sus derivados se compensan · USD', kitsSVG() + leg([['var(--chart-2)', 'Insumo que sale solo en el sistema'], ['var(--chart)', 'Derivados vendidos sin entrada'], ['var(--ink-strong)', 'Efecto neto']]));
   },
-  rc(h = 260) {
-    const C = D.fig.r_comp;
-    return FIG(0, 'Composición de la diferencia de USD ' + nf(C.reduce((a, x) => a + x[1], 0), 2), cv(h, id => { const k = K(); mk(id, {type: 'bar', data: {labels: C.map(c => wrap(c[0], 26)), datasets: [
-        {label: 'Aporte', data: C.map(c => c[1]), backgroundColor: C.map(c => c[1] >= 0 ? k.ol : k.lb), borderRadius: 4, borderSkipped: false, maxBarThickness: 22, fmt: v => usd(v, 2), vlab: v => (v >= 0 ? '+' : '−') + nf(Math.abs(v), 0)}]},
-      options: {...opt({hz: true, legend: false, mode: 'nearest', pr: 46}), scales: {x: {...axY(v => nf(v)), beginAtZero: true}, y: {...axX, ticks: {font: {size: 10.5}}}}}}); }));
+  rc() {
+    const C = D.fig.r_comp, tot = C.reduce((a, x) => a + x[1], 0), cols = ['var(--c1)', 'var(--c2)', 'var(--c3)', 'var(--c4)', 'var(--c5)', 'var(--chart-2)', 'var(--c6)'];
+    return FIG(0, 'Composición de la diferencia de USD ' + nf(tot, 2), anillos(C.map(([n, v], j) => ({n, f: tot ? v / tot : 0, t: (v < 0 ? '−' : '') + pct(Math.abs(v / tot * 100)), d: (v < 0 ? 'resta ' : '') + usd(Math.abs(v), 2), c: cols[j % cols.length]})), null),
+      {i: 'Aporte de cada causa a la diferencia entre el conteo y los archivos; cada anillo completo es la diferencia total. El aporte que resta gira en sentido contrario.'});
   }
 };
 
@@ -3495,11 +3509,11 @@ function vxHeatEv(el) {
 // compacto: una línea por fila (nombre, barra, monto y porcentaje)
 function vxLista(el, filas, on, attr, vacio, compacto) {
   if (!filas.length) { el.innerHTML = `<div class="empty-st">${vacio}</div>`; return; }
-  const max = Math.max(...filas.map(x => x.v), 1e-9);
-  const barra = (x, k) => `<span class="trk"><i style="--c:${x.id === on ? 'var(--accent)' : 'var(--chart)'};--w:${clamp(x.v / max, 0, 1)};--k:${k}"></i></span>`;
-  el.innerHTML = `<div class="vx-l">${filas.map((x, k) => `<button type="button" class="vx-r${compacto ? ' vx-rc' : ''}${x.id === on ? ' on' : on != null ? ' dim' : ''}" data-${attr}="${x.id}" aria-pressed="${x.id === on}">${compacto
-    ? `<span class="vx-n"><b>${esc(x.n)}</b></span>${barra(x, k)}<span class="vx-u">${usd(x.v)}</span><span class="vx-pc">${pct(x.sh)}</span>`
-    : `<span class="vx-n"><b>${esc(x.n)}</b>${x.s ? `<small>${esc(x.s)}</small>` : ''}</span><span class="vx-v">${usd(x.v)}<small>${pct(x.sh)}</small></span>${barra(x, k)}`}</button>`).join('')}</div>`;
+  // el peso de cada fila en un anillo pequeño: la vuelta completa es el total de la selección
+  const aro = (x, k) => { const p = clamp(x.sh || 0, 0, 100); return `<svg class="vx-an" viewBox="0 0 24 24" aria-hidden="true"><circle class="vx-an-t" cx="12" cy="12" r="9"/>${p > 0 ? `<circle class="vx-an-a${x.id === on ? ' on' : ''}" cx="12" cy="12" r="9" pathLength="100" transform="rotate(-90 12 12)" style="--p:${p.toFixed(2)};--k:${k}"/>` : ''}</svg>`; };
+  el.innerHTML = `<div class="vx-l">${filas.map((x, k) => `<button type="button" class="vx-r vx-ra${compacto ? ' vx-rc' : ''}${x.id === on ? ' on' : on != null ? ' dim' : ''}" data-${attr}="${x.id}" aria-pressed="${x.id === on}">${aro(x, k)}${compacto
+    ? `<span class="vx-n"><b>${esc(x.n)}</b></span><span class="vx-u">${usd(x.v)}</span><span class="vx-pc">${pct(x.sh)}</span>`
+    : `<span class="vx-n"><b>${esc(x.n)}</b>${x.s ? `<small>${esc(x.s)}</small>` : ''}</span><span class="vx-v">${usd(x.v)}<small>${pct(x.sh)}</small></span>`}</button>`).join('')}</div>`;
 }
 function vxProd(R) {
   const el = $('vx-p'); if (!el) return;
@@ -3523,24 +3537,24 @@ function vxCat(R) {
   el.querySelectorAll('[data-c]').forEach(b => b.onclick = () => vxSet('cat', +b.dataset.c));
 }
 
-// meses: transacciones (barras) y ticket (línea); tocar un mes enfoca el periodo
+// meses: transacciones (línea con sombra) y ticket (línea); tocar un mes enfoca el periodo
 function vxMes(R) {
   const el = $('vx-m'); if (!el) return;
   const k = K(), f = S.vx; let bars, line, need = null;
   if (!R) { const rP = calc(SI()); need = rP.pe ? rP.pe / rP.ticket : null; bars = SER(M.transacciones); line = PER.map(q => calc([ix(q)]).ticket); }
   else { bars = PER.map(q => R.mN[ix(q)] || null); line = PER.map(q => { const m = ix(q); return R.mN[m] ? R.mV[m] / 100 / R.mN[m] : null; }); }
   $('vx-tm').textContent = R ? 'Transacciones y ticket · ' + vxTxt() : 'Transacciones y ticket promedio (I11)';
-  const col = PER.map(q => dimA(R ? k.li : k.ol, ix(q))), hl = need ? {lines: [{v: need, c: k.ac, t: `punto de equilibrio: ${nf(need)} al mes`}]} : null;
+  const c0 = R ? k.li : k.ol, col = PER.map(q => dimA(c0, ix(q))), hl = need ? {lines: [{v: need, c: k.ac, t: `punto de equilibrio: ${nf(need)} al mes`}]} : null;
   const ch = VXC.m;
   if (ch && ch.canvas && ch.canvas.isConnected) {
-    ch.data.labels = LBP(); ch.data.datasets[0].data = line; ch.data.datasets[1].data = bars; ch.data.datasets[1].backgroundColor = col;
+    const d = ch.data.datasets; ch.data.labels = LBP(); d[0].data = line; d[1].data = bars; d[1].borderColor = c0; d[1].backgroundColor = sombra(c0, .36); d[1].pointBackgroundColor = col;
     ch.options.plugins.hl = hl; ch.options.scales.y.suggestedMax = need ? need * 1.08 : undefined;
     Object.assign(ch.options.scales.y2, R ? {suggestedMin: undefined, suggestedMax: undefined} : {suggestedMin: 6, suggestedMax: 11});
     ch.update(); return;
   }
-  el.innerHTML = cv(300, id => { VXC.m = mk(id, {data: {labels: LBP(), datasets: [
-      {type: 'line', label: 'Ticket promedio', data: line, yAxisID: 'y2', borderColor: k.lb, backgroundColor: k.lb, borderWidth: 2.4, pointRadius: 4.5, pointBackgroundColor: k.lb, pointBorderColor: k.sf, pointBorderWidth: 1.5, tension: .3, order: 0, spanGaps: true, fmt: v => usd(v, 2)},
-      {type: 'bar', label: 'Transacciones', data: bars, backgroundColor: col, borderRadius: 5, borderSkipped: false, maxBarThickness: 34, order: 1, fmt: v => nf(v)}]},
+  el.innerHTML = cv(300, id => { VXC.m = mk(id, {type: 'line', data: {labels: LBP(), datasets: [
+      {label: 'Ticket promedio', data: line, yAxisID: 'y2', borderColor: k.lb, backgroundColor: k.lb, borderWidth: 2.4, pointRadius: 4.5, pointBackgroundColor: k.lb, pointBorderColor: k.sf, pointBorderWidth: 1.5, tension: .3, spanGaps: true, fmt: v => usd(v, 2)},
+      {label: 'Transacciones', data: bars, borderColor: c0, backgroundColor: sombra(c0, .36), fill: 'origin', borderWidth: 2.4, pointRadius: ptR(4), pointBackgroundColor: col, pointBorderColor: k.sf, pointBorderWidth: 1.5, tension: .35, spanGaps: true, fmt: v => nf(v)}]},
     options: {...opt({hl}), animation: {duration: 450, easing: 'easeOutQuart'},
       onClick: (e, els) => { if (els.length) mesFoco(PER[els[0].index]); }, onHover: (e, els) => { e.native.target.style.cursor = els.length ? 'pointer' : 'default'; },
       scales: {x: {...axX, ticks: {maxRotation: 0}}, y: {...axY(v => nf(v)), beginAtZero: true, suggestedMax: need ? need * 1.08 : undefined},
@@ -3548,18 +3562,20 @@ function vxMes(R) {
   flush(el);
 }
 
-// días de la semana: venta promedio diaria; tocar un día filtra
+// días de la semana: venta promedio diaria en una línea con sombra; tocar un día filtra
 function vxDia(R) {
   const el = $('vx-d'); if (!el) return;
   const h_ = selHoras(); if (!h_) { el.innerHTML = sinHoras(); VXC.d = null; return; }
   const k = K(), f = S.vx, filt = !!R && (f.cat != null || f.prod != null), NH = h_.mapa.horas.length, ds = diasSem();
   const d = filt ? DIAS.map((_, dd) => ds[dd] ? [...Array(NH).keys()].reduce((a, j) => a + R.cV[dd * NH + j], 0) / 100 / ds[dd] : 0) : h_.dia;
   const selD = f.cel && (f.cel.t === 'd' || f.cel.t === 'c') ? f.cel.d : null;
-  const col = d.map((_, j) => { const c = j > 4 ? k.ol : k.li; return selD == null || selD === j ? c : c + '59'; });
+  const col = d.map((_, j) => { const c = j > 4 ? k.ol : k.li; return selD == null || selD === j ? c : c + '59'; }), rad = d.map((_, j) => selD === j ? 7 : 5);
   $('vx-td').textContent = filt ? 'Venta promedio diaria · ' + vxTxt(true) + ' · USD sin IVA' : 'Venta promedio diaria · USD con IVA';
+  const lab = v => nf(v, filt && Math.max(...d) < 20 ? 1 : 0);
   const ch = VXC.d;
-  if (ch && ch.canvas && ch.canvas.isConnected) { ch.data.datasets[0].data = d; ch.data.datasets[0].backgroundColor = col; ch.data.datasets[0].vlab = v => nf(v, filt && Math.max(...d) < 20 ? 1 : 0); ch.update(); return; }
-  el.innerHTML = cv(220, id => { VXC.d = mk(id, {type: 'bar', data: {labels: DIAS, datasets: [{label: 'Venta diaria', data: d, backgroundColor: col, borderRadius: 6, borderSkipped: false, maxBarThickness: 46, fmt: v => usd(v, v < 20 ? 2 : 0), vlab: v => nf(v)}]},
+  if (ch && ch.canvas && ch.canvas.isConnected) { const s = ch.data.datasets[0]; s.data = d; s.pointBackgroundColor = col; s.pointRadius = rad; s.vlab = lab; ch.update(); return; }
+  el.innerHTML = cv(220, id => { VXC.d = mk(id, {type: 'line', data: {labels: DIAS, datasets: [{label: 'Venta diaria', data: d, borderColor: k.li, backgroundColor: sombra(k.li, .4), fill: 'origin', borderWidth: 2.6, tension: .35,
+      pointRadius: rad, pointHoverRadius: 7, pointBackgroundColor: col, pointBorderColor: k.sf, pointBorderWidth: 1.6, fmt: v => usd(v, v < 20 ? 2 : 0), vlab: lab}]},
     options: {...opt({legend: false, yf: v => nf(v)}), animation: {duration: 450, easing: 'easeOutQuart'},
       onClick: (e, els) => { if (els.length) vxSet('cel', {t: 'd', d: els[0].index}); }, onHover: (e, els) => { e.native.target.style.cursor = els.length ? 'pointer' : 'default'; }}}); });
   flush(el);
@@ -3841,19 +3857,20 @@ function ixKpi(R) {
     {l: 'Con existencia y sin venta', v: nf(T.sv), u: 'productos', s: usd(T.svU / 100) + ' inmovilizados'},
     {l: 'Merma neta', v: usd(perd), s: (ven > 1 ? pct(perd / ven * 100) + ' de sus ventas · ' : '') + 'entradas ' + usd((T.ec + T.et) / 100)}]);
 }
-// existencias de cada área en los tres conteos; tocar un área filtra
+// existencias de cada área en los tres conteos: una línea por área; tocar un área filtra
 function ixStock(R) {
   const el = $('ix-s'); if (!el) return;
-  const f = S.ix, filt = !!R && IXK.some(k => k !== 'area' && f[k] != null), k = K(), cols = [k.pa, k.li, k.ol], C = D.inventario.conteos;
+  const f = S.ix, filt = !!R && IXK.some(k => k !== 'area' && f[k] != null), k = K(), cols = [k.al, k.li, k.ol, k.pa], C = D.inventario.conteos;
   const val = (a, w) => filt ? R.Ar[a].k[w] / 100 : D.inventario.areas[a - 1].v[w];
-  const data = [0, 1, 2].map(w => [1, 2, 3, 4].map(a => val(a, w))), bg = w => [1, 2, 3, 4].map(a => f.area != null && f.area !== a ? cols[w] + '59' : cols[w]);
+  const data = [1, 2, 3, 4].map(a => [0, 1, 2].map(w => val(a, w))), on = a => f.area == null || f.area === a;
   $('ix-ts').textContent = 'Inventario en cada conteo, por área · ' + (filt ? ixTxt('area') + ' · ' : '') + 'USD';
+  const estilo = (ds, a) => { const c = on(a) ? cols[a - 1] : cols[a - 1] + '59'; ds.borderColor = c; ds.pointBackgroundColor = c; ds.backgroundColor = sombra(cols[a - 1], on(a) ? .3 : .06); ds.borderWidth = f.area === a ? 3.2 : 2.4; };
   const ch = IXC.s;
-  if (ch && ch.canvas && ch.canvas.isConnected) { ch.data.datasets.forEach((d, w) => { d.data = data[w]; d.backgroundColor = bg(w); }); ch.update(); return; }
-  el.innerHTML = cv(280, id => { IXC.s = mk(id, {type: 'bar', data: {labels: [1, 2, 3, 4].map(a => wrap(AREA_N(a), 18)), datasets: [0, 1, 2].map(w => ({label: C[w], data: data[w], backgroundColor: bg(w), borderRadius: 4, borderSkipped: false, maxBarThickness: 26, fmt: v => usd(v)}))},
-    options: {...opt({yf: v => nf(v), xs: 10, skip: false}), animation: {duration: 450, easing: 'easeOutQuart'},
-      onClick: (e, els) => { if (els.length) ixSet('area', els[0].index + 1); }, onHover: (e, els) => { e.native.target.style.cursor = els.length ? 'pointer' : 'default'; },
-      scales: {x: {...axX, ticks: {maxRotation: 0, autoSkip: false}}, y: {...axY(v => nf(v)), beginAtZero: true}}}}); });
+  if (ch && ch.canvas && ch.canvas.isConnected) { ch.data.datasets.forEach((d, j) => { d.data = data[j]; estilo(d, j + 1); }); ch.update(); return; }
+  el.innerHTML = cv(280, id => { IXC.s = mk(id, {type: 'line', data: {labels: C, datasets: [1, 2, 3, 4].map(a => { const d = {label: AREA_N(a), data: data[a - 1], fill: 'origin', tension: .3, pointRadius: 5, pointHoverRadius: 7, pointBorderColor: k.sf, pointBorderWidth: 1.5, fmt: v => usd(v)}; estilo(d, a); return d; })},
+    options: {...opt({yf: v => nf(v), mode: 'nearest'}), interaction: {mode: 'nearest', intersect: false, axis: 'xy'}, animation: {duration: 450, easing: 'easeOutQuart'},
+      onClick: (e, els) => { if (els.length) ixSet('area', els[0].datasetIndex + 1); }, onHover: (e, els) => { e.native.target.style.cursor = els.length ? 'pointer' : 'default'; },
+      scales: {x: {...axX, ticks: {maxRotation: 0}}, y: {...axY(v => nf(v)), beginAtZero: true}}}}); });
   flush(el);
 }
 // rotación rápida y lenta de la selección (existencia promedio de al menos USD 10)
@@ -3869,49 +3886,51 @@ function ixRotT(R) {
     el_.innerHTML = dt({cols: [...cols, {k: 'nv', l: 'Venta', t: 'tag', tc: v => v === 'Sin venta' ? 'none' : 'part'}], rows: len.slice(0, 300), filters: ['nv'], top: 15, unit: 'productos', name: 'rotacion_lenta', mark: r => r._p === f.prod, click: r => ixSet('prod', r._p)}); flush(el_); }
 }
 
-// meses: entradas (barras) y costo de lo vendido (línea); tocar un mes enfoca el periodo
+// meses: entradas (áreas apiladas) y costo de lo vendido (línea); tocar un mes enfoca el periodo
 function ixMesE(R) {
   const el = $('ix-e'); if (!el) return;
   const k = K(), F = D.fig.f9, filt = !!R && ixOn(), Mo = R && R.Mo;
   const cn = filt ? PER.map(q => Mo.ec[ix(q)] / 100) : SER(F.cn), tr = filt ? PER.map(q => Mo.et[ix(q)] / 100) : SER(F.treg);
   const im = filt ? PER.map(() => null) : SER(F.tcor.map((x, j) => Math.max(0, x - F.treg[j]))), sal = R ? PER.map(q => Mo.cv[ix(q)] / 100) : SER(D.fig.r_mes.sal);
   $('ix-te').textContent = 'Entradas y costo de lo vendido por mes · ' + (filt ? ixTxt() + ' · ' : '') + 'USD';
-  const col = c => PER.map(q => dimA(c, ix(q)));
+  const pc = c => PER.map(q => dimA(c, ix(q)));
   const ch = IXC.e;
   if (ch && ch.canvas && ch.canvas.isConnected) {
     const d = ch.data.datasets; ch.data.labels = LBP(); d[0].data = sal; d[1].data = cn; d[2].data = tr; d[3].data = im;
     d[2].label = filt ? 'Transferencias' : 'Transferencias registradas'; d[3].label = filt ? '_Costo imputado (enero)' : 'Costo imputado (enero)';
-    d[1].backgroundColor = col(k.ol); d[2].backgroundColor = col(k.li); ch.update(); return;
+    d[1].pointBackgroundColor = pc(k.ol); d[2].pointBackgroundColor = pc(k.li); ch.update(); return;
   }
-  el.innerHTML = cv(280, id => { IXC.e = mk(id, {data: {labels: LBP(), datasets: [
-      {type: 'line', label: 'Costo de lo vendido', data: sal, borderColor: k.dk, backgroundColor: k.dk, borderWidth: 2, pointRadius: ptR(3.5), pointBackgroundColor: k.sf, pointBorderColor: k.dk, pointBorderWidth: 1.6, tension: .3, order: 0, spanGaps: true, fmt: v => usd(v)},
-      {type: 'bar', label: 'Compras netas', data: cn, backgroundColor: col(k.ol), borderRadius: R4(false, true), borderSkipped: false, maxBarThickness: 34, stack: 's', order: 1, fmt: v => usd(v)},
-      {type: 'bar', label: filt ? 'Transferencias' : 'Transferencias registradas', data: tr, backgroundColor: col(k.li), borderRadius: 0, maxBarThickness: 34, stack: 's', order: 1, fmt: v => usd(v)},
-      {type: 'bar', label: filt ? '_Costo imputado (enero)' : 'Costo imputado (enero)', data: im, backgroundColor: hatch(k.al), borderRadius: R4(true, false), borderSkipped: false, maxBarThickness: 34, stack: 's', order: 1, fmt: v => usd(v)}]},
+  const area = (label, data, c, fill, bg) => ({label, data, borderColor: c, backgroundColor: bg || hexA(c, .34), fill, stack: 's', borderWidth: 2, tension: .35, pointRadius: ptR(3), pointBackgroundColor: pc(c), pointBorderColor: k.sf, pointBorderWidth: 1.2, fmt: v => usd(v)});
+  el.innerHTML = cv(280, id => { IXC.e = mk(id, {type: 'line', data: {labels: LBP(), datasets: [
+      {label: 'Costo de lo vendido', data: sal, borderColor: k.dk, backgroundColor: k.dk, borderWidth: 2, pointRadius: ptR(3.5), pointBackgroundColor: k.sf, pointBorderColor: k.dk, pointBorderWidth: 1.6, tension: .3, stack: 'c', spanGaps: true, fmt: v => usd(v)},
+      area('Compras netas', cn, k.ol, 'origin'),
+      area(filt ? 'Transferencias' : 'Transferencias registradas', tr, k.li, '-1'),
+      area(filt ? '_Costo imputado (enero)' : 'Costo imputado (enero)', im, k.al, '-1', hatch(k.al))]},
     options: {...opt({yf: v => nf(v)}), animation: {duration: 450, easing: 'easeOutQuart'},
       onClick: (e, els) => { if (els.length) mesFoco(PER[els[0].index]); }, onHover: (e, els) => { e.native.target.style.cursor = els.length ? 'pointer' : 'default'; },
-      scales: {x: {...axX, stacked: true, ticks: {maxRotation: 0}}, y: {...axY(v => nf(v)), stacked: true, beginAtZero: true}}}}); });
+      scales: {x: {...axX, ticks: {maxRotation: 0}}, y: {...axY(v => nf(v)), stacked: true, beginAtZero: true}}}}); });
   flush(el);
 }
 
-// meses: faltantes, sobrantes y neto de los conteos
+// meses: faltantes (sombra bajo el cero), sobrantes (sobre el cero) y neto (línea)
 function ixMesM(R) {
   const el = $('ix-m'); if (!el) return;
   const k = K(), MM = D.merma_mes, filt = !!R && ixOn(), Mo = R && R.Mo;
   const fa = filt ? PER.map(q => -Mo.fa[ix(q)] / 100) : SER(MM.faltantes).map(v => -v), so = filt ? PER.map(q => (Mo.so[ix(q)] - Mo.sn[ix(q)]) / 100) : SER(MM.sobrantes);
   const sn = filt ? PER.map(q => Mo.sn[ix(q)] / 100) : SER(MM.sobr_neg), ne = filt ? PER.map(q => (Mo.so[ix(q)] - Mo.fa[ix(q)]) / 100) : SER(MM.neto);
+  const tope = so.map((v, j) => (v || 0) + (sn[j] || 0));   // los sobrantes por existencia negativa van encima de los sobrantes
   $('ix-tm').textContent = 'Diferencias de conteo por mes · ' + (filt ? ixTxt() + ' · ' : '') + 'USD';
-  const col = c => PER.map(q => dimA(c, ix(q)));
+  const pc = c => PER.map(q => dimA(c, ix(q)));
   const ch = IXC.m;
-  if (ch && ch.canvas && ch.canvas.isConnected) { const d = ch.data.datasets; ch.data.labels = LBP(); d[0].data = ne; d[1].data = fa; d[2].data = so; d[3].data = sn; d[1].backgroundColor = col(k.al); d[2].backgroundColor = col(k.li); ch.update(); return; }
-  el.innerHTML = cv(280, id => { IXC.m = mk(id, {type: 'bar', data: {labels: LBP(), datasets: [
-      {type: 'line', label: 'Neto', data: ne, borderColor: k.dk, backgroundColor: k.dk, borderWidth: 1.8, pointRadius: ptR(4), pointBackgroundColor: k.sf, pointBorderColor: k.dk, pointBorderWidth: 1.6, tension: .3, order: 0, fmt: v => usd(v)},
-      {label: 'Faltantes', data: fa, backgroundColor: col(k.al), borderRadius: R4(false, true), borderSkipped: false, maxBarThickness: 34, stack: 's', order: 1, fmt: v => usd(v)},
-      {label: 'Sobrantes', data: so, backgroundColor: col(k.li), borderRadius: 0, maxBarThickness: 34, stack: 's', order: 1, fmt: v => usd(v)},
-      {label: 'Sobrantes por existencia negativa', data: sn, backgroundColor: hatch(k.pa), borderRadius: R4(true, false), borderSkipped: false, maxBarThickness: 34, stack: 's', order: 1, fmt: v => usd(v)}]},
+  if (ch && ch.canvas && ch.canvas.isConnected) { const d = ch.data.datasets; ch.data.labels = LBP(); d[0].data = ne; d[1].data = fa; d[2].data = so; d[3].data = tope; d[3].dv = sn; d[1].pointBackgroundColor = pc(k.al); d[2].pointBackgroundColor = pc(k.li); ch.update(); return; }
+  el.innerHTML = cv(280, id => { IXC.m = mk(id, {type: 'line', data: {labels: LBP(), datasets: [
+      {label: 'Neto', data: ne, borderColor: k.dk, backgroundColor: k.dk, borderWidth: 1.8, pointRadius: ptR(4), pointBackgroundColor: k.sf, pointBorderColor: k.dk, pointBorderWidth: 1.6, tension: .3, fmt: v => usd(v)},
+      {label: 'Faltantes', data: fa, borderColor: k.al, backgroundColor: hexA(k.al, .32), fill: 'origin', borderWidth: 2, tension: .35, pointRadius: ptR(3), pointBackgroundColor: pc(k.al), pointBorderColor: k.sf, pointBorderWidth: 1.2, fmt: v => usd(v)},
+      {label: 'Sobrantes', data: so, borderColor: k.li, backgroundColor: hexA(k.li, .32), fill: 'origin', borderWidth: 2, tension: .35, pointRadius: ptR(3), pointBackgroundColor: pc(k.li), pointBorderColor: k.sf, pointBorderWidth: 1.2, fmt: v => usd(v)},
+      {label: 'Sobrantes por existencia negativa', data: tope, dv: sn, borderColor: k.pa, backgroundColor: hatch(k.pa), fill: 2, borderWidth: 1.4, tension: .35, pointRadius: 0, pointHoverRadius: 4, pointBackgroundColor: k.pa, fmt: v => usd(v)}]},
     options: {...opt({hl: {lines: [{v: 0, c: css('--line'), dash: [1, 0], w: 1}]}}), animation: {duration: 450, easing: 'easeOutQuart'},
       onClick: (e, els) => { if (els.length) mesFoco(PER[els[0].index]); }, onHover: (e, els) => { e.native.target.style.cursor = els.length ? 'pointer' : 'default'; },
-      scales: {x: {...axX, stacked: true, ticks: {maxRotation: 0}}, y: {...axY(v => nf(v)), stacked: true}}}}); });
+      scales: {x: {...axX, ticks: {maxRotation: 0}}, y: {...axY(v => nf(v))}}}}); });
   flush(el);
 }
 
@@ -3929,7 +3948,7 @@ function ixAreas(R) {
   vxLista(el, rows, f.area, 'a', 'Sin existencias con este filtro.');
   el.querySelectorAll('[data-a]').forEach(b => b.onclick = () => ixSet('area', +b.dataset.a));
 }
-// tipo de producto (Figura 11): pérdida neta de perecibles y no perecibles
+// tipo de producto (Figura 11): pérdida neta de perecibles y no perecibles en anillos; tocar un tipo filtra
 function ixTipo(R) {
   const el = $('ix-t'); if (!el) return;
   const f = S.ix, filt = !!R && IXK.some(k => k !== 'tipo' && f[k] != null), T = selMerma();
@@ -3937,10 +3956,12 @@ function ixTipo(R) {
   const rows = [1, 0].map(t => ({id: t, n: TIPO_N(t), v: Math.max(0, val(t)), r: val(t)}));
   const tot = rows.reduce((s, x) => s + x.v, 0); rows.forEach(x => { x.sh = tot ? x.v / tot * 100 : 0; });
   $('ix-tt').textContent = 'Pérdida neta por tipo · ' + (filt ? ixTxt('tipo') : selL());
-  vxLista(el, rows.map(x => ({...x, s: x.r < 0 ? 'sobrante neto de ' + usd(-x.r) : ''})), f.tipo, 't', 'Sin pérdida con este filtro.');
+  if (!tot && rows.every(x => x.r >= 0)) { el.innerHTML = '<div class="empty-st">Sin pérdida con este filtro.</div>'; return; }
+  el.innerHTML = anillos(rows.map((x, j) => ({id: x.id, n: x.n, f: x.sh / 100, t: pct(x.sh), d: x.r < 0 ? 'sobrante neto de ' + usd(-x.r) : usd(x.v), c: ['var(--c1)', 'var(--c3)'][j]})), [usd(tot), 'de pérdida neta · ' + (filt ? ixTxt('tipo') : selL())], {btn: 't', on: f.tipo});
   el.querySelectorAll('[data-t]').forEach(b => b.onclick = () => ixSet('tipo', +b.dataset.t));
+  const an = el.querySelector('.an'); if (an) anFoco(an, null);
 }
-// resultado de cada fecha de conteo del periodo
+// resultado de cada fecha de conteo del periodo: línea con sombra; tocar una fecha enfoca su mes
 function ixFechas(R) {
   const el = $('ix-fc'); if (!el) return;
   const F_ = fechasSel(), filt = !!R && ixOn(), k = K();
@@ -3950,9 +3971,10 @@ function ixFechas(R) {
   const fl = s => { const [, m, d] = s.split('-'); return `${+d} ${MES[+m - 1].toLowerCase()}`; };
   const col = F_.map((x, j) => (val[j] < 0 ? k.al : k.li) + (x.on ? '' : '59'));
   const ch = IXC.f;
-  if (ch && ch.canvas && ch.canvas.isConnected && ch.data.labels.length === F_.length) { ch.data.datasets[0].data = val; ch.data.datasets[0].backgroundColor = col; ch.update(); return; }
-  el.innerHTML = cv(150, id => { IXC.f = mk(id, {type: 'bar', data: {labels: F_.map(x => fl(x.d)), datasets: [{label: 'Resultado del conteo', data: val, backgroundColor: col, borderRadius: 3, borderSkipped: false, maxBarThickness: 14, fmt: v => usd(v), tipL: j => `${nf(F_[j].n)} líneas de la tienda`}]},
-    options: {...opt({legend: false, yf: v => nf(v), xs: 9}), animation: {duration: 450, easing: 'easeOutQuart'},
+  if (ch && ch.canvas && ch.canvas.isConnected && ch.data.labels.length === F_.length) { const s = ch.data.datasets[0]; s.data = val; s.pointBackgroundColor = col; ch.update(); return; }
+  el.innerHTML = cv(150, id => { IXC.f = mk(id, {type: 'line', data: {labels: F_.map(x => fl(x.d)), datasets: [{label: 'Resultado del conteo', data: val, borderColor: k.mu, borderWidth: 1.6, tension: .3,
+      fill: {value: 0, above: hexA(k.li, .3), below: hexA(k.al, .3)}, backgroundColor: k.mu, pointRadius: 4, pointHoverRadius: 6, pointBackgroundColor: col, pointBorderColor: k.sf, pointBorderWidth: 1.2, fmt: v => usd(v), tipL: j => `${nf(F_[j].n)} líneas de la tienda`}]},
+    options: {...opt({legend: false, yf: v => nf(v), xs: 9, hl: {lines: [{v: 0, c: css('--line'), dash: [1, 0], w: 1}]}}), animation: {duration: 450, easing: 'easeOutQuart'},
       onClick: (e, els) => { if (els.length) mesFoco(F_[els[0].index].d.slice(0, 7)); }, onHover: (e, els) => { e.native.target.style.cursor = els.length ? 'pointer' : 'default'; }}}); });
   flush(el);
 }
@@ -4421,12 +4443,13 @@ function fzOss(h = 260) {
 /* anillos concéntricos al estilo de Actividad de iOS: cada anillo es la parte de un total (una vuelta completa).
    filas: [{n, f (fracción 0 a 1), t (valor), d (detalle), c (color)}]; cab: [cifra, texto] destacados sobre la leyenda */
 function anillos(filas, cab, o = {}) {
-  const N = filas.length, g = 3.5, w = Math.min(22, (82 - (N - 1) * g) / N);
-  const ar = filas.map((x, j) => { const r = 96 - w / 2 - j * (w + g), p = Math.max(0, Math.min(1, x.f || 0)) * 100;
+  const N = filas.length, g = 3.5, w = Math.min(22, (82 - (N - 1) * g) / N), sel = o.btn ? filas.findIndex(x => x.id === o.on) : -1;
+  const ar = filas.map((x, j) => { const r = 96 - w / 2 - j * (w + g), p = Math.min(1, Math.abs(x.f || 0)) * 100, neg = (x.f || 0) < 0;
     return `<circle class="an-t" data-k="${j}" cx="100" cy="100" r="${r.toFixed(1)}" style="stroke:${x.c};stroke-width:${w.toFixed(1)}"/>`
-      + (p > 0 ? `<circle class="an-a" data-k="${j}" cx="100" cy="100" r="${r.toFixed(1)}" pathLength="100" transform="rotate(-90 100 100)" style="stroke:${x.c};stroke-width:${w.toFixed(1)};--p:${p.toFixed(2)};--k:${j}"/>` : ''); }).join('');
-  const ley = filas.map((x, j) => `<div class="an-r" data-k="${j}"${o.n ? ` data-n="${esc(x.n)}"` : ''}><i style="background:${x.c}"></i><span>${x.n}</span><b class="num">${x.t}</b>${x.d ? `<small>${x.d}</small>` : ''}</div>`).join('');
-  return `<div class="an"><svg class="an-s" viewBox="0 0 200 200" aria-hidden="true">${ar}</svg><div class="an-l">${cab ? `<div class="an-h"><b class="num">${cab[0]}</b><span>${cab[1]}</span></div>` : ''}<div class="an-rs">${ley}</div></div></div>`;
+      + (p > 0 ? `<circle class="an-a" data-k="${j}" cx="100" cy="100" r="${r.toFixed(1)}" pathLength="100" transform="${neg ? 'translate(200 0) scale(-1 1) ' : ''}rotate(-90 100 100)" style="stroke:${x.c};stroke-width:${w.toFixed(1)};--p:${p.toFixed(2)};--k:${j}"/>` : ''); }).join('');
+  const ley = filas.map((x, j) => { const at = `data-k="${j}"${o.n ? ` data-n="${esc(x.n)}"` : ''}`, dentro = `<i style="background:${x.c}"></i><span>${x.n}</span><b class="num">${x.t}</b>${x.d ? `<small>${x.d}</small>` : ''}`;
+    return o.btn ? `<button type="button" class="an-r an-bt${j === sel ? ' on' : ''}" ${at} data-${o.btn}="${x.id}" aria-pressed="${j === sel}">${dentro}</button>` : `<div class="an-r" ${at}>${dentro}</div>`; }).join('');
+  return `<div class="an"${sel >= 0 ? ` data-sel="${sel}"` : ''}><svg class="an-s" viewBox="0 0 200 200" aria-hidden="true">${ar}</svg><div class="an-l">${cab ? `<div class="an-h"><b class="num">${cab[0]}</b><span>${cab[1]}</span></div>` : ''}<div class="an-rs">${ley}</div></div></div>`;
 }
 // al pasar sobre un anillo o su fila, los demás se atenúan (lo elegido queda marcado al salir)
 function anFoco(an, k) { const s = an.dataset.sel, q = k ?? (s === undefined || s === '' ? null : +s); an.querySelectorAll('[data-k]').forEach(x => x.classList.toggle('dim', q != null && +x.dataset.k !== q)); }
@@ -4719,16 +4742,18 @@ const ABF = {
   h: () => FIG(0, 'Concentración de compras por mes (HHI)', cv(260, id => { const k = K(); mk(id, {type: 'line', data: {labels: LBP(), datasets: [{label: 'HHI', data: SER(D.hhi_mes), borderColor: k.ac, backgroundColor: k.ac + '1f', fill: true, tension: .35, borderWidth: 2.2, pointRadius: ptR(3.5), pointBackgroundColor: k.sf, pointBorderWidth: 1.8, fmt: v => nf(v)}]},
       options: opt({legend: false, yf: v => nf(v), hl: {lines: [{v: 1500, c: k.mu, t: '1.500 · moderada', left: true, under: true}, {v: 2500, c: k.dk, dash: [2, 3], t: '2.500 · alta', left: true}]}})}); }), {tools: semB('I20'), i: 'Diciembre no tiene transferencias registradas.'}),
   pm: () => { const P = selProv(), tc = P.rows.filter(x => x.r).slice(0, 5).map(x => x.r), pm = provMes([0, ...tc]), nm = [P.rows.find(x => x.r === 0) ? 'Centro de acopio' : null, ...tc.map(r_ => DET.pr.n[r_])];
-    return FIG(0, 'Entradas por mes y proveedor · USD', cv(300, id => { const col = PALS(); mk(id, {type: 'bar', data: {labels: LBP(), datasets: [...nm.map((n, i) => n ? {label: n, data: SER(pm.out[i]).map(v => Math.max(0, v || 0)), backgroundColor: PER.map(q => dimA(col[i], ix(q))), borderRadius: R4(false, i === 0), borderSkipped: false, maxBarThickness: 34, stack: 's', fmt: v => usd(v)} : null).filter(Boolean),
-      {label: 'Resto', data: SER(pm.rest).map(v => Math.max(0, v || 0)), backgroundColor: PER.map(q => dimA(css('--chart-2'), ix(q))), borderRadius: R4(true, false), borderSkipped: false, maxBarThickness: 34, stack: 's', fmt: v => usd(v)}]},
-      options: {...opt({yf: v => nf(v)}), scales: {x: {...axX, stacked: true}, y: {...axY(v => nf(v)), stacked: true, beginAtZero: true}}}}); })); },
+    return FIG(0, 'Entradas por mes y proveedor · USD', cv(300, id => { const col = PALS(), k = K(), ser = [...nm.map((n, i) => n ? [n, SER(pm.out[i]).map(v => Math.max(0, v || 0)), col[i]] : null).filter(Boolean), ['Resto', SER(pm.rest).map(v => Math.max(0, v || 0)), css('--chart-2')]];
+      mk(id, {type: 'line', data: {labels: LBP(), datasets: ser.map(([n, data, c], i) => ({label: n, data, borderColor: c, backgroundColor: hexA(c, .3), fill: i ? '-1' : 'origin', stack: 's', borderWidth: 2, tension: .35,
+          pointRadius: ptR(2.5), pointBackgroundColor: PER.map(q => dimA(c, ix(q))), pointBorderColor: k.sf, pointBorderWidth: 1.2, fmt: v => usd(v)}))},
+        options: {...opt({yf: v => nf(v)}), scales: {x: {...axX, ticks: {maxRotation: 0}}, y: {...axY(v => nf(v)), stacked: true, beginAtZero: true}}}}); }), {i: 'Cada banda es un proveedor; la línea de arriba son las entradas totales del mes.'}); },
   t: () => { const P = selProv(); return FIG(0, 'Proveedores · ' + selL(), dt({cols: [{k: 'p', l: 'Proveedor', b: true}, {k: 'tipo', l: 'Tipo', t: 'tag', tc: v => v === 'Centro de acopio' ? 'full' : v === 'Agroecológico' ? 'agro' : ''}, {k: 'usd', l: 'USD', t: 'usd', bar: true}, {k: 'pct', l: '% entradas', t: 'pct', d: 2}, {k: 'fact', l: 'Facturas', t: 'num'}, {k: 'prod', l: 'Productos', t: 'num'}, {k: 'meses', l: 'Meses', t: 'num', heat: 1}],
     rows: P.rows.filter(x => Math.abs(x.usd) > .5), filters: ['tipo'], top: 999, unit: 'proveedores', foot: {usd: 'sum', pct: 'sum', fact: 'sum'}, name: 'proveedores'}), {i: `Entradas al costo de ${selL()}: compras netas y transferencias del centro de acopio como un solo proveedor.`}); },
   a: () => { const P = selProv(); return FIG(0, 'Productores agroecológicos · ' + selL(), P.agro.lista.length ? dt({cols: [{k: 'p', l: 'Productora o productor', b: true}, {k: 'usd', l: 'USD', t: 'usd', bar: true}, {k: 'pct', l: '% entradas', t: 'pct', d: 2}, {k: 'meses', l: 'Meses', t: 'num', heat: 1}, {k: 'prod', l: 'Productos', t: 'num'}],
     rows: P.agro.lista.map(x => ({...x, pct: P.tot ? x.usd / P.tot * 100 : 0})), search: false, top: 999, foot: {usd: 'sum', pct: 'sum'}, name: 'productores_agroecologicos'}) : '<div class="empty-st">Sin entregas de productores agroecológicos en los meses elegidos.</div>',
     {i: `Entradas al costo de ${selL()}: compras netas y transferencias del centro de acopio como un solo proveedor.`}); },
-  tipo: () => { const P = selProv(); return FIG(0, 'Entradas por tipo de proveedor · ' + selL(), hb(P.tipo.map((t, k) => [t.t, t.pct, `${pct(t.pct)} · ${usd(t.usd)}`, k ? null : 'var(--accent)']), 45)
-    + `<div class="fgs">Productoras y productores agroecológicos: ${pct(P.agro.pct)} de las entradas · ${nf(P.agro.lista.length)} en la lista</div>`, {cls: 'mid', tools: semB('I18'), i: 'Compras netas y transferencias del centro de acopio, al costo.'}); },
+  tipo: () => { const P = selProv(), cols = ['var(--c1)', 'var(--c2)', 'var(--c3)', 'var(--c4)'];
+    return FIG(0, 'Entradas por tipo de proveedor · ' + selL(), anillos(P.tipo.map((t, k) => ({n: t.t, f: t.pct / 100, t: pct(t.pct), d: usd(t.usd), c: cols[k % cols.length]})), [usd(P.tot), 'de entradas · ' + selL()])
+    + `<div class="fgs">Productoras y productores agroecológicos: ${pct(P.agro.pct)} de las entradas · ${nf(P.agro.lista.length)} en la lista</div>`, {cls: 'mid', tools: semB('I18'), i: 'Compras netas y transferencias del centro de acopio, al costo; cada anillo completo son las entradas totales.'}); },
   o: () => FG.f10b(270),
   oa: () => FG.f10a(),
   fq: () => { const F = D.financiamiento, dS = qv0('I13d', 'me');
@@ -4785,7 +4810,7 @@ const VN = {
     sub: {
       exi: {i: [['e', 'Evolución', IXF.e], ['r', 'Rotación rápida', IXF.rr], ['l', 'Rotación lenta', IXF.rl]], d: [['a', 'Por área', IXF.s]]},
       mer: {i: [['e', 'Evolución', IXF.m], ['f', 'Por conteo', IXF.fc], ['c', 'Categorías', IXF.c], ['p', 'Productos', IXF.p]], d: [['t', 'Por tipo', IXF.t]]},
-      ras: {i: [['m', 'Movimientos', () => FG.r1(290)], ['x', 'Un producto', IXF.x], ['f', 'Fechas de conteo', () => FG.r3(260)], ['t', 'Tabla', IXF.rt]], d: [['q', 'Cuadre', IXF.q], ['p', 'Puente', () => FG.r2(290)], ['c', 'Composición', () => FG.rc(290)], ['k', 'Kits', () => FG.r5()]]}
+      ras: {i: [['m', 'Movimientos', () => FG.r1(290)], ['x', 'Un producto', IXF.x], ['f', 'Fechas de conteo', () => FG.r3(260)], ['t', 'Tabla', IXF.rt]], d: [['q', 'Cuadre', IXF.q], ['p', 'Puente', () => FG.r2(290)], ['c', 'Composición', () => FG.rc()], ['k', 'Kits', () => FG.r5()]]}
     },
     tira: () => '<dl class="fz-ind" id="ix-k" hidden></dl>',
     pinta: () => ixPintar(true),
