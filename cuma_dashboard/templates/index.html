@@ -1205,16 +1205,14 @@ button.kx-i:focus-visible,.kx-sb:focus-visible,.mini-b:focus-visible{outline:2px
 @media (max-width:640px){.kx-h{align-items:flex-start}.kx-l{white-space:normal;line-height:1.3;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;padding-top:1px}.kx-l i{display:none}}
 .mcsem-b i.ok{color:#10130a}
 .mi-n{display:inline-grid;place-items:center;width:14px;font-family:var(--font);font-size:10.5px;color:var(--muted);font-variant-numeric:tabular-nums}
-/* mapa del tablero: red en capas con giro 3D y ficha del elemento */
-.nm{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;min-width:0}
-@container (min-width:1100px){.nm{grid-template-columns:minmax(0,1fr) 330px}}
-.nm-m{display:flex;flex-direction:column;gap:6px;min-width:0}
+/* mapa del tablero: red en capas con giro 3D; la ficha flota sobre el mapa */
+.nm{display:flex;flex-direction:column;gap:6px;min-width:0;container:nm/inline-size}
 .nm-capas{align-self:center}
 @media (max-width:640px){.gb.vw.nm-capas{gap:0;padding:3px}.gb.vw.nm-capas button{padding:5px 7px;font-size:11px}}
-.nm-cv{position:relative;height:clamp(520px,64vh,660px)}
-@media (max-width:640px){.nm-cv{height:540px}}
-.nm-cv canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:pan-y}
-.nm-cv canvas.drag{cursor:grabbing}
+.nm-cv{position:relative;min-width:0}
+.nm-lz{position:relative;height:clamp(470px,58vh,560px)}
+.nm-lz canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:pan-y}
+.nm-lz canvas.drag{cursor:grabbing}
 .nm-it{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;min-height:34px}
 .nm-it button,.nm-ch button{appearance:none;display:inline-flex;align-items:center;gap:6px;margin:0;padding:5px 11px;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--ink);font:500 12px var(--font);cursor:pointer;transition:background-color .3s var(--ease),border-color .3s var(--ease),color .3s var(--ease)}
 .nm-it button:hover,.nm-ch button:hover{border-color:var(--ink-strong);color:var(--ink-strong)}
@@ -1223,12 +1221,20 @@ button.kx-i:focus-visible,.kx-sb:focus-visible,.mini-b:focus-visible{outline:2px
 .nm-d.f{background:var(--c4)}.nm-d.c{background:var(--c3)}.nm-d.a{background:var(--c2)}.nm-d.s{background:var(--accent)}
 .nm-d.ok{background:var(--sem-ok)}.nm-d.warn{background:var(--sem-warn)}.nm-d.bad{background:var(--sem-bad)}.nm-d.na{background:var(--sem-na)}
 .nm-d.sd{background:none;border:1.2px dashed var(--muted);box-sizing:border-box}
-.nm-p{display:flex;flex-direction:column;gap:10px;min-width:0;padding:4px 2px 4px 18px;border-left:1px solid var(--line);transition:opacity .16s ease,transform .16s ease}
-@container (max-width:1099px){.nm-p{padding:16px 2px 0;border-left:0;border-top:1px solid var(--line)}}
-.nm-p.out{opacity:0;transform:translateY(6px)}
-.nm-h{display:flex;flex-direction:column;gap:4px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+/* ficha del elemento: tarjeta de vidrio que entra desde la derecha */
+.nm-p{position:absolute;top:8px;right:8px;bottom:8px;width:min(290px,46%);overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;padding:16px 16px 18px;border:1px solid var(--line);border-radius:14px;
+  background:color-mix(in srgb,var(--card-bg) 84%,transparent);-webkit-backdrop-filter:blur(18px) saturate(140%);backdrop-filter:blur(18px) saturate(140%);box-shadow:0 18px 40px -24px var(--glass-shadow,rgba(0,0,0,.3));
+  opacity:0;visibility:hidden;transform:translateX(18px) scale(.98);transform-origin:100% 50%;transition:opacity .3s var(--ease),transform .55s var(--spring),visibility 0s .55s}
+.nm-p.on{opacity:1;visibility:visible;transform:none;transition:opacity .3s var(--ease),transform .55s var(--spring),visibility 0s}
+@container nm (max-width:640px){.nm-p{position:relative;inset:auto;width:auto;margin-top:8px;display:none;transform:none}.nm-p.on{display:block}}
+.nm-x{appearance:none;position:absolute;top:8px;right:8px;display:grid;place-items:center;width:28px;height:28px;margin:0;padding:0;border:0;border-radius:50%;background:var(--glass-flat);color:var(--ink-strong);cursor:pointer;transition:background-color .3s var(--ease)}
+.nm-x:hover{background:var(--line)}
+.nm-x svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.nm-pc{display:flex;flex-direction:column;gap:10px;min-width:0;transition:opacity .16s ease,transform .16s ease}
+.nm-pc.out{opacity:0;transform:translateY(6px)}
+.nm-h{display:flex;flex-direction:column;gap:4px;padding:0 30px 10px 0;border-bottom:1px solid var(--line)}
 .nm-k{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--muted)}
-.nm-h h2{margin:0;font-size:17px;font-weight:600;line-height:1.25;color:var(--ink-strong);text-wrap:balance}
+.nm-h h2{margin:0;font-size:16px;font-weight:600;line-height:1.25;color:var(--ink-strong);text-wrap:balance}
 .nm-v{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .nm-v b{font-size:24px;font-weight:300;letter-spacing:-.02em;color:var(--ink-strong);font-variant-numeric:tabular-nums}
 .nm-tx{margin:0;font-size:12.5px;line-height:1.5;color:var(--ink)}
@@ -1241,8 +1247,18 @@ button.kx-i:focus-visible,.kx-sb:focus-visible,.mini-b:focus-visible{outline:2px
 .nm-0{margin:0;color:var(--muted);font-size:12px}
 .nm-go{appearance:none;align-self:flex-start;margin-top:4px;padding:8px 16px;border:0;border-radius:999px;background:var(--ink-strong);color:var(--surface);font:600 12.5px var(--font);cursor:pointer;transition:opacity .3s var(--ease)}
 .nm-go:hover{opacity:.85}
-.nm-it button:focus-visible,.nm-ch button:focus-visible,.nm-go:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.nm-it button:focus-visible,.nm-ch button:focus-visible,.nm-go:focus-visible,.nm-x:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .sleg i.mp-sd{background:none!important;border:1.2px dashed var(--muted);box-sizing:border-box}
+/* resumen: el mapa al centro y las tarjetas de indicadores a sus lados */
+.hero{display:flex;flex-direction:column;gap:12px;min-width:0}
+@container (min-width:1100px){
+  .hero{display:grid;grid-template-columns:minmax(230px,1fr) minmax(0,3.1fr) minmax(230px,1fr);align-items:stretch}
+  .hero>.kx{grid-template-columns:minmax(0,1fr);grid-auto-rows:1fr}
+  .hero>.kx .kx-i{justify-content:center}
+  .hero .kx-h{align-items:flex-start}
+  .hero .kx-l{white-space:normal;line-height:1.3;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;padding-top:1px}
+}
+@container (max-width:1099px){.hero>.kx{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .mp-dest{animation:mpDest 1.9s var(--ease)}
 @keyframes mpDest{0%,35%{box-shadow:0 0 0 2px var(--accent)}100%{box-shadow:0 0 0 2px transparent}}
 @media (prefers-reduced-motion:reduce){.mp-e path,.mn,.mn .mo{transition:none}.ms.hit .mg,.mp-dest{animation:none}}
@@ -4091,15 +4107,16 @@ const tituloSec = t => `<h2 class="ix-sec">${t}</h2>`;
 /* ---------- 1. Resumen ejecutivo ---------- */
 function secResumen(el) {
   const r = calc(SI()), perd = -selMerma().neto, inv = D.inventario;
-  el.innerHTML = kx([
+  const T = [
     xi('I5', {l: 'Ventas totales', v: usd(r.V), u: '', s: `${usd(r.vmes)} al mes · crecimiento ${V.I5.v} al mes`}),
     xi('I1'), xi('I2'),
     xi('I15', {l: 'Merma neta', v: usd(perd), u: '', s: `${pct(perd / r.V * 100)} de las ventas · frutas y hortalizas ${V.I15.v}`}),
     xi('I13', {l: 'Rotación de inventario', v: nf(inv.dias, 0) + ' días', u: '', s: `${nf(inv.rot_anual, 1)} veces al año · conteos de abril y septiembre`}),
     xi('I14', {l: 'GMROI', u: 'al año'}),
     xi('I17', {l: 'Ventas por m²', v: usd(r.vmes / D.superficie_m2, 2), u: 'al mes', s: `${nf(D.superficie_m2, 2)} m² de local`}),
-    xi('I17', {l: 'Ventas por empleado', v: usd(r.vmes / D.empleados), u: 'al mes', s: `${nf(D.empleados, 2)} empleados en promedio`})])
-    + figMapa();
+    xi('I17', {l: 'Ventas por empleado', v: usd(r.vmes / D.empleados), u: 'al mes', s: `${nf(D.empleados, 2)} empleados en promedio`})];
+  // el mapa al centro; las tarjetas de indicadores a sus dos lados
+  el.innerHTML = `<div class="hero">${kx(T.slice(0, 4))}${figMapa()}${kx(T.slice(4))}</div>`;
 }
 
 /* ---------- 2. Finanzas y rentabilidad ---------- */
@@ -4262,12 +4279,7 @@ function nmFicha(n, R) {
   const ch = arr => arr.length ? `<div class="nm-ch">${arr.map(m => `<button type="button" data-k="${m.k}"><i class="nm-d ${m.t} ${nmEstado(m)}"></i>${esc(m.t === 'i' ? m.n : m.t === 's' ? SECN[m.s] : m.n)}</button>`).join('')}</div>` : '<p class="nm-0">—</p>';
   const fila = (l, v) => `<div class="nm-r"><span>${l}</span><b>${v}</b></div>`;
   const flujo = (t1, a1, t2, a2) => `<div class="nm-fl"><div><h3>${t1}</h3>${ch(a1)}</div><div><h3>${t2}</h3>${ch(a2)}</div></div>`;
-  if (!n) {
-    const calc = IND.filter(i => i.e !== 'none').length, cu = st => IND.filter(i => i.e !== 'none' && V[i.id] && V[i.id].st === st).length;
-    return `<div class="nm-h"><span class="nm-k">Mapa del tablero</span><h2>${NM_FU.length} fuentes, ${IND.length} indicadores y ${NM_AN.length} análisis</h2></div>
-      <p class="nm-tx">${calc} de ${IND.length} indicadores se calculan con los datos disponibles: ${cu('bad')} requieren acción, ${cu('warn')} están en vigilancia y ${cu('ok')} cumplen la meta. Cada señal recorre el camino del dato, de la fuente a la sección donde se lee.</p>
-      ${NM_CAPAS.map(([c, l], j) => fila(l, nf(R.N.filter(m => m.layer === j).length))).join('')}`;
-  }
+  if (!n) return '';
   const kind = {f: 'Fuente de datos', c: 'Categoría', i: 'Indicador · ' + (n.i ? FAM_L[n.i.f] : ''), a: 'Análisis de datos · ' + (n.a ? SECN[n.a.s] : ''), s: 'Sección'}[n.t];
   let cuerpo = '', boton = '';
   if (n.t === 'f') { const F = (D.fuentes || []).find(x => x.fuente === n.fu) || {};
@@ -4305,7 +4317,8 @@ function nmMontar() {
   const R = nmRed(), cv = raiz.querySelector('canvas'), ctx = cv.getContext('2d'), pn = raiz.querySelector('.nm-p'), chips = raiz.querySelector('.nm-it'), nav = raiz.querySelector('.nm-capas');
   const RM = reduce(), tmp = document.createElement('canvas').getContext('2d');
   let W = 0, H = 0, dpr = 1, yaw = 0, pitch = 0, tYaw = 0, tPitch = 0, drag = false, moved = false, lx = 0, ly = 0, t0 = 0, sway = RM ? 0 : 1;
-  let hover = null, sel = null, capa = null, parts = [], C = {}, tick = 0, vis = true, raf = 0;
+  let hover = null, sel = null, capa = null, parts = [], C = {}, tick = 0, vis = true, raf = 0, pr = 0, tPr = 0;
+  const pc = pn.querySelector('.nm-pc');
   // colores del tema, también cuando el tema cambia
   const rgb = c => { tmp.fillStyle = '#000'; tmp.fillStyle = c || '#888'; const v = tmp.fillStyle; if (v[0] === '#') { const x = parseInt(v.slice(1), 16); return [x >> 16, (x >> 8) & 255, x & 255]; } const m = v.match(/[\d.]+/g) || [136, 136, 136]; return m.slice(0, 3).map(Number); };
   const col = (c, a) => { const [r, g, b] = C[c] || rgb(c); return `rgba(${r},${g},${b},${a})`; };
@@ -4314,11 +4327,12 @@ function nmMontar() {
   const base = n => n.t === 'i' ? {ok: '--sem-ok', warn: '--sem-warn', bad: '--sem-bad', na: '--sem-na', sd: '--muted'}[nmEstado(n)] : {f: '--c4', c: '--c3', a: '--c2', s: '--accent'}[n.t];
   const radio = n => ({f: 7, c: 8.5, i: 5.5, a: 6, s: 8.5})[n.t] * (angosto() && (n.t === 'i' || n.t === 'a') ? .78 : 1);
   function medir() { const r = cv.getBoundingClientRect(); dpr = window.devicePixelRatio || 1; W = r.width; H = r.height; cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); leeCss(); }
-  const angosto = () => W < 700;
+  const angosto = () => W < 640, ew = () => W - pr, regla = () => ew() >= 1000;
+  const cabe = {i: 600, a: 720, s: 620};   // ancho desde el que caben los nombres de cada capa
   function proj(n) {
     const a = angosto() && n.uA != null ? n.uA : n.u, b = n.l + (n.dl || 0), z = n.z, y = yaw + Math.sin(t0 * .0004) * .22 * sway, p = pitch;
     const x1 = a * Math.cos(y) - z * Math.sin(y), z1 = a * Math.sin(y) + z * Math.cos(y), y2 = b * Math.cos(p) - z1 * Math.sin(p), z2 = b * Math.sin(p) + z1 * Math.cos(p), s = 3 / (3 + z2);
-    const ml = angosto() ? 26 : 150, mr = angosto() ? 26 : 70, my = angosto() ? 40 : 46, cx = (ml + W - mr) / 2, hw = (W - ml - mr) / 2;
+    const ml = regla() ? 150 : angosto() ? 26 : 34, mr = (regla() ? 70 : angosto() ? 26 : 34) + pr, my = angosto() ? 40 : 46, cx = (ml + W - mr) / 2, hw = (W - ml - mr) / 2;
     return {x: cx + x1 * s * hw * .92, y: H / 2 - 8 + y2 * s * (H / 2 - my) * .92, s, z: z2};
   }
   const cpt = (a, b) => { const dy = b.y - a.y; return [a.x, a.y + dy * .45, b.x, b.y - dy * .45]; };
@@ -4335,20 +4349,21 @@ function nmMontar() {
   function etiqueta(n, on, lit) {
     const t = n.t, ang = angosto();
     if (on) return t === 'i' ? n.n : t === 's' ? NM_SEC[n.s] : n.c;
-    if (ang) return t === 'f' || t === 'c' ? n.c : '';
-    return n.c;
+    if (t === 'f' || t === 'c') return n.c;
+    if (ang) return '';
+    return ew() >= cabe[t] || (lit && sel) ? n.c : '';
   }
   function frame(ts) {
     raf = 0;
     if (!cv.isConnected) return;
     if (!vis || document.hidden) return;
-    t0 = ts || 0; yaw += (tYaw - yaw) * .08; pitch += (tPitch - pitch) * .08;
+    t0 = ts || 0; yaw += (tYaw - yaw) * .08; pitch += (tPitch - pitch) * .08; pr = RM ? tPr : pr + (tPr - pr) * .12;
     if (++tick % 45 === 0) leeCss();
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
     R.N.forEach(n => { n.p = proj(n); });
     const {nb, act} = luces(), AC = '--accent';
     // regla de capas a la izquierda
-    if (!angosto()) {
+    if (regla()) {
       const rx = 118, ys = [0, 1, 2, 3, 4].map(l => proj({u: -1, l: l / 2 - 1, z: 0}).y);
       ctx.save(); ctx.lineWidth = 1; ctx.strokeStyle = col('--muted', .3); ctx.beginPath(); ctx.moveTo(rx + .5, ys[0] - 18); ctx.lineTo(rx + .5, ys[4] + 18); ctx.stroke();
       ctx.strokeStyle = col('--muted', .5); ctx.beginPath();
@@ -4372,7 +4387,8 @@ function nmMontar() {
     const orden = R.N.slice().sort((a, b) => b.p.z - a.p.z), fs = angosto() ? 10.5 : 11, F = css('--font');
     // borra las líneas que pasan detrás de cada rótulo
     ctx.save(); ctx.globalCompositeOperation = 'destination-out'; ctx.fillStyle = '#000'; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-    orden.forEach(n => { const on = n === sel || n === hover, lit = nb.has(n), tx = etiqueta(n, on, lit); if (!tx) return; const r = radio(n) * n.p.s; ctx.font = (on ? '600 ' : '500 ') + fs + 'px ' + F; const w = ctx.measureText(tx).width; pil(n.p.x - w / 2 - 5, n.p.y + r + 5, w + 10, fs + 6); });
+    const tx0 = (x, w) => Math.max(w / 2 + 4, Math.min(W - pr - w / 2 - 4, x));
+    orden.forEach(n => { const on = n === sel || n === hover, lit = nb.has(n), tx = etiqueta(n, on, lit); if (!tx) return; const r = radio(n) * n.p.s; ctx.font = (on ? '600 ' : '500 ') + fs + 'px ' + F; const w = ctx.measureText(tx).width; pil(tx0(n.p.x, w) - w / 2 - 5, n.p.y + r + 5, w + 10, fs + 6); });
     ctx.restore();
     orden.forEach(n => {
       const p = n.p, r = radio(n) * p.s, on = n === sel || n === hover, lit = nb.has(n), deCapa = !sel && !angosto() && capa && NM_CAPAS[n.layer][0] === capa, bc = base(n), apagado = sel && !lit && !on;
@@ -4383,7 +4399,7 @@ function nmMontar() {
       if (nmEstado(n) === 'sd') { ctx.setLineDash([2, 2]); ctx.lineWidth = 1.2; ctx.strokeStyle = col('--muted', .9); ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, 6.283); ctx.stroke(); ctx.setLineDash([]); }
       else { ctx.fillStyle = col(bc, .26); ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, 6.283); ctx.fill(); ctx.fillStyle = col(bc, 1); ctx.beginPath(); ctx.arc(p.x, p.y, r * (n.t === 'i' ? .62 : .42), 0, 6.283); ctx.fill(); }
       const tx = etiqueta(n, on, lit);
-      if (tx) { ctx.font = (on ? '600 ' : '500 ') + fs + 'px ' + F; ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillStyle = on || lit ? col('--ink-strong', 1) : col('--ink', .85); ctx.fillText(tx, p.x, p.y + r + 8); }
+      if (tx) { ctx.font = (on ? '600 ' : '500 ') + fs + 'px ' + F; ctx.textAlign = 'center'; ctx.textBaseline = 'top'; ctx.fillStyle = on || lit ? col('--ink-strong', 1) : col('--ink', .85); ctx.fillText(tx, tx0(p.x, ctx.measureText(tx).width), p.y + r + 8); }
       ctx.globalAlpha = 1;
     });
     raf = requestAnimationFrame(frame);
@@ -4392,11 +4408,19 @@ function nmMontar() {
   function cerca(e) { const r = cv.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top; let best = null, bd = 1e9; R.N.forEach(n => { if (!n.p) return; const d = Math.hypot(n.p.x - x, n.p.y - y); if (d < bd && d < 18) { bd = d; best = n; } }); return best; }
   // ficha: cambia con un fundido corto
   let tf = 0;
-  function ficha(n) { clearTimeout(tf); pn.classList.add('out'); tf = setTimeout(() => { pn.innerHTML = nmFicha(n, R); pn.classList.remove('out'); }, RM ? 0 : 160); }
+  // la ficha flota sobre el mapa y el mapa se corre a la izquierda para dejarle sitio; en el teléfono va debajo
+  function ficha(n) {
+    clearTimeout(tf);
+    if (!n) { pn.classList.remove('on'); tPr = 0; arranca(); return; }
+    const abierta = pn.classList.contains('on'), fija = getComputedStyle(pn).position === 'static';
+    pn.classList.add('on'); tPr = fija ? 0 : pn.offsetWidth + 18;
+    if (!abierta || RM) { pc.innerHTML = nmFicha(n, R); pc.classList.remove('out'); arranca(); return; }
+    pc.classList.add('out'); tf = setTimeout(() => { pc.innerHTML = nmFicha(n, R); pc.classList.remove('out'); }, 160); arranca();
+  }
   function chipsDe(c) { const j = NM_CAPAS.findIndex(x => x[0] === c), g = R.N.filter(n => n.layer === j);
     chips.innerHTML = g.map(n => `<button type="button" data-k="${n.k}" aria-pressed="${n === sel}"><i class="nm-d ${n.t} ${nmEstado(n)}"></i>${esc(n.t === 'i' ? n.id : n.t === 's' ? SECN[n.s] : n.n)}</button>`).join('');
     chips.setAttribute('aria-label', 'Elementos: ' + NM_CAPAS[j][1]); }
-  function elegir(n) { sel = n; if (n) { const c = NM_CAPAS[n.layer][0]; if (c !== capa) { capa = c; press(nav, c); chipsDe(c); } chips.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b.dataset.k === n.k)); } ficha(n); arranca(); }
+  function elegir(n) { sel = n; chips.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', !!n && b.dataset.k === n.k)); if (n) { const c = NM_CAPAS[n.layer][0]; if (c !== capa) { capa = c; press(nav, c); chipsDe(c); } chips.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b.dataset.k === n.k)); } ficha(n); arranca(); }
   function accion(go) {
     const n = sel; if (!n) return; const dl = $('fgdlg'); if (dl && dl.open && go !== 'fi') dl.close();
     if (go === 'fi') pick(n.id);
@@ -4407,7 +4431,8 @@ function nmMontar() {
   menu(nav, NM_CAPAS.map(([c, l, s]) => [c, angosto() ? s : l]), 'i', c => { capa = c; sel = null; chipsDe(c); ficha(null); arranca(); });
   capa = 'i'; chipsDe('i');
   chips.addEventListener('click', e => { const b = e.target.closest('button[data-k]'); if (b) elegir(R.by[b.dataset.k]); });
-  pn.addEventListener('click', e => { const b = e.target.closest('button[data-k]'); if (b) { elegir(R.by[b.dataset.k]); return; } const g = e.target.closest('.nm-go'); if (g) accion(g.dataset.go); });
+  pn.addEventListener('click', e => { if (e.target.closest('.nm-x')) { elegir(null); return; } const b = e.target.closest('button[data-k]'); if (b) { elegir(R.by[b.dataset.k]); return; } const g = e.target.closest('.nm-go'); if (g) accion(g.dataset.go); });
+  pn.addEventListener('keydown', e => { if (e.key === 'Escape' && sel) { e.stopPropagation(); elegir(null); } });
   cv.addEventListener('pointerdown', e => { drag = true; moved = false; lx = e.clientX; ly = e.clientY; cv.classList.add('drag'); });
   cv.addEventListener('pointermove', e => {
     if (drag) { const dx = e.clientX - lx, dy = e.clientY - ly; if (Math.abs(dx) + Math.abs(dy) > 4) moved = true;
@@ -4420,15 +4445,18 @@ function nmMontar() {
   const ro = new ResizeObserver(() => { if (!cv.isConnected) { ro.disconnect(); io.disconnect(); return; } medir(); arranca(); }); ro.observe(cv);
   const vc = () => { if (!cv.isConnected) { document.removeEventListener('visibilitychange', vc); io.disconnect(); ro.disconnect(); return; } arranca(); };
   document.addEventListener('visibilitychange', vc);
-  medir(); pn.innerHTML = nmFicha(null, R); arranca();
+  medir(); arranca();
 }
 function figMapa() {
   PEND.push(nmMontar);
-  return FIG(0, 'Mapa del tablero', `<div class="nm" id="nm"><div class="nm-m"><nav class="gb vw nm-capas" aria-label="Capas del mapa"></nav>
-      <div class="nm-cv"><canvas role="img" aria-label="Red del tablero: ${NM_FU.length} fuentes de datos, 4 categorías, ${IND.length} indicadores, ${NM_AN.length} análisis de datos y ${SECS.length + SECX.length} secciones. Los elementos de cada capa se eligen con los botones de abajo."></canvas></div>
-      <div class="nm-it" role="group"></div></div><aside class="nm-p" aria-live="polite"></aside></div>`
+  const calc = IND.filter(i => i.e !== 'none').length, cu = st => IND.filter(i => i.e !== 'none' && V[i.id] && V[i.id].st === st).length, ns = SECS.length + SECX.length;
+  const nota = `${NM_FU.length} fuentes de datos, 4 categorías, ${IND.length} indicadores, ${NM_AN.length} análisis de datos y ${ns} secciones. ${calc} de ${IND.length} indicadores se calculan con los datos disponibles: ${cu('bad')} requieren acción, ${cu('warn')} están en vigilancia y ${cu('ok')} cumplen la meta. Cada línea sigue el camino del dato: la fuente que alimenta cada indicador, su categoría, los análisis que lo calculan o muestran y la sección donde están. Arrastra para girar el mapa; toca un punto para ver su ficha.`;
+  return FIG(0, 'Mapa del tablero', `<div class="nm" id="nm"><nav class="gb vw nm-capas" aria-label="Capas del mapa"></nav>
+      <div class="nm-cv"><div class="nm-lz"><canvas role="img" aria-label="Red del tablero: ${NM_FU.length} fuentes de datos, 4 categorías, ${IND.length} indicadores, ${NM_AN.length} análisis de datos y ${ns} secciones. Los elementos de cada capa se eligen con los botones de abajo."></canvas></div>
+        <aside class="nm-p" aria-live="polite"><button type="button" class="nm-x" aria-label="Cerrar la ficha"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17"/></svg></button><div class="nm-pc"></div></aside></div>
+      <div class="nm-it" role="group"></div></div>`
     + leg([['var(--c4)', 'Fuente'], ['var(--c3)', 'Categoría'], ['var(--sem-ok)', 'Meta'], ['var(--sem-warn)', 'Vigilar'], ['var(--sem-bad)', 'Acción'], ['var(--sem-na)', 'Sin semáforo'], ['transparent', 'Sin datos', 'mp-sd'], ['var(--c2)', 'Análisis'], ['var(--accent)', 'Sección']]),
-    {i: 'Cada línea sigue el camino del dato: la fuente que alimenta cada indicador, la categoría a la que pertenece, los análisis que lo calculan o muestran y la sección donde están. Arrastra para girar el mapa; toca un punto para ver su ficha.'});
+    {i: nota, cls: 'fg-mapa'});
 }
 
 /* ---------- 7. Gobernanza de datos ---------- */
