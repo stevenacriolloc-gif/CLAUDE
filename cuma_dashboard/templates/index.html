@@ -2176,6 +2176,8 @@ function dtCSV(st) {
 
 /* ---------- complementos de Chart.js: etiquetas de valor, líneas de referencia, conectores de cascada, rótulos de puntos ---------- */
 const FONT = () => css('--font') || 'system-ui';
+// un evento que llega cuando la gráfica ya se redibujó (y la anterior se destruyó) se descarta
+Chart.register({id: 'vivo', beforeEvent(ch) { if (!ch.canvas || !ch.ctx) return false; }});
 Chart.register({id: 'vlab', afterDatasetsDraw(ch) {
   const ctx = ch.ctx, hz = ch.options.indexAxis === 'y';
   ch.data.datasets.forEach((ds, i) => {
@@ -3307,7 +3309,7 @@ function cardMargen(db) {
 function cardSostenibilidad(db) {
   const r = calc(SI());
   const rows = mesRows(i => { const c = calc([i]); return {mb: c.mb, pgo: c.pgo, mo: c.mo, oss: c.oss, mc: c.mc}; });
-  db.innerHTML = kp([['Autosuficiencia', pct(r.oss), refK('I6'), V.I6.st], ['Punto de equilibrio', r.pe ? usd(r.pe) : '—', 'al mes', V.I7.st], ['Ventas', usd(r.vmes), 'al mes'], ['Veces la venta actual', r.pe ? nf(r.pe / r.vmes, 1) : '—', 'para el equilibrio']])
+  db.innerHTML = kp([['Autosuficiencia', pct(r.oss), refK('I6'), V.I6.st], ['Punto de equilibrio', r.pe ? usd(r.pe) : '—', r.pe ? 'al mes' : `no alcanzable · margen ${pct(r.mc)}`, V.I7.st], ['Ventas', usd(r.vmes), 'al mes'], ['Veces la venta actual', r.pe ? nf(r.pe / r.vmes, 1) : '—', r.pe ? 'para el equilibrio' : 'sin equilibrio']])
     + grid2(FG.f5a(260), FG.f5b(260))
     + FIG(0, 'Indicadores mensuales', dt({cols: [{k: 'mes', l: 'Mes', b: true}, {k: 'mb', l: 'Margen bruto', t: 'pct', heat: 1}, {k: 'pgo', l: 'Gasto / ventas', t: 'pct', heat: -1}, {k: 'mo', l: 'Margen operativo', t: 'pct', bar: true}, {k: 'oss', l: 'Autosuficiencia', t: 'pct', heat: 1}, {k: 'mc', l: 'Margen de contribución', t: 'pct'}],
       rows, search: false, mark: markSel, name: 'sostenibilidad'}));
@@ -3405,7 +3407,7 @@ function vxLimpia() { S.vx = {cel: null, cat: null, prod: null}; syncHash(); vxP
 function mesFoco(k) {
   if (S.mes === k) { if (!S.vxPer) return; [S.mes, PER] = S.vxPer; S.vxPer = null; }
   else { if (S.mes === 'acum' || !S.vxPer) S.vxPer = [S.mes, PER]; S.mes = k; PER = D.meses.slice(Math.min(ix(k), idx0)); }
-  refresh();
+  setTimeout(refresh, 0);   // fuera del evento de la gráfica, que se destruye al redibujar
 }
 const vxAviso = t => { const el = $('vx-av'); if (el) el.textContent = t; };
 function vxFalla() { vxAviso('No se pudo cargar el detalle por hora; los filtros se aplicarán cuando vuelva la conexión.'); }
@@ -4447,6 +4449,18 @@ const hexA = (c, a) => /^#[0-9a-f]{6}$/i.test(c) ? c + Math.round(Math.max(0, Ma
 const sombra = (c, a = .32) => x => { const ch = x.chart, A = ch.chartArea; if (!A) return hexA(c, a * .4);
   const g = ch.ctx.createLinearGradient(0, A.top, 0, A.bottom); g.addColorStop(0, hexA(c, a)); g.addColorStop(1, hexA(c, 0)); return g; };
 // ventas, costo de ventas y gasto operativo de cada mes, con el punto de equilibrio de cada mes y el del periodo
+// meses sin punto de equilibrio: el costo de ventas y las comisiones superan las ventas (margen de contribución negativo); se rotula sobre la venta del mes
+const sinPE = {id: 'sinPE', afterDatasetsDraw(ch) {
+  const c = ch.ctx, A = ch.chartArea, mv = ch.getDatasetMeta(0), corto = ch.width < 480; if (mv.hidden) return;
+  const f1 = `600 10.5px ${Chart.defaults.font.family}`, f2 = `400 10px ${Chart.defaults.font.family}`;
+  PER.forEach((q, j) => { const r = calc([ix(q)]); if (r.pe || !(r.V > 0) || !mv.data[j]) return;
+    const t1 = corto ? 'no alcanzable' : 'equilibrio no alcanzable', t2 = corto ? '' : `margen de contribución ${pct(r.mc)}`;
+    c.save(); c.textAlign = 'center'; c.textBaseline = 'bottom';
+    c.font = f1; let w = c.measureText(t1).width; c.font = f2; w = Math.max(w, c.measureText(t2).width);
+    const x = Math.max(A.left + w / 2 + 2, Math.min(A.right - w / 2 - 2, mv.data[j].x)), y = Math.max(A.top + 26, mv.data[j].y - 14);
+    c.font = f1; c.fillStyle = css('--accent'); c.fillText(t1, x, t2 ? y - 13 : y);
+    if (t2) { c.font = f2; c.fillStyle = css('--muted'); c.fillText(t2, x, y); }
+    c.restore(); }); }};
 const figMensual = (h = 320) => FIG(0, 'Ventas, costo de ventas y gasto operativo por mes · USD', cv(h, id => { const k = K(), ref = j => ix(PER[j]) < idx0, r = calc(SI()), pe = PER.map(q => calc([ix(q)]).pe);
         const o = opt({yf: v => nf(v), hl: r.pe ? {lines: [{v: r.pe, c: k.ac, dash: [2, 3], left: true, t: `equilibrio ${SIX ? 'del mes' : 'del periodo'}: ${usd(r.pe)} al mes`}]} : null});
         mk(id, {type: 'line', data: {labels: LBP(), datasets: [
@@ -4458,8 +4472,8 @@ const figMensual = (h = 320) => FIG(0, 'Ventas, costo de ventas y gasto operativ
             fmt: v => usd(v) + ' en ventas'}]},
         options: {...o, onClick: (e, els) => { if (els.length) mesFoco(PER[els[0].index]); }, onHover: (e, els) => { e.native.target.style.cursor = els.length ? 'pointer' : 'default'; },
           plugins: {...o.plugins, legend: {...o.plugins.legend, labels: {...o.plugins.legend.labels, sort: (x, y) => x.datasetIndex - y.datasetIndex}}},
-          scales: {x: {...axX, ticks: {maxRotation: 0}}, y: {...axY(v => nf(v)), beginAtZero: true}}}}); }),
-      {i: `Ventas con sombra verde; costo de ventas y gasto operativo (punteado) en gris. Rombos: punto de equilibrio de cada mes, las ventas que cubren los costos fijos (gasto operativo sin comisiones) con el margen de contribución de ese mes; línea punteada: el del periodo. Sin rombo, el mes no tuvo margen de contribución. El costo de las transferencias es real desde ${lblL(D.inicio_costo_real)} de 2026; antes es referencial (tramo punteado).`});
+          scales: {x: {...axX, ticks: {maxRotation: 0}}, y: {...axY(v => nf(v)), beginAtZero: true}}}, plugins: [sinPE]}); }),
+      {i: `Ventas con sombra verde; costo de ventas y gasto operativo (punteado) en gris. Rombos: punto de equilibrio de cada mes, las ventas que cubren los costos fijos (gasto operativo sin comisiones) con el margen de contribución de ese mes; línea punteada: el del periodo. Cuando el costo de ventas contable y las comisiones superan las ventas del mes, el margen de contribución es negativo y ningún nivel de ventas cubre los costos fijos: el equilibrio no es alcanzable y el mes queda rotulado. El costo de las transferencias es real desde ${lblL(D.inicio_costo_real)} de 2026; antes es referencial (tramo punteado).`});
 // gasto operativo por mes y rubro: una línea con sombra por rubro, su nombre al final de la línea y una reseña de lo que pasó en el periodo
 const FZ_COL = () => { const k = K(); return [k.ol, k.al, k.li, k.gr]; };
 // nombre de cada línea junto a su último punto, separados para que no se encimen
@@ -4544,7 +4558,7 @@ function fzInd(s) {
   if (s === 'mo') { const gv = selGasto();
     return [['Sobre las ventas', pct(r.pgo), `${usd(r.GO / r.n)} de gasto al mes`, V.I2.st], ['Personal sobre ventas', pct(gv.personal), 'socio y ocasional', V.I4.st], ['Energía sobre ventas', pct(gv.energia), `${usd(gv.en)} en el periodo`]]; }
   if (s === 'oss') return [['Ventas', usd(r.V), `${usd(r.vmes)} al mes`], ['Margen bruto', pct(r.mb), `${usd(r.V - r.CV)} de margen`, V.I1.st], ['Gasto / ventas', pct(r.pgo), `${usd(r.GO)} de gasto`, V.I2.st], ['Resultado', usd(res), usd(res / r.n) + ' al mes · con otros ingresos']];
-  return [['Autosuficiencia', pct(r.oss), 'ingresos / costos totales', V.I6.st], ['Punto de equilibrio', r.pe ? usd(r.pe) : '—', 'al mes', V.I7.st], ['Ventas', usd(r.vmes), 'al mes'], ['Veces la venta actual', r.pe ? nf(r.pe / r.vmes, 1) : '—', 'para el equilibrio']];
+  return [['Autosuficiencia', pct(r.oss), 'ingresos / costos totales', V.I6.st], ['Punto de equilibrio', r.pe ? usd(r.pe) : '—', r.pe ? 'al mes' : `no alcanzable · margen ${pct(r.mc)}`, V.I7.st], ['Ventas', usd(r.vmes), 'al mes'], ['Veces la venta actual', r.pe ? nf(r.pe / r.vmes, 1) : '—', r.pe ? 'para el equilibrio' : 'sin equilibrio']];
 }
 // franja de indicadores: rótulo con el punto del semáforo, cifra y nota; sin cajas
 const fzTira = s => { const L = fzInd(s);
@@ -4649,7 +4663,7 @@ const fzTenue = c => typeof c !== 'string' ? c : /^#[0-9a-f]{6}$/i.test(c) ? c +
 function fzVincula() {
   const b = $('fz-b'); if (!b) return; const j = S.fz.m == null ? -1 : PER.indexOf(D.meses[S.fz.m]);
   b.querySelectorAll('canvas').forEach(cv => { const ch = Chart.getChart(cv); if (!ch || ch.data.labels.length !== PER.length) return;
-    if (!ch._fz) { ch._fz = 1; ch.options.onClick = (e, els) => { if (!els.length) return; const m = ix(PER[els[0].index]); S.fz.m = S.fz.m === m ? null : m; fzDer(); };
+    if (!ch._fz) { ch._fz = 1; ch.options.onClick = (e, els) => { if (!els.length) return; const m = ix(PER[els[0].index]); S.fz.m = S.fz.m === m ? null : m; setTimeout(fzDer, 0); };
       ch.options.onHover = (e, els) => { e.native.target.style.cursor = els.length ? 'pointer' : 'default'; }; }
     ch.data.datasets.forEach(ds => {
       if (!('_bg' in ds)) { ds._bg = ds.backgroundColor; ds._pr = ds.pointRadius; }
