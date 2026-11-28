@@ -1461,18 +1461,16 @@ button.kx-i:focus-visible,.kx-sb:focus-visible,.mini-b:focus-visible{outline:2px
 .an.an-v .an-h b{font-size:clamp(24px,2.1vw,30px)}
 .an.an-v .an-r{padding:4px 8px}
 @container (max-width:470px){.an2{grid-template-columns:minmax(0,1fr);gap:18px}.an.an-v{grid-template-columns:110px minmax(0,1fr);align-items:center}}
-/* ---------- revisión de diseño: un radio para paneles y otro para controles, filete neutro y franja de estado arriba ---------- */
+/* ---------- revisión de diseño: un radio para paneles y otro para controles y filete neutro ---------- */
 :root{--r-card:10px;--r-ctl:8px}
 .card,.side>.phead,.side>.sec,.side>.note,.side>.empty-st,.side>.dbody,.side>.cgs>.cg,.glass,.left>.sema,.chrome,
 .tile:not(.chip),.fg,.kx-i,.kp,.ficha,.fgrid>.cg,.dli,.pop,.finder,.fgdlg,.fg-ph{border-radius:var(--r-card)}
 .gb button,.tema,.tbtn .tip,.dt-q,.dt-s select,.mcb{border-radius:var(--r-ctl)}
 .fgn{border-radius:6px}
-/* tarjetas: borde neutro; el estado se lee en una franja de 3 px en el borde superior */
-.tile:not(.chip):not(.hmt):not(.more),.tile.big{border:1px solid var(--line);box-shadow:inset 0 3px 0 var(--sx,transparent)}
-.tile[data-st="ok"]{--sx:var(--sem-ok)}.tile[data-st="warn"]{--sx:var(--sem-warn)}.tile[data-st="bad"]{--sx:var(--sem-bad)}
+/* tarjetas: borde neutro y sin franja de estado (el estado se lee solo en la etiqueta) */
+.tile:not(.chip):not(.hmt):not(.more),.tile.big{border:1px solid var(--line);box-shadow:none}
 .tile:not(.chip):not(.hmt):not(.more):hover,.tile.big:hover{border-color:color-mix(in srgb,var(--ink) 35%,var(--line))}
-.kx-i{box-shadow:inset 0 3px 0 var(--sx,transparent)}
-.kx-i.ok{--sx:var(--sem-ok)}.kx-i.warn{--sx:var(--sem-warn)}.kx-i.bad{--sx:var(--sem-bad)}
+.kx-i{box-shadow:none}
 /* tarjetas de sección de igual alto, con la nota arriba del borde inferior */
 .kx{align-items:stretch}.kx-i{height:100%}
 .kx-s{margin-top:auto}
