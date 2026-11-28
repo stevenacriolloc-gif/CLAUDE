@@ -1507,6 +1507,12 @@ button.kx-i:focus-visible,.kx-sb:focus-visible,.mini-b:focus-visible{outline:2px
 .tmap-leg i{display:block;flex:0 1 220px;height:8px;border-radius:4px}
 .tmap-leg em{font-style:normal;font-weight:600;color:var(--ink)}
 .tmap-cat{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:10px;font-size:11px;color:var(--muted)}
+.tmap__g{position:absolute;box-sizing:border-box;border:2px solid var(--card-bg);background:var(--card-bg);overflow:hidden}
+.tmap__gh{position:absolute;left:0;right:0;top:0;height:18px;padding:2px 5px;font-size:10.5px;font-weight:700;color:var(--ink-strong);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tmap__gi{position:absolute;left:0;right:0;top:18px;bottom:0}
+.tmap__c{border-width:1px}
+.tm-modo button{padding:6px 12px}
+.tm-modo button[aria-pressed="true"]{background:var(--band,var(--ink-strong));color:var(--on-band,#fff)}
 .tmap-cat span{display:inline-flex;align-items:center;gap:5px}.tmap-cat i{width:10px;height:10px;border-radius:3px}
 </style>
 <style id="base">
@@ -2016,6 +2022,7 @@ function renderSeccion() {
   $('sec-h').textContent = 'ProDesarrollo · ' + SECN[S.sec];
   el.dataset.s = S.sec;
   SECB[S.sec](el);
+  if (TMAP[S.sec]) { try { el.insertAdjacentHTML('beforeend', TMAP[S.sec]()); } catch (e) { console.warn('mapa de productos', e); } }
   flush(el);
 }
 function goSec(k) {
@@ -2105,7 +2112,13 @@ const LEC = [
     'Superintendencia de Compañías, ventas y gastos de 2025. Ventas de ProDesarrollo llevadas a doce meses.'],
   ['Margen bruto frente al gasto', () => { const p = pdTam(); return p.g > p.mb ? `ProDesarrollo está en la <b>zona de pérdida</b>: su gasto (${pct(p.g * 100)} de las ventas) supera su margen bruto (${pct(p.mb * 100)}) por ${nf((p.g - p.mb) * 100, 1)} puntos.` : `El margen bruto de ProDesarrollo (${pct(p.mb * 100)}) cubre su gasto (${pct(p.g * 100)}).`; },
     'Superintendencia de Compañías, estados de 2025.'],
-  ['Mapa de productos', () => null, null]
+  ['Mapa de categorías por clase ABC', () => { const P = selProd(); return `<b>${nf(P.abc[0])} de ${nf(P.nP)} productos</b> (${pct(P.abc[0] / P.nP * 100, 0)}) hacen el 80 % de la venta; los ${nf(P.abc[2])} de la clase C apenas suman el 5 % y son candidatos a salir del surtido o a pedirse bajo demanda.`; },
+    'Líneas de venta del periodo. Pareto ABC: A, primeros productos hasta el 80 % de la venta; B, hasta el 95 %; C, el resto.'],
+  ['Mapa de productos por venta', () => { const P = selProd(), meta = qv('I1', 'me') ?? 17; let b = 0; P.idx.forEach(p => { if (P.V[p] && (P.V[p] - P.C[p]) / P.V[p] * 100 < meta) b += P.V[p]; });
+    return `<b>${pct(b / P.Vt * 100, 0)} de la venta</b> sale de productos con margen bajo la meta de ${pct(meta, 0)}; los cuadros terracota grandes son los primeros candidatos para revisar precio o costo.`; },
+    'Líneas de venta con el costo de cada producto. Margen = (venta − costo) / venta.'],
+  ['Mapa de proveedores', () => { const P = selProv(), r = P.rows[0]; return r ? `<b>${r.p}</b> ocupa ${pct(r.pct)} del mapa y los cinco primeros, ${pct(P.top5)}: así se ve la concentración que mide el HHI.` : null; },
+    'Compras netas y transferencias, al costo.'],
 ];
 function lecDe(t) {
   const s = sinTag(t), e = LEC.find(([k]) => s.startsWith(k)); if (!e) return {l: null, s: null};
@@ -3980,6 +3993,7 @@ function cardInventario(db) {
   });
 }
 function ixPintar(primera) {
+  try { tmInvLlena(); } catch (e) { console.warn('mapa del inventario', e); }
   if (!$('ix-f')) return;
   const R = IV ? ixCalc() : null;
   ixFiltros(); ixKpi(R); ixStock(R); ixMesE(R); ixMesM(R); ixTipo(R); ixFechas(R); ixCats(R); ixProds(R); ixRotT(R); ixExist(); ixCuadre(R);
@@ -5401,6 +5415,94 @@ function secMapa(el) {
   }));
 }
 
+/* ---------- mapas de productos (treemap): el área de cada cuadro es su peso y el color, su desempeño ---------- */
+// reparto «squarified» (Bruls, Huizing y van Wijk, 2000): cuadros lo más cercanos posible a un cuadrado; coordenadas en % del contenedor
+function squarify(items, x, y, w, h) {
+  const out = [], tot = items.reduce((s, it) => s + it.v, 0); if (!tot || w <= 0 || h <= 0) return out;
+  const sc = w * h / tot, q = items.map(it => ({it, a: it.v * sc}));
+  const peor = (row, lado) => { const s = row.reduce((t, r) => t + r.a, 0), mx = Math.max(...row.map(r => r.a)), mn = Math.min(...row.map(r => r.a)); return Math.max(lado * lado * mx / (s * s), s * s / (lado * lado * mn)); };
+  let row = [];
+  const pone = () => { const s = row.reduce((t, r) => t + r.a, 0);
+    if (w >= h) { const ww = s / h; let yy = y; row.forEach(r => { const hh = r.a / ww; out.push({...r.it, x, y: yy, w: ww, h: hh}); yy += hh; }); x += ww; w -= ww; }
+    else { const hh = s / w; let xx = x; row.forEach(r => { const ww = r.a / hh; out.push({...r.it, x: xx, y, w: ww, h: hh}); xx += ww; }); y += hh; h -= hh; }
+    row = []; };
+  q.forEach(r => { const lado = Math.min(w, h); if (!row.length || peor([...row, r], lado) <= peor(row, lado)) row.push(r); else { pone(); row.push(r); } });
+  if (row.length) pone();
+  return out;
+}
+// escala divergente terracota – crema – verde (t de −1 a 1); el texto pasa a blanco sobre los tonos oscuros
+const TM_N = [192, 88, 58], TM_M = [243, 236, 216], TM_P = [79, 138, 58];
+const tmMix = (a, b, f) => a.map((v, i) => Math.round(v + (b[i] - v) * f));
+const tmCol = t => t == null ? {c: '#d9d9dc', dk: false} : (c => ({c: `rgb(${c})`, dk: c[0] * .299 + c[1] * .587 + c[2] * .114 < 140}))(t >= 0 ? tmMix(TM_M, TM_P, Math.min(1, t)) : tmMix(TM_M, TM_N, Math.min(1, -t)));
+const tmEsc = (lo, mid, hi) => `<div class="tmap-leg"><span>${lo}</span><i style="background:linear-gradient(90deg,rgb(${TM_N}),rgb(${TM_M}),rgb(${TM_P}))"></i><span>${hi}</span><span>· centro: <em>${mid}</em></span></div>`;
+// grupos (categorías) con sus cuadros dentro; cada cuadro: {n, v, col:{c,dk}, d (detalle), tip}
+function tmHTML(grupos, h = 380) {
+  const G = squarify(grupos.filter(g => g.v > 0).sort((a, b) => b.v - a.v), 0, 0, 100, 100);
+  return `<div class="tmap" style="--tmh:${h}px">${G.map(g => {
+    const cab = !!g.n && g.w > 9 && g.h > 12, cs = squarify(g.items.filter(it => it.v > 0).sort((a, b) => b.v - a.v), 0, 0, 100, 100);
+    return `<div class="tmap__g" style="left:${g.x}%;top:${g.y}%;width:${g.w}%;height:${g.h}%">${cab ? `<div class="tmap__gh" title="${esc(g.n)}">${esc(g.n)}</div>` : ''}<div class="tmap__gi"${cab ? '' : ' style="top:0"'}>${cs.map(c => {
+      const wpx = c.w * g.w / 1e4 * 1300, hpx = c.h / 100 * (g.h / 100 * h - (cab ? 18 : 0)), lbl = wpx > 64 && hpx > 30;
+      return `<div class="tmap__c${c.col.dk ? ' dk' : ''}" style="left:${c.x}%;top:${c.y}%;width:${c.w}%;height:${c.h}%;background:${c.col.c}" title="${esc(c.tip)}">${lbl ? `<b>${esc(c.n)}</b>${hpx > 44 ? `<span>${esc(c.d)}</span>` : ''}` : ''}</div>`; }).join('')}</div></div>`; }).join('')}</div>`;
+}
+// agrupa filas por categoría: los cuadros más pequeños de cada una se juntan en «Otros» para que el mapa se lea
+// colR(resto) da el color de «Otros» con el desempeño conjunto de los productos que agrupa; maxG limita las categorías (el resto va a «Otras categorías»)
+function tmAgrupa(rows, max = 9, colR = null, maxG = 12) {
+  const m = new Map(); rows.forEach(r => { const g = m.get(r.g) || {n: r.g, v: 0, items: []}; g.v += r.v; g.items.push(r); m.set(r.g, g); });
+  let G = [...m.values()].sort((a, b) => b.v - a.v);
+  if (G.length > maxG) { const rr = G.slice(maxG - 1); G = [...G.slice(0, maxG - 1), {n: `Otras categorías (${rr.length})`, v: rr.reduce((s, g) => s + g.v, 0), items: rr.map(g => { const cr = colR ? colR(g.items) : null; return {n: g.n, v: g.v, col: cr ? cr.col : {c: '#cfcfd3', dk: false}, d: usd(g.v) + (cr ? ' · ' + cr.d : ''), tip: `${g.n} · ${g.items.length} productos · ${usd(g.v)}${cr ? ' · ' + cr.d : ''}`}; })}]; }
+  return G.map(g => { if (g.n.startsWith('Otras categorías')) return g; g.items.sort((a, b) => b.v - a.v); if (g.items.length > max) { const resto = g.items.slice(max - 1), v = resto.reduce((s, r) => s + r.v, 0), cr = colR ? colR(resto) : null;
+    g.items = [...g.items.slice(0, max - 1), {n: `Otros (${resto.length})`, v, col: cr ? cr.col : {c: '#cfcfd3', dk: false}, d: usd(v) + (cr ? ' · ' + cr.d : ''), tip: `${resto.length} productos más de ${g.n}: ${usd(v)}${cr ? ' · ' + cr.d : ''}`}]; } return g; });
+}
+let TM_MODO = 'mg';
+// Ventas: cada producto por su venta; color por margen frente a la meta del sector, o por clase del Pareto ABC
+function tmVentas() {
+  const P = selProd(); if (!P) return '';
+  const meta = qv('I1', 'me') ?? 17, abcC = [tmCol(.9), tmCol(0), tmCol(-.75)];
+  const cM_ = m => tmCol(m == null ? null : (m - meta) / 15), CLN = ['Clase A · 80 % de la venta', 'Clase B · siguiente 15 %', 'Clase C · último 5 %'];
+  // margen: grupos por categoría; Pareto ABC: grupos por clase y, dentro, las categorías que la forman
+  const rows = TM_MODO === 'abc' ? (() => { const m = new Map(); P.idx.forEach(p => { const k = P.cls[p] + '|' + DET.p.c[p], o = m.get(k) || {cl: P.cls[p], cat: DET.cats[DET.p.c[p]], v: 0, n: 0}; o.v += P.V[p] / 100; o.n++; m.set(k, o); });
+      return [...m.values()].map(o => ({g: CLN[o.cl] + ` · ${nf(P.abc[o.cl])} productos`, n: o.cat, v: o.v, col: abcC[o.cl], d: `${usd(o.v)} · ${nf(o.n)} productos`, tip: `${CLN[o.cl]}: ${o.cat} · ${usd(o.v)} · ${nf(o.n)} productos`})); })()
+    : P.idx.map(p => { const r = pRow(P, p); return {g: r.cat || 'Sin categoría', n: r.p, v: r.v, mg: r.mg, col: cM_(r.mgp), d: `${usd(r.v)} · ${pct(r.mgp)}`, tip: `${r.p} (${r.cat}) · venta ${usd(r.v)} · margen ${pct(r.mgp)} · clase ${r.c}`}; });
+  const colR = TM_MODO === 'abc' ? null : rs => { const v = rs.reduce((s, r) => s + r.v, 0), m = v ? rs.reduce((s, r) => s + r.mg, 0) / v * 100 : null; return {col: cM_(m), d: 'margen ' + pct(m)}; };
+  const nav = `<nav class="gb tm-modo" aria-label="Color del mapa">${[['mg', 'Margen'], ['abc', 'Pareto ABC']].map(([k, l]) => `<button type="button" data-m="${k}" aria-pressed="${TM_MODO === k}">${l}</button>`).join('')}</nav>`;
+  const leg = TM_MODO === 'abc' ? `<div class="tmap-cat">${CLN.map((t, j) => `<span><i style="background:${abcC[j].c}"></i>${t}</span>`).join('')}<span>· cada cuadro es una categoría dentro de su clase</span></div>`
+    : tmEsc(pct(meta - 15, 0), `meta ${pct(meta, 0)}`, pct(meta + 15, 0));
+  return FIG(0, TM_MODO === 'abc' ? 'Mapa de categorías por clase ABC' : 'Mapa de productos por venta', `<div id="tm-ven">${tmHTML(TM_MODO === 'abc' ? tmAgrupa(rows, 40, null, 3) : tmAgrupa(rows, 16, colR, 16), 460)}${leg}</div>`, {tools: nav, i: 'Cada cuadro es un producto y su área, su venta en el periodo. Los productos se agrupan por categoría; dentro de cada una, los más pequeños se juntan en «Otros». Pasa el cursor sobre un cuadro para ver su detalle.'});
+}
+function tmModo(k) { TM_MODO = k; const f = $('tm-ven'); if (!f) return; const fg = f.closest('figure'); fg.outerHTML = tmVentas(); }
+// Inventario: cada producto por su existencia promedio (conteos de abril y septiembre); color por días de inventario frente a los del sector.
+// El detalle por producto llega aparte (api/inventario): el mapa se dibuja cuando está, con los filtros del análisis de inventario.
+const tmDiasCol = (d, ref) => tmCol(d ? Math.max(-1, Math.min(1, -Math.log(d / ref) / Math.log(6))) : -1);
+function tmInventario() {
+  const ref = 365 / (qv('I13', 'me') || 7.9);
+  setTimeout(() => cargaIV().then(tmInvLlena).catch(() => { const el = $('tm-inv'); if (el) el.innerHTML = '<p class="ficha__vacio">No se pudo cargar el detalle de inventario.</p>'; }), 0);
+  return FIG(0, 'Mapa del inventario por producto', `<p class="fg-lec" id="tm-inv-lec"></p><div id="tm-inv"><div class="tmap" style="--tmh:400px"></div></div>`
+    + tmEsc(`${nf(ref * 6, 0)} días o sin venta`, `${nf(ref, 0)} días (mediana del sector)`, `${nf(ref / 6, 0)} días`) + '<p class="fg-src">Fuente: conteos físicos de abril y septiembre valorados al costo y costo vendido de mayo a septiembre; días = 365 × existencia promedio / costo vendido al año.</p>',
+    {lec: false, i: 'Cada cuadro es un producto y su área, el valor promedio en existencia entre los conteos de abril y septiembre. Verde: se vende rápido; terracota: dinero inmovilizado. Sigue los filtros del análisis de inventario.'});
+}
+function tmInvLlena() {
+  const el = $('tm-inv'); if (!el || !IV) return;
+  const ref = 365 / (qv('I13', 'me') || 7.9), R = ixCalc();
+  const rows = R.Pr.map(x => { const inv = (x.k4 + x.k9) / 200, cva = x.cv5 * 12 / 5 / 100, d = inv > 0 && cva > 0 ? 365 * inv / cva : null, n = DET.p.n[x.p] || '—';
+    return {g: DET.cats[DET.p.c[x.p]] || 'Sin categoría', n, v: inv, cv: cva, col: tmDiasCol(d, ref), d: `${usd(inv)} · ${d ? nf(d, 0) + ' días' : 'sin venta'}`, tip: `${n} · existencia promedio ${usd(inv)} · ${d ? nf(d, 0) + ' días de inventario' : 'sin venta de mayo a septiembre'}`}; }).filter(r => r.v >= 1);
+  const colR = rs => { const v = rs.reduce((s, r) => s + r.v, 0), cv = rs.reduce((s, r) => s + r.cv, 0), d = cv ? 365 * v / cv : null; return {col: tmDiasCol(d, ref), d: d ? nf(d, 0) + ' días' : 'sin venta'}; };
+  el.innerHTML = tmHTML(tmAgrupa(rows, 12, colR, 14), 400);
+  const t = rows.reduce((s, r) => s + r.v, 0), l = rows.filter(r => !r.cv || 365 * r.v / r.cv > ref * 2).reduce((s, r) => s + r.v, 0), lec = $('tm-inv-lec');
+  if (lec && t) lec.innerHTML = `<b>${pct(l / t * 100, 0)} del valor en existencia</b> (${usd(l)} de ${usd(t)}) está en productos que tardan más del doble que el sector en venderse (más de ${nf(ref * 2, 0)} días) o que no se vendieron.`;
+}
+// Abastecimiento: cada proveedor por sus entradas; color por tipo de proveedor
+function tmProveedores() {
+  const P = selProv(), tipos = [...new Set(P.rows.map(r => r.tipo || 'Sin determinar'))], pal = ['#3d5a2a', '#7a8f2e', '#b9c27a', '#c0583a', '#8e8e93', '#d9a441'];
+  const cT = t => ({c: pal[tipos.indexOf(t) % pal.length], dk: tipos.indexOf(t) < 2 || tipos.indexOf(t) === 3});
+  const top = P.rows.filter(r => r.usd > 0).slice(0, 45), resto = P.rows.filter(r => r.usd > 0).slice(45), vr = resto.reduce((s, r) => s + r.usd, 0);
+  const items = top.map(r => ({n: r.p, v: r.usd, col: cT(r.tipo || 'Sin determinar'), d: `${usd(r.usd)} · ${pct(r.pct)}`, tip: `${r.p} (${r.tipo || 'sin tipo'}) · ${usd(r.usd)} · ${pct(r.pct)} de las entradas`}));
+  if (resto.length) items.push({n: `Resto (${resto.length})`, v: vr, col: {c: '#cfcfd3', dk: false}, d: usd(vr), tip: `${resto.length} proveedores más: ${usd(vr)}`});
+  return FIG(0, 'Mapa de proveedores por entradas', tmHTML([{n: '', v: 1, items}], 360)
+    + `<div class="tmap-cat">${tipos.map(t => `<span><i style="background:${cT(t).c}"></i>${esc(t)}</span>`).join('')}</div>`,
+    {i: 'Cada cuadro es un proveedor y su área, sus entradas al costo en el periodo (compras netas y transferencias del centro de acopio como un solo proveedor).'});
+}
+const TMAP = {ven: tmVentas, inv: tmInventario, abs: tmProveedores};
+document.addEventListener('click', e => { const b = e.target.closest('.tm-modo button'); if (b) { e.stopPropagation(); tmModo(b.dataset.m); } }, true);
 const SECB = {res: secResumen, fin: secFinanzas, ven: secVentas, inv: secInventario, abs: secAbastecimientoVN, sec: secSector, mc: secMC, mapa: secMapa};
 // filtros de las secciones enlazadas que viajan en el enlace de la vista
 const FXS = {ven: {on: () => vxOn(), cod: () => vxCod(), de: x => { S.vx = vxDeCod(x); }}, inv: {on: () => ixOn(), cod: () => ixCod(), de: x => { S.ix = ixDeCod(x); }}};
