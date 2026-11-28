@@ -1451,6 +1451,16 @@ button.kx-i:focus-visible,.kx-sb:focus-visible,.mini-b:focus-visible{outline:2px
 /* productos: buscador arriba y la lista se desplaza dentro de la tarjeta */
 .vx-pq{flex:none;max-width:none;margin:0 0 8px}
 .fz-col>.fg:not(.xl)>.fgb>#vx-p{flex:1 1 0;min-height:0;overflow:auto;scrollbar-width:thin;margin:0}
+/* reseña bajo la evolución del gasto */
+.fz-res{flex:none;margin:10px 0 0;font-size:12px;line-height:1.45;color:var(--muted)}
+/* dos grupos de anillos en paralelo: anillos arriba, cifra y leyenda debajo */
+.an2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px;align-items:start;min-width:0}
+.an.an-v{grid-template-columns:minmax(0,1fr);gap:12px;align-items:start}
+.an.an-v .an-s{max-width:190px}
+.an.an-v .an-l{gap:8px}
+.an.an-v .an-h b{font-size:clamp(24px,2.1vw,30px)}
+.an.an-v .an-r{padding:4px 8px}
+@container (max-width:470px){.an2{grid-template-columns:minmax(0,1fr);gap:18px}.an.an-v{grid-template-columns:110px minmax(0,1fr);align-items:center}}
 </style>
 <style id="base">
 /* base del navegador: preflight de Tailwind CSS 3.4.16 (licencia MIT), en el mismo orden en que lo aplicaba el CDN */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}
@@ -4429,35 +4439,56 @@ function secResumen(el) {
 // Debajo, dos contenedores del mismo tamaño: a la izquierda la evolución, con botones para ver las demás gráficas, los indicadores y la tabla;
 // a la derecha la composición. Quedan vinculados por mes (y por rubro en el gasto)
 S.fz = S.fz || {k: null, c: null, m: null, v: {}};
-S.fz.v = S.fz.v || {};
+S.fz.v = S.fz.v || {}; S.fz.vd = S.fz.vd || {};
 const FZN = {mb: 'Margen bruto', mo: 'Margen operativo', oss: 'Autosuficiencia', pe: 'Punto de equilibrio'};
 const FZH = 300;   // alto inicial de las gráficas; el contenedor fija el alto final
 // color con transparencia y sombra degradada bajo una línea: intensa junto a la línea y transparente abajo
 const hexA = (c, a) => /^#[0-9a-f]{6}$/i.test(c) ? c + Math.round(Math.max(0, Math.min(1, a)) * 255).toString(16).padStart(2, '0') : c;
 const sombra = (c, a = .32) => x => { const ch = x.chart, A = ch.chartArea; if (!A) return hexA(c, a * .4);
   const g = ch.ctx.createLinearGradient(0, A.top, 0, A.bottom); g.addColorStop(0, hexA(c, a)); g.addColorStop(1, hexA(c, 0)); return g; };
-// ventas, costo de ventas y gasto operativo de cada mes: líneas con sombra
-const figMensual = (h = 320) => FIG(0, 'Ventas, costo de ventas y gasto operativo por mes · USD', cv(h, id => { const k = K(), ref = j => ix(PER[j]) < idx0;
+// ventas, costo de ventas y gasto operativo de cada mes, con el punto de equilibrio de cada mes y el del periodo
+const figMensual = (h = 320) => FIG(0, 'Ventas, costo de ventas y gasto operativo por mes · USD', cv(h, id => { const k = K(), ref = j => ix(PER[j]) < idx0, r = calc(SI()), pe = PER.map(q => calc([ix(q)]).pe);
+        const o = opt({yf: v => nf(v), hl: r.pe ? {lines: [{v: r.pe, c: k.ac, dash: [2, 3], left: true, t: `equilibrio ${SIX ? 'del mes' : 'del periodo'}: ${usd(r.pe)} al mes`}]} : null});
         mk(id, {type: 'line', data: {labels: LBP(), datasets: [
           {label: 'Ventas', data: SER(M.ventas), borderColor: k.li, backgroundColor: sombra(k.li, .42), fill: 'origin', borderWidth: 2.6, pointRadius: ptR(3.5), pointBackgroundColor: k.li, pointBorderColor: k.sf, pointBorderWidth: 1.5, tension: .35, order: 2, fmt: v => usd(v)},
           {label: 'Costo de ventas', data: SER(M.costo_ventas), borderColor: k.dk, backgroundColor: sombra(k.dk, .12), fill: 'origin', borderWidth: 2, pointRadius: ptR(3.5), pointBackgroundColor: k.sf, pointBorderColor: k.dk, pointBorderWidth: 1.6, tension: .35, order: 1,
             segment: {borderDash: c => ref(c.p0DataIndex) || ref(c.p1DataIndex) ? [4, 4] : undefined}, fmt: v => usd(v)},
-          {label: 'Gasto operativo', data: SER(M.gastos), borderColor: k.mu, backgroundColor: sombra(k.mu, .16), fill: 'origin', borderWidth: 2, borderDash: [6, 4], pointRadius: ptR(3.5), pointBackgroundColor: k.sf, pointBorderColor: k.mu, pointBorderWidth: 1.6, tension: .35, order: 0, fmt: v => usd(v)}]},
-        options: {...opt({yf: v => nf(v)}), onClick: (e, els) => { if (els.length) mesFoco(PER[els[0].index]); }, onHover: (e, els) => { e.native.target.style.cursor = els.length ? 'pointer' : 'default'; },
-          plugins: {...opt().plugins, legend: {...opt().plugins.legend, labels: {...opt().plugins.legend.labels, sort: (x, y) => x.datasetIndex - y.datasetIndex}}},
+          {label: 'Gasto operativo', data: SER(M.gastos), borderColor: k.mu, backgroundColor: sombra(k.mu, .16), fill: 'origin', borderWidth: 2, borderDash: [6, 4], pointRadius: ptR(3.5), pointBackgroundColor: k.sf, pointBorderColor: k.mu, pointBorderWidth: 1.6, tension: .35, order: 0, fmt: v => usd(v)},
+          {label: 'Punto de equilibrio', data: pe, borderColor: k.ac, backgroundColor: k.ac, borderWidth: 2.2, pointStyle: 'rectRot', pointRadius: 4.5, pointBackgroundColor: k.ac, pointBorderColor: k.sf, pointBorderWidth: 1.2, tension: .3, spanGaps: false, order: -1,
+            fmt: v => usd(v) + ' en ventas'}]},
+        options: {...o, onClick: (e, els) => { if (els.length) mesFoco(PER[els[0].index]); }, onHover: (e, els) => { e.native.target.style.cursor = els.length ? 'pointer' : 'default'; },
+          plugins: {...o.plugins, legend: {...o.plugins.legend, labels: {...o.plugins.legend.labels, sort: (x, y) => x.datasetIndex - y.datasetIndex}}},
           scales: {x: {...axX, ticks: {maxRotation: 0}}, y: {...axY(v => nf(v)), beginAtZero: true}}}}); }),
-      {i: `Ventas con sombra verde; costo de ventas y gasto operativo (punteado) en gris. El costo de las transferencias es real desde ${lblL(D.inicio_costo_real)} de 2026; antes es referencial (tramo punteado). Toca un mes para ver su composición a la derecha.`});
-// gasto operativo por mes y rubro: áreas apiladas (con un rubro elegido, solo ese rubro; con «Otros rubros», los rubros menores)
+      {i: `Ventas con sombra verde; costo de ventas y gasto operativo (punteado) en gris. Rombos: punto de equilibrio de cada mes, las ventas que cubren los costos fijos (gasto operativo sin comisiones) con el margen de contribución de ese mes; línea punteada: el del periodo. Sin rombo, el mes no tuvo margen de contribución. El costo de las transferencias es real desde ${lblL(D.inicio_costo_real)} de 2026; antes es referencial (tramo punteado).`});
+// gasto operativo por mes y rubro: una línea con sombra por rubro, su nombre al final de la línea y una reseña de lo que pasó en el periodo
 const FZ_COL = () => { const k = K(); return [k.ol, k.al, k.li, k.gr]; };
+// nombre de cada línea junto a su último punto, separados para que no se encimen
+const finLab = {id: 'finLab', afterDatasetsDraw(ch) {
+  const c = ch.ctx, A = ch.chartArea, L = [];
+  ch.data.datasets.forEach((ds, i) => { const m = ch.getDatasetMeta(i); if (m.hidden) return; let j = ds.data.length - 1; while (j >= 0 && ds.data[j] == null) j--; if (j < 0) return; const p = m.data[j]; L.push({t: ds.label, x: p.x, y: p.y, c: ds.borderColor}); });
+  L.sort((p, q) => p.y - q.y); for (let i = 1; i < L.length; i++) if (L[i].y - L[i - 1].y < 13) L[i].y = L[i - 1].y + 13;
+  c.save(); c.font = `600 10.5px ${Chart.defaults.font.family}`; c.textBaseline = 'middle'; c.textAlign = 'left';
+  L.forEach(p => { c.fillStyle = p.c; c.fillText(p.t, Math.min(p.x + 8, A.right + 8), Math.max(A.top + 4, Math.min(A.bottom, p.y))); }); c.restore(); }};
+function fzResena(rubro) {
+  const gm = D.fig.gastos_mes, si = [...SI()].sort((x, y) => x - y), a0 = si[0], a1 = si[si.length - 1], ML = i => lblL(D.meses[i]);
+  const tot = i => gm.reduce((s, x) => s + x.v[i], 0), sumR = x => si.reduce((s, i) => s + x.v[i], 0), T = si.reduce((s, i) => s + tot(i), 0), sg = v => (v >= 0 ? '+' : '−') + usd(Math.abs(v));
+  if (rubro) { const R = rubro === 'Otros rubros' ? {v: D.meses.map((_, i) => gm.slice(3).reduce((s, x) => s + x.v[i], 0))} : gm.find(x => x.n === rubro); if (!R) return '';
+    const s = sumR(R); return si.length > 1 ? `${rubro}: de ${usd(R.v[a0])} en ${ML(a0)} a ${usd(R.v[a1])} en ${ML(a1)} (${sg(R.v[a1] - R.v[a0])}); en promedio ${usd(s / si.length)} al mes, el ${pct(T ? s / T * 100 : 0)} del gasto operativo.` : `${rubro}: ${usd(R.v[a0])} en ${ML(a0)}, el ${pct(T ? s / T * 100 : 0)} del gasto operativo del mes.`; }
+  const may = gm.reduce((b, x) => sumR(x) > sumR(b) ? x : b, gm[0]);
+  if (si.length < 2) return `En ${ML(a0)} el gasto operativo fue ${usd(T)}; el rubro mayor es ${may.n.toLowerCase()} (${pct(T ? sumR(may) / T * 100 : 0)}).`;
+  const sube = gm.reduce((b, x) => Math.abs(x.v[a1] - x.v[a0]) > Math.abs(b.v[a1] - b.v[a0]) ? x : b, gm[0]), d = tot(a1) - tot(a0);
+  return `De ${ML(a0)} a ${ML(a1)} el gasto operativo pasó de ${usd(tot(a0))} a ${usd(tot(a1))} al mes (${sg(d)}). El rubro mayor es ${may.n.toLowerCase()} (${pct(T ? sumR(may) / T * 100 : 0)} del gasto) y el que más cambió, ${sube.n.toLowerCase()} (${sg(sube.v[a1] - sube.v[a0])}).`;
+}
 function fzGastoMes(rubro, h = 250) {
   const gm = D.fig.gastos_mes, uno = rubro && gm.find(x => x.n === rubro), otros = rubro === 'Otros rubros';
   const sets = uno ? [[uno.n, uno.v]] : otros ? gm.slice(3).map(x => [x.n, x.v]) : [...gm.slice(0, 3).map(x => [x.n, x.v]), ['Otros rubros', D.meses.map((_, i) => gm.slice(3).reduce((a, x) => a + x.v[i], 0))]];
   const j0 = uno ? Math.min(3, gm.indexOf(uno)) : otros ? 3 : 0;
   return FIG(0, 'Gasto operativo por mes y rubro · USD' + (rubro ? ' · ' + rubro : ''), cv(h, id => { const k = K(), C = FZ_COL(), pal = [k.gr, k.al, k.li, k.ol, k.pa], col = j => otros ? pal[j % pal.length] : C[j0 + j];
-    mk(id, {type: 'line', data: {labels: LBP(), datasets: sets.map(([n, v], j) => ({label: n, data: SER(v), borderColor: col(j), backgroundColor: sets.length > 1 ? hexA(col(j), .34) : sombra(col(j), .42), fill: j ? '-1' : 'origin', stack: 's',
-        borderWidth: 2, tension: .35, pointRadius: ptR(2.5), pointBackgroundColor: col(j), pointBorderColor: k.sf, pointBorderWidth: 1.2, fmt: x => usd(x)}))},
-      options: {...opt({yf: v => nf(v)}), scales: {x: {...axX, ticks: {maxRotation: 0}}, y: {...axY(v => nf(v)), stacked: true, beginAtZero: true}}}}); }),
-    {i: sets.length > 1 ? 'Cada banda es un rubro; la línea de arriba es el gasto operativo total del mes.' : 'Gasto del rubro elegido en cada mes. Vuelve a tocar el rubro a la derecha para ver todos.'});
+    mk(id, {type: 'line', data: {labels: LBP(), datasets: sets.map(([n, v], j) => ({label: n, data: SER(v), borderColor: col(j), backgroundColor: sombra(col(j), sets.length > 1 ? .16 : .42), fill: 'origin',
+        borderWidth: 2.4, tension: .35, pointRadius: ptR(3), pointBackgroundColor: col(j), pointBorderColor: k.sf, pointBorderWidth: 1.2, fmt: x => usd(x)}))},
+      options: {...opt({legend: false, yf: v => nf(v)}), layout: {padding: {right: 118}}, scales: {x: {...axX, ticks: {maxRotation: 0}}, y: {...axY(v => nf(v)), beginAtZero: true}}}, plugins: [finLab]}); })
+    + `<p class="fz-res">${fzResena(rubro)}</p>`,
+    {i: sets.length > 1 ? 'Una línea por rubro, con su nombre al final. Toca un rubro en la estructura para ver solo ese.' : 'Gasto del rubro elegido en cada mes. Vuelve a tocar el rubro a la derecha para ver todos.'});
 }
 // autosuficiencia de cada mes: línea con sombra verde sobre el 100 % y gris debajo
 function fzOss(h = 260) {
@@ -4479,7 +4510,7 @@ function anillos(filas, cab, o = {}) {
     return `<g class="an-g" data-k="${j}" style="--c:${x.c}">${p}</g>`; }).join('');
   const ley = filas.map((x, j) => { const at = `data-k="${j}"${o.n ? ` data-n="${esc(x.n)}"` : ''}`, dentro = `<i style="background:${x.c}"></i><span>${x.n}</span><b class="num">${x.t}</b>${x.d ? `<small>${x.d}</small>` : ''}`;
     return o.btn ? `<button type="button" class="an-r an-bt${j === sel ? ' on' : ''}" ${at} data-${o.btn}="${x.id}" aria-pressed="${j === sel}">${dentro}</button>` : `<div class="an-r" ${at}>${dentro}</div>`; }).join('');
-  return `<div class="an"${sel >= 0 ? ` data-sel="${sel}"` : ''}><svg class="an-s" viewBox="0 0 200 200" aria-hidden="true">${ar}</svg><div class="an-l">${cab ? `<div class="an-h"><b class="num">${cab[0]}</b><span>${cab[1]}</span></div>` : ''}<div class="an-rs">${ley}</div></div></div>`;
+  return `<div class="an${o.v ? ' an-v' : ''}"${sel >= 0 ? ` data-sel="${sel}"` : ''}><svg class="an-s" viewBox="0 0 200 200" aria-hidden="true">${ar}</svg><div class="an-l">${cab ? `<div class="an-h"><b class="num">${cab[0]}</b><span>${cab[1]}</span></div>` : ''}<div class="an-rs">${ley}</div></div></div>`;
 }
 // al pasar sobre un anillo o su fila, los demás se atenúan (lo elegido queda marcado al salir)
 function anFoco(an, k) { const s = an.dataset.sel, q = k ?? (s === undefined || s === '' ? null : +s); an.querySelectorAll('[data-k]').forEach(x => x.classList.toggle('dim', q != null && +x.dataset.k !== q)); }
@@ -4492,20 +4523,18 @@ function fzCosto() {
     {i: `Líneas de venta de ${selL()} según el origen de su costo unitario; cada anillo completo es el total de líneas. Las tres primeras usan entradas reales del producto.`});
 }
 // estructura del gasto operativo: los tres rubros mayores y el resto, con los colores de la evolución
-function fzEstructura() {
-  const ii = SI(), gm = D.fig.gastos_mes, v = gm.map(x => sumI(x.v, ii)), tot = v.reduce((a, b) => a + b, 0), C = FZ_COL();
+// estructura del gasto operativo y, en paralelo, el peso de los gastos sobre las ventas: dos grupos de anillos en la misma tarjeta
+const fzAnEst = () => { const ii = SI(), gm = D.fig.gastos_mes, v = gm.map(x => sumI(x.v, ii)), tot = v.reduce((a, b) => a + b, 0), C = FZ_COL();
   const g = [...gm.slice(0, 3).map((x, j) => [x.n, v[j]]), ['Otros rubros', v.slice(3).reduce((a, b) => a + b, 0)]];
-  return FIG(0, 'Estructura del gasto operativo (I4) · ' + selL(), anillos(g.map(([n, x], j) => ({n, f: x / tot, t: pct(x / tot * 100), d: usd(x), c: C[j]})), [usd(tot), 'de gasto operativo · ' + selL()], {n: true}),
-    {i: `Parte de cada rubro en el gasto operativo de ${selL()}; cada anillo completo es el gasto total. Otros rubros: ${gm.slice(3).map(x => x.n.toLowerCase()).join(', ')}. Toca un rubro para ver su evolución.`});
-}
-// peso de cada rubro sobre las ventas: cada anillo completo son las ventas del periodo
-function fzPeso() {
-  const gv = selGasto(), r = gv.r;
-  return FIG(0, 'Peso de los gastos sobre las ventas · ' + selL(), anillos([
-      {n: 'Gasto total', f: r.pgo / 100, t: pct(r.pgo), c: 'var(--c1)'}, {n: 'Personal (socio y ocasional)', f: gv.personal / 100, t: pct(gv.personal), c: 'var(--c2)'},
-      {n: 'Energía y mantenimiento', f: gv.ocup / 100, t: pct(gv.ocup), c: 'var(--c3)'}, {n: 'Energía eléctrica', f: gv.energia / 100, t: pct(gv.energia), c: 'var(--c4)'},
-      {n: 'Comisiones y servicios bancarios', f: gv.comisiones / 100, t: pct(gv.comisiones), c: 'var(--chart-2)'}], [pct(r.pgo), 'de las ventas se va en gasto operativo']),
-    {i: `Gasto de cada rubro sobre las ventas de ${selL()}; cada anillo completo son las ventas.`});
+  return anillos(g.map(([n, x], j) => ({n, f: x / tot, t: pct(x / tot * 100), d: usd(x), c: C[j]})), [usd(tot), 'de gasto operativo · estructura'], {n: true, v: true}); };
+const fzAnPeso = () => { const gv = selGasto(), r = gv.r;
+  return anillos([{n: 'Gasto total', f: r.pgo / 100, t: pct(r.pgo), c: 'var(--c1)'}, {n: 'Personal (socio y ocasional)', f: gv.personal / 100, t: pct(gv.personal), c: 'var(--c2)'},
+    {n: 'Energía y mantenimiento', f: gv.ocup / 100, t: pct(gv.ocup), c: 'var(--c3)'}, {n: 'Energía eléctrica', f: gv.energia / 100, t: pct(gv.energia), c: 'var(--c4)'},
+    {n: 'Comisiones y servicios bancarios', f: gv.comisiones / 100, t: pct(gv.comisiones), c: 'var(--chart-2)'}], [pct(r.pgo), 'de las ventas se va en gasto'], {v: true}); };
+function fzEstructura() {
+  const gm = D.fig.gastos_mes;
+  return FIG(0, 'Estructura del gasto operativo (I4) y su peso sobre las ventas · ' + selL(), `<div class="an2">${fzAnEst()}${fzAnPeso()}</div>`,
+    {i: `Izquierda: parte de cada rubro en el gasto operativo de ${selL()}; cada anillo completo es el gasto total (otros rubros: ${gm.slice(3).map(x => x.n.toLowerCase()).join(', ')}). Toca un rubro para ver su evolución. Derecha: gasto de cada rubro sobre las ventas; cada anillo completo son las ventas.`});
 }
 // indicadores de cada sección: van al pie de la tarjeta de la derecha, en una franja con divisiones finas (la cifra que ya destaca la gráfica no se repite)
 function fzInd(s) {
@@ -4540,11 +4569,12 @@ const FZT_ = {
 // contenedor izquierdo: vistas de cada sección (la primera es la evolución); contenedor derecho: composición
 const FZV = {
   mb: [['e', 'Evolución', () => FG.f3b(FZH)], ['t', 'Tabla', FZT_.mb]],
-  mo: [['e', 'Evolución', () => fzGastoMes(S.fz.c, FZH)], ['p', 'Peso', fzPeso], ['t', 'Tabla', FZT_.mo]],
+  mo: [['e', 'Evolución', () => fzGastoMes(S.fz.c, FZH)], ['t', 'Tabla', FZT_.mo]],
   oss: [['e', 'Evolución', () => fzOss(FZH)], ['t', 'Tabla', FZT_.oss]],
-  pe: [['e', 'Evolución', () => figMensual(FZH)], ['t', 'Tabla', FZT_.pe]]
+  pe: [['e', 'Evolución', () => FG.f5a(FZH)], ['t', 'Tabla', FZT_.pe]]
 };
-const FZC = {mb: fzCosto, mo: fzEstructura, oss: () => FG.f4(FZH), pe: () => FG.f5a(FZH)};
+const FZC = {mb: [['c', 'Costo', fzCosto]], mo: [['e', 'Estructura', fzEstructura]], oss: [['r', 'Resultados', () => FG.f4(FZH)]], pe: [['m', 'Ventas y costos', () => figMensual(FZH)]]};
+const fzVistaD = s => FZC[s].find(x => x[0] === S.fz.vd[s]) || FZC[s][0];
 const fzS = () => S.fz.k || 'mb';
 const fzVista = s => FZV[s].find(x => x[0] === S.fz.v[s]) || FZV[s][0];
 function fzMenu() {
@@ -4590,7 +4620,7 @@ function fzCuerpo(anim) {
   const b = $('fz-b'); if (!b) return;
   const pinta = () => {
     b.innerHTML = `<div class="g2 fz-cols"><div class="fz-col" id="fz-izq">${fzVista(fzS())[2]()}</div><div class="fz-col" id="fz-der">${fzDerHTML()}</div></div>`;
-    flush(b); fzNav(); fzVincula();
+    flush(b); fzNav(); fzNavD(); fzVincula();
   };
   anim ? swap(b, pinta) : pinta();
 }
@@ -4602,11 +4632,18 @@ function fzNav() {
 }
 function fzIzq(anim) { const d = $('fz-izq'); if (!d) return; const pinta = () => { d.innerHTML = fzVista(fzS())[2](); flush(d); fzNav(); fzVincula(); }; anim ? swap(d, pinta) : pinta(); }
 // la composición se calcula con el mes elegido en la evolución
+// la composición se calcula con el mes elegido en la evolución; en el gasto, los anillos del peso ya muestran esas cifras y no lleva franja de indicadores
 function fzDerHTML() {
   SIX = S.fz.m != null ? [S.fz.m] : null;
-  try { return FZC[fzS()]().replace(/<\/div>(<\/figure>)$/, fzTira(fzS()) + '</div>$1'); } finally { SIX = null; }
+  try { const v = fzVistaD(fzS()), h = v[2](); return fzS() === 'mo' ? h : h.replace(/<\/div>(<\/figure>)$/, fzTira(fzS()) + '</div>$1'); } finally { SIX = null; }
 }
-function fzDer() { const d = $('fz-der'); if (!d) return; d.innerHTML = fzDerHTML(); flush(d); fzVincula(); }
+function fzDer(anim) { const d = $('fz-der'); if (!d) return; const pinta = () => { d.innerHTML = fzDerHTML(); flush(d); fzNavD(); fzVincula(); }; anim ? swap(d, pinta) : pinta(); }
+// botones de la tarjeta derecha, cuando tiene más de una vista
+function fzNavD() {
+  const s = fzS(), L = FZC[s], d = $('fz-der'), fc = d && d.querySelector('.fg>figcaption'); if (!fc || L.length < 2) return;
+  fc.classList.remove('fc1'); fc.querySelector('.fgr').insertAdjacentHTML('beforebegin', `<nav class="gb vw" id="fz-vd" aria-label="Vistas: ${L.map(x => x[1]).join(', ')}"></nav>`);
+  menu($('fz-vd'), L.map(x => [x[0], x[1]]), fzVistaD(s)[0], v => { if (v === fzVistaD(s)[0]) return; S.fz.vd[s] = v; fzDer(true); });
+}
 const fzTenue = c => typeof c !== 'string' ? c : /^#[0-9a-f]{6}$/i.test(c) ? c + '40' : /^#[0-9a-f]{8}$/i.test(c) ? c.slice(0, 7) + '30' : c;
 // vínculos: tocar un mes en una gráfica mensual elige ese mes; tocar un rubro del gasto filtra la evolución
 function fzVincula() {
@@ -4993,7 +5030,7 @@ function mapaIr(k, q, vw, vn) {
   // ventas, inventario y abastecimiento: se abre la parte del menú y la vista de cada ventana donde está la figura
   if (vn) { const st = vnE(k); st.k = vn[0]; if (vn[1]) st.v[vn[0] + 'i'] = vn[1]; if (vn[2]) st.v[vn[0] + 'd'] = vn[2]; if (S.sec === k) swap($('secp'), renderSeccion); }
   // finanzas: las gráficas buscadas están en la primera sección, con la evolución a la vista
-  if (k === 'fin' && q && q[0] !== '#' && (S.fz.k || Object.values(S.fz.v).some(v => v !== 'e'))) { S.fz = {k: null, c: null, m: null, v: {}}; if (S.sec === 'fin') swap($('secp'), renderSeccion); }
+  if (k === 'fin' && q && q[0] !== '#' && (S.fz.k || Object.values(S.fz.v).some(v => v !== 'e'))) { S.fz = {k: null, c: null, m: null, v: {}, vd: {}}; if (S.sec === 'fin') swap($('secp'), renderSeccion); }
   if (!q) { goSec(k); return; }
   const halla = () => { const t = h => sinEt(h.textContent), hs = [...document.querySelectorAll('#secp .fg>figcaption>b, #secp .sgr-h>h2, #secp h2.ix-sec')].filter(h => h.offsetParent !== null);
     if (q[0] === '#') { const e = document.querySelector('#secp ' + q); return e && e.offsetParent !== null ? e : null; }
