@@ -4961,8 +4961,9 @@ const NM_SEC = {res: 'Resumen', fin: 'Finanzas', ven: 'Ventas', inv: 'Inventario
 // un color por rama (fuente de datos); las señales mezclan los colores de las ramas que atraviesan
 // un color intenso por nivel: todos los puntos de una capa iguales
 // fuentes verde claro, categorías (la clasificación) gris, indicadores verde amarillento, análisis rojo oscuro y secciones rojo claro intenso
-const NM_NIVEL = {claro: {f: '#6FCF5F', c: '#8E8E93', i: '#A3A21F', a: '#8E1B1B', s: '#FF3B30'}, oscuro: {f: '#8EE07F', c: '#A6A6AB', i: '#C9C83A', a: '#C0392B', s: '#FF5E54'}};
-const NM_RAMA = {claro: ['#6E8B23', '#C29A22', '#3F7F6A', '#9AAE3A', '#7D7466', '#55707F'], oscuro: ['#A3C24A', '#E0B640', '#5FB39A', '#C9DB6A', '#B3A898', '#8FB0C2']};
+// colores del mapa tomados del tema elegido: uno por capa y uno por fuente (ramas)
+const NM_NIVEL = {f: '--c2', c: '--c6', i: '--c1', a: '--c4', s: '--c3'};
+const NM_RAMA = ['--c1', '--c2', '--c3', '--c4', '--c5', '--c6'];
 // análisis de datos: sección, título con que se ubica (o #id), pestaña que abre e indicadores que calcula o muestra
 const NM_AN = [
   {n: 'Indicadores clave', s: 'res', ind: ['I5', 'I1', 'I2', 'I15', 'I13', 'I14', 'I20']},
@@ -5077,11 +5078,15 @@ function nmMontar() {
   const col = (c, a) => { const [r, g, b] = Array.isArray(c) ? c : C[c] || rgb(c); return `rgba(${r | 0},${g | 0},${b | 0},${a})`; };
   const mezcla = (a, b, t) => a.map((x, i) => x + (b[i] - x) * t), media = L => L.length ? [0, 1, 2].map(i => L.reduce((s, c) => s + c[i], 0) / L.length) : [128, 128, 128];
   function leeCss() {
-    const cs = getComputedStyle(raiz); ['--muted', '--ink', '--ink-strong', '--accent', '--c2', '--c3', '--c4', '--sem-ok', '--sem-warn', '--sem-bad', '--sem-na', '--surface'].forEach(v => { C[v] = rgb(cs.getPropertyValue(v).trim()); });
+    const cs = getComputedStyle(raiz); ['--muted', '--ink', '--ink-strong', '--accent', '--c1', '--c2', '--c3', '--c4', '--c5', '--c6', '--sem-ok', '--sem-warn', '--sem-bad', '--sem-na', '--surface'].forEach(v => { C[v] = rgb(cs.getPropertyValue(v).trim()); });
     const bg = getComputedStyle(raiz.closest('.fg') || raiz).backgroundColor; C.bg = rgb(bg && !/rgba\(0, 0, 0, 0\)|transparent/.test(bg) ? bg : cs.getPropertyValue('--surface').trim());
-    const os = (C.bg[0] * .3 + C.bg[1] * .59 + C.bg[2] * .11) < 110, fg = raiz.closest('.fg') || raiz; ramas = NM_RAMA[os ? 'oscuro' : 'claro'].map(rgb);
+    // un color del tema que casi no se distingue del fondo se acerca a la tinta hasta que se vea
+    const lum = c => c.reduce((s, v, i) => { v /= 255; return s + [.2126, .7152, .0722][i] * (v <= .03928 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4); }, 0);
+    const contraste = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y) + .05) / (Math.min(x, y) + .05); };
+    const legible = c => { let o = c; for (let t = .1; contraste(o, C.bg) < 2.2 && t <= 1; t += .1) o = mezcla(c, C['--ink-strong'], t); return o.map(Math.round); };
+    const fg = raiz.closest('.fg') || raiz; ramas = NM_RAMA.map(v => legible(C[v]));
     ramas.forEach((c, j) => fg.style.setProperty('--rama-' + j, `rgb(${c})`));
-    Object.entries(NM_NIVEL[os ? 'oscuro' : 'claro']).forEach(([t, h]) => { C['--nv-' + t] = rgb(h); fg.style.setProperty('--nv-' + t, h); });
+    Object.entries(NM_NIVEL).forEach(([t, v]) => { const c = legible(C[v]); C['--nv-' + t] = c; fg.style.setProperty('--nv-' + t, `rgb(${c})`); });
     // color mezclado de cada elemento, con los indicadores recogidos (m0) y a la vista (m1)
     const by = R.by, cap = t => R.N.filter(n => n.t === t);
     cap('f').forEach(n => { n.m0 = n.m1 = ramas[n.j]; });
