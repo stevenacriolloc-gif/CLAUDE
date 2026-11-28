@@ -1479,7 +1479,8 @@ button.kx-i:focus-visible,.kx-sb:focus-visible,.mini-b:focus-visible{outline:2px
 .perchip small{font-size:11.5px;font-weight:500;color:var(--muted)}
 .perchip:hover{border-color:var(--ink-strong)}
 .perchip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-@media (max-width:640px){.perchip small{display:none}.perchip{padding:0 10px;margin-left:4px}}
+/* en pantallas angostas el periodo baja a una segunda línea, bajo los íconos, para no ensanchar la página */
+@media (max-width:760px){.top{align-items:flex-start}.top>.tbar:first-child{flex-wrap:wrap;row-gap:6px}.perchip{order:99;height:30px;line-height:28px;margin-left:0;font-size:12.5px}}
 /* tablas: la barra de cada cifra va como subrayado en la base de la celda y ya no pasa por debajo de los dígitos */
 .dt-tbl.dyn .cb{top:auto;bottom:3px;height:4px;border-radius:2px;background:color-mix(in srgb,var(--chart) 55%,transparent)}
 .dt-tbl.dyn .cb.ng{background:color-mix(in srgb,var(--sem-bad) 50%,transparent)}
@@ -1510,9 +1511,11 @@ button.kx-i:focus-visible,.kx-sb:focus-visible,.mini-b:focus-visible{outline:2px
 .tmap__g{position:absolute;box-sizing:border-box;border:2px solid var(--card-bg);background:var(--card-bg);overflow:hidden}
 .tmap__gh{position:absolute;left:0;right:0;top:0;height:18px;padding:2px 5px;font-size:10.5px;font-weight:700;color:var(--ink-strong);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tmap__gi{position:absolute;left:0;right:0;top:18px;bottom:0}
-.tmap__c{border-width:1px}
+.tmap__c{border-width:1px;cursor:pointer}
+.tmap__c.on{outline:2.5px solid var(--ink-strong);outline-offset:-2.5px;z-index:3}
+.tmap-det{margin:8px 0 0;min-height:18px;font-size:12px;line-height:1.4;color:var(--ink)}
 .tm-modo button{padding:6px 12px}
-.tm-modo button[aria-pressed="true"]{background:var(--band,var(--ink-strong));color:var(--on-band,#fff)}
+.gb.tm-modo button[aria-pressed="true"],.gb.tm-modo button[aria-pressed="true"]:hover{background:var(--band,var(--ink-strong));color:var(--on-band,#fff)}
 .tmap-cat span{display:inline-flex;align-items:center;gap:5px}.tmap-cat i{width:10px;height:10px;border-radius:3px}
 </style>
 <style id="base">
@@ -5431,27 +5434,34 @@ function squarify(items, x, y, w, h) {
   return out;
 }
 // escala divergente terracota – crema – verde (t de −1 a 1); el texto pasa a blanco sobre los tonos oscuros
-const TM_N = [192, 88, 58], TM_M = [243, 236, 216], TM_P = [79, 138, 58];
+const TM_N = [192, 88, 58], TM_P = [79, 138, 58];
+// en los temas oscuros el centro de la escala es un gris oliva oscuro: el crema deslumbra sobre fondo negro
+const tmOsc = () => getComputedStyle(document.documentElement).colorScheme === 'dark';
+const tmMid = () => tmOsc() ? [62, 64, 50] : [243, 236, 216], tmGris = () => tmOsc() ? '#4a4c40' : '#cfcfd3';
 const tmMix = (a, b, f) => a.map((v, i) => Math.round(v + (b[i] - v) * f));
-const tmCol = t => t == null ? {c: '#d9d9dc', dk: false} : (c => ({c: `rgb(${c})`, dk: c[0] * .299 + c[1] * .587 + c[2] * .114 < 140}))(t >= 0 ? tmMix(TM_M, TM_P, Math.min(1, t)) : tmMix(TM_M, TM_N, Math.min(1, -t)));
-const tmEsc = (lo, mid, hi) => `<div class="tmap-leg"><span>${lo}</span><i style="background:linear-gradient(90deg,rgb(${TM_N}),rgb(${TM_M}),rgb(${TM_P}))"></i><span>${hi}</span><span>· centro: <em>${mid}</em></span></div>`;
+const tmCol = t => t == null ? {c: tmGris(), dk: tmOsc()} : (c => ({c: `rgb(${c})`, dk: c[0] * .299 + c[1] * .587 + c[2] * .114 < 140}))(t >= 0 ? tmMix(tmMid(), TM_P, Math.min(1, t)) : tmMix(tmMid(), TM_N, Math.min(1, -t)));
+const tmEsc = (lo, mid, hi) => `<div class="tmap-leg"><span>${lo}</span><i style="background:linear-gradient(90deg,rgb(${TM_N}),rgb(${tmMid()}),rgb(${TM_P}))"></i><span>${hi}</span><span>· centro: <em>${mid}</em></span></div>`;
 // grupos (categorías) con sus cuadros dentro; cada cuadro: {n, v, col:{c,dk}, d (detalle), tip}
+// ancho disponible para decidir qué cuadros llevan rótulo; en pantallas angostas el mapa es más alto y agrupa más
+const tmAncho = () => Math.min(1300, Math.max(280, innerWidth - 64)), tmAngosto = () => tmAncho() < 700;
 function tmHTML(grupos, h = 380) {
+  const W = tmAncho(); if (W < 700) h = Math.round(h * 1.35);
   const G = squarify(grupos.filter(g => g.v > 0).sort((a, b) => b.v - a.v), 0, 0, 100, 100);
   return `<div class="tmap" style="--tmh:${h}px">${G.map(g => {
     const cab = !!g.n && g.w > 9 && g.h > 12, cs = squarify(g.items.filter(it => it.v > 0).sort((a, b) => b.v - a.v), 0, 0, 100, 100);
     return `<div class="tmap__g" style="left:${g.x}%;top:${g.y}%;width:${g.w}%;height:${g.h}%">${cab ? `<div class="tmap__gh" title="${esc(g.n)}">${esc(g.n)}</div>` : ''}<div class="tmap__gi"${cab ? '' : ' style="top:0"'}>${cs.map(c => {
-      const wpx = c.w * g.w / 1e4 * 1300, hpx = c.h / 100 * (g.h / 100 * h - (cab ? 18 : 0)), lbl = wpx > 64 && hpx > 30;
-      return `<div class="tmap__c${c.col.dk ? ' dk' : ''}" style="left:${c.x}%;top:${c.y}%;width:${c.w}%;height:${c.h}%;background:${c.col.c}" title="${esc(c.tip)}">${lbl ? `<b>${esc(c.n)}</b>${hpx > 44 ? `<span>${esc(c.d)}</span>` : ''}` : ''}</div>`; }).join('')}</div></div>`; }).join('')}</div>`;
+      const wpx = c.w * g.w / 1e4 * W, hpx = c.h / 100 * (g.h / 100 * h - (cab ? 18 : 0)), lbl = wpx > 64 && hpx > 30;
+      return `<div class="tmap__c${c.col.dk ? ' dk' : ''}" style="left:${c.x}%;top:${c.y}%;width:${c.w}%;height:${c.h}%;background:${c.col.c}" title="${esc(c.tip)}">${lbl ? `<b>${esc(c.n)}</b>${hpx > 44 ? `<span>${esc(c.d)}</span>` : ''}` : ''}</div>`; }).join('')}</div></div>`; }).join('')}</div><p class="tmap-det" aria-live="polite">${W < 700 ? 'Toca' : 'Pasa el cursor o haz clic en'} un cuadro para ver su detalle.</p>`;
 }
 // agrupa filas por categoría: los cuadros más pequeños de cada una se juntan en «Otros» para que el mapa se lea
 // colR(resto) da el color de «Otros» con el desempeño conjunto de los productos que agrupa; maxG limita las categorías (el resto va a «Otras categorías»)
 function tmAgrupa(rows, max = 9, colR = null, maxG = 12) {
+  if (tmAngosto()) { max = Math.min(max, 5); maxG = Math.min(maxG, 7); }
   const m = new Map(); rows.forEach(r => { const g = m.get(r.g) || {n: r.g, v: 0, items: []}; g.v += r.v; g.items.push(r); m.set(r.g, g); });
   let G = [...m.values()].sort((a, b) => b.v - a.v);
-  if (G.length > maxG) { const rr = G.slice(maxG - 1); G = [...G.slice(0, maxG - 1), {n: `Otras categorías (${rr.length})`, v: rr.reduce((s, g) => s + g.v, 0), items: rr.map(g => { const cr = colR ? colR(g.items) : null; return {n: g.n, v: g.v, col: cr ? cr.col : {c: '#cfcfd3', dk: false}, d: usd(g.v) + (cr ? ' · ' + cr.d : ''), tip: `${g.n} · ${g.items.length} productos · ${usd(g.v)}${cr ? ' · ' + cr.d : ''}`}; })}]; }
+  if (G.length > maxG) { const rr = G.slice(maxG - 1); G = [...G.slice(0, maxG - 1), {n: `Otras categorías (${rr.length})`, v: rr.reduce((s, g) => s + g.v, 0), items: rr.map(g => { const cr = colR ? colR(g.items) : null; return {n: g.n, v: g.v, col: cr ? cr.col : {c: tmGris(), dk: tmOsc()}, d: usd(g.v) + (cr ? ' · ' + cr.d : ''), tip: `${g.n} · ${g.items.length} productos · ${usd(g.v)}${cr ? ' · ' + cr.d : ''}`}; })}]; }
   return G.map(g => { if (g.n.startsWith('Otras categorías')) return g; g.items.sort((a, b) => b.v - a.v); if (g.items.length > max) { const resto = g.items.slice(max - 1), v = resto.reduce((s, r) => s + r.v, 0), cr = colR ? colR(resto) : null;
-    g.items = [...g.items.slice(0, max - 1), {n: `Otros (${resto.length})`, v, col: cr ? cr.col : {c: '#cfcfd3', dk: false}, d: usd(v) + (cr ? ' · ' + cr.d : ''), tip: `${resto.length} productos más de ${g.n}: ${usd(v)}${cr ? ' · ' + cr.d : ''}`}]; } return g; });
+    g.items = [...g.items.slice(0, max - 1), {n: `Otros (${resto.length})`, v, col: cr ? cr.col : {c: tmGris(), dk: tmOsc()}, d: usd(v) + (cr ? ' · ' + cr.d : ''), tip: `${resto.length} productos más de ${g.n}: ${usd(v)}${cr ? ' · ' + cr.d : ''}`}]; } return g; });
 }
 let TM_MODO = 'mg';
 // Ventas: cada producto por su venta; color por margen frente a la meta del sector, o por clase del Pareto ABC
@@ -5496,12 +5506,14 @@ function tmProveedores() {
   const cT = t => ({c: pal[tipos.indexOf(t) % pal.length], dk: tipos.indexOf(t) < 2 || tipos.indexOf(t) === 3});
   const top = P.rows.filter(r => r.usd > 0).slice(0, 45), resto = P.rows.filter(r => r.usd > 0).slice(45), vr = resto.reduce((s, r) => s + r.usd, 0);
   const items = top.map(r => ({n: r.p, v: r.usd, col: cT(r.tipo || 'Sin determinar'), d: `${usd(r.usd)} · ${pct(r.pct)}`, tip: `${r.p} (${r.tipo || 'sin tipo'}) · ${usd(r.usd)} · ${pct(r.pct)} de las entradas`}));
-  if (resto.length) items.push({n: `Resto (${resto.length})`, v: vr, col: {c: '#cfcfd3', dk: false}, d: usd(vr), tip: `${resto.length} proveedores más: ${usd(vr)}`});
+  if (resto.length) items.push({n: `Resto (${resto.length})`, v: vr, col: {c: tmGris(), dk: tmOsc()}, d: usd(vr), tip: `${resto.length} proveedores más: ${usd(vr)}`});
   return FIG(0, 'Mapa de proveedores por entradas', tmHTML([{n: '', v: 1, items}], 360)
     + `<div class="tmap-cat">${tipos.map(t => `<span><i style="background:${cT(t).c}"></i>${esc(t)}</span>`).join('')}</div>`,
     {i: 'Cada cuadro es un proveedor y su área, sus entradas al costo en el periodo (compras netas y transferencias del centro de acopio como un solo proveedor).'});
 }
 const TMAP = {ven: tmVentas, inv: tmInventario, abs: tmProveedores};
+// tocar un cuadro escribe su detalle bajo el mapa (en pantallas táctiles no hay cursor para el texto emergente)
+document.addEventListener('click', e => { const c = e.target.closest('.tmap__c'); if (!c) return; const m = c.closest('.tmap'); m.querySelectorAll('.tmap__c.on').forEach(x => x.classList.remove('on')); c.classList.add('on'); const d = m.nextElementSibling; if (d && d.classList.contains('tmap-det')) d.textContent = c.title; });
 document.addEventListener('click', e => { const b = e.target.closest('.tm-modo button'); if (b) { e.stopPropagation(); tmModo(b.dataset.m); } }, true);
 const SECB = {res: secResumen, fin: secFinanzas, ven: secVentas, inv: secInventario, abs: secAbastecimientoVN, sec: secSector, mc: secMC, mapa: secMapa};
 // filtros de las secciones enlazadas que viajan en el enlace de la vista
