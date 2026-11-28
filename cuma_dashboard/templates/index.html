@@ -3596,22 +3596,27 @@ function vxMes(R) {
   flush(el);
 }
 
-// días de la semana: venta promedio diaria en una línea con sombra; tocar un día filtra
+// venta promedio diaria de cada mes en líneas con sombra: lunes a viernes y sábado y domingo (el mapa ya muestra cada día); tocar un mes enfoca el periodo
 function vxDia(R) {
   const el = $('vx-d'); if (!el) return;
-  const h_ = selHoras(); if (!h_) { el.innerHTML = sinHoras(); VXC.d = null; return; }
-  const k = K(), f = S.vx, filt = !!R && (f.cat != null || f.prod != null), NH = h_.mapa.horas.length, ds = diasSem();
-  const d = filt ? DIAS.map((_, dd) => ds[dd] ? [...Array(NH).keys()].reduce((a, j) => a + R.cV[dd * NH + j], 0) / 100 / ds[dd] : 0) : h_.dia;
-  const selD = f.cel && (f.cel.t === 'd' || f.cel.t === 'c') ? f.cel.d : null;
-  const col = d.map((_, j) => { const c = j > 4 ? k.ol : k.li; return selD == null || selD === j ? c : c + '59'; }), rad = d.map((_, j) => selD === j ? 7 : 5);
-  $('vx-td').textContent = filt ? 'Venta promedio diaria · ' + vxTxt(true) + ' · USD sin IVA' : 'Venta promedio diaria · USD con IVA';
-  const lab = v => nf(v, filt && Math.max(...d) < 20 ? 1 : 0);
+  if (!DET || !DET.h || !DET.h.d.some(r => r.some(x => x))) { el.innerHTML = sinHoras(); VXC.d = null; return; }
+  const k = K(), f = S.vx, H = DET.h, NH = H.horas.length, filt = !!R && (f.cat != null || f.prod != null), msk = celMask(f.cel);
+  const tiene = d => !msk || H.horas.some((_, j) => msk[d * NH + j]);
+  const serie = fn => PER.map(q => { const m = dmi(ix(q)); return m < 0 || !H.d[m].some(x => x) ? null : fn(m); });
+  const prom = (m, dd) => { let u = 0, n = 0; dd.filter(tiene).forEach(d => { n += H.d[m][d]; for (let j = 0; j < NH; j++) if (!msk || msk[d * NH + j]) u += H.v[m][d][j]; }); return n ? u / 100 / n : null; };
+  const L = filt ? [['Venta diaria', serie(m => { const dd = diasDe(f.cel, [m]); return dd ? R.mV[m] / 100 / dd : null; }), k.li]]
+    : f.cel ? [['Venta diaria', serie(m => prom(m, [0, 1, 2, 3, 4, 5, 6])), k.li]]
+    : [['Lunes a viernes', serie(m => prom(m, [0, 1, 2, 3, 4])), k.li], ['Sábado y domingo', serie(m => prom(m, [5, 6])), k.ol]];
+  $('vx-td').textContent = 'Venta promedio diaria por mes · ' + (filt ? vxTxt() + ' · USD sin IVA' : f.cel ? celTxt(f.cel) + ' · USD con IVA' : 'USD con IVA');
+  const fm = v => usd(v, filt && v < 20 ? 2 : 0), ds = L.map(([l, data, c], i) => ({label: l, data, borderColor: c, backgroundColor: sombra(c, i ? .14 : .4), fill: 'origin', borderWidth: 2.4, tension: .35, spanGaps: false,
+    pointRadius: ptR(4), pointBackgroundColor: PER.map(q => dimA(c, ix(q))), pointBorderColor: k.sf, pointBorderWidth: 1.5, fmt: fm}));
   const ch = VXC.d;
-  if (ch && ch.canvas && ch.canvas.isConnected) { const s = ch.data.datasets[0]; s.data = d; s.pointBackgroundColor = col; s.pointRadius = rad; s.vlab = lab; ch.update(); return; }
-  el.innerHTML = cv(220, id => { VXC.d = mk(id, {type: 'line', data: {labels: DIAS, datasets: [{label: 'Venta diaria', data: d, borderColor: k.li, backgroundColor: sombra(k.li, .4), fill: 'origin', borderWidth: 2.6, tension: .35,
-      pointRadius: rad, pointHoverRadius: 7, pointBackgroundColor: col, pointBorderColor: k.sf, pointBorderWidth: 1.6, fmt: v => usd(v, v < 20 ? 2 : 0), vlab: lab}]},
-    options: {...opt({legend: false, yf: v => nf(v)}), animation: {duration: 450, easing: 'easeOutQuart'},
-      onClick: (e, els) => { if (els.length) vxSet('cel', {t: 'd', d: els[0].index}); }, onHover: (e, els) => { e.native.target.style.cursor = els.length ? 'pointer' : 'default'; }}}); });
+  if (ch && ch.canvas && ch.canvas.isConnected && ch.data.datasets.length === ds.length) {
+    ch.data.labels = LBP(); ch.data.datasets.forEach((x, i) => Object.assign(x, ds[i])); ch.update(); return; }
+  el.innerHTML = cv(240, id => { VXC.d = mk(id, {type: 'line', data: {labels: LBP(), datasets: ds},
+    options: {...opt({legend: ds.length > 1, yf: v => nf(v)}), animation: {duration: 450, easing: 'easeOutQuart'},
+      onClick: (e, els) => { if (els.length) mesFoco(PER[els[0].index]); }, onHover: (e, els) => { e.native.target.style.cursor = els.length ? 'pointer' : 'default'; },
+      scales: {x: {...axX, ticks: {maxRotation: 0}}, y: {...axY(v => nf(v)), beginAtZero: true}}}}); });
   flush(el);
 }
 
@@ -4792,7 +4797,7 @@ const VXF = {
   b: () => FIG(0, '<span id="vx-tb">Ventas por franja horaria</span>', '<div id="vx-b"></div>', {i: 'Participación de cada franja horaria en las ventas y las transacciones, y su ticket. Toca una franja para filtrar.'}),
   hm: () => { const h = selHoras(); return FIG(8, '<span id="vx-t8">Venta promedio por hora y día</span>', '<div class="hm vxh" id="hm" role="group" aria-label="Venta promedio por hora y día"></div><div class="hm-foot"><span class="hm-info" id="hm-info"></span><span class="hm-lg"><em>Menos</em><i></i><em>Más</em></span></div>',
     {tools: '<nav class="gb hm-mode" id="hm-mode" aria-label="Medida"></nav>', i: `Días de operación regular${h ? ' de ' + mesesL(h.meses) : ''}. Promedio de cada día de la semana en cada hora, con IVA; con una categoría o un producto elegido, ventas sin IVA de las facturas unidas a sus órdenes. Toca una celda, un día o una hora para filtrar; las celdas rayadas son horas en que la tienda está cerrada.`}); },
-  d: () => FIG(0, '<span id="vx-td">Venta promedio diaria</span>', '<div id="vx-d"></div>', {i: 'Venta promedio de cada día de la semana. Toca un día para filtrar.'}),
+  d: () => FIG(0, '<span id="vx-td">Venta promedio diaria por mes</span>', '<div id="vx-d"></div>', {i: 'Venta promedio por día de operación en cada mes, con IVA: de lunes a viernes y de sábado y domingo. Con un día, una hora o una franja elegidos, solo esa parte de la semana; con una categoría o un producto, ventas sin IVA. Toca un mes para enfocar el periodo en él.'}),
   p7: () => FG.f7(280),
   s: () => FIG(0, 'Venta y margen de los 250 productos con más venta', '<div id="vx-s"></div>', {i: `Eje horizontal en escala logarítmica: venta de cada producto de ${selL()}. Con un filtro, se resaltan los productos que se venden en la selección.`}),
   t: () => FIG(0, '<span id="vx-tt">Productos</span>', '<nav class="gb vw vx-tbn" id="vx-tbn" aria-label="Tabla"></nav><div id="vx-tb2"></div>', {i: `Margen promedio por producto de ${selL()}: ${pct(selProd().mg)}. Toca una fila para elegir el producto.`}),
@@ -4867,7 +4872,7 @@ const VN = {
     },
     sub: {
       cli: {i: [['e', 'Evolución', VXF.m], ['t', 'Tabla', VXF.q]], d: [['b', 'Franjas', VXF.b]]},
-      hor: {i: [['m', 'Mapa', VXF.hm]], d: [['p', 'Productos', VXF.p], ['d', 'Por día', VXF.d]]},
+      hor: {i: [['m', 'Mapa', VXF.hm]], d: [['p', 'Productos', VXF.p], ['d', 'Evolución', VXF.d]]},
       pro: {i: [['p', 'Pareto', VXF.p7], ['s', 'Venta y margen', VXF.s], ['t', 'Tabla', VXF.t]], d: [['v', 'Más venta', VXF.p]]},
       cat: {i: [['h', 'Por hora', VXF.hc]], d: [['c', 'Categorías', VXF.c]]}
     },
