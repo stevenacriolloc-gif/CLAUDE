@@ -2062,9 +2062,60 @@ S.vw = S.vw || {};
 /* ---------- piezas de diseño: nota, indicadores clave, figura ampliable y vistas ---------- */
 const info = t => t ? `<button type="button" class="inf" aria-label="Nota: ${esc(t)}" data-tip="${esc(t)}"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16.5v-5"/><circle cx="12" cy="8" r=".7"/></svg></button>` : '';
 const kp = items => `<div class="kp">${items.filter(Boolean).map(([l, v, s, st]) => `<div class="kp-i${st ? ' ' + st : ''}"><span>${l}</span><b class="num">${v}</b>${s ? `<em>${s}</em>` : ''}</div>`).join('')}</div>`;
+/* ---------- lectura de cada gráfico: una frase con la conclusión (se calcula con los mismos datos) y la fuente al pie ---------- */
+const sinTag = s => String(s).replace(/<[^>]+>/g, '').trim();
+const mesMin = (vals, ks) => { let j = -1; vals.forEach((v, i) => { if (v != null && (j < 0 || v < vals[j])) j = i; }); return j < 0 ? null : {k: ks[j], v: vals[j]}; };
+const mesMax = (vals, ks) => { let j = -1; vals.forEach((v, i) => { if (v != null && (j < 0 || v > vals[j])) j = i; }); return j < 0 ? null : {k: ks[j], v: vals[j]}; };
+const LEC = [
+  ['Ventas y su variación', () => { const ii = SI(), g = ii.map(growth), n = g.filter(v => v != null), ng = n.filter(v => v < 0).length, mx = mesMax(g, ii.map(i => D.meses[i]));
+    return n.length < 2 ? null : `Las ventas bajaron frente al mes anterior en <b>${ng} de ${n.length} meses</b>${mx ? `; el mejor fue ${lblL(mx.k)} (${sgn(mx.v)})` : ''}. La tendencia del periodo es ${V.I5 ? V.I5.v : '—'} al mes${V.I5 && V.I5.st === 'bad' ? ', en zona de acción frente al sector' : ''}.`; },
+    'Ventas sin IVA del sistema de facturación. Crecimiento = variación frente al mes anterior.'],
+  ['Margen bruto mensual', () => { const F = D.fig, ii = SI(), sv = sumI(F.f3_ventas, ii), sc = sumI(F.f3_costo, ii), mw = (sv - sc) / sv * 100, cw = calc(ii).mb, lo = mesMin(ii.map(i => cM(i).mb), ii.map(i => D.meses[i]));
+    return `El margen contable (<b>${pct(cw)}</b>) queda ${nf(mw - cw, 1)} puntos bajo el margen por producto (${pct(mw)}): esa diferencia son pérdidas de inventario y valoración del costo.${lo && ii.length > 1 ? ` El mes más bajo fue ${lblL(lo.k)} (${pct(lo.v)}).` : ''}`; },
+    'Apuntes contables y costo de cada línea de venta. Margen bruto = (ventas − costo de ventas) / ventas.'],
+  ['De dónde sale el costo', () => 'Cuanto mayor es la parte de líneas con costo de entradas reales del producto, más confiable es el margen por producto; las de costo del catálogo son una estimación.',
+    'Líneas de venta cruzadas con compras y transferencias.'],
+  ['Transacciones y ticket', () => { const r = calc(SI()), need = r.pe ? r.pe / r.ticket : null;
+    return need ? `Se registran <b>${nf(r.trans)} transacciones al mes</b> con un ticket de ${usd(r.ticket, 2)}; el punto de equilibrio exigiría ${nf(need)} al mes, ${nf((need / r.trans - 1) * 100, 0)} % más con el mismo ticket.` : `Se registran ${nf(r.trans)} transacciones al mes con un ticket de ${usd(r.ticket, 2)}.`; },
+    'Facturas del punto de venta. Ticket = ventas sin IVA / transacciones.'],
+  ['Ventas por franja horaria', () => { const h = selHoras(); if (!h) return null; const f = [...h.franjas].sort((a, b) => b.pv - a.pv)[0];
+    return `La franja de <b>${f.f}</b> concentra ${pct(f.pv)} de la venta con ${pct(f.pt)} de las transacciones: es la de mayor movimiento y conviene reforzar allí personal y reposición.`; },
+    'Ventas por hora con IVA (las demás cifras del tablero van sin IVA).'],
+  ['Inventario en cada conteo', () => { const A = D.inventario.areas, C = D.inventario.conteos, t = w => A.reduce((s, a) => s + (a.v[w] || 0), 0), n = C.length - 1, top = [...A].sort((a, b) => b.v[n] - a.v[n])[0];
+    return `El inventario pasó de ${usd(t(0))} (${C[0]}) a <b>${usd(t(n))}</b> (${C[n]}), ${sgn((t(n) / t(0) - 1) * 100, 0)}. ${AREA_N(A.indexOf(top) + 1)} concentra ${pct(top.v[n] / t(n) * 100, 0)} del valor.`; },
+    'Conteos físicos valorados al costo.'],
+  ['Entradas y costo de lo vendido', () => 'Cuando las entradas (compras y transferencias) superan el costo de lo vendido, el inventario crece; cuando quedan por debajo, se consume existencia.',
+    'Compras netas, transferencias del centro de acopio y costo de ventas contable.'],
+  ['Concentración de compras', () => { const ii = SI(), h = ii.map(i => D.hhi_mes[i]), s = h.filter(v => v != null), on = s.filter(v => v > 1500).length, mx = mesMax(h, ii.map(i => D.meses[i]));
+    return s.length ? `En <b>${on} de ${s.length} meses</b> el índice supera 1.500 (concentración moderada)${mx ? `; el máximo fue en ${lblL(mx.k)} (${nf(mx.v)})` : ''}. Depender de pocos proveedores eleva el riesgo de desabastecimiento.` : null; },
+    'Compras netas y transferencias. HHI (índice Herfindahl-Hirschman) = suma de los cuadrados de la participación de cada proveedor; sobre 1.500 hay concentración moderada y sobre 2.500, alta.'],
+  ['Entradas por tipo de proveedor', () => { const t = [...selProv().tipo].sort((a, b) => b.pct - a.pct);
+    return `${t[0].t} aporta <b>${pct(t[0].pct)}</b> de las entradas${t[1] ? `, seguido de ${t[1].t.toLowerCase()} (${pct(t[1].pct)})` : ''}${t[2] ? ` y ${t[2].t.toLowerCase()} (${pct(t[2].pct)})` : ''}.`; },
+    'Compras netas y transferencias, al costo.'],
+  ['Entradas por mes y proveedor', () => { const P = selProv(), r = P.rows[0]; return r ? `<b>${r.p}</b> es el principal proveedor, con ${pct(r.pct)} de las entradas; los cinco primeros suman ${pct(P.top5)}.` : null; },
+    'Compras netas y transferencias, al costo.'],
+  ['Proveedores', () => { const P = selProv(); return `${nf(P.n)} proveedores; los cinco primeros concentran <b>${pct(P.top5)}</b> de las entradas.`; }, 'Compras netas y transferencias, al costo.'],
+  ['Posición de ProDesarrollo', () => { const b = UMB.filter(id => V[id] && V[id].st === 'bad').length, w = UMB.filter(id => V[id] && V[id].st === 'warn').length;
+    return `ProDesarrollo está en zona de acción en <b>${b} de ${UMB.length}</b> indicadores con umbral${w ? ` y en vigilancia en ${w}` : ''}. Cada fila tiene su escala: a la derecha, la posición más favorable.`; },
+    'Superintendencia de Compañías, Valores y Seguros: estados de 2025 de nueve compañías del sector (actividad G4711).'],
+  ['Del margen operativo', () => { const c = selCasc(), st = [...c.steps].sort((a, b) => a[1] - b[1]).filter(s => s[1] < 0).slice(0, 2);
+    return `La brecha de <b>${nf((c.ref - c.pd) * 100, 1)} puntos</b> frente a una compañía local típica se explica sobre todo por ${st.map(s => `${s[0].toLowerCase()} (${nf(s[1] * 100, 1)})`).join(' y ')}.`; },
+    'Medianas de las compañías locales del Azuay, 2025. Puntos porcentuales de las ventas.'],
+  ['Tamaño frente al gasto', () => `Correlación de Spearman de <b>${nf(D.fig.tam.rho, 2)}</b> (va de −1 a 1): en el sector, las compañías con más ventas no gastan menos en proporción, así que el tamaño pequeño no explica por sí solo el gasto de ProDesarrollo.`,
+    'Superintendencia de Compañías, ventas y gastos de 2025. Ventas de ProDesarrollo llevadas a doce meses.'],
+  ['Margen bruto frente al gasto', () => { const p = pdTam(); return p.g > p.mb ? `ProDesarrollo está en la <b>zona de pérdida</b>: su gasto (${pct(p.g * 100)} de las ventas) supera su margen bruto (${pct(p.mb * 100)}) por ${nf((p.g - p.mb) * 100, 1)} puntos.` : `El margen bruto de ProDesarrollo (${pct(p.mb * 100)}) cubre su gasto (${pct(p.g * 100)}).`; },
+    'Superintendencia de Compañías, estados de 2025.'],
+  ['Mapa de productos', () => null, null]
+];
+function lecDe(t) {
+  const s = sinTag(t), e = LEC.find(([k]) => s.startsWith(k)); if (!e) return {l: null, s: null};
+  let l = null; try { l = e[1](); } catch (err) { l = null; }
+  return {l, s: e[2]};
+}
 function FIG(n, t, body, o = {}) {
   const soloSem = !o.tools || /^(?:\s*<button[^>]*class="kx-st[^"]*"[^>]*>(?:(?!<button)[\s\S])*?<\/button>)+\s*$/.test(o.tools);   // solo etiquetas de semáforo: quedan a la derecha del título
-  return `<figure class="fg${o.cls ? ' ' + o.cls : ''}"><figcaption${soloSem ? ' class="fc1"' : ''}><b>${t}</b><span class="fgr">${o.tools || ''}${info(o.i)}<button type="button" class="fgx" aria-label="Ampliar la figura">${ICO_EXP}</button></span></figcaption><div class="fgb">${body}</div>${o.leg || ''}</figure>`;
+  const lc = o.lec === false ? {l: null, s: null} : lecDe(t);
+  return `<figure class="fg${o.cls ? ' ' + o.cls : ''}"><figcaption${soloSem ? ' class="fc1"' : ''}><b>${t}</b><span class="fgr">${o.tools || ''}${info(o.i)}<button type="button" class="fgx" aria-label="Ampliar la figura">${ICO_EXP}</button></span></figcaption>${lc.l ? `<p class="fg-lec">${lc.l}</p>` : ''}<div class="fgb">${body}</div>${o.leg || ''}${lc.s ? `<p class="fg-src">Fuente: ${lc.s}</p>` : ''}</figure>`;
 }
 const grid2 = (...xs) => `<div class="g2">${xs.filter(Boolean).join('')}</div>`;
 const gcol = (...xs) => `<div class="gcol">${xs.filter(Boolean).join('')}</div>`;
